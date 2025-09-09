@@ -7,7 +7,6 @@ import mastersRoutes from "./views/masters/MasterRoutes";
 import HomeRoutes from "./views/Home/homeRoutes";
 import HomePage from "./views/Home/home";
 
-
 const routes = [
     {
       element: (
@@ -17,9 +16,10 @@ const routes = [
       ),
       children: [
           { path: '/home', element: <HomePage/> },
+
         //  { path: '/companydetails', element: <div>companydetails</div> },
         ...mastersRoutes,
-      // ...HomeRoutes,
+        ...HomeRoutes,
       
       
       ],
