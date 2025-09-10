@@ -1040,7 +1040,8 @@ const HomePage = () => {
         <Box sx={{ textAlign: "center", py: 6 }}>
           {/* Top Button */}
           <Button
-            variant="contained"
+           onClick={()=> navigate("/home/ViewCaseStudy")}
+           variant="contained"
             sx={{
               bgcolor: "#b3570d", // orange/brown shade
               borderRadius: "25px",
