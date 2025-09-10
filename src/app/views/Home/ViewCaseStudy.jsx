@@ -1457,6 +1457,8 @@ fontSize: "18px",
 <Box
 sx={{
   mt: 1,
+    position: 'sticky',
+    zIndex: 1300,  
   width: "100%"
 }}
 >

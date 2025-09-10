@@ -43,6 +43,7 @@ import Repairservicemagnet from "../../../assets/repairservicemagnet.png";
 import RepairServicesPageCard from "app/components/Card/RepairServicesPageCard";
 import ProcessCards from "app/components/Card/HowweworkCard";
 import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
+import { typography } from "app/utils/constant";
 
 
 
@@ -243,6 +244,7 @@ const blogData = [
       {/* Overlay Label */}
       <Box
         sx={{
+          ...typography.h3R,
           position: "absolute",
           bottom: 325,
           left: 20,
