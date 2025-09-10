@@ -946,6 +946,7 @@ color: "#111",
           <Box sx={{ textAlign: "center", py: 6 }}>
         {/* Top Button */}
         <Button
+        onClick={()=> navigate("/home/ViewCaseStudy")}
           variant="contained"
           sx={{
             bgcolor: "#b3570d", // orange/brown shade
