@@ -1887,7 +1887,6 @@ const HomePage = () => {
                         sx={{ color: "#1976d2", fontWeight: "bold", mt: 0.5, display: "inline-flex", alignItems: "center" }}
                       >
 
-
                         Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1976d2", }} />
                       </Link>
                     </Box>
