@@ -1016,14 +1016,14 @@ const HomePage = () => {
               width: "40%", borderRadius: 2, objectFit: "cover",
               mt: 8
             }}
-          />{" "}
+          />{"Before"}
           {/* After Image */}{" "}
           <Box
             component="img"
             src={after}
             alt="After"
             sx={{ width: "40%", borderRadius: 2, objectFit: "cover" }}
-          />{" "}
+          />{"After "}
           {/* Right Arrow */}{" "}
           <IconButton
             sx={{

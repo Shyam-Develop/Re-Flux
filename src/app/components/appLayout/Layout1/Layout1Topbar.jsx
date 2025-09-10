@@ -16,7 +16,7 @@ import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useNavigate } from "react-router-dom";  // or any other ico
+import { Link, useNavigate } from "react-router-dom";  // or any other ico
 const MenuButton = styled(Button)(({ theme }) => ({
   flex: 1, // equal width for all buttons
   position: "relative",
@@ -1150,7 +1150,36 @@ const MorePopoverContent = () => {
               letterSpacing: "-0.12px",
             }}
           >
-            FAQ <br />About Us <br />Legal
+            FAQ 
+          </Typography>
+           <Typography
+      component={Link} // 🔗 makes Typography behave like a Link
+      to="/about-us"
+      sx={{
+        color: "#AE5609",
+        fontFamily: "Space Grotesk",
+        fontWeight: 400,
+        fontSize: "24px",
+        lineHeight: "130%",
+        letterSpacing: "-0.12px",
+        textDecoration: "none",
+        cursor: "pointer",
+        "&:hover": { textDecoration: "underline" }, // hover effect
+      }}
+    >
+      About Us
+    </Typography>
+          <Typography
+            sx={{
+              color: "#AE5609",
+              fontFamily: "Space Grotesk",
+              fontWeight: 400,
+              fontSize: "24px",
+              lineHeight: "130%",
+              letterSpacing: "-0.12px",
+            }}
+          >
+          Legal
           </Typography>
         </Box>
       </Grid>
