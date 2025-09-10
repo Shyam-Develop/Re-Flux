@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import {
   Box,
   Typography,
@@ -80,6 +80,8 @@ const HomePage = () => {
   const handledialogClose = () => {
     setBrowseDialogOpen(false);
   };
+  //==============================ELECTROMAGNET -REPAIR==================================//
+  //  const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const features = [
     {
@@ -103,8 +105,28 @@ const HomePage = () => {
       image: after,
     },
   ];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const intervalRef = useRef(null);;
 
+  // Auto play effect
+  useEffect(() => {
+    if (autoPlay) {
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % features.length);
+        setHoveredIndex((prev) => (prev + 1) % features.length);
+      }, 2000);
+    }
 
+    return () => clearInterval(intervalRef.current);
+  }, [autoPlay, features.length]);
+
+  const handleTabClick = (index) => {
+    setActiveIndex(index);
+    setAutoPlay(false); // stop auto rotation when clicked
+    clearInterval(intervalRef.current);
+  };
+  //----------------------------------------------------------------------------------------//
   const benefits = [
     {
       title: 'Lower Upfront Cost',
@@ -723,7 +745,7 @@ const HomePage = () => {
                   >
                     {item.id}
                   </Typography>
-                 
+
                 </Box>
 
                 <Typography
@@ -1065,21 +1087,37 @@ const HomePage = () => {
       <Box
         sx={{
           display: "flex",
+          justifyContent: "center",
           alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          px: 4,
-          py: 4,
-          gap: 6,
-          bgcolor: "white",
+          minHeight: "100vh", // full viewport height
+          bgcolor: "#f5f5f5", // optional background
         }}
       >
-        {/* Left - Features with vertical timeline */}
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {/* Continuous Vertical Line */}
-          <Box
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "1312px",
+            height: "708px",
+            opacity: 1,
+            border: "1px solid #ddd",
+            borderRadius: "12px", // Radius/radius-12
+            // px: "32px",           // padding-left + padding-right
+            // py: "24px",           // padding-top + padding-bottom
+            gap: "12px",
+            bgcolor: "white",
+          }}
+        >
+          
+          {/* Left - Features with vertical timeline */}
+          <Box sx={{
+            flex: 1, position: "relative", width: 570,
+            height: 660,
+            opacity: 1,
+          }}>
+            {/* Continuous Vertical Line */}
+            {/* <Box
             sx={{
               position: "absolute",
               top: 0,
@@ -1088,46 +1126,41 @@ const HomePage = () => {
               width: "2px",
               bgcolor: "#ccc",
               borderRadius: 1,
+
             }}
-          />
+          /> */}
 
-          {features.map((item, index) => {
-            const isActive = hoveredIndex === index;
+            {features.map((item, index) => {
+              const isActive = activeIndex === index;
 
-            return (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  mb: 4,
-                  cursor: "pointer",
-                  position: "relative",
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-              >
-                {/* Highlighted section of the vertical line */}
-                {isActive && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: "10px",
-                      width: "2px",
-                      bgcolor: "#1976d2",
-                      height: "100%",
-                      borderRadius: 1,
-                    }}
-                  />
-                )}
-
-                {/* Icon + Text */}
-                <Box sx={{ ml: 4 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    width: 570,
+                    height: 165,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    gap: "20px",
+                    px: "32px", // padding-left/right
+                    py: "32px", // padding-top/bottom
+                    borderLeft: isActive ? "4px solid #1976d2" : "4px solid transparent",
+                    opacity: 1,
+                    position: "relative",
+                    cursor: "pointer",
+                    borderRadius: 1,
+                    left:10,
+                    transition: "all 0.3s ease",
+                  }}
+                  onClick={() => handleTabClick(index)}
+                >
+                  {/* Icon + Title */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <CalendarMonthIcon
                       sx={{
                         fontSize: 20,
                         color: isActive ? "#1976d2" : "#666",
-                        mr: 1,
                         transition: "0.3s",
                       }}
                     />
@@ -1144,37 +1177,40 @@ const HomePage = () => {
                     </Typography>
                   </Box>
 
+                  {/* Description */}
                   <Typography
                     variant="body2"
                     sx={{
-                      // color: isActive ? "#1976d2" : "text.secondary",
                       fontFamily: "Inter, sans-serif",
                       transition: "0.3s",
-                      ml: 4
+                      ml: 4,
                     }}
                   >
                     {item.desc}
                   </Typography>
                 </Box>
-              </Box>
-            );
-          })}
-        </Box>
+              );
+            })}
 
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          <Box
-            component="img"
-            src={features[hoveredIndex].image}
-            alt="ElectroMagnet Repair"
-            sx={{
-              width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
-            }}
-          />
+          </Box>
+
+          {/* Right - Dynamic Image */}
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+            <Box
+              component="img"
+              src={features[hoveredIndex].image}
+              alt="ElectroMagnet Repair"
+              sx={{
+                width: "570px",
+                height: "567px",
+                borderRadius: "20px",
+                objectFit: "cover",
+                opacity: 1,
+                transition: "0.5s",
+              }}
+            />
+
+          </Box>
         </Box>
       </Box>
       {/* Why Choose Reflux Section */}
@@ -2034,7 +2070,7 @@ const services = [
     price: 20,
     img: rentserviceimg,
   },
-    {
+  {
     id: 4,
     title: "Rectangular Lifting Magnet",
     type: "Permanent Magnet",
