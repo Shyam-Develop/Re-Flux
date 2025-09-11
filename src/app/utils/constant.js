@@ -56,17 +56,21 @@ export const typography = {
 h3R: {fontFamily: Fonts.spaceRegular, fontSize: "28px", lineHeight: "1.12", letterSpacing: "-0.28%" },
 h3RBold: {fontFamily: Fonts.spaceRegular, fontSize: "48px", lineHeight: "1.12", letterSpacing: "-0.4%" },
 h3medium: {fontFamily: Fonts.spaceRegular, fontSize: "20px", lineHeight: "1.30", letterSpacing: "0%" },
+h3RB: {fontFamily: Fonts.spaceRegular, fontSize: "56px", lineHeight: "1.12", letterSpacing: "-0.56%" },
+h3B1: {fontFamily: Fonts.spaceRegular, fontSize: "24px", lineHeight: "1.30", letterSpacing: "-0.12px" },
+
 h4: { fontFamily: Fonts.spaceSemiBold, fontSize: "24px", lineHeight: "1.30", letterSpacing: "-0.12px" },   // Feature titles
   h5: { fontFamily: Fonts.spaceMedium, fontSize: "20px", lineHeight: "1.35", letterSpacing: "0px" },         // Small headers
   h6: { fontFamily: Fonts.spaceMedium, fontSize: "16px", lineHeight: "1.40", letterSpacing: "0px" },         // Long copy
   overline: { fontFamily: Fonts.spaceMedium, fontSize: "16px", lineHeight: "1.40", letterSpacing: "0.32px" },// Label text
 
   // Body
-  bodyBase: { fontFamily: Fonts.firaRegular, fontSize: "16px", lineHeight: "1.60", letterSpacing: "0px" },   // Long copy
+  bodyBase: { fontFamily: Fonts.firaRegular, fontSize: "18px", lineHeight: "1.60", letterSpacing: "0px" },   // Long copy
     bodyBasemedium: { fontFamily: Fonts.firaRegular, fontSize: "18px", lineHeight: "1.60", letterSpacing: "0px" },   // Long copy
 
   bodyStrong: { fontFamily: Fonts.firaSemiBold, fontSize: "16px", lineHeight: "1.60", letterSpacing: "0px" },// Emphasis
   bodySmall: { fontFamily: Fonts.firaRegular, fontSize: "14px", lineHeight: "1.40", letterSpacing: "-0.14px" }, // Captions, legal
+  bodyStrongB: { fontFamily: Fonts.firaSemiBold, fontSize: "18px", lineHeight: "1.60", letterSpacing: "0px" },// Emphasis
 
   // Buttons & UI
   buttonLink: { fontFamily: Fonts.firaSemiBold, fontSize: "14px", lineHeight: "1.40", letterSpacing: "-0.42px" }, // CTAs, nav

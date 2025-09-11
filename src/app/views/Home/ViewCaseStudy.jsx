@@ -1261,6 +1261,7 @@ fontSize: "18px",
 
 
 {/* Footer Section */}
+{/* Footer Section */}
 <Box
   component="footer"
   sx={{
@@ -1340,7 +1341,7 @@ fontSize: "18px",
           fontWeight: 500,
           fontSize: "20px",
           fontFamily: "Space Grotesk, Regular",
-          borderBottom: "2px solid #1976d2",
+            borderBottom: "2px solid #1976d2",
         }}
         >(123) 456-7890</Typography>
         <Typography
@@ -1457,8 +1458,6 @@ fontSize: "18px",
 <Box
 sx={{
   mt: 1,
-    position: 'sticky',
-    zIndex: 1300,  
   width: "100%"
 }}
 >

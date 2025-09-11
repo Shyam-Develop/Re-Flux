@@ -10,7 +10,7 @@ import {
   useTheme, Card,
   CardMedia,
   CardContent,
-  IconButton
+  IconButton,Link
 } from "@mui/material";
 import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
@@ -60,6 +60,7 @@ export default function TopbarWithMegaMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
   const appBarRef = useRef(null);
+  const navigate = useNavigate();
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [activeMenu, setActiveMenu] = useState(null);
@@ -615,6 +616,7 @@ const RentalPopoverContent = () => {
 };
 
 const ResalePopoverContent = () => {
+  const navigate = useNavigate();
   return (
     <Grid container spacing={0}>
       {/* Column 1 */}
@@ -678,7 +680,8 @@ const ResalePopoverContent = () => {
             gap: 1.5,
           }}
         >
-          <Typography
+          <Link
+            onClick={() => navigate("home/SellMagnet")}
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
@@ -686,10 +689,12 @@ const ResalePopoverContent = () => {
               fontSize: "24px",
               lineHeight: "130%",
               letterSpacing: "-0.12px",
+              textDecoration: "none",
+              cursor: "pointer"
             }}
           >
             Sell/Exchange Your<br />Magnets
-          </Typography>
+          </Link>
 
           <Typography
             sx={{
@@ -1237,7 +1242,7 @@ const BrowseRentals = () => {
       display="flex"
       alignItems="center"
       sx={{ mt: 2, cursor: "pointer" }}
-      onClick={() => navigate("/rentals")} // replace with your route
+      onClick={() => navigate("./home/Rentals")} // replace with your route
     >
       <Typography
         sx={{
