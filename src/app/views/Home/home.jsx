@@ -12,6 +12,7 @@ import {
   Divider, IconButton, Grid, Modal, List, ListItem, ListItemIcon, ListItemText, TextField,
   InputAdornment, Dialog, DialogContent, FormControl, Select, MenuItem
 } from "@mui/material";
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -1249,6 +1250,7 @@ const HomePage = () => {
                 We handle service and upkeep — you focus on getting the job done.
               </Typography>
               <Button
+           
                 variant="contained"
                 sx={{
                   borderRadius: "25px",
@@ -1885,7 +1887,6 @@ const HomePage = () => {
                         sx={{ color: "#1976d2", fontWeight: "bold", mt: 0.5, display: "inline-flex", alignItems: "center" }}
                       >
 
-
                         Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1976d2", }} />
                       </Link>
                     </Box>
@@ -1899,139 +1900,199 @@ const HomePage = () => {
 
 
       {/* Footer Section */}
-      <Box sx={{ bgcolor: "#f9f9f9", px: 8, py: 6 }}>
-        {/* Top Grid */}
-        <Grid container spacing={4}>
-          {/* 1. Logo + Sub-brand */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Box mb={2}>
-              <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-            </Box>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              A unit of
-            </Typography>
-            <Box>
-              <img
-                src={Brand1}
-                alt="Electro Flux"
-                style={{ height: 70 }}
-              />
-            </Box>
-          </Grid>
-
-          {/* 2. Sitemap */}
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography fontWeight="bold" gutterBottom>
-              Sitemap
-            </Typography>
-            {["Home", "Abouts", "Growers", "Merchants", "Contact"].map((item) => (
-              <Typography key={item} variant="body2" sx={{ mb: 0.5 }}>
-                <Link href="#" underline="none" color="text.primary">
-                  {item}
-                </Link>
-              </Typography>
-            ))}
-          </Grid>
-
-          {/* 3. Socials */}
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography fontWeight="bold" gutterBottom>
-              Socials
-            </Typography>
-            {["Facebook", "Linkedin", "Instagram", "Twitter"].map((item) => (
-              <Typography key={item} variant="body2" sx={{ mb: 0.5 }}>
-                <Link href="#" underline="none" color="text.primary">
-                  {item}
-                </Link>
-              </Typography>
-            ))}
-          </Grid>
-
-          {/* 4. Office & Newsletter */}
-          <Grid item xs={12} sm={6} md={5}>
-            <Typography fontWeight="bold" gutterBottom>
-              Head Office
-            </Typography>
-            <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
-              Xilliams Corner Wine © 2017. 1112 A Market St # Ste B22,
-              Charlottesville, CA 45565
-            </Typography>
-
-            <Typography fontWeight="bold" gutterBottom>
-              News letter
-            </Typography>
-            <TextField
-              placeholder="Enter your email address"
-              variant="standard"
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <MailOutlineIcon
-                        sx={{
-                          color: "#1976d2"
-                        }}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        {/* Bottom Line */}
-        <Grid container spacing={2} sx={{ mt: 6 }}>
-          <Grid item xs={3}>
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontFamily: "Fira Sans",
-                textDecoration: "underline",
-                textDecorationColor: "#1976d2",
-                textUnderlineOffset: "4px",
-              }}
-              variant="body2"
-              fontWeight="medium"
-            >
-              contact@lift.agency
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontFamily: "Space Grotesk",
-                textDecoration: "underline",
-                textDecorationColor: "#1976d2",
-                textUnderlineOffset: "4px",
-              }}
-              variant="body2"
-              fontWeight="medium"
-            >
-              (123) 456-7890
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}></Grid> {/* Empty spacer under socials column */}
-
-          <Grid item xs={3}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{
-                fontSize: "14px",
-                fontFamily: "Regular",
-              }}
-            >
-              © 2020 Lift Media All rights reserved.
-            </Typography>
-          </Grid>
-        </Grid>
-
+    <Box
+  component="footer"
+  sx={{
+    backgroundColor: "#0b2d55",
+    color: "#fff",
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    width: "100%",
+    px: { xs: 4, md: 12 },
+    py: { xs: 6, md: 10 },
+  }}
+>
+  <Grid container spacing={4}>
+    {/* 1. Left Column: Brand and Unit Info */}
+    <Grid item xs={12} md={4}>
+      <Box display="flex" flexDirection="column" alignItems="flex-start">
+        <Box mb={2}>
+          <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
+        </Box>
+       <Box display="flex" alignItems="center" mt={2}>
+  <Typography
+  //  variant="body2" 
+   sx={{ 
+    fontFamily: "Space Grotesk, Regular",
+    fontWeight: 700, 
+    fontSize: "28px",
+     lineHeight: "120%",
+    mr: 1 ,
+  }}
+   >
+    A unit of
+  </Typography>
+  <Box component="span">
+    <img src={Brand1} alt="Electro Flux" style={{ height: 40 }} />
+  </Box>
+</Box>
       </Box>
+    </Grid>
+
+    {/* 2. Middle Column: Contact Info */}
+    <Grid item xs={12} md={4}>
+      <Box display="flex" flexDirection="column" alignItems="flex-start">
+        <Typography
+          sx={{
+            fontWeight: 600,
+            fontSize: "16px",
+            fontFamily: "Space Grotesk, Regular",
+            border: "1px solid #fff",
+            borderRadius: "16px",
+            px: 2,
+            py: 0.5,
+            display: "inline-block",
+            mb: 2,
+          }}
+        >
+          Contact
+        </Typography>
+
+        <Typography
+        //  variant="body2" 
+         sx={{ 
+          lineHeight: "130%",
+          fontWeight: 500,
+          fontSize: "20px",
+          fontFamily: "Space Grotesk, Regular",
+          textAlign: "left"
+          }}>
+          Xilliams Corner Wine © 2017. <br />
+          1112 A Market St # Ste B22,<br />
+          Charlottesville, CA 45565
+        </Typography>
+
+        <Typography 
+        sx={{ 
+          mt: 2 ,
+           lineHeight: "130%",
+          fontWeight: 500,
+          fontSize: "20px",
+          fontFamily: "Space Grotesk, Regular",
+          borderBottom: "2px solid #1976d2",
+        }}
+        >(123) 456-7890</Typography>
+        <Typography
+          sx={{
+            mt: 1,
+            display: "inline-block",
+            borderBottom: "2px solid #1976d2",
+            pb: "2px",
+             lineHeight: "130%",
+          fontWeight: 500,
+          fontSize: "20px",
+          fontFamily: "Space Grotesk, Regular"
+          }}
+        >
+          contact@lift.agency
+        </Typography>
+      </Box>
+    </Grid>
+
+    {/* 3. Right Column: Links + Scroll Icon + Copyright */}
+    <Grid item xs={12} md={4}>
+      <Box display="flex" flexDirection="column" alignItems="flex-start">
+        <Typography
+          sx={{
+            fontWeight: 600,
+            fontSize: "16px",
+            fontFamily: "Space Grotesk, Regular",
+            border: "1px solid #fff",
+            borderRadius: "16px",
+            px: 2,
+            py: 0.5,
+            display: "inline-block",
+            mb: 2,
+          }}
+        >
+          Links
+        </Typography>
+
+        {["Facebook", "Instagram", "Youtube"].map((item) => (
+          <Typography key={item} 
+          sx={{ 
+            mb: 1,
+          lineHeight: "130%",
+          fontWeight: 500,
+          fontSize: "20px",
+          fontFamily: "Space Grotesk, Regular"
+             }}
+             >
+            {item}
+          </Typography>
+        ))}
+
+        <Typography 
+
+        sx={{ 
+          fontWeight: 700, 
+          fontSize: "24px",
+          fontFamily: "Space Grotesk, Bold",
+          mt: 2,
+          lineHeight: "130%" 
+          }}
+
+          >
+          Wall of Love ❤️
+        </Typography>
+
+        {/* Divider under Wall of Love */}
+        <Box
+          sx={{
+            width: 30,
+            height: 2,
+            backgroundColor: "#fff",
+            my: 1,
+          }}
+        />
+
+        <Typography 
+        sx={{ 
+         fontWeight: 700, 
+          fontSize: "24px",
+          fontFamily: "Space Grotesk, Bold",
+          mt: 3,
+          lineHeight: "130%" 
+         }}
+         >
+          Sitemap</Typography>
+
+        {/* Scroll to Top Icon */}
+        <Box
+          sx={{
+            width: 40,
+            height: 40,
+            borderRadius: "50%",
+            border: "1px solid #fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            mb: 2,
+            ml: 20
+          }}
+        >
+          <ArrowUpwardIcon sx={{ color: "#fff" }} />
+        </Box>
+
+        <Typography variant="caption" sx={{ color: "#ccc" }}>
+          © 2020 Lift Media All rights reserved.
+        </Typography>
+      </Box>
+    </Grid>
+  </Grid>
+</Box>
+
 
 
 

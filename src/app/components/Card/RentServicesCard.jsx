@@ -13,7 +13,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import rentserviceimg from "../../../assets/RentService.png";
+import { useNavigate } from "react-router-dom";
+
 export default function RentServicesCard({ services }) {
+
+    const navigate = useNavigate();
+  
+
   return (
     <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
       {/* Section Tag */}
@@ -179,6 +185,7 @@ export default function RentServicesCard({ services }) {
               {/* Button */}
               <Box sx={{ p: 2, pt: 0 }}>
                 <Button
+                  onClick={() => navigate('/home/CheckAvailabilty')}
                   fullWidth
                   variant="contained"
                   className="availability-btn"

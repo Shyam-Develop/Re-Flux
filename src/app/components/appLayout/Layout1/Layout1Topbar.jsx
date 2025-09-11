@@ -998,11 +998,16 @@ const MorePopoverContent = () => {
           </Typography>
 
           <Typography
+          component={Link}
+          to="/repair-replace"
             sx={{
               fontFamily: "Fira Sans",
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: "160%",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Repair vs Replace
@@ -1141,6 +1146,8 @@ const MorePopoverContent = () => {
           }}
         >
           <Typography
+          component={Link}
+          to="/customer-says"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
@@ -1170,6 +1177,8 @@ const MorePopoverContent = () => {
       About Us
     </Typography>
           <Typography
+          component={Link}
+          to='/legal'
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",

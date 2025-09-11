@@ -36,6 +36,7 @@ export const Fonts = {
   firaMedium: "FiraSans-Medium",
   firaSemiBold: "FiraSans-SemiBold",
   firaBold: "FiraSans-Bold",
+  Intersemibold: "Inter-SemiBold"
 };
 
 // ---------------- Typography ----------------
@@ -52,20 +53,25 @@ export const typography = {
   h2B: { fontFamily: Fonts.spaceBold, fontSize: "32px", lineHeight: "1.20", letterSpacing: "-0.32px" },      // Strong section head
   h3: { fontFamily: Fonts.spaceSemiBold, fontSize: "28px", lineHeight: "1.25", letterSpacing: "-0.28px" },   // Sub-heads / cards
   h3B: { fontFamily: Fonts.spaceBold, fontSize: "28px", lineHeight: "1.22", letterSpacing: "-0.28px" },      // Emphasized sub-head
-  h4: { fontFamily: Fonts.spaceSemiBold, fontSize: "24px", lineHeight: "1.30", letterSpacing: "-0.12px" },   // Feature titles
+h3R: {fontFamily: Fonts.spaceRegular, fontSize: "28px", lineHeight: "1.12", letterSpacing: "-0.28%" },
+h3RBold: {fontFamily: Fonts.spaceRegular, fontSize: "48px", lineHeight: "1.12", letterSpacing: "-0.4%" },
+h3medium: {fontFamily: Fonts.spaceRegular, fontSize: "20px", lineHeight: "1.30", letterSpacing: "0%" },
+h4: { fontFamily: Fonts.spaceSemiBold, fontSize: "24px", lineHeight: "1.30", letterSpacing: "-0.12px" },   // Feature titles
   h5: { fontFamily: Fonts.spaceMedium, fontSize: "20px", lineHeight: "1.35", letterSpacing: "0px" },         // Small headers
   h6: { fontFamily: Fonts.spaceMedium, fontSize: "16px", lineHeight: "1.40", letterSpacing: "0px" },         // Long copy
   overline: { fontFamily: Fonts.spaceMedium, fontSize: "16px", lineHeight: "1.40", letterSpacing: "0.32px" },// Label text
 
   // Body
   bodyBase: { fontFamily: Fonts.firaRegular, fontSize: "16px", lineHeight: "1.60", letterSpacing: "0px" },   // Long copy
+    bodyBasemedium: { fontFamily: Fonts.firaRegular, fontSize: "18px", lineHeight: "1.60", letterSpacing: "0px" },   // Long copy
+
   bodyStrong: { fontFamily: Fonts.firaSemiBold, fontSize: "16px", lineHeight: "1.60", letterSpacing: "0px" },// Emphasis
   bodySmall: { fontFamily: Fonts.firaRegular, fontSize: "14px", lineHeight: "1.40", letterSpacing: "-0.14px" }, // Captions, legal
 
   // Buttons & UI
   buttonLink: { fontFamily: Fonts.firaSemiBold, fontSize: "14px", lineHeight: "1.40", letterSpacing: "-0.42px" }, // CTAs, nav
   uiLabel: { fontFamily: Fonts.firaSemiBold, fontSize: "13px", lineHeight: "1.40", letterSpacing: "-0.26px" },    // Form labels
-
+buttonSBold: { fontFamily: Fonts.Intersemibold, fontSize: "16px", lineHeight: "1", letterSpacing: "0px" },
   // Special
   specNums: { fontFamily: Fonts.firaMedium, fontSize: "16px", lineHeight: "1.45", letterSpacing: "0px" },   // tabular-nums
 };

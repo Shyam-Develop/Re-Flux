@@ -6,6 +6,8 @@ import NotFound from "./views/sessions/NotFound";
 import mastersRoutes from "./views/masters/MasterRoutes";
 import HomeRoutes from "./views/Home/homeRoutes";
 import HomePage from "./views/Home/home";
+import RepairRoutes from "./views/Repair/RepairRoutes";
+import LegalRoutes from "./views/Legal/LegalRoutes";
 
 const routes = [
     {
@@ -20,7 +22,8 @@ const routes = [
         //  { path: '/companydetails', element: <div>companydetails</div> },
         ...mastersRoutes,
         ...HomeRoutes,
-      
+      ...RepairRoutes,
+      ...LegalRoutes,
       
       ],
     },

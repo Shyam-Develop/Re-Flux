@@ -18,10 +18,10 @@ export default function HowWeWorkSwiper() {
   return (
     <Box sx={{ maxWidth: 1200, mx: "auto", px: 2, py: 6 }}>
       {/* Section Heading */}
-      <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, textAlign: "center" }}>
+      <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, textAlign: "left" }}>
         How we work
       </Typography>
-      <Typography variant="body1" sx={{ color: "#4b5563", textAlign: "center", mb: 6 }}>
+      <Typography variant="body1" sx={{ color: "#4b5563", textAlign: "left", mb: 6 }}>
         Electrical and mechanical restoration with documented testing.
       </Typography>
 

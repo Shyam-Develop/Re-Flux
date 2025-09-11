@@ -4,12 +4,16 @@ const { lazy } = require("react");
    const Home = Loadable((lazy(()=>import('./home'))));
    const RepairServicesPage = Loadable((lazy(()=>import('./RepairServicesPage'))));
    const ViewcaseStudyPage = Loadable((lazy(()=>import('./ViewCaseStudy'))));
-const AboutUs = Loadable((lazy(()=>import('./AboutUs'))));
-
+const CheckAvailabilty = Loadable((lazy(() => import('./CheckAvailabilty'))));  
+ const RepairServices =Loadable((lazy(()=>import('./RepairServices'))));
+const AboutUs=Loadable((lazy(()=>import('./AboutUs'))));
    const HomeRoutes=[
     {path:"/home",element: <Home /> },
+    {path:"/home/RepairServices",element: <RepairServices /> },
     {path:"/home/RepairServicesPage",element: <RepairServicesPage /> },
     {path:"/home/ViewCaseStudy",element: <ViewcaseStudyPage /> },
-{path:"/about-us",element: <AboutUs /> },
+    {path:"home/CheckAvailabilty",element: <CheckAvailabilty/>},
+    {path:"about-us",element: <AboutUs/>}
+
    ];
    export default HomeRoutes;

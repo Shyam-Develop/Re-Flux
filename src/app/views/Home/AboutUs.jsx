@@ -315,6 +315,8 @@ const AboutUS = () => {
                 <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
                     <Typography
                         sx={{
+                            ...typography.displayM,
+                            color:"#0C0F13",
                             ml: 8,
                             mt: 5
                         }}
@@ -325,33 +327,65 @@ const AboutUS = () => {
                         {/* Left Section - Contact Info */}
                         <Grid item xs={12} md={4}>
                             <Paper elevation={0} sx={{ p: 3, borderRadius: 2, backgroundColor: "#eaf0f8" }}>
-                                <Typography variant="h6" fontWeight={600} gutterBottom>
+                                <Typography sx={{
+                                      ...typography.h1,
+                            color:"#0E1109",
+                                }} gutterBottom>
                                     Contact Information
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary" gutterBottom>
+                                <Typography sx={{
+                                      ...typography.bodyBase,
+                            color:"#0E1109",
+                                }} gutterBottom>
                                     Get in touch with our approachable team using your preferred method—be it a quick message, a phone call, or a form submission.
                                 </Typography>
 
                                 <Box mt={2}>
-                                    <Typography variant="subtitle2" fontWeight={600}>Email Address</Typography>
-                                    <Typography variant="body2">contact@magnetsindia.com</Typography>
+                                    <Typography sx={{
+                                      ...typography.bodyBasemedium,
+                            color:"#0E1109",
+                                }}>Email Address</Typography>
+                                    <Typography sx={{
+                                      ...typography.bodySmall,
+                            color:"#0E1109",
+                                }}>contact@magnetsindia.com</Typography>
                                 </Box>
 
                                 <Box mt={2}>
-                                    <Typography variant="subtitle2" fontWeight={600}>Phone Number</Typography>
-                                    <Typography variant="body2">+91 98765-43210</Typography>
+                                    <Typography  sx={{
+                                      ...typography.bodyBasemedium,
+                            color:"#0E1109",
+                                }}>Phone Number</Typography>
+                                    <Typography sx={{
+                                      ...typography.bodySmall,
+                            color:"#0E1109",
+                                }}>+91 98765-43210</Typography>
                                 </Box>
 
                                 <Box mt={2}>
-                                    <Typography variant="subtitle2" fontWeight={600}>Office Location</Typography>
-                                    <Typography variant="body2">
+                                    <Typography  sx={{
+                                      ...typography.bodyBasemedium,
+                            color:"#0E1109",
+                                }}>Office Location</Typography>
+                                    <Typography sx={{
+                                      ...typography.bodySmall,
+                            color:"#0E1109",
+                                }}>
                                         Magnets India, 123 Magnet Lane, Chennai, India
                                     </Typography>
                                 </Box>
 
                                 <Box mt={2}>
-                                    <Typography variant="subtitle2" fontWeight={600}>Business Hours</Typography>
-                                    <Typography variant="body2">Monday – Saturday | 09:00 AM – 07:00 PM</Typography>
+                                    <Typography  
+                                    sx={{
+                                      ...typography.bodyBasemedium,
+                            color:"#0E1109",
+                                }}
+                                >Business Hours</Typography>
+                                    <Typography sx={{
+                                      ...typography.bodySmall,
+                            color:"#0E1109",
+                                }}>Monday – Saturday | 09:00 AM – 07:00 PM</Typography>
                                 </Box>
                             </Paper>
                         </Grid>
