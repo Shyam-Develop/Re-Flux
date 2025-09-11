@@ -1289,6 +1289,7 @@ const thumbnailImages = [Checkavailimage, Blogs1, Blogs2, Blogs3];
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          height: "1px",
           px: { xs: 4, md: 12 },
           py: { xs: 4, md: 6 },
           flexDirection: { xs: 'column', md: 'row' },
