@@ -295,6 +295,8 @@ const RepairServices = () => {
         />
       </Box>
 
+
+{/* //ROI Calculator */}
       <Box>
         <Typography
           sx={{
@@ -786,7 +788,7 @@ const RepairServices = () => {
 
 
        {/* Footer Section */}
-      <Box sx={{ bgcolor: "#f9f9f9", px: 8, py: 6, background: '#0b2d55', borderTopRightRadius: '55px',
+      <Box sx={{ bgcolor: "#f9f9f9", px: 8, py: 6, background: '#0b2d55', margin:'10px', borderTopRightRadius: '55px',
               borderTopLeftRadius: '55px' }}>
         {/* Top Grid */}
         <Grid container spacing={4}>

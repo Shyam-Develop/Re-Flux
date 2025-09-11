@@ -1204,7 +1204,7 @@ const BrowseRentals = () => {
       display="flex"
       alignItems="center"
       sx={{ mt: 2, cursor: "pointer" }}
-      onClick={() => navigate("/rentals")} // replace with your route
+      onClick={() => navigate("./home/Rentals")} // replace with your route
     >
       <Typography
         sx={{
