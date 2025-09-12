@@ -83,8 +83,13 @@ import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
 import { typography } from "app/utils/constant";
 import { grey } from "@mui/material/colors";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
+import Refurbishedmagnet from "../../../assets/topbarservice1.jpg"
+import { useNavigate } from "react-router-dom";
 
-const SellMagnet = () => {
+
+ 
+
+const RefurbishedElectromagnet = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -92,11 +97,87 @@ const SellMagnet = () => {
   const handleClickOpen = () => {
     setBrowseDialogOpen(true);
   };
-
+ const navigate = useNavigate();
   const handledialogClose = () => {
     setBrowseDialogOpen(false);
   };
 
+//Refurbished Magnet
+  const Refurbished = [
+    {
+      id: 1,
+      title: "Sell Us",
+      type: "Coil",
+      subtitile: "Per day",
+      icon: HandshakeIcon,
+      img: Refurbishedmagnet,
+      price: 25,
+      liftCapacity: "2.5 tons",
+      powerSupply: "220V / 110V",
+      sizes: "700mm / 890mm /120mm",
+    },
+    {
+      id: 2,
+      title: "Exchange",
+      type: "Coil",
+      subtitile: "Per day",
+      icon: HandshakeIcon,
+      img: Refurbishedmagnet,
+      price: 25,
+      liftCapacity: "2.5 tons",
+      powerSupply: "220V / 110V",
+      sizes: "700mm / 890mm /120mm",
+    },
+    {
+      id: 3,
+      title: "Exchange",
+      type: "Coil",
+      subtitile: "Per day",
+      icon: HandshakeIcon,
+      img: Refurbishedmagnet,
+      price: 25,
+      liftCapacity: "2.5 tons",
+      powerSupply: "220V / 110V",
+      sizes: "700mm / 890mm /120mm",
+    },
+    {
+      id: 4,
+      title: "Exchange",
+      type: "Coil",
+      subtitile: "Per day",
+      icon: HandshakeIcon,
+      img: Refurbishedmagnet,
+      price: 25,
+      liftCapacity: "2.5 tons",
+      powerSupply: "220V / 110V",
+      sizes: "700mm / 890mm /120mm",
+    },
+    {
+      id: 5,
+      title: "Exchange",
+      type: "Coil",
+      subtitile: "Per day",
+      icon: HandshakeIcon,
+      img: Refurbishedmagnet,
+      price: 25,
+      liftCapacity: "2.5 tons",
+      powerSupply: "220V / 110V",
+      sizes: "700mm / 890mm /120mm",
+    },
+    {
+      id: 6,
+      title: "Exchange",
+      type: "Coil",
+      subtitile: "Per day",
+      icon: HandshakeIcon,
+      img: Refurbishedmagnet,
+      price: 25,
+      liftCapacity: "2.5 tons",
+      powerSupply: "220V / 110V",
+      sizes: "700mm / 890mm /120mm",
+    },
+  ];
+//Rent Instead section services
   const services = [
     {
       id: 1,
@@ -171,6 +252,8 @@ const SellMagnet = () => {
       sizes: "700mm / 890mm /120mm",
     },
   ];
+
+//sell or exchange section
   const servicesnew = [
     {
       id: 1,
@@ -215,54 +298,6 @@ const SellMagnet = () => {
     },
   ];
 
-  const data = [
-    {
-      test: "Insulation (MΩ @ 500 V)",
-      before: 8,
-      after: 8,
-      target: 8,
-    },
-    {
-      test: "Resistance (Ω)",
-      before: 7.3,
-      after: 7.3,
-      target: 7.3,
-    },
-    {
-      test: "Pull Force (kN)",
-      before: 9.4,
-      after: 12.1,
-      target: 12,
-    },
-    {
-      test: "Overhaul Time (h)",
-      before: 24,
-      after: 5,
-      target: 5,
-    },
-  ];
-  const benefits = [
-    {
-      title: "Lower Upfront Cost",
-      description:
-        "Skip the heavy investment. Pay only for the time you use the magnet.",
-    },
-    {
-      title: "Flexibility for Projects",
-      description:
-        "Rent different sizes or types as per project needs, without long-term commitments.",
-    },
-    {
-      title: "Zero Maintenance Hassle",
-      description:
-        "We handle service and upkeep — you focus on getting the job done.",
-    },
-    {
-      title: "Quick Availability",
-      description:
-        "Get magnets delivered and installed fast, exactly when your project demands it.",
-    },
-  ];
 
   //ROI Calcultor
   const roiData = [
@@ -354,45 +389,8 @@ const SellMagnet = () => {
     },
   ];
 
-  const timelineData = [
-    {
-      day: "Day 1",
-      tasks: [{ label: "Visual, tests, approval", color: "#fdb714" }],
-    },
-    {
-      day: "Day 2",
-      tasks: [
-        { label: "Rewind + mechanical + terminals/seals", color: "#d62828" },
-      ],
-    },
-    {
-      day: "Day 3",
-      tasks: [
-        { label: "Load-test & documentation", color: "#0077c8" },
-        { label: "Dispatch, rework on-site checks", color: "#d62828" },
-      ],
-    },
-  ];
 
-  const items = [
-    {
-      img: Approach1,
-      title: "Diagnose",
-      subtitle: "(intake + tests)",
-    },
-    {
-      img: Approach2,
-      title: "Quote & plan",
-    },
-    {
-      img: Approach3,
-      title: "Execute",
-    },
-    {
-      img: Approach4,
-      title: "Re-install & validate",
-    },
-  ];
+
 
   const images = [
     Roi1, // Default large image
@@ -451,7 +449,7 @@ const SellMagnet = () => {
             // ml: 1
           }}
         >
-          Refurbished Electro-Lifting <br /> Magnet (Certified & Warrenty)
+          Refurbished Electro-Lifting <br /> Magnet (Certified & Warrenty) 
         </Typography>
         {/* Subtext line */}
         <Typography
@@ -518,12 +516,555 @@ const SellMagnet = () => {
             WhatsApp an Engineer
           </Link>
         </Box>
-        {/* Optional: Section for “Sell or exchange your used magnet” */}
+
+{/* chip */}
+     <Box sx={{ display: "flex", gap: 2,mt:2 }}>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  sx={{
+                    ...typography.h3medium,
+                    fontWeight: 500,
+                    mb: "4px",
+                    
+                  }}
+                >
+                  Filter By diameter
+                </Typography>
+                   <Select
+                   
+                 sx={{
+                    
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                       border: "1px solid #E17A00",
+                    }}
+                fullWidth size="small" defaultValue="">
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="All"
+                  >
+                    All
+                  </MenuItem>
+                 <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="option1"
+                  >
+                    Option 1
+                  </MenuItem>
+                </Select>
+              </Box>
+                 <Box sx={{ flex: 1 }}>
+                <Typography
+                  sx={{
+                    ...typography.h3medium,
+                    fontWeight: 500,
+                    mb: "4px",
+                  }}
+                >
+                 Capacity
+                </Typography>
+                    <Select
+                 sx={{
+                     border: "1px solid #E17A00",
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                fullWidth size="small" defaultValue="">
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="All"
+                  >
+                    All
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="option1"
+                  >
+                    Option 1
+                  </MenuItem>
+                </Select>
+              </Box>
+
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  sx={{
+                    ...typography.h3medium,
+                    fontWeight: 500,
+                    mb: "4px",
+                  }}
+                >
+                  Duty Cycle
+                </Typography>
+                    <Select
+                 sx={{
+                     border: "1px solid #E17A00",
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                fullWidth size="small" defaultValue="">
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="All"
+                  >
+                    All
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="option1"
+                  >
+                    Option 1
+                  </MenuItem>
+                </Select>
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  sx={{
+                    ...typography.h3medium,
+                    fontWeight: 500,
+                    mb: "4px",
+                    
+                  }}
+                >
+                  Voltage
+                </Typography>
+                   <Select
+                   
+                 sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                       border: "1px solid #E17A00",
+                    }}
+                fullWidth size="small" defaultValue="">
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="All"
+                  >
+                    All
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      ...typography.bodyBasemedium,
+                      fontWeight: 400,
+                    }}
+                    value="option1"
+                  >
+                    Option 1
+                  </MenuItem>
+                </Select>
+              </Box>
+
+           
+            </Box>
+
+{/* Refurbished section */}
+<Box
+  sx={{
+    display: "flex",
+    flexWrap: "nowrap",      // all in single row
+    overflowX: "auto",       // enable horizontal scrolling
+    gap: 3,                  // spacing between cards
+    pb: 2, 
+    mt: 5                  // bottom padding for scroll area
+  }}
+>
+      <Grid container spacing={3}>
+        {Refurbished.map((service) => (
+
+          <Grid
+          
+          item xs={12} sm={6} md={4} key={service.id}>
+
+     <Card
+  sx={{
+    borderRadius: 2,
+    border: "1px solid #e0e0e0", // subtle border
+    boxShadow: "none",           // flat like image 2
+    overflow: "hidden",
+    // transition: "all 0.3s ease",
+     transition: "all 0.3s",
+                "&:hover": {
+                  backgroundColor: "#0b2d55",
+                  color: "#eee",
+                },
+                 "&:hover .buy-now-btn": {
+      backgroundColor: "#ffffff !important", // overrides button's own hover
+      color: "#0b2d55 !important",
+    },
+  }}
+>
+  {/* Title + Subtitle */}
+  <CardContent sx={{ pb: 1 }}>
+    <Typography
+   sx={{
+    fontFamily: "SpaceGrotesk-Bold",
+    fontWeight: 700,
+    fontSize: "24px",
+    lineHeight: "1.30",
+    color: "inherit",
+   }}
+     >
+      {service.title}
+    </Typography>
+   
+ <Box
+    sx={{
+        display: "flex",
+        justifyContent: "space-between"
+    }}
+    >
+  
+    <Typography 
+    sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+    color="text.secondary"
+
+    >
+      {service.sizes}
+    </Typography>
+    
+    <Typography 
+  sx={{
+    fontFamily: "Fira Sans, Regular",
+    fontWeight: 400,
+    fontSize: "14px",
+    lineHeight: "1.50",
+     color: "inherit",
+  }}
+     
+     >
+      Certified: Load-test 12 Mar 2025
+    </Typography>
+      </Box>
+  </CardContent>
+
+  {/* Image with Chips */}
+<Box sx={{ position: "relative", mx: 2,  }}>
+  <CardMedia
+    component="img"
+    height="180"
+    image={service.img}
+    alt={service.title}
+    sx={{ objectFit: "cover" }}
+  />
+
+  {/* Top-left Chip */}
+  <Chip
+    label="Available for Rent"
+    size="small"
+    sx={{
+      position: "absolute",
+      borderRadius: 1,
+      top: 8,
+      left: 8,
+ fontFamily: "Inter-Regular",
+                      fontSize: "14px",
+                      bgcolor: "#2e7d32",
+                      color: "white",
+                      fontWeight: 400,
+    }}
+  />
+
+  {/* Bottom-left Chip */}
+  <Chip
+    label="Safety Tested"
+    size="small"
+    sx={{
+      position: "absolute",
+      borderRadius: 1,
+      bottom: 8,
+      left: 8,
+     fontFamily: "Inter-Regular",
+                      fontSize: "14px",
+                      bgcolor: "#1565c0",
+                      color: "white",
+                      fontWeight: 400,
+    }}
+  />
+</Box>
+
+
+  {/* Specs */}
+  <CardContent sx={{ flexGrow: 1 }}>
+    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1, }}>
+      <Box>
+        <Typography 
+        sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+        >
+          Lift Capacity
+        </Typography>
+        <Typography 
+               sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+        >
+          {service.liftCapacity}
+        </Typography>
+      </Box>
+      <Box>
+        <Typography 
+     sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+          
+        >
+          Power Supply
+        </Typography>
         <Typography
+        
+                  sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+         >
+          {service.powerSupply}
+        </Typography>
+      </Box>
+    </Box>
+
+    {/* Extra spec row */}
+    <Box>
+      <Typography 
+        sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+      >
+        Included
+      </Typography>
+      <Typography 
+      
+                  sx={{ 
+                    // mb: 2,
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                     color: "inherit",
+                 }}
+      >
+        Controller (EF-RC220) · 25 m cable
+      </Typography>
+    </Box>
+  </CardContent>
+
+  {/* Action Button */}
+  <Box sx={{ px: 2, pb: 2 }}>
+    <Button
+    onClick={() => navigate("/home/RefurbishedDetail")}
+      fullWidth
+      variant="contained" className="buy-now-btn" 
+      sx={{
+         ...typography.buttonSBold,
+         p: 2,
+         color: "#eee",
+        borderRadius: 1,
+        textTransform: "none",
+        fontWeight: 600,
+        backgroundColor: "#0b2d55",
+        "&:hover": { 
+        backgroundColor: "#204e77ff !important", // ensures button's own hover works
+      color: "#ffffff !important",
+         },
+      }}
+    >
+      Buy now
+    </Button>
+  </Box>
+</Card>
+
+
+          </Grid>
+        ))}
+        
+      </Grid>
+</Box>
+
+  {/* Left - Features with vertical timeline */}
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          border: "1px solid #ddd",
+          borderRadius: 3,
+          ml: 5,
+          mt: 10,
+          px: 4,
+          py: 4,
+          gap: 6,
+          bgcolor: "white",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 4,
+            px: { xs: 2, md: 6 },
+            py: 6,
+            // border: "1px solid #e5e7eb",
+            borderRadius: 2,
+            backgroundColor: "#fff",
+          }}
+        >
+          {/* Left Section */}
+        <Box sx={{ flex: 1 }}>
+  {/* Heading */}
+  <Typography
+    sx={{
+      fontWeight: 600,
+      ...typography.h3R,
+      mt: 8,
+    }}
+  >
+    How it works
+  </Typography>
+
+  {/* Green underline */}
+  <Box
+    sx={{
+      width: "280px",           // fixed width for the line
+      height: "2px", 
+      fontWeight: 700,          // thickness of the line
+      backgroundColor: "#0f766e", // green color (you can tweak this)
+      mt: 1,                   // spacing from the heading
+      mb: 2,                   // spacing before the paragraph
+    }}
+  />
+
+  {/* Subtitle */}
+  <Typography
+    sx={{
+      ...typography.h3medium,
+      color: "#4B5563",
+    }}
+  >
+    Let’s embody your beautiful ideas together, simplify the way you
+    visualize your next big thing.
+  </Typography>
+</Box>
+
+
+          {/* Right Section: Steps */}
+          <Box sx={{ flex: 2, display: "flex", flexWrap: "wrap" }}>
+            {steps.map((step) => (
+              <Box
+                key={step.number}
+                sx={{
+                  flex: "1 1 50%",
+                  mb: 3,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    ...typography.h3R,
+                    mb: 0.5,
+                  }}
+                >
+                  {step.number}. {step.title}
+                </Typography>
+                <Typography
+                  sx={{
+                    ...typography.h3medium,
+                    color: "#4B5563",
+                  }}
+                >
+                  {step.desc}
+                </Typography>
+              </Box>
+            ))}
+
+            {/* Optional CTA Link */}
+            <Box sx={{ flex: "1 1 50%", mt: 1 }}>
+              <Link
+                href="#"
+                underline="hover"
+                sx={{
+                  fontWeight: 600,
+                  ...typography.bodyStrongB,
+                  color: "#0B5ED7",
+                  textDecoration: "underline",
+                }}
+              >
+                Request a Quote
+              </Link>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Right - Dynamic Image */}
+        {/* <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          <Box
+            component="img"
+            src={Approach5}
+            alt="ElectroMagnet Repair"
+            sx={{
+              width: "100%",
+              maxWidth: 600,
+              borderRadius: 3,
+              objectFit: "cover",
+              transition: "0.5s",
+            }}
+          />
+        </Box> */}
+      </Box>
+    </Box>
+        
+        {/* Optional: Section for “Sell or exchange your used magnet” */}
+        <Box>
+   <Typography
           sx={{
             mt: 8,
             ...typography.h3RBold,
             fontWeight: 600,
+            ml: 2
           }}
         >
           Sell or exchange your used magnet
@@ -533,17 +1074,19 @@ const SellMagnet = () => {
             mt: 1,
             ...typography.bodyBasemedium,
             color: "#555",
+              ml: 2
           }}
         >
           Turn idle assets into value—or trade up to a certified unit.
         </Typography>
-      </Box>
+  
       {/* Sell or exchange your used magnet images section */}
       <Box
         sx={{
           // px: { xs: 2, md: 6 },
           // py: 6,
           backgroundColor: "#f9fafb",
+          ml: 2
         }}
       >
         {/* Grid-like Card Layout */}
@@ -677,133 +1220,31 @@ const SellMagnet = () => {
         </Box>
       </Box>
 
-      {/* Left - Features with vertical timeline */}
-
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          mt: 10,
-          px: 4,
-          py: 4,
-          gap: 6,
-          bgcolor: "white",
-        }}
-      >
-        <Box
+       <Typography
           sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 4,
-            px: { xs: 2, md: 6 },
-            py: 6,
-            // border: "1px solid #e5e7eb",
-            borderRadius: 2,
-            backgroundColor: "#fff",
+            ...typography.h3R,
+            color: "#1a4dab",
+            fontWeight: 600,
+            ml: 2,
           }}
         >
-          {/* Left Section */}
-          <Box sx={{ flex: 1 }}>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                ...typography.h3R,
-                mt: 8,
-              }}
-            >
-              How it works
-            </Typography>
-             {/* Green underline */}
-              <Box
-                sx={{
-                  width: "280px",           // fixed width for the line
-                  height: "2px", 
-                  fontWeight: 700,          // thickness of the line
-                  backgroundColor: "#0f766e", // green color (you can tweak this)
-                  mt: 1,                   // spacing from the heading
-                  mb: 2,                   // spacing before the paragraph
-                }}
-              />
-            <Typography
-              sx={{
-                ...typography.h3medium,
-                color: "#4B5563",
-              }}
-            >
-              Let’s embody your beautiful ideas together, simply the way you
-              visualize your next big thing.
-            </Typography>
-          </Box>
-
-          {/* Right Section: Steps */}
-          <Box sx={{ flex: 2, display: "flex", flexWrap: "wrap" }}>
-            {steps.map((step) => (
-              <Box
-                key={step.number}
-                sx={{
-                  flex: "1 1 50%",
-                  mb: 3,
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                    ...typography.h3R,
-                    mb: 0.5,
-                  }}
-                >
-                  {step.number}. {step.title}
-                </Typography>
-                <Typography
-                  sx={{
-                    ...typography.h3medium,
-                    color: "#4B5563",
-                  }}
-                >
-                  {step.desc}
-                </Typography>
-              </Box>
-            ))}
-
-            {/* Optional CTA Link */}
-            <Box sx={{ flex: "1 1 50%", mt: 1 }}>
-              <Link
-                href="#"
-                underline="hover"
-                sx={{
-                  fontWeight: 600,
-                  ...typography.bodyStrongB,
-                  color: "#0B5ED7",
-                  textDecoration: "underline",
-                }}
-              >
-                Request a Quote
-              </Link>
-            </Box>
-          </Box>
-        </Box>
-
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          <Box
-            component="img"
-            src={Approach5}
-            alt="ElectroMagnet Repair"
+          View More
+          <ArrowRightAltIcon
             sx={{
-              width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
+              color: "#1a4dab",
+              fontWeight: "bold",
+              verticalAlign: "middle",
+              ml: 1,
+              fontSize: "3rem",
             }}
           />
+        </Typography>
         </Box>
-      </Box>
-      {/* ROI Calculator */}
+     
+
+    
+     
+      {/*  ROI Calculator  */}
       <Box
         sx={{
           mt: 5,
@@ -1470,4 +1911,4 @@ const SellMagnet = () => {
   );
 };
 
-export default SellMagnet;
+export default RefurbishedElectromagnet;

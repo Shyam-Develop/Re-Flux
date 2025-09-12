@@ -16,7 +16,7 @@ import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link, useNavigate } from "react-router-dom";  // or any other ico
+import { useNavigate } from "react-router-dom";  // or any other ico
 const MenuButton = styled(Button)(({ theme }) => ({
   flex: 1, // equal width for all buttons
   position: "relative",
@@ -632,7 +632,8 @@ const ResalePopoverContent = () => {
             alignItems: "flex-start",
           }}
         >
-          <Typography
+       <Link
+            onClick={() => navigate("home/RefurbishedElectromagnet")}
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
@@ -640,10 +641,12 @@ const ResalePopoverContent = () => {
               fontSize: "24px",
               lineHeight: "130%",
               letterSpacing: "-0.12px",
+               textDecoration: "none",
+              cursor: "pointer"
             }}
           >
             Browse Refurbished<br />Inventory
-          </Typography>
+          </Link>
 
           <Typography
             sx={{
