@@ -13,6 +13,10 @@ import Scope1 from "../../../assets/Scope1.png";
 import Scope2 from "../../../assets/Scope2.png";
 import Scope3 from "../../../assets/Scope3.png";
 import Scope4 from "../../../assets/Scope4.png";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+
+
 
 const services = [
   {
@@ -79,152 +83,130 @@ const services = [
 
 export default function RepairServicesPageCard() {
   return (
-    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
-
-
-      {/* Cards */}
-<Box
-  sx={{
-    display: "flex",
-    flexWrap: "nowrap",      // all in single row
-    overflowX: "auto",       // enable horizontal scrolling
-    gap: 3,                  // spacing between cards
-    pb: 2,                   // bottom padding for scroll area
-  }}
->
-      <Grid container spacing={3}>
-        {services.map((service) => (
-
-          <Grid
-          
-          item xs={12} sm={6} md={4} key={service.id}>
-
-           <Card
-  sx={{
-     borderRadius: 3,
-    boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-    overflow: "hidden",
-    height: "100%",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    transition: "all 0.4s ease-in-out",
-    "&:hover": {
-       borderRadius: 3,
-      transform: "scale(1.03)",         // zoom-out effect
-      backgroundColor: "#0b2d55",       // dark blue background
-      color: "white",                   // all text inside becomes white
-    },
-    "&:hover .MuiTypography-root": {
-      color: "white !important",        // force all Typography to white
-    },
-    "&:hover .availability-btn": {
-      backgroundColor: "#944708 !important", // change button on hover
-    },
-  }}
->
-  {/* Image + Chips */}
-  <Box sx={{ 
-  borderRadius: 2,
-    position: "relative"
-
-   }}>
-    <CardMedia
-      component="img"
-      image={service.img}
-      alt={service.title}
-      sx={{
-        height: 210,
-         display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-        width: "100%",
-        objectFit: "contain",
-        borderRadius: 10,
-        mt: 2,
-        // backgroundColor: "#f9f9f9",
-        transition: "transform 0.6s ease-in-out",
-      }}
-    />
-
-  </Box>
-
-  {/* Content */}
-  <CardContent sx={{ flexGrow: 1 }}>
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        mb: 1,
-      }}
-    >
-      <Typography variant="h6" fontWeight="bold">
-        {service.title}
-      </Typography>
-      {/* <Typography
-        variant="body1"
-        fontWeight="bold"
-        sx={{ color: "green" }}
-      >
-        Starting at ${service.price}
-      </Typography> */}
-    </Box>
-    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-      {service.type}
-    </Typography>
-  
-  </CardContent>
-
-  {/* Button */}
-  <Box sx={{ p: 2, pt: 0 }}>
-   <Button
-    fullWidth
-    variant="contained"
-    className="view-more-btn"
-    sx={{
-      borderRadius: 2,
-      textTransform: "none",
-      bgcolor: "#b45309",
-      transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
-      opacity: 0,              // hidden by default
-      transform: "translateY(10px)",
-
-      // when parent card is hovered
-      ".MuiCard-root:hover &": {
-        opacity: 1,
-        transform: "translateY(0)",
-        textDecoration: "underline"
-      },
+<Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+  {/* Swiper Container */}
+  <Swiper
+    modules={[Navigation]}
+    navigation
+    spaceBetween={24}
+    slidesPerView={3}
+    loop={true}
+    breakpoints={{
+      0: { slidesPerView: 1 },
+      600: { slidesPerView: 2 },
+      960: { slidesPerView: 3 },
     }}
   >
-    View More
+    {services.map((service) => (
+      <SwiperSlide key={service.id}>
+        {/* MUI Card Component */}
+        <Card
+          sx={{
+            borderRadius: 3,
+            boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+            overflow: "hidden",
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            transition: "all 0.4s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.03)",
+              backgroundColor: "#0b2d55",
+              color: "white",
+            },
+            "&:hover .MuiTypography-root": {
+              color: "white !important",
+            },
+            "&:hover .view-more-btn": {
+              backgroundColor: "#944708 !important",
+            },
+          }}
+        >
+          {/* Image */}
+          <Box sx={{ borderRadius: 2, position: "relative" }}>
+            <CardMedia
+              component="img"
+              image={service.img}
+              alt={service.title}
+              sx={{
+                height: 210,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                objectFit: "contain",
+                borderRadius: 10,
+                mt: 2,
+                transition: "transform 0.6s ease-in-out",
+              }}
+            />
+          </Box>
+
+          {/* Content */}
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 1,
+              }}
+            >
+              <Typography variant="h6" fontWeight="bold">
+                {service.title}
+              </Typography>
+            </Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {service.type}
+            </Typography>
+          </CardContent>
+
+          {/* View More Button */}
+          <Box sx={{ p: 2, pt: 0 }}>
+            <Button
+              fullWidth
+              variant="contained"
+              className="view-more-btn"
+              sx={{
+                borderRadius: 2,
+                textTransform: "none",
+                bgcolor: "#b45309",
+                transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
+                opacity: 0,
+                transform: "translateY(10px)",
+                ".MuiCard-root:hover &": {
+                  opacity: 1,
+                  transform: "translateY(0)",
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              View More
+            </Button>
+          </Box>
+        </Card>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+
+  {/* CTA Button */}
+  <Button
+    variant="contained"
+    sx={{
+      mt: 4,
+      textDecoration: "underline",
+      width: "100%",
+      bgcolor: "#b45309",
+      borderRadius: 10,
+      px: 6,
+      py: 1.5,
+      textTransform: "none",
+      "&:hover": { bgcolor: "#92400e" },
+    }}
+  >
+    Get a repair quote
   </Button>
-  </Box>
-</Card>
-
-          </Grid>
-        ))}
-        
-      </Grid>
 </Box>
-
-  {/* Button */}
-      <Button
-        variant="contained"
-        sx={{
-          textDecoration: "underline",
-          width: "100%",
-          bgcolor: "#b45309",
-          borderRadius: 10,
-          px: 6,
-          py: 1.5,
-          textTransform: "none",
-          "&:hover": { bgcolor: "#92400e" },
-        }}
-      >
-        Get a repair quote
-      </Button>
-    </Box>
   );
 }

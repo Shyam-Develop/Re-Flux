@@ -13,6 +13,10 @@ import {
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import buyExchange from "../../../assets/BuyExchange.png";
 import SellExchange from "../../../assets/SellExchange.png";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+
+
 const services = [
   {
     id: 1,
@@ -34,7 +38,7 @@ export default function ResaleServices() {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+  <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
       <Button
         disableElevation
         disableRipple
@@ -67,14 +71,26 @@ export default function ResaleServices() {
         performance for every project!
       </Typography>
 
-      <Grid container spacing={6} justifyContent="center">
+      <Swiper
+        modules={[Navigation]}
+        spaceBetween={24}
+        slidesPerView={3}
+        navigation
+        onSlideChange={() => setHoveredCard(null)} // reset hover on slide change
+        style={{ paddingBottom: 32 }}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          900: { slidesPerView: 3 },
+        }}
+      >
         {services.map((service) => (
-          <Grid item xs={12} sm={6} md={6} key={service.id}>
+          <SwiperSlide key={service.id}>
             <Card
               onMouseEnter={() => setHoveredCard(service.id)}
               onMouseLeave={() => setHoveredCard(null)}
               sx={{
-                 objectFit: "cover",
+                objectFit: "cover",
                 borderRadius: 3,
                 boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
                 transition: "all 0.5s ease-in-out",
@@ -82,6 +98,9 @@ export default function ResaleServices() {
                 position: "relative",
                 bgcolor: hoveredCard === service.id ? "#0b2d55" : "white",
                 color: hoveredCard === service.id ? "white" : "inherit",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <Box
@@ -110,7 +129,7 @@ export default function ResaleServices() {
                 />
               </Box>
 
-              <CardContent>
+              <CardContent sx={{ flexGrow: 1 }}>
                 <Box
                   sx={{
                     display: "flex",
@@ -129,40 +148,15 @@ export default function ResaleServices() {
                   >
                     {service.title}
                   </Typography>
-                  {/* <IconButton
-                    size="small"
-                    sx={{
-                      backgroundColor: hoveredCard === service.id
-                        ? "#6aa9ff"
-                        : "#f5f6f7",
-                      color: hoveredCard === service.id ? "white" : "inherit",
-                      transition: "0.3s",
-                    }}
-                  >
-                    <ArrowForwardIosIcon fontSize="small" />
-                  </IconButton> */}
                 </Box>
-
-                {/* <Divider
-                  sx={{
-                    mb: 2,
-                    borderColor:
-                      hoveredCard === service.id
-                        ? "rgba(255,255,255,0.3)"
-                        : "divider",
-                  }}
-                /> */}
 
                 <Typography
                   variant="body2"
-                  color={
-                    hoveredCard === service.id ? "white" : "text.secondary"
-                  }
+                  color={hoveredCard === service.id ? "white" : "text.secondary"}
                 >
                   {service.desc}
                 </Typography>
 
-                {/* Hover Button */}
                 {hoveredCard === service.id && (
                   <Box sx={{ mt: 3, textAlign: "center" }}>
                     <Button
@@ -185,14 +179,13 @@ export default function ResaleServices() {
                     >
                       View More
                     </Button>
-                    
                   </Box>
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </SwiperSlide>
         ))}
-      </Grid>
+      </Swiper>
     </Box>
   );
 }

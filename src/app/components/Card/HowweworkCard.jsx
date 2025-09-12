@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState} from "react";
 import { Box, Typography, Card, CardContent, CardMedia, Chip } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -17,14 +17,16 @@ const steps = [
 ];
 
 export default function ProcessCards() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
-    <Box sx={{ p: 1 }}>
+    <Box sx={{ p: 1, position: 'relative' }}>
       <Swiper
-        modules={[Pagination]}
         spaceBetween={20}
-        slidesPerView={3} // how many cards visible
-        pagination={{ clickable: true }} // dots under carousel
-        grabCursor={true} // allows drag/slide with mouse
+        slidesPerView={3}
+        grabCursor={true}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        pagination={false}
       >
         {steps.map((item, index) => (
           <SwiperSlide key={index}>
@@ -52,6 +54,29 @@ export default function ProcessCards() {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Custom progress line (like image1) */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 3,
+        }}
+      >
+        {steps.map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              width: 30,
+              height: 3,
+              borderRadius: 2,
+              backgroundColor: index <= activeIndex ? '#0066cc' : '#d3d3d3',
+              mx: 0.5,
+              transition: 'background-color 0.3s ease',
+            }}
+          />
+        ))}
+      </Box>
     </Box>
   );
 }
