@@ -1945,8 +1945,9 @@ const HomePage = () => {
                   borderRadius: 3,
                   boxShadow: 0,
                   bgcolor: "#fafafa",
+                  cursor:'pointer'
                 }}
-              >
+               onClick={() => navigate("/home/BlogPost")}>
                 <CardMedia
                   component="img"
                   image={blogData[0].image}

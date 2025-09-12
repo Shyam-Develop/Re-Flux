@@ -61,6 +61,7 @@ const roiData = [
 ]
 
 
+//faqs
 const faqData = [
   {
     question: "Do I need to be home during the cleaning?",
@@ -166,7 +167,7 @@ const Rentals = () => {
         </Box>
 
         {/* Filters */}
-        <Paper elevation={0} sx={{ padding: 3 }}>
+        <Paper elevation={0} sx={{ padding: 3, paddingLeft: '70px'}}>
           <Box display="flex" gap={2} flexWrap="wrap">
             <FormControl sx={{ width: 170 }}>
               <Select defaultValue="">
@@ -207,26 +208,27 @@ const Rentals = () => {
 
 
         {/* Divider Line */}
-        <Divider />
+       <Divider sx={{ width: '95%', mx: 'auto' }} />
 
         {/* Product Count and Sort */}
-        <Container sx={{ py: 2 }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="body2">135 Products available</Typography>
-            <Box display="flex" alignItems="center" gap={1}>
-              <Typography variant="body2">Sort by</Typography>
-              <FormControl size="small">
-                <Select defaultValue="az">
-                  <MenuItem value="az">A-Z</MenuItem>
-                  <MenuItem value="za">Z-A</MenuItem>
-                </Select>
-              </FormControl>
+        <Box sx={{ py: 2, px: '30px' }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Typography sx={{ paddingLeft:'1%', fontSize:'20px'}} variant="body2">135 Products available</Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Typography variant="body2">Sort by</Typography>
+                <FormControl size="small">
+                  <Select defaultValue="az">
+                    <MenuItem value="az">A-Z</MenuItem>
+                    <MenuItem value="za">Z-A</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
             </Box>
           </Box>
-        </Container>
+
 
         {/* Bottom Divider */}
-        <Divider />
+        <Divider sx={{ width: '95%' , mx:'auto'}}/>
       </Box>
 
       {/* Product grid */}
@@ -413,6 +415,7 @@ const Rentals = () => {
           disableRipple
           sx={{
             marginBottom: 2,
+            marginTop:'30px',
             ml: 8,
             textTransform: "none",           // keep text as-is
             fontSize: "0.8rem",              // smaller font
