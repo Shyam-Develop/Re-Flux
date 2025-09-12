@@ -8,6 +8,7 @@ import HomeRoutes from "./views/Home/homeRoutes";
 import HomePage from "./views/Home/home";
 import RepairRoutes from "./views/Repair/RepairRoutes";
 import LegalRoutes from "./views/Legal/LegalRoutes";
+import ContactRoutes from "./views/Contact/ContactRoues";
 
 const routes = [
     {
@@ -24,6 +25,7 @@ const routes = [
         ...HomeRoutes,
       ...RepairRoutes,
       ...LegalRoutes,
+      ...ContactRoutes,
       
       ],
     },

@@ -10,7 +10,7 @@ import {
   useTheme, Card,
   CardMedia,
   CardContent,
-  IconButton,Link
+  IconButton
 } from "@mui/material";
 import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
@@ -876,12 +876,17 @@ const ContactPopoverContent = () => {
             Request a Quote
           </Typography>
           <Typography
+          component={Link}
+          to="/contact-us"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
               fontWeight: 400,
               fontSize: "24px",
               lineHeight: "130%",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Book a Site Visit
