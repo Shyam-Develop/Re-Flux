@@ -8,12 +8,16 @@ const { lazy } = require("react");
   const CheckAvailabilty = Loadable((lazy(() => import('./CheckAvailabilty'))));  
    const RepairServices =Loadable((lazy(()=>import('./RepairServices'))));
   const Rentals =Loadable((lazy(()=>import('./Rentals'))));
+  const CircularMagnet =Loadable((lazy(()=>import('./CircularMagnet'))));
+  const BlogPost =Loadable((lazy(()=>import('./BlogPost'))));
 
    const HomeRoutes=[
     {path:"/home",element: <Home /> },
     {path:"/home/RepairServices",element: <RepairServices /> },
     {path:"/home/Rentals",element: <Rentals /> },
     {path:"/home/RepairServicesPage",element: <RepairServicesPage /> },
+    {path:"/home/CircularMagnet",element: <CircularMagnet /> },
+    {path:"/home/BlogPost",element: <BlogPost /> },
     {path:"/home/ViewCaseStudy",element: <ViewcaseStudyPage /> },
     {path:"home/CheckAvailabilty",element: <CheckAvailabilty/>}
 

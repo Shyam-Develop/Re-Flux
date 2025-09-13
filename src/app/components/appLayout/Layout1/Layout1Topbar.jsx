@@ -375,6 +375,9 @@ const ServicesPopoverContent = () => {
 };
 
 const RentalPopoverContent = () => {
+
+  const navigate = useNavigate();
+
   return (
     <Grid container spacing={0}>
       {/* Column 1 */}
@@ -398,8 +401,9 @@ const RentalPopoverContent = () => {
               fontSize: "24px",
               lineHeight: "130%",
               letterSpacing: "-0.12px",
+               cursor: 'pointer'
             }}
-          >
+          onClick={() => navigate("./home/CircularMagnet")}>
             Circular Magnet
           </Typography>
 

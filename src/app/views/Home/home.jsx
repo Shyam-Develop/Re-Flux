@@ -1810,8 +1810,9 @@ const HomePage = () => {
                 borderRadius: 3,
                 boxShadow: 0,
                 bgcolor: "#fafafa",
+                cursor:'pointer'
               }}
-            >
+             onClick={() => navigate("/home/BlogPost")}>
               <CardMedia
                 component="img"
                 image={blogData[0].image}
@@ -1839,7 +1840,7 @@ const HomePage = () => {
                     display: "inline-flex",
                     alignItems: "center"
                   }}
-                >
+               >
                   Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1976d2", }} />
                 </Link>
               </CardContent>
