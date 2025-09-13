@@ -967,8 +967,8 @@ FAQs
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     width: "100%",
-    px: { xs: 5, md: 12 },
-    py: { xs: 6, md: 10 },
+    px: { xs: 5, md: 1 },
+    py: { xs: 6, md: 2 },
   }}
 >
   <Grid container spacing={4}>

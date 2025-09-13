@@ -16,7 +16,7 @@ import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useNavigate } from "react-router-dom";  // or any other ico
+import { Link, useNavigate } from "react-router-dom";  // or any other ico
 const MenuButton = styled(Button)(({ theme }) => ({
   flex: 1, // equal width for all buttons
   position: "relative",
@@ -60,6 +60,7 @@ export default function TopbarWithMegaMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
   const appBarRef = useRef(null);
+  const navigate = useNavigate();
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [activeMenu, setActiveMenu] = useState(null);
@@ -619,6 +620,7 @@ const RentalPopoverContent = () => {
 };
 
 const ResalePopoverContent = () => {
+  const navigate = useNavigate();
   return (
     <Grid container spacing={0}>
       {/* Column 1 */}
@@ -682,7 +684,8 @@ const ResalePopoverContent = () => {
             gap: 1.5,
           }}
         >
-          <Typography
+          <Link
+            onClick={() => navigate("home/SellMagnet")}
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
@@ -690,10 +693,12 @@ const ResalePopoverContent = () => {
               fontSize: "24px",
               lineHeight: "130%",
               letterSpacing: "-0.12px",
+              textDecoration: "none",
+              cursor: "pointer"
             }}
           >
             Sell/Exchange Your<br />Magnets
-          </Typography>
+          </Link>
 
           <Typography
             sx={{
@@ -1002,11 +1007,16 @@ const MorePopoverContent = () => {
           </Typography>
 
           <Typography
+          component={Link}
+          to="/repair-replace"
             sx={{
               fontFamily: "Fira Sans",
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: "160%",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Repair vs Replace
@@ -1145,6 +1155,8 @@ const MorePopoverContent = () => {
           }}
         >
           <Typography
+          component={Link}
+          to="/customer-says"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
@@ -1154,7 +1166,38 @@ const MorePopoverContent = () => {
               letterSpacing: "-0.12px",
             }}
           >
-            FAQ <br />About Us <br />Legal
+            FAQ 
+          </Typography>
+           <Typography
+      component={Link} // 🔗 makes Typography behave like a Link
+      to="/about-us"
+      sx={{
+        color: "#AE5609",
+        fontFamily: "Space Grotesk",
+        fontWeight: 400,
+        fontSize: "24px",
+        lineHeight: "130%",
+        letterSpacing: "-0.12px",
+        textDecoration: "none",
+        cursor: "pointer",
+        "&:hover": { textDecoration: "underline" }, // hover effect
+      }}
+    >
+      About Us
+    </Typography>
+          <Typography
+          component={Link}
+          to='/legal'
+            sx={{
+              color: "#AE5609",
+              fontFamily: "Space Grotesk",
+              fontWeight: 400,
+              fontSize: "24px",
+              lineHeight: "130%",
+              letterSpacing: "-0.12px",
+            }}
+          >
+          Legal
           </Typography>
         </Box>
       </Grid>
