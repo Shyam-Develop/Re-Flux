@@ -58,7 +58,7 @@ import Blogs4 from "../../../assets/Blogs4.jpg";
 import { useNavigate } from "react-router-dom";
 import RepairServicesPage from "app/views/Home/RepairServicesPage";
 import { typography } from "app/utils/constant";
-
+import about from '../../../assets/homeAbout.png';
 const HomePage = () => {
   const navigate = useNavigate();
   //=================VIDEO-Loading===============================//
@@ -1248,40 +1248,78 @@ const HomePage = () => {
         <Grid container spacing={6} alignItems="flex-start">
           {/* Column 1 - Left Text */}
           <Grid item xs={12} md={4}>
-            <Box
-              sx={{
-                display: "flex",
-                mt: 10,
-                ml: 5,
-                flexDirection: "column",
-                alignItems: { xs: "center", md: "flex-start" },
-                textAlign: { xs: "center", md: "left" },
-              }}
-            >
-              <Typography variant="h4" fontWeight={700} gutterBottom>
-                Why Choose <br /> Reflux?
-              </Typography>
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                mb={3}
-                sx={{ maxWidth: "320px" }}
-              >
-                We handle service and upkeep — you focus on getting the job
-                done.
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: "25px",
-                  px: 3,
-                  backgroundColor: "#00A99D",
-                  "&:hover": { backgroundColor: "#00897B" },
-                }}
-              >
-                About Us
-              </Button>
-            </Box>
+          <Box
+  sx={{
+    display: "flex",
+    mt: 10,
+    ml: 5,
+    flexDirection: "column",
+    alignItems: { xs: "center", md: "flex-start" },
+    textAlign: { xs: "center", md: "left" },
+    position: "relative", // 👈 needed for positioning arrow & text
+  }}
+>
+  {/* Heading */}
+  <Typography variant="h4" fontWeight={700} gutterBottom>
+    Why Choose <br /> Reflux?
+  </Typography>
+
+  {/* Sub text */}
+  <Typography
+    variant="body1"
+    color="text.secondary"
+    mb={3}
+    sx={{ maxWidth: "320px" }}
+  >
+    We handle service and upkeep — you focus on getting the job done.
+  </Typography>
+
+  {/* Button */}
+  <Button
+    variant="contained"
+    onClick={() => navigate("/about-us")}
+    sx={{
+      borderRadius: "25px",
+      px: 3,
+      backgroundColor: "#00A99D",
+      "&:hover": { backgroundColor: "#00897B" },
+    }}
+  >
+    About Us
+  </Button>
+
+  {/* Handwritten text + arrow (absolute positioned) */}
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: -50, // adjust based on spacing
+      right: { xs: "10%", md: "20%" }, // responsive placement
+      textAlign: "right",
+    }}
+  >
+    {/* <Typography
+      variant="body2"
+      sx={{
+        fontStyle: "italic",
+        fontWeight: 500,
+        fontFamily: "'Caveat', cursive", // 👈 Google handwritten font
+      }}
+    >
+      Dedicated to magnets <br /> - Thats us
+    </Typography> */}
+
+    <Box
+      component="img"
+      src={about} // 👈 replace with your arrow asset
+      alt="Arrow"
+      sx={{
+        width: 120,
+        mt: 1,
+      }}
+    />
+  </Box>
+</Box>
+
           </Grid>
 
           {/* Column 2 - Middle Content */}
