@@ -61,6 +61,7 @@ import { typography } from "app/utils/constant";
 import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import BeforeAfterCard from "app/components/Card/BeforeAfterCard";
 
 
 const UploadBox = ({ label }) => {
@@ -683,57 +684,7 @@ const HomePage = () => {
           customers in repairing
         </Typography>
         {/* Image Section */}{" "}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 3,
-          }}
-        >
-          {" "}
-          {/* Left Arrow */}{" "}
-          <IconButton
-            sx={{
-              bgcolor: "#1c2434",
-              color: "white",
-              "&:hover": { bgcolor: "#344050" },
-            }}
-          >
-            {" "}
-            <ArrowBackIcon />{" "}
-          </IconButton>{" "}
-          {/* Before Image */}{" "}
-          <Box
-            component="img"
-            src={before}
-            alt="Before"
-            sx={{
-              width: "40%",
-              borderRadius: 2,
-              objectFit: "cover",
-              mt: 8,
-            }}
-          />{"Before"}
-          {/* After Image */}{" "}
-          <Box
-            component="img"
-            src={after}
-            alt="After"
-            sx={{ width: "40%", borderRadius: 2, objectFit: "cover" }}
-          />{"After "}
-          {/* Right Arrow */}{" "}
-          <IconButton
-            sx={{
-              bgcolor: "#1c2434",
-              color: "white",
-              "&:hover": { bgcolor: "#344050" },
-            }}
-          >
-            {" "}
-            <ArrowForwardIcon />{" "}
-          </IconButton>{" "}
-        </Box>
+     <BeforeAfterCard/>
         <Box sx={{ textAlign: "center", py: 6 }}>
           {/* Top Button */}
           <Button
