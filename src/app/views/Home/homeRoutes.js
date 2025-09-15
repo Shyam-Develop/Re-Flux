@@ -11,7 +11,7 @@ const SellMagnet = Loadable(lazy(() => import("./SellMagnet")));
 const AboutUs = Loadable(lazy(() => import("./AboutUs")));
 const RefurbishedElectromagnet = Loadable(lazy(() => import("./RefurbishedElectromagnet")));
 const RefurbishedDetail = Loadable(lazy(() => import("./RefurbishedDetail")));
-
+const CircularMagnet = Loadable(lazy(() => import("./CircularMagnet")));
 const HomeRoutes = [
   { path: "/home", element: <Home /> },
   { path: "/home/RepairServices", element: <RepairServices /> },
@@ -23,7 +23,7 @@ const HomeRoutes = [
   { path: "about-us", element: <AboutUs /> },
   { path: "/home/RefurbishedElectromagnet",element: <RefurbishedElectromagnet /> },
   { path: "/home/RefurbishedDetail",element: <RefurbishedDetail />,},
-
+  { path: "/home/CircularMagnet",element: <CircularMagnet />,},
 
 ];
 export default HomeRoutes;

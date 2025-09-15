@@ -12,7 +12,9 @@ const App = () => {
       // <Provider store={Store}>
         <SettingsProvider>
           <Apptheme>
-            <AuthProvider>{content}</AuthProvider>
+            {/* <AuthProvider> */}
+              {content}
+              {/* </AuthProvider> */}
           </Apptheme>
         </SettingsProvider>
       // {/* </Provider> */}

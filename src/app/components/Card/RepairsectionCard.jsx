@@ -94,6 +94,7 @@ export default function RepairsectionCard() {
         {services.map((service) => (
           <Grid item xs={12} sm={6} md={4} key={service.id}>
             <Card
+            onClick={()=>navigate("/home/RepairServicesPage")}
               sx={{
                 borderRadius: 3,
                 boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
@@ -167,7 +168,7 @@ export default function RepairsectionCard() {
                     {service.title}
                   </Typography>
                   <IconButton
-                    onClick={() => navigate("/home/RepairServicesPage")}
+                    // onClick={() => navigate("/home/RepairServicesPage")}
                     size="small"
                     sx={{
                       color: "text.secondary",

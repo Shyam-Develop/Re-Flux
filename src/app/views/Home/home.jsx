@@ -3,7 +3,7 @@ import {
   Box,
   Typography,
   Button,
-  Link,
+  // Link,
   Card,
   CardMedia,
   CardContent,
@@ -37,7 +37,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
 import WhatsApp from "../../../assets/whatsappimg.jpg";
 import RepairsectionCard from "app/components/Card/RepairsectionCard";
-// import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import serviceimg from "../../../assets/Repairservice.png";
 import before from "../../../assets/beforecstudy.png";
 import after from "../../../assets/aftercstudy.png";
@@ -55,10 +55,50 @@ import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RepairServicesPage from "app/views/Home/RepairServicesPage";
 import { typography } from "app/utils/constant";
 import about from '../../../assets/homeAbout.png';
+import Testimonials from "app/components/Card/OurCustomerCard";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+
+
+const UploadBox = ({ label }) => {
+    return (
+        <Box sx={{ my: 3 }}>
+            <Typography variant="h6" gutterBottom>{label}</Typography>
+            <label htmlFor="upload-input">
+                <Box
+                    sx={{
+                        border: '2px dashed #ccc',
+                        borderRadius: 2,
+                        p: 4,
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                        transition: 'border-color 0.3s ease',
+                        '&:hover': { borderColor: 'primary.main' },
+                    }}
+                >
+                    <IconButton component="span" size="large">
+                        <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+                    </IconButton>
+                    <Typography>
+                        <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                        Select image in jpeg, PNG
+                    </Typography>
+                </Box>
+            </label>
+            <input
+                id="upload-input"
+                type="file"
+                accept="image/jpeg, image/png"
+                style={{ display: 'none' }}
+            />
+        </Box>
+    );
+};
 const HomePage = () => {
   const navigate = useNavigate();
   //=================VIDEO-Loading===============================//
@@ -353,331 +393,7 @@ const HomePage = () => {
           >
             Browse Inventory
           </Button>
-          {/* Dialog */}
-          <Dialog
-            open={BrowseDialogopen}
-            onClose={handledialogClose}
-            maxWidth="sm"
-            fullWidth
-            sx={{
-              "& .MuiDialog-paper": {
-                borderRadius: "16px",
-                height: "100vh", // 👈 fixed height
-                maxHeight: "100vh", // 👈 prevent overflow beyond screen
-              },
-            }}
-          >
-            <DialogContent>
-              {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-              <CardContent>
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                  }}
-                  variant="h6"
-                  gutterBottom
-                >
-                  Tell us what you need
-                </Typography>
-                <Typography
-                  //  variant="h6"
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    // marginTop: 5,
-                  }}
-                >
-                  Company Name *
-                </Typography>
-                <TextField
-                  placeholder="Ex: John"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                  // value={values.name}
-                  // onChange={handleChange}
-                  // error={touched.name && Boolean(errors.name)}
-                  // helperText={touched.name && errors.name}
-                  //           sx={{
-                  //             bgcolor: theme.palette.textInput, // background color
-                  // "& .MuiInputBase-input": {
-                  //   color: theme.palette.primary.contrastText, // text color
-                  // },
-                  // "& .MuiOutlinedInput-root": {
-                  //   "& fieldset": {
-                  //     borderColor: theme.palette.border, // border color
-                  //   },
-                  //   "&:hover fieldset": {
-                  //     borderColor: theme.palette.border, // hover border
-                  //   },
-                  //   "&.Mui-focused fieldset": {
-                  //     borderColor: theme.palette.border, // focused border
-                  //   },
-                  //    },
-                  //             mb: 2
-
-                  //            }}
-                />
-
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Contact Person *
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                  // value={values.name}
-                  // onChange={handleChange}
-                  // error={touched.name && Boolean(errors.name)}
-                  // helperText={touched.name && errors.name}
-                  //           sx={{
-                  //             bgcolor: theme.palette.textInput, // background color
-                  // "& .MuiInputBase-input": {
-                  //   color: theme.palette.primary.contrastText, // text color
-                  // },
-                  // "& .MuiOutlinedInput-root": {
-                  //   "& fieldset": {
-                  //     borderColor: theme.palette.border, // border color
-                  //   },
-                  //   "&:hover fieldset": {
-                  //     borderColor: theme.palette.border, // hover border
-                  //   },
-                  //   "&.Mui-focused fieldset": {
-                  //     borderColor: theme.palette.border, // focused border
-                  //   },
-                  //    },
-                  //             mb: 2
-
-                  //            }}
-                />
-
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Phone *
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                  // value={values.name}
-                  // onChange={handleChange}
-                  // error={touched.name && Boolean(errors.name)}
-                  // helperText={touched.name && errors.name}
-                  //           sx={{
-                  //             bgcolor: theme.palette.textInput, // background color
-                  // "& .MuiInputBase-input": {
-                  //   color: theme.palette.primary.contrastText, // text color
-                  // },
-                  // "& .MuiOutlinedInput-root": {
-                  //   "& fieldset": {
-                  //     borderColor: theme.palette.border, // border color
-                  //   },
-                  //   "&:hover fieldset": {
-                  //     borderColor: theme.palette.border, // hover border
-                  //   },
-                  //   "&.Mui-focused fieldset": {
-                  //     borderColor: theme.palette.border, // focused border
-                  //   },
-                  //    },
-                  //             mb: 2
-
-                  //            }}
-                />
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Email *
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                  // value={values.name}
-                  // onChange={handleChange}
-                  // error={touched.name && Boolean(errors.name)}
-                  // helperText={touched.name && errors.name}
-                  //           sx={{
-                  //             bgcolor: theme.palette.textInput, // background color
-                  // "& .MuiInputBase-input": {
-                  //   color: theme.palette.primary.contrastText, // text color
-                  // },
-                  // "& .MuiOutlinedInput-root": {
-                  //   "& fieldset": {
-                  //     borderColor: theme.palette.border, // border color
-                  //   },
-                  //   "&:hover fieldset": {
-                  //     borderColor: theme.palette.border, // hover border
-                  //   },
-                  //   "&.Mui-focused fieldset": {
-                  //     borderColor: theme.palette.border, // focused border
-                  //   },
-                  //    },
-                  //             mb: 2
-
-                  //            }}
-                />
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Enquiry for *
-                </Typography>
-                <FormControl fullWidth>
-                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-                  <Select
-                    //  sx={{
-                    //                 bgcolor: theme.palette.textInput, // background color
-                    //                 "& .MuiInputBase-input": {
-                    //                   color: theme.palette.primary.contrastText, // text color
-                    //                 },
-                    //                 "& .MuiOutlinedInput-root": {
-                    //                   "& fieldset": {
-                    //                     borderColor: theme.palette.border, // border color
-                    //                   },
-                    //                   "&:hover fieldset": {
-                    //                     borderColor: theme.palette.border, // hover border
-                    //                   },
-                    //                   "&.Mui-focused fieldset": {
-                    //                     borderColor: theme.palette.border, // focused border
-                    //                   },
-                    //                 },
-                    //                 mb: 2,
-                    //               }}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    // value={age}
-                    // label="Age"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem
-                      // sx={{
-                      //  color: theme.palette.primary.contrastText
-                      // }}
-                      value={10}
-                    >
-                      1-5
-                    </MenuItem>
-                    <MenuItem
-                      //  sx={{
-                      //  color: theme.palette.primary.contrastText
-                      // }}
-                      value={20}
-                    >
-                      6-10
-                    </MenuItem>
-                    <MenuItem
-                      //  sx={{
-                      //   color: theme.palette.primary.contrastText
-                      // }}
-                      value={30}
-                    >
-                      10-20
-                    </MenuItem>
-                    <MenuItem
-                      //  sx={{
-                      //   color: theme.palette.primary.contrastText
-                      // }}
-                      value={30}
-                    >
-                      20+
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    // marginTop: 5,
-                  }}
-                >
-                  Message
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  minRows={3}
-                  name="name"
-                  id="name"
-                  // value={values.name}
-                  // onChange={handleChange}
-                  // error={touched.name && Boolean(errors.name)}
-                  // helperText={touched.name && errors.name}
-                  //           sx={{
-                  //             bgcolor: theme.palette.textInput, // background color
-                  // "& .MuiInputBase-input": {
-                  //   color: theme.palette.primary.contrastText, // text color
-                  // },
-                  // "& .MuiOutlinedInput-root": {
-                  //   "& fieldset": {
-                  //     borderColor: theme.palette.border, // border color
-                  //   },
-                  //   "&:hover fieldset": {
-                  //     borderColor: theme.palette.border, // hover border
-                  //   },
-                  //   "&.Mui-focused fieldset": {
-                  //     borderColor: theme.palette.border, // focused border
-                  //   },
-                  //    },
-                  //             mb: 2
-
-                  //            }}
-                />
-              </CardContent>
-              {/* </Card> */}
-            </DialogContent>
-          </Dialog>
+         
 
           {/* WhatsApp Button */}
           <Box
@@ -774,43 +490,7 @@ const HomePage = () => {
             );
           })}
         </Box>
-        {/* <Box sx={{ display: "flex", gap: 2, mb: 3, mt: 3 }}>
-          {[
-            { id: "01", title: "Repair" },
-            { id: "02", title: "Rent" },
-            { id: "03", title: "Buy" },
-            { id: "04", title: "Sell/exchange" },
-          ].map((item) => (
-            <Card
-              key={item.id}
-              sx={{
-                width: 110,
-                height: 80,
-                borderRadius: 2,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "white",
-                color: "black",
-                fontWeight: "bold",
-                cursor: "pointer",
-                "&:hover": { backgroundColor: "#f5f5f5" },
-              }}
-            >
-              <Typography
-                variant="caption"
-                sx={{ color: "text.secondary", fontWeight: 600 }}
-              >
-                {item.id}
-              </Typography>
-              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                {item.title}
-              </Typography>
-            </Card>
-          ))}
-        </Box> */}
-        {/* </Box> */}
+        
 
         {/* Extra link */}
       </Box>
@@ -861,7 +541,7 @@ const HomePage = () => {
             </Link>
           </Box>
 
-          <Divider sx={{ mb: 2 }} />
+          {/* <Divider sx={{ mb: 2 }} /> */}
 
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
@@ -1139,18 +819,7 @@ const HomePage = () => {
             }}
           >
             {/* Continuous Vertical Line */}
-            {/* <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "10px", // adjust to align with icons
-              width: "2px",
-              bgcolor: "#ccc",
-              borderRadius: 1,
-
-            }}
-          /> */}
+           
 
             {features.map((item, index) => {
               const isActive = activeIndex === index;
@@ -1297,17 +966,7 @@ const HomePage = () => {
       textAlign: "right",
     }}
   >
-    {/* <Typography
-      variant="body2"
-      sx={{
-        fontStyle: "italic",
-        fontWeight: 500,
-        fontFamily: "'Caveat', cursive", // 👈 Google handwritten font
-      }}
-    >
-      Dedicated to magnets <br /> - Thats us
-    </Typography> */}
-
+   
     <Box
       component="img"
       src={about} // 👈 replace with your arrow asset
@@ -1433,6 +1092,8 @@ const HomePage = () => {
       {/* View all magnets for rent Section*/}
       <Box>
         <Typography
+        component={Link}
+        to="/home/Rentals"
           sx={{
             fontSize: "1.5rem", // or "h4" variant below
             color: "#1a4dab",
@@ -1544,6 +1205,7 @@ const HomePage = () => {
           </Button>
         </Box>
       </Box>
+      <Testimonials/>
       {/* ROI Calculator */}
       <Box>
         <Typography
@@ -2285,6 +1947,233 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
+       {/* Dialog */}
+          <Dialog
+            open={BrowseDialogopen}
+            onClose={handledialogClose}
+            maxWidth="sm"
+            fullWidth
+            sx={{
+              "& .MuiDialog-paper": {
+                borderRadius: "16px",
+                height: "100vh", // 👈 fixed height
+                maxHeight: "100vh", // 👈 prevent overflow beyond screen
+              },
+            }}
+          >
+            <DialogContent>
+              {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+              <CardContent>
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                  }}
+                  variant="h6"
+                  gutterBottom
+                >
+                  Tell us what you need
+                </Typography>
+                <Typography
+                  //  variant="h6"
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    color: "#111",
+                  }}
+                >
+                  Company Name *
+                </Typography>
+                <TextField
+                  placeholder="Ex: John"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+                 
+                />
+
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    marginTop: 2,
+                  }}
+                >
+                  Contact Person *
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+              
+                />
+
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    marginTop: 2,
+                  }}
+                >
+                  Phone *
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+                 
+                />
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                 
+                    color: "#111",
+                    marginTop: 2,
+                  }}
+                >
+                  Email *
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+                 
+                />
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    marginTop: 2,
+                  }}
+                >
+                  Enquiry for *
+                </Typography>
+                <FormControl fullWidth>
+                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                  <Select
+                    
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    
+                  >
+                    <MenuItem
+                      value={10}
+                    >
+                      1-5
+                    </MenuItem>
+                    <MenuItem
+                      value={20}
+                    >
+                      6-10
+                    </MenuItem>
+                    <MenuItem
+                      value={30}
+                    >
+                      10-20
+                    </MenuItem>
+                    <MenuItem
+                      //  sx={{
+                      //   color: theme.palette.primary.contrastText
+                      // }}
+                      value={30}
+                    >
+                      20+
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    // marginTop: 5,
+                  }}
+                >
+                  Message
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  name="name"
+                  id="name"
+                  
+                />
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    // marginTop: 5,
+                  }}
+                >
+                  Photos/Videos
+                </Typography>
+                <UploadBox/>
+
+              </CardContent>
+               {/* Buttons */}
+                                                  <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+                                                     <Button
+  variant="text"
+  startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+  sx={{
+    color: "black", // text color
+    textTransform: "none", // keep normal text
+    fontWeight: 500,
+    fontSize: "14px",
+    "&:hover": {
+      backgroundColor: "transparent", // no hover background
+    },
+  }}
+>
+  Send on WhatsApp
+</Button>
+                                                      <Button
+                                                          fullWidth
+                                                          variant="contained"
+                                                          color="primary"
+                                                      >
+                                                          Submit Message
+                                                      </Button>
+                                                  </Box>
+              
+                                                  <Box mt={2}>
+                                                      <Button fullWidth variant="outlined">
+                                                          Continue to details
+                                                      </Button>
+                                                  </Box>
+              {/* </Card> */}
+            </DialogContent>
+          </Dialog>
     </Box>
   );
 };
@@ -2352,3 +2241,53 @@ const services = [
     img: rentserviceimg,
   },
 ];
+{/* <Box sx={{ display: "flex", gap: 2, mb: 3, mt: 3 }}>
+          {[
+            { id: "01", title: "Repair" },
+            { id: "02", title: "Rent" },
+            { id: "03", title: "Buy" },
+            { id: "04", title: "Sell/exchange" },
+          ].map((item) => (
+            <Card
+              key={item.id}
+              sx={{
+                width: 110,
+                height: 80,
+                borderRadius: 2,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "white",
+                color: "black",
+                fontWeight: "bold",
+                cursor: "pointer",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{ color: "text.secondary", fontWeight: 600 }}
+              >
+                {item.id}
+              </Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                {item.title}
+              </Typography>
+            </Card>
+          ))}
+        </Box> */}
+        {/* </Box> */}
+
+         {/* <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: "10px", // adjust to align with icons
+              width: "2px",
+              bgcolor: "#ccc",
+              borderRadius: 1,
+
+            }}
+          /> */}

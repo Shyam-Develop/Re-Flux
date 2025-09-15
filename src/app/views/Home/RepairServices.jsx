@@ -18,8 +18,10 @@ import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
+import { useNavigate } from 'react-router-dom';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
+ const navigate=useNavigate()
   return (
     <Paper
       elevation={0}
@@ -105,6 +107,7 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
           </Typography>
 
           <Button
+          onClick={()=>navigate("/home/RepairServicesPage")}
             variant="contained"
             sx={{
               backgroundColor: '#27274c',
