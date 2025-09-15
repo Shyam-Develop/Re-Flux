@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 
 import Howweworkimg from "../../../assets/Howwework.png";
+import { typography } from "app/utils/constant";
 
 const steps = [
   { img: Howweworkimg, step: "Step 1", title: "Diagnose", desc: "Intake inspection, electrical tests, root-" },
@@ -39,14 +40,29 @@ export default function ProcessCards() {
                   sx={{
                     backgroundColor: "#f0f6ff",
                     color: "#1a4dab",
-                    fontWeight: "bold",
+                    fontWeight: 500,
+                    fontFamily: "Plus Jakarta Sans-Medium",
+                    fontSize: "14px",
                     mb: 1
                   }}
                 />
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#1a1a1a" }}>
+                <Typography 
+                // variant="h6" 
+                sx={{ 
+                  ...typography.h3R,
+                  fontWeight: 600, 
+                color: "#1a1a1a" 
+                }}>
                   {item.title}
                 </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography 
+              
+                sx={{ 
+                  ...typography.bodyBasemedium,
+                  fontWeight: 400,
+                  color: "text.secondary" 
+
+                }}>
                   {item.desc}
                 </Typography>
               </CardContent>

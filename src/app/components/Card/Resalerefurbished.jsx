@@ -10,6 +10,7 @@ import {
   Chip,
 } from "@mui/material";
 import resalerefurbished from "../../../assets/Resalerefurbished.jpg"
+import { typography } from "app/utils/constant";
 
 
 const services = [
@@ -43,36 +44,7 @@ const services = [
     price: 20,
     img: resalerefurbished,
   },
-    {
-    id: 4,
-    title: "Rectangular Lifting Magnet",
-    type: "Permanent Magnet",
-    liftCapacity: "3 Tons",
-    powerSupply: "None Required",
-    sizes: "500mm / 800mm / 1000mm",
-    price: 30,
-    img: resalerefurbished,
-  },
-  {
-    id: 5,
-    title: "Bespoke Lifting Magnet",
-    type: "Custom Coil",
-    liftCapacity: "Varied",
-    powerSupply: "Custom",
-    sizes: "Custom Sizes Available",
-    price: 100,
-    img: resalerefurbished,
-  },
-  {
-    id: 6,
-    title: "Mini Lifting Magnet",
-    type: "Coil",
-    liftCapacity: "1 Ton",
-    powerSupply: "220V",
-    sizes: "300mm / 500mm",
-    price: 20,
-    img: resalerefurbished,
-  },
+
 ];
 
 export default function ResalerefurbishedCard() {
@@ -83,10 +55,11 @@ export default function ResalerefurbishedCard() {
         disableElevation
         disableRipple
         sx={{
+          ...typography.bodySmall,
           mb: 2,
           textTransform: "none",
-          fontSize: "0.8rem",
-          fontWeight: 500,
+          // fontSize: "0.8rem",
+          fontWeight: 400,
           color: "#1a4dab",
           backgroundColor: "rgba(36,121,233,0.08)",
           borderRadius: "20px",
@@ -103,10 +76,22 @@ export default function ResalerefurbishedCard() {
       </Button>
 
       {/* Heading */}
-      <Typography variant="h3" fontWeight="bold" gutterBottom>
+      <Typography 
+    sx={{
+      ...typography.h3RB,
+      fontWeight: 700
+    }}
+      >
         Check Out Our Refurbished section
       </Typography>
-      <Typography variant="h5" sx={{ mb: 4, color: "text.secondary" }}>
+      <Typography 
+  
+      sx={{
+        ...typography.h3B1,
+        fontWeight: 400,
+         mb: 4, 
+         color: "text.secondary" 
+         }}>
         Check Out this rentals
       </Typography>
 
@@ -141,13 +126,29 @@ export default function ResalerefurbishedCard() {
 >
   {/* Title + Subtitle */}
   <CardContent sx={{ pb: 1 }}>
-    <Typography variant="h6" fontWeight="600">
+    <Typography 
+  sx={{
+    ...typography.h3B1,
+    fontWeight: 400,
+  }}
+    >
       {service.title}
     </Typography>
-    <Typography variant="body2" color="text.secondary">
+    <Typography
+ sx={{
+  ...typography.h3medium,
+  fontWeight: 500
+ }}
+     color="text.secondary"
+     >
       {service.sizes}
     </Typography>
-    <Typography variant="caption" color="text.secondary">
+    <Typography 
+    sx={{
+      ...typography.bodySmall,
+      fontWeight: 400
+    }}
+    color="text.secondary">
       Certified: Load-test 12 Mar 2025
     </Typography>
   </CardContent>
@@ -167,13 +168,15 @@ export default function ResalerefurbishedCard() {
     label="Available for Rent"
     size="small"
     sx={{
+      fontFamily: "Inter, Regular",
       position: "absolute",
+      fontSize: "14px",
       borderRadius: 1,
       top: 8,
       left: 8,
       bgcolor: "rgba(46,125,50,0.9)",
       color: "white",
-      fontWeight: 500,
+      fontWeight: 400,
     }}
   />
 
@@ -182,13 +185,15 @@ export default function ResalerefurbishedCard() {
     label="Safety Tested"
     size="small"
     sx={{
+        fontFamily: "Inter, Regular",
+           fontSize: "14px",
       position: "absolute",
       borderRadius: 1,
       bottom: 8,
       left: 8,
       bgcolor: "rgba(21,101,192,0.9)",
       color: "white",
-      fontWeight: 500,
+      fontWeight: 400,
     }}
   />
 </Box>
@@ -198,18 +203,43 @@ export default function ResalerefurbishedCard() {
   <CardContent sx={{ flexGrow: 1 }}>
     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
       <Box>
-        <Typography variant="subtitle2" fontWeight="bold">
+        <Typography 
+
+      sx={{
+        fontFamily: "Space Grotesk, Regular",
+        fontSize: "16px",
+        fontWeight: 600
+      }}
+        >
           Lift Capacity
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography 
+         sx={{
+      ...typography.bodySmall,
+      fontWeight: 400
+    }}
+         color="text.secondary"
+         >
           {service.liftCapacity}
         </Typography>
       </Box>
       <Box>
-        <Typography variant="subtitle2" fontWeight="bold">
+        <Typography
+      sx={{
+        fontFamily: "Space Grotesk, Regular",
+        fontSize: "16px",
+        fontWeight: 600
+      }}
+         >
           Power Supply
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography 
+         sx={{
+      ...typography.bodySmall,
+      fontWeight: 400
+    }}
+        color="text.secondary"
+        >
           {service.powerSupply}
         </Typography>
       </Box>
@@ -217,10 +247,22 @@ export default function ResalerefurbishedCard() {
 
     {/* Extra spec row */}
     <Box>
-      <Typography variant="subtitle2" fontWeight="bold">
+      <Typography 
+      sx={{
+        fontFamily: "Space Grotesk, Regular",
+        fontSize: "16px",
+        fontWeight: 600
+      }}
+      >
         Included
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography
+    sx={{
+      ...typography.bodySmall,
+      fontWeight: 400
+    }}
+       color="text.secondary"
+       >
         Controller (EF-RC220) · 25 m cable
       </Typography>
     </Box>
@@ -232,6 +274,7 @@ export default function ResalerefurbishedCard() {
       fullWidth
       variant="contained"
       sx={{
+        ...typography.bodyStrongB,
         borderRadius: 1,
         textTransform: "none",
         fontWeight: 600,

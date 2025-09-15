@@ -854,217 +854,251 @@ const thumbnailImages = [Checkavailimage, Blogs1, Blogs2, Blogs3];
           
        <Whyitworkcard />
 
-      {/*ElectroMagnet Repair Section */}
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: 700,
-          color: "#1c2434",
-          mb: 2,
-          ml: 5,
-          fontFamily: "Inter, sans-serif",
-        }}
-      >
-        Symptoms & Faults
-      </Typography>
+       {/*ElectroMagnet Repair Section */}
+   <Typography
+      variant="h4"
+      sx={{
+       
+        color: "#1c2434",
+        mb: 2,
+        ml: 5,
+         fontWeight: 600,
+            fontFamily: "Space Grotesk, Regular",
+            fontSize: "48px",
+      }}
+    >
+      Symptoms & Faults
+    </Typography>
 
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          px: 4,
-          py: 4,
-          gap: 6,
-          bgcolor: "white",
-        }}
-      >
-        {/* Left - Features with vertical timeline */}
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {/* Continuous Vertical Line */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "10px", // adjust to align with icons
-              width: "2px",
-              bgcolor: "#ccc",
-              borderRadius: 1,
-            }}
-          />
+   
+ <Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    border: "1px solid #ddd",
+    borderRadius: 3,
+    ml: 5,
+    px: 4,
+    py: 4,
+    gap: 6,
+    bgcolor: "white",
+  }}
+>
+  {/* Left - Features with vertical timeline */}
+  <Box sx={{ flex: 1, position: "relative" }}>
+    {/* Continuous Vertical Line */}
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: "10px", // adjust to align with icons
+        width: "2px",
+        bgcolor: "#ccc",
+        borderRadius: 1,
+      }}
+    />
 
-          {features.map((item, index) => {
-            const isActive = hoveredIndex === index;
+    {features.map((item, index) => {
+      const isActive = hoveredIndex === index;
 
-            return (
-              <Box
-                key={index}
+      return (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            mb: 4,
+            cursor: "pointer",
+            position: "relative",
+          }}
+          onMouseEnter={() => setHoveredIndex(index)}
+        >
+          {/* Highlighted section of the vertical line */}
+          {isActive && (
+            <Box
+              sx={{
+                position: "absolute",
+                left: "10px",
+                width: "2px",
+                bgcolor: "#1976d2",
+                height: "100%",
+                borderRadius: 1,
+              }}
+            />
+          )}
+
+          {/* Icon + Text */}
+          <Box sx={{ ml: 4 }}>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <CalendarMonthIcon
                 sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  mb: 4,
-                  cursor: "pointer",
-                  position: "relative",
+                  fontSize: 20,
+                  color: isActive ? "#1976d2" : "#666",
+                  mr: 1,
+                  transition: "0.3s",
                 }}
-                onMouseEnter={() => setHoveredIndex(index)}
+              />
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  ...typography.h3B1,
+                  fontWeight: 400,
+                  color: isActive ? "#1976d2" : "#1c2434",
+                  transition: "0.3s",
+                }}
               >
-                {/* Highlighted section of the vertical line */}
-                {isActive && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: "10px",
-                      width: "2px",
-                      bgcolor: "#1976d2",
-                      height: "100%",
-                      borderRadius: 1,
-                    }}
-                  />
-                )}
+                {item.title}
+              </Typography>
+            </Box>
 
-                {/* Icon + Text */}
-                <Box sx={{ ml: 4 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <CalendarMonthIcon
-                      sx={{
-                        fontSize: 20,
-                        color: isActive ? "#1976d2" : "#666",
-                        mr: 1,
-                        transition: "0.3s",
-                      }}
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 600,
-                        color: isActive ? "#1976d2" : "#1c2434",
-                        fontFamily: "Inter, sans-serif",
-                        transition: "0.3s",
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                  </Box>
-
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      // color: isActive ? "#1976d2" : "text.secondary",
-                      fontFamily: "Inter, sans-serif",
-                      transition: "0.3s",
-                      ml: 4,
-                    }}
-                  >
-                    {item.desc}
-                  </Typography>
-                </Box>
-              </Box>
-            );
-          })}
+            <Typography
+              variant="body2"
+              sx={{
+                // color: isActive ? "#1976d2" : "text.secondary",
+                ...typography.bodyBasemedium,
+                fontWeight: 400,
+                transition: "0.3s",
+                ml: 4
+              }}
+            >
+              {item.desc}
+            </Typography>
+          </Box>
         </Box>
+      );
+    })}
+  </Box>
 
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          <Box
-            component="img"
-            src={features[hoveredIndex].image}
-            alt="ElectroMagnet Repair"
-            sx={{
-              width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
-            }}
-          />
-        </Box>
-      </Box>
-
+  {/* Right - Dynamic Image */}
+  <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+    <Box
+      component="img"
+      src={features[hoveredIndex].image}
+      alt="ElectroMagnet Repair"
+      sx={{
+        width: "100%",
+        maxWidth: 600,
+        borderRadius: 3,
+        objectFit: "cover",
+        transition: "0.5s",
+      }}
+    />
+  </Box>
+</Box>
     
 
    
 
 
-      {/* FAQs Section */}
-      <Button
-        disableElevation
-        disableRipple
+   {/* FAQs Section */}
+      <Box
         sx={{
-          marginBottom: 2,
-          ml: 8,
-          mt: 2,
-          textTransform: "none", // keep text as-is
-          fontSize: "0.8rem", // smaller font
-          fontWeight: 500, // medium weight
-          color: "#1a4dab", // dark blue text
-          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-          borderRadius: "20px", // pill shape
-          px: 2, // horizontal padding
-          py: 0.5, // vertical padding
-          boxShadow: "none", // remove shadow
-          "&:hover": {
-            backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-            boxShadow: "none",
-          },
+          mt: 3,
         }}
       >
-        FAQs
-      </Button>
-      <Typography
-        sx={{
-          ml: 8,
-          // mt: 5
-        }}
-        variant="h3"
-        fontWeight="bold"
-        gutterBottom
-      >
-        FAQs
-      </Typography>
-      <Typography variant="h5" sx={{ mb: 4, color: "text.secondary", ml: 8 }}>
-        Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
-      </Typography>
-      <Box sx={{ px: 8, py: 6 }}>
-        {faqData.map((item, index) => (
-          <Accordion
-            key={index}
-            expanded={expanded === index}
-            onChange={() => handleChange(index)}
-            disableGutters
-            elevation={0}
-            sx={{
-              backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-              borderRadius: 2,
-              mb: 1,
-              px: 2,
-            }}
-          >
-            <AccordionSummary
-              expandIcon={
-                <IconButton>
-                  {expanded === index ? (
-                    <RemoveIcon sx={{ color: "#1976d2" }} />
-                  ) : (
-                    <AddIcon sx={{ color: "#1976d2" }} />
-                  )}
-                </IconButton>
-              }
+        <Button
+          disableElevation
+          disableRipple
+          sx={{
+            ...typography.bodySmall,
+            marginBottom: 2,
+            ml: 8,
+            textTransform: "none", // keep text as-is
+            // fontSize: "0.8rem", // smaller font
+            fontWeight: 400, // medium weight
+            color: "#1a4dab", // dark blue text
+            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+            borderRadius: "20px", // pill shape
+            px: 2, // horizontal padding
+            py: 0.5, // vertical padding
+            boxShadow: "none", // remove shadow
+            "&:hover": {
+              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+              boxShadow: "none",
+            },
+          }}
+        >
+          FAQs
+        </Button>
+        <Typography
+          sx={{
+            ...typography.h3RB,
+            fontWeight: 700,
+            ml: 8,
+            // mt: 5
+          }}
+          //   variant="h3"
+          //   fontWeight="bold"
+          //   gutterBottom
+        >
+          FAQs
+        </Typography>
+        <Typography
+          //   variant="h5"
+          sx={{
+            ...typography.h3B1,
+            fontWeight: 400,
+            mb: 4,
+            color: "text.secondary",
+            ml: 8,
+          }}
+        >
+          Get powerful lifting magnets when you need them — without the upfront
+          cost. Flexible rental plans, quick installation, and reliable
+          performance for every project!
+        </Typography>
+        <Box sx={{ px: 8, py: 6 }}>
+          {faqData.map((item, index) => (
+            <Accordion
+              key={index}
+              expanded={expanded === index}
+              onChange={() => handleChange(index)}
+              disableGutters
+              elevation={0}
+              sx={{
+                backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
+                borderRadius: 2,
+                mb: 1,
+                px: 2,
+              }}
             >
-              <Typography fontWeight="bold">{item.question}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body2" color="text.secondary">
-                {item.answer}
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+              <AccordionSummary
+                expandIcon={
+                  <IconButton>
+                    {expanded === index ? (
+                      <RemoveIcon sx={{ color: "#1976d2" }} />
+                    ) : (
+                      <AddIcon sx={{ color: "#1976d2" }} />
+                    )}
+                  </IconButton>
+                }
+              >
+                <Typography
+                  sx={{
+                    ...typography.h3B1,
+                    fontWeight: 400,
+                  }}
+                  //  fontWeight="bold"
+                >
+                  {item.question}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography
+                  sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
+                  }}
+                  color="text.secondary"
+                >
+                  {item.answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </Box>
       </Box>
 
    {/* Footer Section */}
