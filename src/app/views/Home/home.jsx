@@ -1560,7 +1560,7 @@ const HomePage = () => {
                   bgcolor: "#fafafa",
                   cursor:'pointer'
                 }}
-               onClick={() => navigate("/home/BlogPost")}>
+               onClick={() => navigate("/home/BlogDetails")}>
                 <CardMedia
                   component="img"
                   image={blogData[0].image}
