@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Box, Grid, Typography, Button, Chip, Paper, Card,
   CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary,TextField,
-  InputAdornment, AccordionDetails,
+  InputAdornment, AccordionDetails
 } from '@mui/material';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -19,6 +19,7 @@ import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
 import { useNavigate } from 'react-router-dom';
+import { typography } from 'app/utils/constant';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
  const navigate=useNavigate()

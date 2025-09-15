@@ -63,7 +63,7 @@ const blogPosts = [
     },
 ];
 
-const BlogPage = () => {
+const BlogPost = () => {
 
       const navigate = useNavigate();
 
@@ -542,4 +542,4 @@ const BlogPage = () => {
     );
 };
 
-export default BlogPage;
+export default BlogPost;

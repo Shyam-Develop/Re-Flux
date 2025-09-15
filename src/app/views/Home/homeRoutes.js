@@ -12,7 +12,7 @@ const AboutUs = Loadable(lazy(() => import("./AboutUs")));
 const RefurbishedElectromagnet = Loadable(lazy(() => import("./RefurbishedElectromagnet")));
 const RefurbishedDetail = Loadable(lazy(() => import("./RefurbishedDetail")));
 const CircularMagnet = Loadable(lazy(() => import("./CircularMagnet")));
-const BlogPost = Loadable(lazy(() => import("./Blogpost")));
+const BlogPost = Loadable(lazy(() => import("./BlogPost")));
 const BlogDetails = Loadable(lazy(() => import("./BlogDetails")));
 
 const HomeRoutes = [
@@ -21,7 +21,7 @@ const HomeRoutes = [
   { path: "/home/Rentals", element: <Rentals /> },
   { path: "/home/RepairServicesPage", element: <RepairServicesPage /> },
   { path: "/home/CircularMagnet", element: <CircularMagnet /> },
-  { path: "/home/BlogPost", element: <BlogPost /> },
+  { path: "/home/Blogpost", element: <BlogPost /> },
   { path: "/home/BlogDetails", element: <BlogDetails /> },
   { path: "/home/ViewCaseStudy", element: <ViewcaseStudyPage /> },
   { path: "home/CheckAvailabilty", element: <CheckAvailabilty /> },
