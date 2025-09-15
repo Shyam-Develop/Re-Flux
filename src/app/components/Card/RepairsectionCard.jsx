@@ -56,7 +56,12 @@ export default function RepairsectionCard() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+    <Box 
+    width= "1300px"
+height= "559px"
+gap= {32}
+
+    sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
       <Button
         disableElevation
         disableRipple
@@ -96,6 +101,8 @@ export default function RepairsectionCard() {
             <Card
             onClick={()=>navigate("/home/RepairServicesPage")}
               sx={{
+                height:"559px",
+                width:"412px",
                 borderRadius: 3,
                 boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
                 transition: "all 0.6s ease-in-out", // slower smooth animation
@@ -135,9 +142,9 @@ export default function RepairsectionCard() {
                   alt={service.title}
                   className="card-img"
                   sx={{
-                    width: "80%",              // smaller image (controls left/right spacing)
-                    height: "auto",            // keeps natural aspect ratio
-                    maxHeight: 200,            // optional: limit height
+                    width: "280px",              // smaller image (controls left/right spacing)
+                    height: "260px",            // keeps natural aspect ratio
+                    //maxHeight: 200,            // optional: limit height
                     objectFit: "contain",      // ensures image fits without cropping
                     borderRadius: 2,
                     transition: "transform 0.8s ease-in-out",
@@ -149,6 +156,8 @@ export default function RepairsectionCard() {
               {/* Text Section */}
               <CardContent
                 sx={{
+                  width: "365px",              // smaller image (controls left/right spacing)
+                    height: "235px",
                   transition: "transform 0.5s ease-in-out, color 0.5s ease-in-out",
                   "& .MuiTypography-root": {
                     transition: "transform 0.5s ease-in-out, color 0.5s ease-in-out",

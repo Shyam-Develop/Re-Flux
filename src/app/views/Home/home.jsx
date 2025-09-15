@@ -34,7 +34,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import rentserviceimg from "../../../assets/RentService.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
+import videoFile from "../../../assets/Electroflux_basic_ edit.mp4"; // ✅ put your video file here
 import WhatsApp from "../../../assets/whatsappimg.jpg";
 import RepairsectionCard from "app/components/Card/RepairsectionCard";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -62,65 +62,57 @@ import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import BeforeAfterCard from "app/components/Card/BeforeAfterCard";
+import HeroSection from "app/components/Card/HomeVideoCard";
+import HomeVideoCard from "app/components/Card/HomeVideoCard";
 
 
 const UploadBox = ({ label }) => {
-    return (
-        <Box sx={{ my: 3 }}>
-            <Typography variant="h6" gutterBottom>{label}</Typography>
-            <label htmlFor="upload-input">
-                <Box
-                    sx={{
-                        border: '2px dashed #ccc',
-                        borderRadius: 2,
-                        p: 4,
-                        textAlign: 'center',
-                        cursor: 'pointer',
-                        transition: 'border-color 0.3s ease',
-                        '&:hover': { borderColor: 'primary.main' },
-                    }}
-                >
-                    <IconButton component="span" size="large">
-                        <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
-                    </IconButton>
-                    <Typography>
-                        <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                        Select image in jpeg, PNG
-                    </Typography>
-                </Box>
-            </label>
-            <input
-                id="upload-input"
-                type="file"
-                accept="image/jpeg, image/png"
-                style={{ display: 'none' }}
-            />
+  return (
+    <Box sx={{ my: 3 }}>
+      <Typography variant="h6" gutterBottom>{label}</Typography>
+      <label htmlFor="upload-input">
+        <Box
+          sx={{
+            border: '2px dashed #ccc',
+            borderRadius: 2,
+            p: 4,
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'border-color 0.3s ease',
+            '&:hover': { borderColor: 'primary.main' },
+          }}
+        >
+          <IconButton component="span" size="large">
+            <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+          </IconButton>
+          <Typography>
+            <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Select image in jpeg, PNG
+          </Typography>
         </Box>
-    );
+      </label>
+      <input
+        id="upload-input"
+        type="file"
+        accept="image/jpeg, image/png"
+        style={{ display: 'none' }}
+      />
+    </Box>
+  );
 };
 const HomePage = () => {
   const navigate = useNavigate();
   //=================VIDEO-Loading===============================//
-  const [selected, setSelected] = useState(null);
-  const [loadingId, setLoadingId] = useState(null);
+
   const items = [
-    { id: "01", title: "Repair" },
-    { id: "02", title: "Rent" },
-    { id: "03", title: "Buy" },
-    { id: "04", title: "Sell/exchange" },
+    { id: "01", title: "Repair",head:"Magnet down? We’ll get your lift back fast.",text:" Coil rewinds (Class F/H), terminals/leads, junction boxes & controllers—returned to spec with a load-test certificate. Clear Turn Around Time bands and Pan-India pickup/install.",button:"Request a Repair Quote" },
+    { id: "02", title: "Rent",head:"Rent electro-lifting magnets, ready when you are",text:"Circular, rectangular, and suspension (oil/air-cooled) magnets with controllers and cables. Pan-India logistics, load-tested before dispatch.",button:"Check Availability" },
+    { id: "03", title: "Buy",head:"Certified refurbished magnets—ready to work, warranty included.",text:"Each unit is tested, load-certified and documented. Warranty 3–12 months. Pan-India dispatch and install support.",button:"Browse Inventory" },
+    { id: "04", title: "Sell/exchange",head:"Sell or exchange your magnet—quick valuation, easy logistics.",text:"Share a few photos and specs. We’ll reply with a buyback range or exchange offer and arrange Pan-India pickup.",button:"Start Sell / Exchange" },
   ];
 
-  const handleClick = (id) => {
-    setSelected(id);
-    setLoadingId(id);
-
-    // Simulate loading (2 sec)
-    setTimeout(() => {
-      setLoadingId(null);
-    }, 100000);
-  };
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -337,241 +329,12 @@ const HomePage = () => {
           zIndex: -1,
         }}
       /> */}
-      <video
-        // playsInline
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          position: "absolute",
-          //   top: 0,
-          //   left: 0,
-          //   zIndex: -1,
-        }}
-        src={videoFile}
-        autoPlay
-        muted
-        loop
-        class="video.mp4"
-      ></video>
-
-      {/* 🔹 Foreground Content */}
-      <Box
-        sx={{
-          position: "relative",
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          height: "100%",
-          color: "white",
-          textAlign: "left", // ✅ left align
-          maxWidth: "700px", // ✅ restrict width like in screenshot
-          pl: 8, // ✅ padding from left
-        }}
-      >
-        {/* Heading */}
-        <Typography
-          variant="h2"
-          sx={{ fontWeight: "bold", mb: 2, lineHeight: 1.2 }}
-        >
-          Certified refurbished magnets—ready to work, warranty included.
-        </Typography>
-
-        {/* Subtext */}
-        <Typography variant="h6" sx={{ mb: 3, opacity: 0.9 }}>
-          Each unit is tested, load-certified and documented. Warranty 3–12
-          months. Pan-India dispatch and install support.
-        </Typography>
-
-        {/* Buttons Row */}
-        <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
-          <Button
-            onClick={handleClickOpen}
-            variant="contained"
-            color="warning"
-            sx={{ borderRadius: "25px", px: 3 }}
-          >
-            Browse Inventory
-          </Button>
-         
-
-          {/* WhatsApp Button */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <Box
-              component="img"
-              src={WhatsApp}
-              alt="WhatsApp"
-              sx={{ width: 32, height: 32 }}
-            />
-            <Link
-              onClick={() => navigate("/home/RepairServicesPage")}
-              sx={{
-                px: 1,
-                color: "white",
-                textDecoration: "none",
-                fontWeight: 500,
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              WhatsApp an Engineer
-            </Link>
-          </Box>
-        </Box>
-        <Typography
-          sx={{
-            fontWeight: 500,
-            textDecoration: "underline",
-            cursor: "pointer",
-            display: "inline-block",
-          }}
-        >
-          What “Refurbished” Means? →
-        </Typography>
-        {/* 🔹 Small Cards Row (moved outside WhatsApp box) */}
-        <Box sx={{ display: "flex", gap: 3, mb: 3, mt: 3 }}>
-          {items.map((item) => {
-            const isSelected = selected === item.id;
-            const isLoading = loadingId === item.id;
-
-            return (
-              <Card
-                key={item.id}
-                onClick={() => handleClick(item.id)}
-                sx={{
-                  width: 208,
-                  height: 93,
-                  borderRadius: "16px",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  borderColor: isSelected ? "#1C2D4B" : "rgba(0,0,0,0.12)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  padding: "12px 16px",
-                  cursor: "pointer",
-                  backgroundColor: isSelected ? "#1C2D4B" : "white",
-                  color: isSelected ? "white" : "black",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    backgroundColor: isSelected ? "#1C2D4B" : "#f5f5f5",
-                  },
-                }}
-              >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  gap={1}
-                >
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: isSelected ? "white" : "text.secondary",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {item.id}
-                  </Typography>
-                </Box>
-
-                <Typography variant="subtitle1" sx={{ fontWeight: 600, mt: 1 }}>
-                  {item.title}
-                </Typography>
-              </Card>
-            );
-          })}
-        </Box>
-        
-
-        {/* Extra link */}
-      </Box>
-
-      {/* 🔹 Right Side Card */}
-      <Card
-        sx={{
-          position: "absolute",
-          top: "7%",
-          right: "5%",
-          width: 320,
-          borderRadius: 2,
-          boxShadow: 3,
-          zIndex: 2,
-        }}
-      >
-        <CardContent>
-          <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-            Peace of mind
-          </Typography>
-          <Typography sx={{ color: "teal", fontWeight: "bold", mb: 1 }}>
-            We’ve got you covered
-          </Typography>
-          <Link
-            sx={{
-              display: "block",
-              mb: 2,
-              fontWeight: 500,
-              textDecoration: "underline",
-              color: "primary.main",
-            }}
-          >
-            View All Magnets for rent →
-          </Link>
-
-          <Divider sx={{ mb: 2 }} />
-
-          {/* Items */}
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Repair
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Magnet down? Get a fast repair quote.
-            </Typography>
-            <Link sx={{ fontWeight: 500, textDecoration: "underline" }}>
-              Request a Quote
-            </Link>
-          </Box>
-
-          {/* <Divider sx={{ mb: 2 }} /> */}
-
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Rent
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Need a temporary magnet today?
-            </Typography>
-            <Link sx={{ fontWeight: 500, textDecoration: "underline" }}>
-              Request a Quote
-            </Link>
-          </Box>
-
-          <Divider sx={{ mb: 2 }} />
-
-          <Box>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Resale (Refurbished)
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Certified units with warranty buy/sell/exchange.
-            </Typography>
-            <Link sx={{ fontWeight: 500, textDecoration: "underline" }}>
-              Request a Quote
-            </Link>
-          </Box>
-        </CardContent>
-      </Card>
-
+      <HomeVideoCard
+      videoFile={videoFile}
+      items={items}
+      WhatsApp={WhatsApp}
+      />
+      
       <RepairsectionCard
       // onClick={() => navigate("/home/RepairServicesPage")}
       />
@@ -684,7 +447,7 @@ const HomePage = () => {
           customers in repairing
         </Typography>
         {/* Image Section */}{" "}
-     <BeforeAfterCard/>
+        <BeforeAfterCard />
         <Box sx={{ textAlign: "center", py: 6 }}>
           {/* Top Button */}
           <Button
@@ -770,7 +533,7 @@ const HomePage = () => {
             }}
           >
             {/* Continuous Vertical Line */}
-           
+
 
             {features.map((item, index) => {
               const isActive = activeIndex === index;
@@ -868,67 +631,67 @@ const HomePage = () => {
         <Grid container spacing={6} alignItems="flex-start">
           {/* Column 1 - Left Text */}
           <Grid item xs={12} md={4}>
-          <Box
-  sx={{
-    display: "flex",
-    mt: 10,
-    ml: 5,
-    flexDirection: "column",
-    alignItems: { xs: "center", md: "flex-start" },
-    textAlign: { xs: "center", md: "left" },
-    position: "relative", // 👈 needed for positioning arrow & text
-  }}
->
-  {/* Heading */}
-  <Typography variant="h4" fontWeight={700} gutterBottom>
-    Why Choose <br /> Reflux?
-  </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                mt: 10,
+                ml: 5,
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "flex-start" },
+                textAlign: { xs: "center", md: "left" },
+                position: "relative", // 👈 needed for positioning arrow & text
+              }}
+            >
+              {/* Heading */}
+              <Typography variant="h4" fontWeight={700} gutterBottom>
+                Why Choose <br /> Reflux?
+              </Typography>
 
-  {/* Sub text */}
-  <Typography
-    variant="body1"
-    color="text.secondary"
-    mb={3}
-    sx={{ maxWidth: "320px" }}
-  >
-    We handle service and upkeep — you focus on getting the job done.
-  </Typography>
+              {/* Sub text */}
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                mb={3}
+                sx={{ maxWidth: "320px" }}
+              >
+                We handle service and upkeep — you focus on getting the job done.
+              </Typography>
 
-  {/* Button */}
-  <Button
-    variant="contained"
-    onClick={() => navigate("/about-us")}
-    sx={{
-      borderRadius: "25px",
-      px: 3,
-      backgroundColor: "#00A99D",
-      "&:hover": { backgroundColor: "#00897B" },
-    }}
-  >
-    About Us
-  </Button>
+              {/* Button */}
+              <Button
+                variant="contained"
+                onClick={() => navigate("/about-us")}
+                sx={{
+                  borderRadius: "25px",
+                  px: 3,
+                  backgroundColor: "#00A99D",
+                  "&:hover": { backgroundColor: "#00897B" },
+                }}
+              >
+                About Us
+              </Button>
 
-  {/* Handwritten text + arrow (absolute positioned) */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: -50, // adjust based on spacing
-      right: { xs: "10%", md: "20%" }, // responsive placement
-      textAlign: "right",
-    }}
-  >
-   
-    <Box
-      component="img"
-      src={about} // 👈 replace with your arrow asset
-      alt="Arrow"
-      sx={{
-        width: 120,
-        mt: 1,
-      }}
-    />
-  </Box>
-</Box>
+              {/* Handwritten text + arrow (absolute positioned) */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: -50, // adjust based on spacing
+                  right: { xs: "10%", md: "20%" }, // responsive placement
+                  textAlign: "right",
+                }}
+              >
+
+                <Box
+                  component="img"
+                  src={about} // 👈 replace with your arrow asset
+                  alt="Arrow"
+                  sx={{
+                    width: 120,
+                    mt: 1,
+                  }}
+                />
+              </Box>
+            </Box>
 
           </Grid>
 
@@ -1043,8 +806,8 @@ const HomePage = () => {
       {/* View all magnets for rent Section*/}
       <Box>
         <Typography
-        component={Link}
-        to="/home/Rentals"
+          component={Link}
+          to="/home/Rentals"
           sx={{
             fontSize: "1.5rem", // or "h4" variant below
             color: "#1a4dab",
@@ -1156,7 +919,7 @@ const HomePage = () => {
           </Button>
         </Box>
       </Box>
-      <Testimonials/>
+      <Testimonials />
       {/* ROI Calculator */}
       <Box>
         <Typography
@@ -1421,9 +1184,9 @@ const HomePage = () => {
             ml: 8,
             // mt: 5
           }}
-          //   variant="h3"
-          //   fontWeight="bold"
-          //   gutterBottom
+        //   variant="h3"
+        //   fontWeight="bold"
+        //   gutterBottom
         >
           FAQs
         </Typography>
@@ -1472,7 +1235,7 @@ const HomePage = () => {
                     ...typography.h3B1,
                     fontWeight: 400,
                   }}
-                  //  fontWeight="bold"
+                //  fontWeight="bold"
                 >
                   {item.question}
                 </Typography>
@@ -1526,9 +1289,9 @@ const HomePage = () => {
             ml: 8,
             // mt: 5
           }}
-          //   variant="h3"
-          //   fontWeight="bold"
-          //   gutterBottom
+        //   variant="h3"
+        //   fontWeight="bold"
+        //   gutterBottom
         >
           Blogs
         </Typography>
@@ -1558,9 +1321,9 @@ const HomePage = () => {
                   borderRadius: 3,
                   boxShadow: 0,
                   bgcolor: "#fafafa",
-                  cursor:'pointer'
+                  cursor: 'pointer'
                 }}
-               onClick={() => navigate("/home/BlogDetails")}>
+                onClick={() => navigate("/home/BlogDetails")}>
                 <CardMedia
                   component="img"
                   image={blogData[0].image}
@@ -1898,233 +1661,233 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
-       {/* Dialog */}
-          <Dialog
-            open={BrowseDialogopen}
-            onClose={handledialogClose}
-            maxWidth="sm"
-            fullWidth
-            sx={{
-              "& .MuiDialog-paper": {
-                borderRadius: "16px",
-                height: "100vh", // 👈 fixed height
-                maxHeight: "100vh", // 👈 prevent overflow beyond screen
-              },
-            }}
-          >
-            <DialogContent>
-              {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-              <CardContent>
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                  }}
-                  variant="h6"
-                  gutterBottom
-                >
-                  Tell us what you need
-                </Typography>
-                <Typography
-                  //  variant="h6"
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    color: "#111",
-                  }}
-                >
-                  Company Name *
-                </Typography>
-                <TextField
-                  placeholder="Ex: John"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                 
-                />
+      {/* Dialog */}
+      <Dialog
+        open={BrowseDialogopen}
+        onClose={handledialogClose}
+        maxWidth="sm"
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            borderRadius: "16px",
+            height: "100vh", // 👈 fixed height
+            maxHeight: "100vh", // 👈 prevent overflow beyond screen
+          },
+        }}
+      >
+        <DialogContent>
+          {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+          <CardContent>
+            <Typography
+              sx={{
+                textAlign: "left",
+              }}
+              variant="h6"
+              gutterBottom
+            >
+              Tell us what you need
+            </Typography>
+            <Typography
+              //  variant="h6"
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                color: "#111",
+              }}
+            >
+              Company Name *
+            </Typography>
+            <TextField
+              placeholder="Ex: John"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
 
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Contact Person *
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-              
-                />
+            />
 
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Phone *
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                 
-                />
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                 
-                    color: "#111",
-                    marginTop: 2,
-                  }}
-                >
-                  Email *
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  name="name"
-                  id="name"
-                 
-                />
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    marginTop: 2,
-                  }}
-                >
-                  Enquiry for *
-                </Typography>
-                <FormControl fullWidth>
-                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-                  <Select
-                    
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    
-                  >
-                    <MenuItem
-                      value={10}
-                    >
-                      1-5
-                    </MenuItem>
-                    <MenuItem
-                      value={20}
-                    >
-                      6-10
-                    </MenuItem>
-                    <MenuItem
-                      value={30}
-                    >
-                      10-20
-                    </MenuItem>
-                    <MenuItem
-                      //  sx={{
-                      //   color: theme.palette.primary.contrastText
-                      // }}
-                      value={30}
-                    >
-                      20+
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Contact Person *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
 
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    // marginTop: 5,
-                  }}
-                >
-                  Message
-                </Typography>
-                <TextField
-                  placeholder="example@gmail.com"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  minRows={3}
-                  name="name"
-                  id="name"
-                  
-                />
-                <Typography
-                  sx={{
-                    textAlign: "left",
-                    fontSize: "15px",
-                    // ...typography.h6,
-                    // fontWeight: 500,
-                    color: "#111",
-                    // color: theme.palette.primary.contrastText
-                    // marginTop: 5,
-                  }}
-                >
-                  Photos/Videos
-                </Typography>
-                <UploadBox/>
+            />
 
-              </CardContent>
-               {/* Buttons */}
-                                                  <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
-                                                     <Button
-  variant="text"
-  startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
-  sx={{
-    color: "black", // text color
-    textTransform: "none", // keep normal text
-    fontWeight: 500,
-    fontSize: "14px",
-    "&:hover": {
-      backgroundColor: "transparent", // no hover background
-    },
-  }}
->
-  Send on WhatsApp
-</Button>
-                                                      <Button
-                                                          fullWidth
-                                                          variant="contained"
-                                                          color="primary"
-                                                      >
-                                                          Submit Message
-                                                      </Button>
-                                                  </Box>
-              
-                                                  <Box mt={2}>
-                                                      <Button fullWidth variant="outlined">
-                                                          Continue to details
-                                                      </Button>
-                                                  </Box>
-              {/* </Card> */}
-            </DialogContent>
-          </Dialog>
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Phone *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+
+                color: "#111",
+                marginTop: 2,
+              }}
+            >
+              Email *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Enquiry for *
+            </Typography>
+            <FormControl fullWidth>
+              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+              <Select
+
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+
+              >
+                <MenuItem
+                  value={10}
+                >
+                  1-5
+                </MenuItem>
+                <MenuItem
+                  value={20}
+                >
+                  6-10
+                </MenuItem>
+                <MenuItem
+                  value={30}
+                >
+                  10-20
+                </MenuItem>
+                <MenuItem
+                  //  sx={{
+                  //   color: theme.palette.primary.contrastText
+                  // }}
+                  value={30}
+                >
+                  20+
+                </MenuItem>
+              </Select>
+            </FormControl>
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                // marginTop: 5,
+              }}
+            >
+              Message
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              multiline
+              minRows={3}
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                // marginTop: 5,
+              }}
+            >
+              Photos/Videos
+            </Typography>
+            <UploadBox />
+
+          </CardContent>
+          {/* Buttons */}
+          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+            <Button
+              variant="text"
+              startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+              sx={{
+                color: "black", // text color
+                textTransform: "none", // keep normal text
+                fontWeight: 500,
+                fontSize: "14px",
+                "&:hover": {
+                  backgroundColor: "transparent", // no hover background
+                },
+              }}
+            >
+              Send on WhatsApp
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Submit Message
+            </Button>
+          </Box>
+
+          <Box mt={2}>
+            <Button fullWidth variant="outlined">
+              Continue to details
+            </Button>
+          </Box>
+          {/* </Card> */}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
@@ -2228,9 +1991,9 @@ const services = [
             </Card>
           ))}
         </Box> */}
-        {/* </Box> */}
+{/* </Box> */ }
 
-         {/* <Box
+{/* <Box
             sx={{
               position: "absolute",
               top: 0,

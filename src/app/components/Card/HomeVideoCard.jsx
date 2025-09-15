@@ -14,6 +14,7 @@ import {
   Link,
   Divider,CircularProgress
 } from "@mui/material";
+import { typography } from "app/utils/constant";
 
 const HomeVideoCard = ({
   videoFile,
@@ -34,20 +35,44 @@ const HomeVideoCard = ({
 
   // Sequential loading on mount
   useEffect(() => {
-    let index = 0;
-    const loop = () => {
-      if (!selected) { // only auto-cycle if no card is locked
-        setLoadingId(items[index].id);
-        setTimeout(() => {
-          setLoadingId(null);
-          index = (index + 1) % items.length; // loop back after last card
-          loop();
-        }, 2000);
-      }
-    };
-    loop();
-  }, [selected]);
+  let index = 0;
+  let timer;
 
+  const loop = () => {
+    if (selected) return; // stop loop if something is selected
+
+    setLoadingId(items[index].id);
+    timer = setTimeout(() => {
+      setLoadingId(null);
+      index = (index + 1) % items.length;
+      loop();
+    }, 10000);
+  };
+
+  loop();
+
+  return () => clearTimeout(timer); // cleanup on unmount or dependency change
+}, [selected, items]);
+
+  // useEffect(() => {
+  //   let index = 0;
+  //   const loop = () => {
+  //     if (!selected) { // only auto-cycle if no card is locked
+  //       setLoadingId(items[index].id);
+  //       setTimeout(() => {
+  //         setLoadingId(null);
+  //         index = (index + 1) % items.length; // loop back after last card
+  //         loop();
+  //       }, 10000);
+  //     }
+  //   };
+  //   loop();
+  // }, [selected]);
+
+// pick the active item: selected takes priority, else show the auto-loading one
+const activeItem = selected 
+  ? items.find((item) => item.id === selected) 
+  : items.find((item) => item.id === loadingId) || items[0];
 
   const handleClick = (id) => {
     setSelected(id);
@@ -55,7 +80,7 @@ const HomeVideoCard = ({
   };
 
   return (
-    <Box sx={{ position: "relative", width: "100%", height: "100vh" }}>
+    <Box sx={{ position: "relative", width: "1440px", height: "908px" }}>
       {/* 🔹 Background Video */}
       <video
         style={{
@@ -71,6 +96,7 @@ const HomeVideoCard = ({
       ></video>
 
       {/* 🔹 Foreground Content */}
+      <Box sx={{ position: "relative", width: "1280px", height: "448px",p:5 }}>
       <Box
         sx={{
           position: "relative",
@@ -78,74 +104,73 @@ const HomeVideoCard = ({
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          height: "100%",
+          height: "479px",
           color: "white",
           textAlign: "left",
-          maxWidth: "700px",
-          pl: 8,
+          maxWidth: "828px",
+          // pl: 8,
+          mt:30
         }}
       >
         {/* Heading */}
-        <Typography
-          variant="h2"
-          sx={{ fontWeight: "bold", mb: 2, lineHeight: 1.2 }}
-        >
-          Certified refurbished magnets—ready to work, warranty included.
-        </Typography>
+    <Typography
+      sx={{...typography.displayXL,color:"#FFFFFF", mb: 2, }}
+    >
+      {activeItem?.head} {/* pick first item or static text */}
+    </Typography>
 
-        {/* Subtext */}
-        <Typography variant="h6" sx={{ mb: 3, opacity: 0.9 }}>
-          Each unit is tested, load-certified and documented. Warranty 3–12
-          months. Pan-India dispatch and install support.
-        </Typography>
+    {/* Subtext */}
+    <Typography  sx={{ ...typography.h4,color:"#FFFFFF",mb: 3, opacity: 0.9 }}>
+      {activeItem?.text}
+    </Typography>
 
-        {/* Buttons Row */}
-        <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
-          <Button
-            onClick={handleClickOpen}
-            variant="contained"
-            color="warning"
-            sx={{ borderRadius: "25px", px: 3 }}
-          >
-            Browse Inventory
-          </Button>
+    {/* Buttons Row */}
+    <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+      <Button
+        onClick={handleClickOpen}
+        variant="contained"
+        width="120px"
+        height="20px"
+        color="warning"
+        sx={{...typography.buttonLink,color:"#FFFFFF", borderRadius: "25px", px: 3, }}
+      >
+        {activeItem?.button}
+      </Button>
 
-      
-
-          {/* WhatsApp Button */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Box
-              component="img"
-              src={WhatsApp}
-              alt="WhatsApp"
-              sx={{ width: 32, height: 32 }}
-            />
-            <Link
-              onClick={() => navigate("/home/RepairServicesPage")}
-              sx={{
-                px: 1,
-                color: "white",
-                textDecoration: "none",
-                fontWeight: 500,
-                "&:hover": { textDecoration: "underline" },
-              }}
-            >
-              WhatsApp an Engineer
-            </Link>
-          </Box>
-        </Box>
-
-        {/* Extra Link */}
-        <Typography
+      {/* WhatsApp Button */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Box
+          component="img"
+          src={WhatsApp}
+          alt="WhatsApp"
+          sx={{ width: 32, height: 32 }}
+        />
+        <Link
+          onClick={() => navigate("/home/RepairServicesPage")}
           sx={{
+            px: 1,
+            color: "white",
+            textDecoration: "none",
             fontWeight: 500,
-            textDecoration: "underline",
-            cursor: "pointer",
-            display: "inline-block",
+            "&:hover": { textDecoration: "underline" },
           }}
         >
-          What “Refurbished” Means? →
-        </Typography>
+          WhatsApp an Engineer
+        </Link>
+      </Box>
+    </Box>
+
+    {/* Extra Link */}
+    <Typography
+      sx={{
+        fontWeight: 500,
+        textDecoration: "underline",
+        cursor: "pointer",
+        display: "inline-block",
+      }}
+    >
+      What “Refurbished” Means? →
+    </Typography>
 
         {/* Small Cards Row */}
  <Box sx={{ display: "flex", gap: 2, mb: 3, mt: 3 }}>
@@ -159,8 +184,8 @@ const HomeVideoCard = ({
             key={item.id}
             onClick={() => handleClick(item.id)}
             sx={{
-              width: 208,
-              height: 93,
+              width: "120px",
+              height: "76px",
               borderRadius: "16px",
               borderWidth: "1px",
               borderStyle: "solid",
@@ -236,10 +261,12 @@ const HomeVideoCard = ({
           position: "absolute",
           top: "7%",
           right: "5%",
-          width: 320,
+          width: "350px",
+          height:"437px",
           borderRadius: 2,
           boxShadow: 3,
           zIndex: 2,
+          mt:30
         }}
       >
         <CardContent>
@@ -292,7 +319,7 @@ const HomeVideoCard = ({
           ))}
         </CardContent>
       </Card>
-
+</Box>
 
 
           {/* Dialog */}
