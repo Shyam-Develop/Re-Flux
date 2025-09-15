@@ -332,6 +332,7 @@ export default function SellRentServicesCard({ services }) {
                   variant="contained"
                   className="availability-btn"
                   sx={{
+                     p: 2,
                     ...typography.buttonSBold,
                     borderRadius: 1,
                     textTransform: "none",

@@ -16,7 +16,8 @@ import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link, useNavigate } from "react-router-dom";  // or any other ico
+import {Link, useNavigate } from "react-router-dom";  // or any other ico
+import { typography } from "app/utils/constant";
 const MenuButton = styled(Button)(({ theme }) => ({
   flex: 1, // equal width for all buttons
   position: "relative",
@@ -155,12 +156,8 @@ const ServicesPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Electromagnet
@@ -169,10 +166,8 @@ const ServicesPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Coil Rewinds
@@ -180,10 +175,8 @@ const ServicesPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Terminals
@@ -204,12 +197,8 @@ const ServicesPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Suspension Magnet Service (Oil / Air-cooled)
@@ -217,10 +206,8 @@ const ServicesPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Overhaul
@@ -228,10 +215,8 @@ const ServicesPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Oil Changes
@@ -254,32 +239,24 @@ const ServicesPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Rectangular<br /> Magnet
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Face Machining
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Pole-Shoe Rework
@@ -302,12 +279,8 @@ const ServicesPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Emergency Support (24×7)
@@ -327,10 +300,8 @@ const ServicesPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Whatsapp
@@ -396,12 +367,8 @@ const RentalPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
                cursor: 'pointer'
             }}
           onClick={() => navigate("./home/CircularMagnet")}>
@@ -410,10 +377,8 @@ const RentalPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -421,10 +386,8 @@ const RentalPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Electro-Lifting Magnet
@@ -445,12 +408,8 @@ const RentalPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Rectangle Magnet
@@ -458,10 +417,8 @@ const RentalPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -469,10 +426,8 @@ const RentalPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Electro-Lifting Magnet
@@ -499,32 +454,24 @@ const RentalPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Overband
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -547,12 +494,8 @@ const RentalPopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Rectangle Magnet
@@ -560,10 +503,8 @@ const RentalPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -571,10 +512,8 @@ const RentalPopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -636,14 +575,19 @@ const ResalePopoverContent = () => {
             alignItems: "flex-start",
           }}
         >
-          <Typography
+       <Typography
+            // onClick={() => navigate("home/RefurbishedElectromagnet")}
+            component={Link}
+          to="home/RefurbishedElectromagnet"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
               fontWeight: 400,
               fontSize: "24px",
               lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Browse Refurbished<br />Inventory
@@ -651,10 +595,8 @@ const ResalePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Circular Magnet
@@ -662,10 +604,8 @@ const ResalePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Rectangular Magnet
@@ -684,28 +624,28 @@ const ResalePopoverContent = () => {
             gap: 1.5,
           }}
         >
-          <Link
-            onClick={() => navigate("home/SellMagnet")}
+          <Typography
+            // onClick={() => navigate("home/SellMagnet")}
+             component={Link}
+          to="home/SellMagnet"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
               fontWeight: 400,
               fontSize: "24px",
               lineHeight: "130%",
-              letterSpacing: "-0.12px",
-              textDecoration: "none",
-              cursor: "pointer"
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Sell/Exchange Your<br />Magnets
-          </Link>
+          </Typography>
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -713,10 +653,8 @@ const ResalePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Electro-Lifting Magnet
@@ -743,32 +681,24 @@ const ResalePopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Overband
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -791,12 +721,8 @@ const ResalePopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Rectangle Magnet
@@ -804,10 +730,8 @@ const ResalePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -815,10 +739,8 @@ const ResalePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Permanent Magnet
@@ -880,12 +802,17 @@ const ContactPopoverContent = () => {
             Request a Quote
           </Typography>
           <Typography
+          component={Link}
+          to="/contact-us"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
               fontWeight: 400,
               fontSize: "24px",
               lineHeight: "130%",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Book a Site Visit
@@ -995,12 +922,8 @@ const MorePopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             ROI Calculator
@@ -1010,10 +933,8 @@ const MorePopoverContent = () => {
           component={Link}
           to="/repair-replace"
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
               cursor: "pointer",
               textDecoration:"none",
         "&:hover": { textDecoration: "underline" },
@@ -1024,20 +945,16 @@ const MorePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Rental vs Buy
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             AMC vs Reactive
@@ -1058,12 +975,8 @@ const MorePopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Downloads
@@ -1071,10 +984,8 @@ const MorePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Safety labels
@@ -1082,10 +993,8 @@ const MorePopoverContent = () => {
 
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Elctro-Lifting Magnet
@@ -1108,32 +1017,24 @@ const MorePopoverContent = () => {
         >
           <Typography
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             Case Studies
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Before and After
           </Typography>
           <Typography
             sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
+             ...typography.bodyBase,
+             color:"#111B2D",
             }}
           >
             Turn Around Time<br />(TAT)
@@ -1158,12 +1059,8 @@ const MorePopoverContent = () => {
           component={Link}
           to="/customer-says"
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
             FAQ 
@@ -1189,12 +1086,8 @@ const MorePopoverContent = () => {
           component={Link}
           to='/legal'
             sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              letterSpacing: "-0.12px",
+              ...typography.h4,
+              color:"#AE5609",
             }}
           >
           Legal
@@ -1272,29 +1165,35 @@ const BrowseRentals = () => {
 const ServiceCard = ({ imgserv }) => {
   return (
     <Card
-      sx={{
-        width: 150,
-        height: 307,
-        borderRadius: 2,
-        boxShadow: 3,
-        overflow: "hidden",
-        opacity: 1,  // angle: 0deg
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+  sx={{
+    width: 223,             // card width
+    height: 307,            // card height
+    borderRadius: 2,        // theme radius (≈ 8px)
+    boxShadow: 3,           // shadow depth
+    overflow: "hidden",     // clip children to rounded corners
+    opacity: 1,
+    transform: "rotate(0deg)", // angle: 0deg
+    display: "flex",
+    flexDirection: "column",
+    bgcolor:"#F7F9FC"
+  }}
+>
+
       {/* Image */}
-      <CardMedia
-        component="img"
-        image={imgserv}
-        alt="promo"
-        sx={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          borderRadius: 2, // apply rounding to image too
-        }}
-      />
+   <CardMedia
+  component="img"
+  image={imgserv}
+  alt="promo"
+  sx={{
+    width: 223,
+    height: 190,
+    // p: 1.5,              // padding (12px)
+    objectFit: "cover",
+    borderRadius: 2,     // theme spacing rounding (~8px)
+    opacity: 1,
+  }}
+/>
+
 
       {/* Content Section */}
       <CardContent

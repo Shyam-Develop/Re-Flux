@@ -27,7 +27,8 @@ const AboutUS = () => {
     const handleClose = () => setOpen(false);
 
     const mapRef = useRef(null);
-
+    const googleMapsUrl =
+        "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
   useEffect(() => {
     // Load Google Maps script
     const script = document.createElement("script");
@@ -73,6 +74,7 @@ const AboutUS = () => {
             // direction={"column"}
             >
                 <AboutUsCard />
+                
                 <ServicesSection />
                 <Box
                     sx={{
@@ -392,8 +394,8 @@ const AboutUS = () => {
 
                         {/* Right Section - Form */}
                         <Grid item xs={12} md={8}>
-                            <Paper elevation={0} sx={{ p: 3, borderRadius: 2 }}>
-                                <Typography variant="h6" fontWeight={600} gutterBottom>
+                            <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
+                                <Typography variant="h6" fontWeight={600}   >
                                     Tell us what you need
                                 </Typography>
 
@@ -472,32 +474,61 @@ const AboutUS = () => {
         Our Location
       </Typography>
 
-      <Grid container spacing={4} alignItems="center">
-        {/* Map Section */}
-        <Grid item xs={12} md={6}>
-          <Paper
-            elevation={3}
-            sx={{ borderRadius: 2, overflow: "hidden", height: "300px" }}
-          >
-            <div
-              ref={mapRef}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </Paper>
-        </Grid>
-
-        {/* Address Section */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6" fontWeight={600} gutterBottom>
-            Head Office
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Xilliams Corner Wine © 2017. <br />
-            1112 A Market St # Ste B22, <br />
-            Charlottesville, CA 45565
-          </Typography>
-        </Grid>
-      </Grid>
+       <Grid container spacing={4} alignItems="center">
+                          {/* Map Section */}
+                          <Grid item xs={12} md={6}>
+                              <Paper
+                                  elevation={3}
+                                  sx={{ borderRadius: 2, overflow: "hidden", height: "300px" }}
+                              >
+                                  <Box
+                                      component="a"
+                                      href={googleMapsUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      sx={{ display: "block", width: "100%", height: "100%" }}
+                                  >
+                                      <iframe
+                                          title="location-map"
+                                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus"
+                                          width="100%"
+                                          height="100%"
+                                          style={{ border: 0 }}
+                                          allowFullScreen=""
+                                          loading="lazy"
+                                      ></iframe>
+                                  </Box>
+                              </Paper>
+                          </Grid>
+      
+                          {/* Address Section */}
+                          <Grid item xs={12} md={6}>
+                              <Box
+                                  sx={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center", // 👈 keeps block centered
+                                      height: "100%",
+                                  }}
+                              >
+                                  <Box sx={{ textAlign: "left" }}> {/* 👈 ensures text lines align equally */}
+                                      <Typography  sx={{ ...typography.h2,
+                                      color:"#0A142F", mb: 1 }}>
+                                          Head Office
+                                      </Typography>
+                                      <Typography sx={{
+                                          ...typography.h5,
+                                          color:"#0A142F"
+                                      }}>
+                                          Xilliams Corner Wine © 2017. <br />
+                                          1112 A Market St # Ste B22, <br />
+                                          Charlottesville, CA 45565
+                                      </Typography>
+                                  </Box>
+                              </Box>
+      
+                          </Grid>
+                      </Grid>
     </Box>
 
     {/* Footer Section */}

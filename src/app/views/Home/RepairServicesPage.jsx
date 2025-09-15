@@ -252,10 +252,10 @@ const blogData = [
           px: 3,
           py: 1,
           width: 250,
-          fontSize: "25px",
+          // fontSize: "25px",
           textAlign: "center",
         //   borderRadius: 1,
-          fontWeight: "bold",
+          fontWeight: 600,
         }}
       >
         Services
@@ -292,9 +292,11 @@ fontFamily: "Space Grotesk Reguar"
   <Box sx={{ maxWidth: 780 }}>
     <Typography
     //  variant="body2" 
-     sx={{ mb: 2, 
+     sx={{
+       mb: 2, 
      color: "text.secondary",
-     fontSize: "18px"
+     ...typography.bodySmall,
+     fontWeight: 400
      }}>
       Get powerful lifting magnets when you need them — without the upfront
       cost. Flexible rental plans, quick installation, and reliable
@@ -302,7 +304,13 @@ fontFamily: "Space Grotesk Reguar"
     </Typography>
     <Typography
       variant="body2"
-      sx={{ color: "#1d4ed8", fontWeight: "bold", cursor: "pointer" }}
+      sx={{ 
+        color: "#1d4ed8", 
+       ...typography.bodyStrongB,
+       fontWeight: 600,
+        textDecoration: "underline",
+         cursor: "pointer"
+         }}
     >
       Request a quote →
     </Typography>
@@ -337,7 +345,8 @@ fontFamily: "Space Grotesk Reguar"
       <Typography
     //    variant="body2" 
        sx={{ 
-fontFamily: "Space Grotesk Regular",
+fontFamily: "Space Grotesk, Regular",
+fontWeight: 400,
 // lineHeight: "130px",
         mb: 2, 
        color: "text.secondary",
@@ -361,7 +370,9 @@ fontFamily: "Space Grotesk Regular",
             label={item}
             variant="outlined"
             sx={{
-              fontSize: 14,
+              fontSize: "20px",
+              fontWeight: 500,
+              fontFamily: "Space Grotesk, Regular",
               borderRadius: "20px",
               px: 1.5,
               py: 0.5,
@@ -381,7 +392,9 @@ fontFamily: "Space Grotesk Regular",
           bgcolor: "#b45309",
           "&:hover": { bgcolor: "#92400e" },
           borderRadius: "20px",
-          fontWeight: "bold",
+          fontFamily: "Fira Sans, Regular",
+          fontSize: "18px",
+          fontWeight: 600,
           textTransform: "none",
         }}
       >
@@ -426,6 +439,7 @@ fontFamily: "Space Grotesk Regular",
     //    variant="body2" 
        sx={{ 
 fontFamily: "Space Grotesk Regular",
+fontWeight: 400,
 // lineHeight: "130px",
         mb: 2, 
        color: "text.secondary",
@@ -468,6 +482,7 @@ fontFamily: "Space Grotesk Regular",
        sx={{ 
         ml: 6,
 fontFamily: "Space Grotesk Regular",
+fontWeight: 400,
 // lineHeight: "130px",
         mb: 2, 
        color: "text.secondary",
@@ -477,8 +492,16 @@ fontFamily: "Space Grotesk Regular",
       </Typography>
     <ProcessCards />
   <Typography
-      variant="body2"
-      sx={{ color: "#1d4ed8", fontWeight: "bold", cursor: "pointer",textAlign: "center",fontSize:"24px" }}
+     
+      sx={{ 
+...typography.bodyBase,
+        color: "#1d4ed8", 
+        fontWeight: 600, 
+        cursor: "pointer",
+        textAlign: "center",
+        // fontSize:"24px",
+        textDecoration: "underline" 
+      }}
     >
       Sample load-test certificate (PDF) →
     </Typography>
@@ -488,11 +511,13 @@ fontFamily: "Space Grotesk Regular",
    <Typography
       variant="h4"
       sx={{
-        fontWeight: 700,
+       
         color: "#1c2434",
         mb: 2,
         ml: 5,
-        fontFamily: "Inter, sans-serif",
+         fontWeight: 600,
+            fontFamily: "Space Grotesk, Regular",
+            fontSize: "48px",
       }}
     >
       Symptoms & Faults
@@ -571,9 +596,9 @@ fontFamily: "Space Grotesk Regular",
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: 600,
+                  ...typography.h3B1,
+                  fontWeight: 400,
                   color: isActive ? "#1976d2" : "#1c2434",
-                  fontFamily: "Inter, sans-serif",
                   transition: "0.3s",
                 }}
               >
@@ -585,7 +610,8 @@ fontFamily: "Space Grotesk Regular",
               variant="body2"
               sx={{
                 // color: isActive ? "#1976d2" : "text.secondary",
-                fontFamily: "Inter, sans-serif",
+                ...typography.bodyBasemedium,
+                fontWeight: 400,
                 transition: "0.3s",
                 ml: 4
               }}
@@ -632,13 +658,14 @@ fontFamily: "Space Grotesk Regular",
         }}
       >
         <Typography
-          variant="h4"
+        
           sx={{
             mt: 6,
-            fontWeight: 700,
+            ...typography.h3RBold,
+            fontWeight: 600,
             color: "#1c2434",
-            textAlign: "left", // center align like screenshot
-            fontFamily: "Inter, sans-serif",
+            textAlign: "left", 
+           
           }}
         >
           Before and after case studies
@@ -649,9 +676,10 @@ fontFamily: "Space Grotesk Regular",
           sx={{
             mt: 2,
             fontWeight: 600,
+            fontSize: "32px",
             color: "#1c2434",
             textAlign: "left", // center align
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "Space Grotesk, Regular",
             ml: 8,
           }}
         >
@@ -667,8 +695,8 @@ fontFamily: "Space Grotesk Regular",
             textAlign: "left", // center align text
             // maxWidth: 700,
             // mx: "auto",                 // centers horizontally
-            fontSize: "1rem",
-            fontFamily: "Inter, sans-serif",
+           ...typography.bodyBase,
+           fontWeight: 400,
           }}
         >
           Understanding growing demand and exceeding expectations from our
@@ -733,8 +761,9 @@ fontFamily: "Space Grotesk Regular",
             borderRadius: "25px",
             px: 3,
             py: 1,
-            // fontWeight: "bold",
-            fontSize: "16px",
+            fontWeight: 500,
+            fontFamily: "Inter-Medium",
+            fontSize: "14px",
             "&:hover": {
               bgcolor: "#944708",
             },
@@ -750,12 +779,18 @@ fontFamily: "Space Grotesk Regular",
   <Typography 
   sx={{
     ml: 8,
+    ...typography.h3RB,
+    fontWeight: 700,
   }}
-  variant="h3" fontWeight="bold" gutterBottom>
+  >
        ROI Calculator
       </Typography>
       <Typography
-       variant="h5" sx={{ mb: 4,
+       variant="h5"
+        sx={{ 
+          ...typography.h3B1,
+          fontWeight: 400,
+          mb: 4,
         color: "text.secondary",
         ml: 8
         }}>
@@ -765,10 +800,11 @@ fontFamily: "Space Grotesk Regular",
       </Typography>
   <Typography
   sx={{
-    fontSize: "1.5rem", // or "h4" variant below
+    ...typography.h3R,
+   textDecoration: "underline",
     color: "#1a4dab",
-    fontWeight: "bold",
-    ml: 120
+    fontWeight: 600,
+    ml: 110
   }}
 >
   View All ROI Calculators
@@ -839,7 +875,12 @@ fontFamily: "Space Grotesk Regular",
 
           }}
           justifyContent="space-between" alignItems="center">
-            <Typography variant="subtitle1" fontWeight="bold">
+            <Typography
+           sx={{
+            ...typography.h3B1,
+            fontWeight: 700
+           }}
+             >
               {item.title}
             </Typography>
             <IconButton
@@ -851,7 +892,13 @@ fontFamily: "Space Grotesk Regular",
               <ArrowForwardIosIcon fontSize="small" />
             </IconButton>
           </Box>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+         sx={{
+          ...typography.bodyBase,
+          fontWeight: 400,
+            color: "text.secondary",
+         }}
+           >
             {item.description}
           </Typography>
         </Box>
@@ -871,89 +918,137 @@ fontFamily: "Space Grotesk Regular",
 <ResalerefurbishedCard/>
 
 
-
-
-
-
-  {/* FAQs Section */}
-             <Button
-    disableElevation
-    disableRipple
-    sx={{
-      marginBottom: 2,
-      ml: 8,
-      textTransform: "none",           // keep text as-is
-      fontSize: "0.8rem",              // smaller font
-      fontWeight: 500,                 // medium weight
-      color: "#1a4dab",                // dark blue text
-      backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-      borderRadius: "20px",            // pill shape
-      px: 2,                           // horizontal padding
-      py: 0.5,                         // vertical padding
-      boxShadow: "none",               // remove shadow
-      "&:hover": {
-        backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-        boxShadow: "none",
-      },
-    }}
-  >
-    FAQs
-  </Button>
-   <Typography 
+ <Typography
   sx={{
-    ml: 8,
-    // mt: 5
+    ...typography.h3R,
+   textDecoration: "underline",
+    color: "#1a4dab",
+    fontWeight: 600,
+    ml: 115
   }}
-  variant="h3" fontWeight="bold" gutterBottom>
-FAQs
-      </Typography>
-      <Typography
-       variant="h5" sx={{ mb: 4,
-        color: "text.secondary",
-        ml: 8
-        }}>
-             Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
-      </Typography>
-        <Box sx={{ px: 8, py: 6 }}>
-      {faqData.map((item, index) => (
-        <Accordion
-          key={index}
-          expanded={expanded === index}
-          onChange={() => handleChange(index)}
-          disableGutters
-          elevation={0}
+>
+  View All Magnets for Sale
+  <ArrowRightAltIcon
+    sx={{
+      color: "#1a4dab",
+      fontWeight: "bold",
+      verticalAlign: "middle",
+      ml: 1,
+       fontSize: "3rem",
+    }}
+  /> 
+</Typography>
+
+
+
+   {/* FAQs Section */}
+      <Box
+        sx={{
+          mt: 3,
+        }}
+      >
+        <Button
+          disableElevation
+          disableRipple
           sx={{
-            backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-            borderRadius: 2,
-            mb: 1,
-            px: 2,
+            ...typography.bodySmall,
+            marginBottom: 2,
+            ml: 8,
+            textTransform: "none", // keep text as-is
+            // fontSize: "0.8rem", // smaller font
+            fontWeight: 400, // medium weight
+            color: "#1a4dab", // dark blue text
+            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+            borderRadius: "20px", // pill shape
+            px: 2, // horizontal padding
+            py: 0.5, // vertical padding
+            boxShadow: "none", // remove shadow
+            "&:hover": {
+              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+              boxShadow: "none",
+            },
           }}
         >
-          <AccordionSummary
-            expandIcon={
-              <IconButton>
-                {expanded === index ? (
-                  <RemoveIcon sx={{ color: "#1976d2" }} />
-                ) : (
-                  <AddIcon sx={{ color: "#1976d2" }} />
-                )}
-              </IconButton>
-            }
-          >
-            <Typography fontWeight="bold">
-              {item.question}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography variant="body2" color="text.secondary">
-              {item.answer}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </Box>
+          FAQs
+        </Button>
+        <Typography
+          sx={{
+            ...typography.h3RB,
+            fontWeight: 700,
+            ml: 8,
+            // mt: 5
+          }}
+          //   variant="h3"
+          //   fontWeight="bold"
+          //   gutterBottom
+        >
+          FAQs
+        </Typography>
+        <Typography
+          //   variant="h5"
+          sx={{
+            ...typography.h3B1,
+            fontWeight: 400,
+            mb: 4,
+            color: "text.secondary",
+            ml: 8,
+          }}
+        >
+          Get powerful lifting magnets when you need them — without the upfront
+          cost. Flexible rental plans, quick installation, and reliable
+          performance for every project!
+        </Typography>
+        <Box sx={{ px: 8, py: 6 }}>
+          {faqData.map((item, index) => (
+            <Accordion
+              key={index}
+              expanded={expanded === index}
+              onChange={() => handleChange(index)}
+              disableGutters
+              elevation={0}
+              sx={{
+                backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
+                borderRadius: 2,
+                mb: 1,
+                px: 2,
+              }}
+            >
+              <AccordionSummary
+                expandIcon={
+                  <IconButton>
+                    {expanded === index ? (
+                      <RemoveIcon sx={{ color: "#1976d2" }} />
+                    ) : (
+                      <AddIcon sx={{ color: "#1976d2" }} />
+                    )}
+                  </IconButton>
+                }
+              >
+                <Typography
+                  sx={{
+                    ...typography.h3B1,
+                    fontWeight: 400,
+                  }}
+                  //  fontWeight="bold"
+                >
+                  {item.question}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography
+                  sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
+                  }}
+                  color="text.secondary"
+                >
+                  {item.answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </Box>
+      </Box>
 
 
 

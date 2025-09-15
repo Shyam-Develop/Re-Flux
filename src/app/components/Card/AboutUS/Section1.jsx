@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid, Card, CardContent, Typography } from "@mui/material";
 import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
 import { typography } from "app/utils/constant";
+import { useLocation } from "react-router-dom";
 
 const services = [
   {
@@ -22,9 +23,12 @@ const services = [
 ];
 
 export default function ServicesSection() {
+  const location=useLocation();
   return (
     <Box sx={{ maxWidth: 1200, mx: "auto", px: 2, py: 6 }}>
       {/* Section Heading */}
+      {location.pathname === "/about-us" &&(
+        <>
       <Typography
         variant="h4"
         sx={{ ...typography.displayM,
@@ -48,7 +52,21 @@ export default function ServicesSection() {
         Whether you’re expanding, upgrading, or reselling, our platform makes the
         process seamless.
       </Typography>
-
+      </>
+)}
+ {location.pathname === "/contact-us" &&(
+        <>
+      <Typography
+        variant="h4"
+        sx={{ ...typography.displayM,
+            color:"#1C2D4B"
+            , mb: 1, textAlign: "left" }}
+      >
+        Our Services
+      </Typography>
+      
+      </>
+)}
       {/* Cards */}
       <Grid container spacing={3} justifyContent="center">
         {services.map((service, index) => (

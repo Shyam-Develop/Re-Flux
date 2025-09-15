@@ -15,6 +15,7 @@ import Scope3 from "../../../assets/Scope3.png";
 import Scope4 from "../../../assets/Scope4.png";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import { typography } from "app/utils/constant";
 
 
 
@@ -194,6 +195,8 @@ export default function RepairServicesPageCard() {
   <Button
     variant="contained"
     sx={{
+      ...typography.bodyStrong,
+      fontWeight: 600,
       mt: 4,
       textDecoration: "underline",
       width: "100%",
