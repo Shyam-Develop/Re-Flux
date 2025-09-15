@@ -10,7 +10,7 @@ import {
   useTheme, Card,
   CardMedia,
   CardContent,
-  IconButton,Link
+  IconButton
 } from "@mui/material";
 import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
@@ -575,17 +575,23 @@ const ResalePopoverContent = () => {
             alignItems: "flex-start",
           }}
         >
-       <Link
-            onClick={() => navigate("home/RefurbishedElectromagnet")}
+       <Typography
+            // onClick={() => navigate("home/RefurbishedElectromagnet")}
+            component={Link}
+          to="home/RefurbishedElectromagnet"
             sx={{
-              ...typography.h4,
-              color:"#AE5609",
-               textDecoration: "none",
-              cursor: "pointer"
+              color: "#AE5609",
+              fontFamily: "Space Grotesk",
+              fontWeight: 400,
+              fontSize: "24px",
+              lineHeight: "130%",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Browse Refurbished<br />Inventory
-          </Link>
+          </Typography>
 
           <Typography
             sx={{
@@ -618,17 +624,23 @@ const ResalePopoverContent = () => {
             gap: 1.5,
           }}
         >
-          <Link
-            onClick={() => navigate("home/SellMagnet")}
+          <Typography
+            // onClick={() => navigate("home/SellMagnet")}
+             component={Link}
+          to="home/SellMagnet"
             sx={{
-              ...typography.h4,
-              color:"#AE5609",
-              textDecoration: "none",
-              cursor: "pointer"
+              color: "#AE5609",
+              fontFamily: "Space Grotesk",
+              fontWeight: 400,
+              fontSize: "24px",
+              lineHeight: "130%",
+              cursor: "pointer",
+              textDecoration:"none",
+        "&:hover": { textDecoration: "underline" },
             }}
           >
             Sell/Exchange Your<br />Magnets
-          </Link>
+          </Typography>
 
           <Typography
             sx={{
