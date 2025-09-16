@@ -107,10 +107,10 @@ const HomePage = () => {
   //=================VIDEO-Loading===============================//
 
   const items = [
-    { id: "01", title: "Repair",head:"Magnet down? We’ll get your lift back fast.",text:" Coil rewinds (Class F/H), terminals/leads, junction boxes & controllers—returned to spec with a load-test certificate. Clear Turn Around Time bands and Pan-India pickup/install.",button:"Request a Repair Quote" },
-    { id: "02", title: "Rent",head:"Rent electro-lifting magnets, ready when you are",text:"Circular, rectangular, and suspension (oil/air-cooled) magnets with controllers and cables. Pan-India logistics, load-tested before dispatch.",button:"Check Availability" },
-    { id: "03", title: "Buy",head:"Certified refurbished magnets—ready to work, warranty included.",text:"Each unit is tested, load-certified and documented. Warranty 3–12 months. Pan-India dispatch and install support.",button:"Browse Inventory" },
-    { id: "04", title: "Sell/exchange",head:"Sell or exchange your magnet—quick valuation, easy logistics.",text:"Share a few photos and specs. We’ll reply with a buyback range or exchange offer and arrange Pan-India pickup.",button:"Start Sell / Exchange" },
+    { id: "01", title: "Repair", head: "Magnet down? We’ll get your lift back fast.", text: " Coil rewinds (Class F/H), terminals/leads, junction boxes & controllers—returned to spec with a load-test certificate. Clear Turn Around Time bands and Pan-India pickup/install.", button: "Request a Repair Quote" },
+    { id: "02", title: "Rent", head: "Rent electro-lifting magnets, ready when you are", text: "Circular, rectangular, and suspension (oil/air-cooled) magnets with controllers and cables. Pan-India logistics, load-tested before dispatch.", button: "Check Availability" },
+    { id: "03", title: "Buy", head: "Certified refurbished magnets—ready to work, warranty included.", text: "Each unit is tested, load-certified and documented. Warranty 3–12 months. Pan-India dispatch and install support.", button: "Browse Inventory" },
+    { id: "04", title: "Sell/exchange", head: "Sell or exchange your magnet—quick valuation, easy logistics.", text: "Share a few photos and specs. We’ll reply with a buyback range or exchange offer and arrange Pan-India pickup.", button: "Start Sell / Exchange" },
   ];
 
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -302,12 +302,11 @@ const HomePage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
+    
     <Box
       sx={{
-        width: "100%",
-        height: "100vh",
-        // position: "relative",
-        // overflow: "hidden",
+        width: "1440px",
+       
       }}
     >
       {/* 🔹 Background Video */}
@@ -330,14 +329,75 @@ const HomePage = () => {
         }}
       /> */}
       <HomeVideoCard
-      videoFile={videoFile}
-      items={items}
-      WhatsApp={WhatsApp}
+        videoFile={videoFile}
+        items={items}
+        WhatsApp={WhatsApp}
       />
-      
-      <RepairsectionCard
-      // onClick={() => navigate("/home/RepairServicesPage")}
-      />
+
+      <Box
+        width="1440px"
+        height="1564px"
+        sx={{
+          pt: 5, // Spacing/space-40 → MUI spacing(5) = 40px
+          pb: 5, // same
+          gap: 4, // gap: 32px → spacing(4) = 32px
+          transform: "rotate(0deg)", // angle
+          opacity: 1,
+          mx: "auto"
+        }}
+      >
+         <Button
+                disableElevation
+                disableRipple
+                sx={{
+                  marginBottom: 2,
+                  textTransform: "none",           // keep text as-is
+                  fontSize: "0.8rem",              // smaller font
+                  fontWeight: 500,                 // medium weight
+                  color: "#1a4dab",                // dark blue text
+                  backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+                  borderRadius: "20px",            // pill shape
+                  px: 2,                           // horizontal padding
+                  py: 0.5,                         // vertical padding
+                  boxShadow: "none",               // remove shadow
+                  "&:hover": {
+                    backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                Repair Services
+              </Button>
+              <Box
+  sx={{
+    width: "1280px",
+    height: "132px",
+    gap: "8px",
+    transform: "rotate(0deg)",
+    opacity: 1,
+    margin: "0 auto",
+  }}
+>
+              {/* Heading */}
+              <Typography variant="h3" fontWeight="bold" gutterBottom>
+                Our Repair Services
+              </Typography>
+              <Typography  sx={{ mb: 4,...typography.h4, color: "#6B768A",
+                width: "1280px",
+height: "62px",
+
+               }}>
+                Get powerful lifting magnets when you need them — without the upfront
+                cost. Flexible rental plans, quick installation, and reliable
+                performance for every project!
+              </Typography>
+              </Box>
+        <RepairsectionCard
+        // onClick={() => navigate("/home/RepairServicesPage")}
+        />
+
+      </Box>
+
       <Box sx={{ textAlign: "center", py: 6 }}>
         {/* Top Button */}
         <Button

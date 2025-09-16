@@ -79,3 +79,4 @@ buttonSBold: { fontFamily: Fonts.Intersemibold, fontSize: "16px", lineHeight: "1
   // Special
   specNums: { fontFamily: Fonts.firaMedium, fontSize: "16px", lineHeight: "1.45", letterSpacing: "0px" },   // tabular-nums
 };
+

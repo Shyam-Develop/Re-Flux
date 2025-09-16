@@ -4,6 +4,7 @@ import cust from '../../../assets/custSay.jpg';
 import { typography } from "app/utils/constant";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Brand1 from '../../../assets/Brand1.png';
+import Footer from "app/components/Card/Footer";
 const testimonials = [
     {
         name: "Aaron Aldrich",
@@ -35,197 +36,150 @@ export default function Testimonials() {
                 "& > div": {
                     gridColumn: isNonMobile ? undefined : "span 4",
                 },
-                padding: "10px",
+                // padding: "10px",
             }}
         >
-            <Box sx={{ gridColumn: "span 4", p: 2 }}>
-                {/* Heading */}
-                <Typography
-                    align="left"
-                    sx={{ ...typography.displayL, color: "#232323", mb: 2 }}
-                >
-                    What Our Happy Customer Says
-                </Typography>
-                <Divider
-                    sx={{ borderBottomWidth: 2, borderColor: "#178270", my: 2 }}
-                />
-
-                {/* Subtitle */}
-                <Typography
-                    align="left"
-                    sx={{ mx: "auto", mb: 6, ...typography.h4, color: "#6B768A" }}
-                >
-                    Community Development is often linked with community work or community
-                    planning, and may involve stakeholders and foundations.
-                </Typography>
-
-                {/* Cards */}
-                <Grid container spacing={3}>
-                    {testimonials.map((item, index) => (
-                        <Grid item xs={12} sm={6} md={6} key={index}>
-                            <Card
-                                elevation={0}
-                                sx={{
-                                    borderRadius: 3,
-                                    border: "1px solid #e5e7eb",
-                                    height: "100%",
-                                }}
-                            >
-                                <CardContent>
-                                    <Typography sx={{
-                                        ...typography.h3B, color: "#232323"
-                                    }}>
-                                        {item.name}
-                                    </Typography>
-                                    <Typography
-                                        sx={{ mb: 2, ...typography.h5, color: "#6B768A" }}
-                                    >
-                                        {item.role}
-                                    </Typography>
-                                    <Typography sx={{ ...typography.h6, color: "#5C5C5C" }}>{item.text}</Typography>
-
-                                    {/* Image block */}
-
-                                    {item.image && (
-                                        <Box
-                                            component="img"
-                                            src={item.image}
-                                            alt={item.name}
-                                            sx={{
-                                                width: "100%",
-                                                height: 200,
-                                                borderRadius: 2,
-                                                objectFit: "cover",
-                                                mb: 2,
-                                            }}
-                                        />
-                                    )}
-
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-                {/* Footer Section */}
+            <Box sx={{ gridColumn: "span 4", }}>
                 <Box
-                    mt={2}
-                    component="footer"
                     sx={{
-                        backgroundColor: "#0b2d55",
-                        color: "#fff",
-                        borderTopLeftRadius: 32,
-                        borderTopRightRadius: 32,
-                        width: "100%",
-                        px: { xs: 4, md: 12 },
-                        py: { xs: 6, md: 10 },
+                        width: "1440px",
+                        height: "1867px",
+                        paddingTop: "20px",
+                        paddingRight: "80px",
+                        paddingBottom: "40px",
+                        paddingLeft: "80px",
+                        gap: "32px",
+                        transform: "rotate(0deg)",
+                        opacity: 1,
+                        position: "relative",
+
+                        boxSizing: "border-box",
+                        margin: "0 auto",
+                        display: "flex",
+                        flexDirection: "column",
+                        flexWrap: "wrap",
                     }}
                 >
-                    <Grid container spacing={4} alignItems="flex-start">
-                        {/* 1. Left: Logo + Sub-brand */}
-                        <Grid item xs={12} md={4}>
-                            <Box mb={3}>
-                                <img src={Brand1} alt="ReFlux Magnets" style={{ height: 60 }} />
-                            </Box>
-                            <Typography variant="body2" sx={{ ...typography.h5, color: "white", mb: 1 }}>
-                                A unit of
-                            </Typography>
-                            <Box>
-                                <img src={Brand1} alt="Electro Flux" style={{ height: 60 }} />
-                            </Box>
-                        </Grid>
+                    {/* Content goes here */}
 
-                        {/* 2. Middle: Contact Info */}
-                        <Grid item xs={12} md={4}>
+
+                    {/* Heading */}
+                    <Box
+                        sx={{
+                            width: "100%",
+                            maxWidth: "1440px",
+                            minHeight: "252px",
+                            // px: { xs: 2, sm: 4, md: 2 },
+                            // py: { xs: 4, md: 5 },
+                            gap: 4, // vertical spacing between items
+                            boxSizing: "border-box",
+                            margin: "0 auto",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start", // left align
+                        }}
+                    >
+                        {/* Column content */}
+                        <Box
+                            sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "column", // ✅ stack vertically
+                                gap: 2, // spacing between title, divider, subtitle
+                            }}
+                        >
+                            {/* Title */}
                             <Typography
-                                sx={{
-                                    fontWeight: 600,
-                                    fontSize: "14px",
-                                    border: "1px solid #fff",
-                                    borderRadius: "16px",
-                                    px: 2,
-                                    py: 0.5,
-                                    display: "inline-block",
-                                    mb: 2,
-                                }}
+                                align="center"
+                                sx={{ ...typography.displayL, color: "#232323" }}
                             >
-                                Contact
+                                What Our Happy Customer Says
                             </Typography>
 
-                            <Typography variant="body2" sx={{ lineHeight: 1.8 }}>
-                                Xilliams Corner Wine © 2017. <br />
-                                1112 A Market St # Ste B22,<br />
-                                Charlottesville, CA 45565
-                            </Typography>
+                            {/* Divider */}
+                            <Divider sx={{ borderBottomWidth: 2, borderColor: "#178270", width: "100%" }} />
 
-                            <Typography sx={{ mt: 2 }}>(123) 456-7890</Typography>
+                            {/* Subtitle */}
                             <Typography
-                                sx={{
-                                    mt: 1,
-                                    display: "inline-block",
-                                    borderBottom: "2px solid #1976d2",
-                                    pb: "2px",
-                                }}
+                                align="left"
+                                sx={{ ...typography.h4, color: "#6B768A" }}
                             >
-                                contact@lift.agency
+                                Community Development is often linked with community work or community planning, and may involve stakeholders and foundations.
                             </Typography>
-                        </Grid>
+                        </Box>
+                    </Box>
 
-                        {/* 3. Right: Links + Arrow + Copyright */}
-                        <Grid item xs={12} md={4}>
-                            <Typography
-                                sx={{
-                                    fontWeight: 600,
-                                    fontSize: "14px",
-                                    border: "1px solid #fff",
-                                    borderRadius: "16px",
-                                    px: 2,
-                                    py: 0.5,
-                                    display: "inline-block",
-                                    mb: 2,
-                                }}
-                            >
-                                Links
-                            </Typography>
+                    {/* Cards */}
+                  <Box
+  sx={{
+    width: "1350px",
+    height: "975px",
+    gap: "24px",
+    transform: "rotate(0deg)",
+    opacity: 1,
+    boxSizing: "border-box",
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  }}
+>
+  {testimonials.map((item, index) => (
+    <Box
+      key={index}
+      sx={{
+        width: 650,
+        height: item.image ? 769 : 182, // dynamic height based on image presence
+        pt: 3, // spacing/space-24
+        pr: 5, // spacing/space-40
+        pb: 3,
+        pl: 5,
+        gap: 2.5, // 20px
+        border: "1px solid #f1f1f1ff", // radius-12
+        transform: "rotate(0deg)",
+        opacity: 1,
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        bgcolor:"#F7F9FC",
+        mb: 3, // spacing between rows
+      }}
+    >
+      <Typography sx={{ ...typography.h3B, color: "#232323" }}>
+        {item.name}
+      </Typography>
+      <Typography sx={{ mb: 1, ...typography.h5, color: "#6B768A" }}>
+        {item.role}
+      </Typography>
+      <Typography sx={{ ...typography.h6, color: "#5C5C5C" }}>
+        {item.text}
+      </Typography>
 
-                            {["Facebook", "Instagram", "Youtube"].map((item) => (
-                                <Typography key={item} sx={{ mb: 1 }}>
-                                    {item}
-                                </Typography>
-                            ))}
+      {item.image && (
+        <Box
+          component="img"
+          src={item.image}
+          alt={item.name}
+          sx={{
+            width: "100%",
+            height: 567, // fixed height for the image
+            borderRadius: 2,
+            objectFit: "cover",
+            mt: 2,
+          }}
+        />
+      )}
+    </Box>
+  ))}
+</Box>
 
-                            <Typography sx={{ fontWeight: 700, mt: 2 }}>Wall of Love ❤️</Typography>
-                            <Box
-                                sx={{
-                                    width: 30,
-                                    height: 2,
-                                    backgroundColor: "#fff",
-                                    my: 1,
-                                }}
-                            />
-                            <Typography sx={{ fontWeight: 700, mb: 3 }}>Sitemap</Typography>
 
-                            {/* Scroll to top icon */}
-                            <Box
-                                sx={{
-                                    width: 40,
-                                    height: 40,
-                                    borderRadius: "50%",
-                                    border: "1px solid #fff",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    mb: 2,
-                                }}
-                            >
-                                <ArrowUpwardIcon sx={{ color: "#fff" }} />
-                            </Box>
-
-                            <Typography variant="caption" sx={{ color: "#ccc" }}>
-                                © 2020 Lift Media All rights reserved.
-                            </Typography>
-                        </Grid>
-                    </Grid>
+                    {/* Footer Section */}
+                    <Footer />
                 </Box>
             </Box>
         </Box>

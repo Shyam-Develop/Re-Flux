@@ -23,102 +23,146 @@ const services = [
 ];
 
 export default function ServicesSection() {
-  const location=useLocation();
+  const location = useLocation();
   return (
-    <Box sx={{ maxWidth: 1200, mx: "auto", px: 2, py: 6 }}>
-      {/* Section Heading */}
-      {location.pathname === "/about-us" &&(
-        <>
-      <Typography
-        variant="h4"
-        sx={{ ...typography.displayM,
-            color:"#1C2D4B"
-            , mb: 1, textAlign: "left" }}
-      >
-        What we do
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ ...typography.h2,
-            color:"#1C2D4B", textAlign: "left", mb: 1 }}
-      >
-        Simple. Transparent. Reliable.
-      </Typography>
-      <Typography
-        variant="body1"
-        sx={{ ...typography.h5,
-            color:"#6B768A", textAlign: "left", mb: 6 }}
-      >
-        Whether you’re expanding, upgrading, or reselling, our platform makes the
-        process seamless.
-      </Typography>
+ <Box
+  sx={{
+    width: "100%",
+    minHeight: { xs: "auto", md: 435 }, // auto height on mobile
+    px: { xs: 2, md: 0 }, // horizontal padding for small screens
+    py: 4,
+    boxSizing: "border-box",
+  }}
+>
+  <Box
+    sx={{
+      maxWidth: 1360,
+      mx: "auto",
+      display: "flex",
+      flexDirection: "column",
+      gap: 4,
+      width: "100%",
+    }}
+  >
+    {/* Section Heading */}
+    {location.pathname === "/about-us" && (
+      <>
+        <Typography
+          variant="h4"
+          sx={{
+            ...typography.displayM,
+            color: "#1C2D4B",
+            mb: 1,
+            textAlign: { xs: "center", md: "left" },
+          }}
+        >
+          What we do
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            ...typography.h2,
+            color: "#1C2D4B",
+            textAlign: { xs: "center", md: "left" },
+            mb: 1,
+          }}
+        >
+          Simple. Transparent. Reliable.
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            ...typography.h5,
+            color: "#6B768A",
+            textAlign: { xs: "center", md: "left" },
+            mb: 6,
+          }}
+        >
+          Whether you’re expanding, upgrading, or reselling, our platform makes the
+          process seamless.
+        </Typography>
       </>
-)}
- {location.pathname === "/contact-us" &&(
-        <>
+    )}
+
+    {location.pathname === "/contact-us" && (
       <Typography
         variant="h4"
-        sx={{ ...typography.displayM,
-            color:"#1C2D4B"
-            , mb: 1, textAlign: "left" }}
+        sx={{
+          ...typography.displayM,
+          color: "#1C2D4B",
+          textAlign: { xs: "center", md: "left" },
+        }}
       >
         Our Services
       </Typography>
-      
-      </>
-)}
-      {/* Cards */}
-      <Grid container spacing={3} justifyContent="center">
-        {services.map((service, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card
-              sx={{
-                borderRadius: 2,
-                border: "1px solid #e5e7eb",
-                p: 3,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                boxShadow: "none",
-              }}
-            >
-              {/* Icon */}
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  backgroundColor: "#f9fafb",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <HandshakeOutlinedIcon fontSize="small" sx={{ color: "#374151" }} />
-              </Box>
+    )}
 
-              {/* Content */}
-              <CardContent sx={{ p: 0 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ ...typography.h3,
-                    color:"#0C0F13", mb: 1, color: "#111827" }}
-                >
-                  {service.title}
-                </Typography>
-                <Typography
-                  
-                  sx={{  ...typography.h5,
-                    color:"#00000099", lineHeight: 1.6 }}
-                >
-                  {service.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+    {/* Cards Container */}
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: { xs: "center", md: "flex-start" },
+        gap: 3,
+        width: "100%",
+        mt: 2,
+      }}
+    >
+      {services.map((service, index) => (
+        <Box
+          key={index}
+          sx={{
+            flex: { xs: "1 1 100%", sm: "1 1 45%", md: "1 1 30%" },
+            maxWidth: { xs: "100%", sm: "45%", md: "30%" },
+            height: { xs: "auto", md: 270 },
+            pt: 3,
+            px: 3,
+            pb: 6,
+            borderRadius: 2,
+            border: "1px solid grey",
+            backgroundColor: "white",
+            boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Icon */}
+          <Box
+            sx={{
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              backgroundColor: "#f9fafb",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <HandshakeOutlinedIcon fontSize="small" sx={{ color: "#374151" }} />
+          </Box>
+
+          {/* Content */}
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              mt: 2,
+            }}
+          >
+            <Typography sx={{ ...typography.h3, color: "#111827", mb: 1 }}>
+              {service.title}
+            </Typography>
+            <Typography sx={{ ...typography.h5, color: "#00000099" }}>
+              {service.description}
+            </Typography>
+          </Box>
+        </Box>
+      ))}
     </Box>
+  </Box>
+</Box>
+
   );
 }
