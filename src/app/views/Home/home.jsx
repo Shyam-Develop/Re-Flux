@@ -61,6 +61,7 @@ import { typography } from "app/utils/constant";
 import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import HomeVideoCard from "app/components/Card/HomeVideoCard";
 
 
 const UploadBox = ({ label }) => {
