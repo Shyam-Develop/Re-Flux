@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Pagination, PaginationItem } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useNavigate } from "react-router-dom";
 import Brand1 from '../../../assets/Brand1.png';
 import Blogpost from '../../../assets/Blogpost1.jpg';
 import Blogpost2 from '../../../assets/Blogpost2.jpg';
@@ -19,6 +20,7 @@ import Blogpost4 from '../../../assets/Blogpost4.jpg';
 import Blogpost5 from '../../../assets/Blogpost5.jpg';
 import Blogpost6 from '../../../assets/Blogpost6.jpg';
 import Blogpost7 from '../../../assets/Blogpost7.jpg';
+import { typography } from 'app/utils/constant';
 
 
 
@@ -61,7 +63,10 @@ const blogPosts = [
     },
 ];
 
-const BlogPage = () => {
+const BlogPost = () => {
+
+      const navigate = useNavigate();
+
     return (
         <Box sx={{ bgcolor: '#fff', py: 6 }}>
             {/* Page Title */}
@@ -69,7 +74,7 @@ const BlogPage = () => {
 
             {/* CONTENT CONTAINER: center this box */}
             <Box sx={{ maxWidth: '1137px', mx: 'auto' }}>
-                <Typography variant="h4" fontSize={56} fontWeight="bold" mb={4} textAlign="left">
+                <Typography sx={{ ...typography.displayL, color:'#1C2D4B' }}  mb={4}>
                     Recent blog posts
                 </Typography>
                 {/* Main Blog Post */}
@@ -91,11 +96,11 @@ const BlogPage = () => {
                             Sunday, 1 Jan 2023
                         </Typography>
 
-                        <Typography variant="h5" fontSize={48} fontWeight="bold" mt={1}>
+                        <Typography sx={{...typography.displayM, color:'#1C2D4B'}} mt={1}>
                             UX review presentations
                         </Typography>
 
-                        <Typography variant="body1" color="text.secondary" mt={1}>
+                        <Typography sx={{...typography.h5, color:'#49576F'}} mt={1}>
                             How do you create compelling presentations that wow your colleagues and impress your managers?
                         </Typography>
 
@@ -120,13 +125,13 @@ const BlogPage = () => {
                                 sx={{ width: 320, height: 200, objectFit: 'cover' }}
                             />
                             <Box ml={4}>
-                                <Typography variant="body2" color="#2E8E7E">
+                                <Typography sx={{...typography.h6, color:"#2E8E7E" }}>
                                     Sunday, 1 Jan 2023
                                 </Typography>
-                                <Typography variant="subtitle1" fontSize={28} fontWeight="bold" >
+                                <Typography sx={{...typography.h3, color:'#1C2D4B'}}>
                                     Migrating to Linear 101
                                 </Typography>
-                                <Typography variant="body2" fontSize={20} color="#49576F" mt={0.5}>
+                                <Typography sx={{...typography.h5, color:"#49576F"}}  mt={0.5}>
                                     Linear helps streamline software projects, sprints, tasks, and bug tracking. Here’s how to get...
                                 </Typography>
                             </Box>
@@ -143,13 +148,13 @@ const BlogPage = () => {
                                 sx={{ width: 320, height: 200, objectFit: 'cover' }}
                             />
                             <Box ml={4}>
-                                <Typography variant="body2" color="#2E8E7E">
+                                <Typography sx={{...typography.h6, color:"#2E8E7E" }}>
                                     Sunday, 1 Jan 2023
                                 </Typography>
-                                <Typography variant="subtitle1" fontSize={28} fontWeight="bold" mt={0.5}>
+                                <Typography sx={{...typography.h3, color:'#1C2D4B'}} mt={0.5}>
                                     Building your API Stack
                                 </Typography>
-                                <Typography variant="body2" fontSize={20} color="#49576F" mt={0.5}>
+                                <Typography sx={{...typography.h5, color:"#49576F"}} mt={0.5}>
                                     The rise of RESTful APIs has been met by a rise in tools for creating, testing, and managing...
                                 </Typography>
                             </Box>
@@ -159,7 +164,7 @@ const BlogPage = () => {
 
 
                 {/* 1st Section */}
-                <Typography variant="h4" fontWeight="bold" marginTop={5} fontSize={48} mb={4}>
+                <Typography sx={{...typography.displayM, color:"#1C2D4B"}} marginTop={5}  mb={4}>
                     Exploring the Future of Lifting Magnet Repairs
                 </Typography>
 
@@ -177,17 +182,17 @@ const BlogPage = () => {
                                         height: '240px',
                                         //borderRadius: 2,
                                         objectFit: 'cover',
-
                                         mb: 2,
                                     }}
                                 />
                                 <Typography variant="body2" color="#2E8E7E">
                                     {post.date}
                                 </Typography>
-                                <Typography variant="h6" fontWeight="bold" lineHeight={1.1} fontSize={48} mt={0.5}>
+                                <Typography  sx={{...typography.displayM, color:"#1C2D4B" , cursor:'pointer'}} mt={0.5}
+                                 onClick={() => navigate("/home/BlogDetails")}>
                                     {post.title}
                                 </Typography>
-                                <Typography variant="body2" color="#49576F" mt={1}>
+                                <Typography sx={{...typography.h5, color:"#49576F" }} mt={1}>
                                     {post.description}
                                 </Typography>
                                 <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
@@ -208,6 +213,7 @@ const BlogPage = () => {
                     ))}
                 </Grid>
 
+                {/* Pagination */}
                 <Box display="flex" justifyContent="center" mt={6}>
                     <Pagination
                         count={10}
@@ -229,7 +235,7 @@ const BlogPage = () => {
 
 
                 {/* 2nd Section */}
-                <Typography variant="h4" fontWeight="bold" marginTop={5} fontSize={48} mb={4}>
+                <Typography sx={{...typography.displayM, color:"#1C2D4B"}} marginTop={5} mb={4}>
                     Exploring the Benefits of Renting Lifting Magnets
                 </Typography>
 
@@ -247,17 +253,17 @@ const BlogPage = () => {
                                         height: '240px',
                                         //borderRadius: 2,
                                         objectFit: 'cover',
-
                                         mb: 2,
                                     }}
                                 />
                                 <Typography variant="body2" color="#2E8E7E">
                                     {post.date}
                                 </Typography>
-                                <Typography variant="h6" fontWeight="bold" lineHeight={1.1} fontSize={48} mt={0.5}>
+                                <Typography  sx={{...typography.displayM, color:"#1C2D4B" , cursor:'pointer'}} mt={0.5}
+                                 onClick={() => navigate("/home/BlogDetails")}>
                                     {post.title}
                                 </Typography>
-                                <Typography variant="body2" color="#49576F" mt={1}>
+                                <Typography sx={{...typography.h5, color:"#49576F" }} mt={1}>
                                     {post.description}
                                 </Typography>
                                 <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
@@ -278,7 +284,8 @@ const BlogPage = () => {
                     ))}
                 </Grid>
 
-                <Box display="flex" justifyContent="center" mt={6}>
+                 {/* Pagination */}
+                 <Box display="flex" justifyContent="center" mt={6}>
                     <Pagination
                         count={10}
                         shape="rounded"
@@ -297,13 +304,14 @@ const BlogPage = () => {
                     />
                 </Box>
 
+
                 {/* 3rd Section */}
-                <Typography variant="h4" fontWeight="bold" marginTop={5} fontSize={48} mb={4}>
+                <Typography sx={{...typography.displayM, color:"#1C2D4B"}} marginTop={5} mb={4}>
                     Exploring the Advantages of Refurbished Electro Lifting Magnets
                 </Typography>
 
                 {/* Blog Grid */}
-                <Grid container spacing={4}>
+               <Grid container spacing={4}>
                     {blogPosts.map((post, index) => (
                         <Grid item xs={12} md={6} key={index}>
                             <Box>
@@ -316,17 +324,17 @@ const BlogPage = () => {
                                         height: '240px',
                                         //borderRadius: 2,
                                         objectFit: 'cover',
-
                                         mb: 2,
                                     }}
                                 />
                                 <Typography variant="body2" color="#2E8E7E">
                                     {post.date}
                                 </Typography>
-                                <Typography variant="h6" fontWeight="bold" lineHeight={1.1} fontSize={48} mt={0.5}>
+                                <Typography  sx={{...typography.displayM, color:"#1C2D4B" , cursor:'pointer'}} mt={0.5}
+                                 onClick={() => navigate("/home/BlogDetails")}>
                                     {post.title}
                                 </Typography>
-                                <Typography variant="body2" color="#49576F" mt={1}>
+                                <Typography sx={{...typography.h5, color:"#49576F" }} mt={1}>
                                     {post.description}
                                 </Typography>
                                 <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
@@ -347,7 +355,8 @@ const BlogPage = () => {
                     ))}
                 </Grid>
 
-                <Box display="flex" justifyContent="center" mt={6}>
+                {/* Pagination */}
+                 <Box display="flex" justifyContent="center" mt={6}>
                     <Pagination
                         count={10}
                         shape="rounded"
@@ -533,4 +542,4 @@ const BlogPage = () => {
     );
 };
 
-export default BlogPage;
+export default BlogPost;

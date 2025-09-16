@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Box, Grid, Typography, Button, Chip, Paper, Card,
   CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary,TextField,
-  InputAdornment, AccordionDetails,
+  InputAdornment, AccordionDetails
 } from '@mui/material';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -19,6 +19,8 @@ import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
 import { useNavigate } from 'react-router-dom';
+import { typography } from 'app/utils/constant';
+import Footer from 'app/components/Card/Footer';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
  const navigate=useNavigate()
@@ -69,12 +71,12 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
         {/* Content */}
         <Grid item xs={12} md={7}>
           {/* Title */}
-          <Typography variant="h3" sx={{ fontWeight: 700, mb: 3, fontSize: '40px' }}>
+          <Typography sx={{ ...typography.h2, color:'#1A2438', mb:3 }}>
             {title}
           </Typography>
 
           {/* Subheading */}
-          <Typography variant="h5" sx={{ fontWeight: 600, mb: 2, fontSize: '24px' }}>
+          <Typography sx={{ ...typography.h4, color:'#49576F', mb:3 }}>
             Common faults
           </Typography>
 
@@ -102,8 +104,8 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
             ))}
           </Box>
 
-          <Typography variant="body1" sx={{ fontSize: '18px', mb: 4 }}>
-            <strong>Turnaround Time:</strong><br /> {turnaround}
+          <Typography sx={{ ...typography.h5, color:'#0E1626',marginTop:'3%' }}>
+            <strong>Turnaround Time</strong><br /> {turnaround}
           </Typography>
 
           <Button
@@ -247,18 +249,22 @@ const RepairServices = () => {
       {/* Top Image */}
       <Box sx={topImageStyle}>
         <img src={repairmainimg} alt="Top Banner" style={imageStyle} />
+
+        <Box sx={overlayBoxStyle} >
+            <Typography sx={{...typography.h3, color:'#000000'}}>Services</Typography>
+        </Box>
       </Box>
 
       {/* Top Text Section */}
       <Box sx={{ padding: '80px 120px' }}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography variant="h3" sx={{ fontWeight: 'bold', fontSize: '36px' }}>
+            <Typography sx={{ ...typography.h1, color:'#1A2438' }}>
               Rent Industrial Magnets with Ease
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography sx={{ color: 'text.secondary', fontSize: '18px' }}>
+            <Typography sx={{ ...typography.bodyBase, color:'#99A0AE'  }}>
               Get powerful lifting magnets when you need them — without the upfront cost.
               Flexible rental plans, quick installation, and reliable performance for every project.
             </Typography>
@@ -304,6 +310,8 @@ const RepairServices = () => {
         <Typography
           sx={{
             ml: 8,
+            ...typography.displayL,
+            color:'#1C2D4B'
           }}
           variant="h3" fontWeight="bold" gutterBottom>
           ROI Calculator
@@ -311,7 +319,8 @@ const RepairServices = () => {
         <Typography
           variant="h5" sx={{
             mb: 4,
-            color: "text.secondary",
+            ...typography.h4,
+            color:'#99A0AE',
             ml: 8
           }}>
           Get powerful lifting magnets when you need them — without the upfront
@@ -395,7 +404,7 @@ const RepairServices = () => {
                   >
                     <Box display="flex"
                       justifyContent="space-between" alignItems="center">
-                      <Typography variant="subtitle1" fontWeight="bold" fontSize={'24px'} >
+                      <Typography sx={{ ...typography.h4, color:'#0B121E'}} >
                         {item.title}
                       </Typography>
                       <IconButton
@@ -409,7 +418,7 @@ const RepairServices = () => {
                         <ArrowForwardIosIcon fontSize="small" />
                       </IconButton>
                     </Box>
-                    <Typography variant="body2" color="text.secondary" fontSize={'18px'}>
+                    <Typography sx={{...typography.bodyBase, color:'#99A0AE'}}>
                       {item.description}
                     </Typography>
                   </Box>
@@ -433,10 +442,10 @@ const RepairServices = () => {
               backgroundColor: '#b6c1cd'
             }}
           />
-          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1, fontSize: '54px' }}>
+          <Typography sx={{ ...typography.displayL, color:'#1A2438' }}>
             Check out our Refurbished section
           </Typography>
-          <Typography color="text.secondary" sx={{ mb: 3, fontSize: '24px', fontWeight: 400 }}>
+          <Typography sx={{ ...typography.h4, color:'#99A0AE' }}>
             Check out these rentals
           </Typography>
         </Box>
@@ -458,13 +467,13 @@ const RepairServices = () => {
                 }}
               >
                 {/* Title & size */}
-                <Typography sx={{ fontWeight: '600', fontSize: '24px', width: '406px', height: '31px' }}>
+                <Typography sx={{ ...typography.h4, color:'#0B121E', width: '406px', height: '31px' }}>
                   {product.title}
                 </Typography>
-                <Typography sx={{ fontSize: '20px', height: '26px', mb: 1 }}>
+                <Typography sx={{ ...typography.h5, color:'#00000099', mb: 1 }}>
                   {product.size}
                 </Typography>
-                <Typography sx={{ fontSize: '14px', height: '21px', color: 'text.secondary', mb: 1 }}>
+                <Typography sx={{ ...typography.bodySmall, color:'#00000099', mb: 1 }}>
                   Certified: {product.certified}
                 </Typography>
 
@@ -509,14 +518,14 @@ const RepairServices = () => {
                 {/* Specs */}
                 <Grid container spacing={2} sx={{ mb: 2, width: '406px', height: '47px' }}>
                   <Grid item xs={6}>
-                    <Typography sx={{ fontWeight: 600, fontSize: 16, width: '102px' }}>Lift Capacity</Typography>
-                    <Typography sx={{ fontSize: 12, height: '16px', fontWeight: '600', color: 'text.secondary' }}>
+                    <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Lift Capacity</Typography>
+                    <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
                       {product.liftCapacity}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography sx={{ fontWeight: 600, fontSize: 16 }}>Power Supply</Typography>
-                    <Typography sx={{ fontSize: 12, height: '16px', color: 'text.secondary' }}>
+                    <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Power Supply</Typography>
+                    <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
                       {product.powerSupply}
                     </Typography>
                   </Grid>
@@ -524,8 +533,8 @@ const RepairServices = () => {
 
                 {/* Included */}
                 <Box sx={{ mb: 3, marginBottom: '30px', marginTop: '30px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: 16, }}>Included</Typography>
-                  <Typography sx={{ fontSize: 12, height: '16px', color: 'text.secondary' }}>
+                  <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Included</Typography>
+                  <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
                     {product.included}
                   </Typography>
                 </Box>
@@ -534,7 +543,7 @@ const RepairServices = () => {
                 <Button
                   variant="contained"
                   fullWidth
-                  sx={{ backgroundColor: '#1a73e8', width: '406px', height: '44px', textTransform: 'none', fontWeight: 'bold' }}
+                  sx={{ backgroundColor: '#1a73e8', width: '406px', height: '44px', textTransform: 'none', ...typography.bodyStrong }}
                 >
                   Buy now
                 </Button>
@@ -549,10 +558,9 @@ const RepairServices = () => {
             component="a"
             href="#"
             sx={{
-              fontWeight: 600,
+              ...typography.h3,
               color: '#1976d2',
-              textDecoration: 'none',
-              fontSize: '14px',
+              
               '&:hover': {
                 textDecoration: 'underline',
               },
@@ -592,6 +600,8 @@ const RepairServices = () => {
         sx={{
           ml: 8,
           // mt: 5
+          ...typography.displayL,
+          color:'#1C2D4B'
         }}
         variant="h3" fontWeight="bold" gutterBottom>
         FAQs
@@ -599,7 +609,8 @@ const RepairServices = () => {
       <Typography
         variant="h5" sx={{
           mb: 4,
-          color: "text.secondary",
+         color: '#1C2D4B',
+         ...typography.h4,
           ml: 8
         }}>
         Get powerful lifting magnets when you need them — without the upfront
@@ -632,12 +643,12 @@ const RepairServices = () => {
                 </IconButton>
               }
             >
-              <Typography fontWeight="bold" fontSize={'24px'}>
+              <Typography sx={{...typography.h4, color:'#0E1109'}}>
                 {item.question}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography variant="body2" fontSize={'18px'} color="text.secondary">
+              <Typography sx={{...typography.bodyBase, color:'#0E1109'}}>
                 {item.answer}
               </Typography>
             </AccordionDetails>
@@ -673,7 +684,8 @@ const RepairServices = () => {
       <Typography
         sx={{
           ml: 8,
-          // mt: 5
+          ...typography.displayL,
+          color:'#1C2D4B'
         }}
         variant="h3" fontWeight="bold" gutterBottom>
         Blogs
@@ -681,7 +693,8 @@ const RepairServices = () => {
       <Typography
         variant="h5" sx={{
           mb: 4,
-          color: "text.secondary",
+           color: '#1C2D4B',
+         ...typography.h4,
           ml: 8
         }}>
         Get powerful lifting magnets when you need them — without the upfront
@@ -713,10 +726,10 @@ const RepairServices = () => {
                 }}
               />
               <CardContent>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                <Typography sx={{...typography.h5, color:'#0E1109'}} gutterBottom>
                   {blogData[0].title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography sx={{...typography.bodyBase, color:'#677489'}}>
                   {blogData[0].author} • {blogData[0].date}
                 </Typography>
                 <Link
@@ -724,7 +737,7 @@ const RepairServices = () => {
                   underline="none"
                   sx={{
                     color: "#1976d2",
-                    fontWeight: "bold",
+                    ...typography.bodyBasemedium,
                     mt: 1,
                     display: "inline-flex",
                     alignItems: "center"
@@ -765,19 +778,17 @@ const RepairServices = () => {
                       }}
                     />
                     <Box>
-                      <Typography variant="subtitle1" fontWeight="medium">
+                      <Typography sx={{...typography.h5, color:'#0E1109'}}>
                         {item.title}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography sx={{...typography.bodyBase, color:'#677489'}}>
                         {item.author} • {item.date}
                       </Typography>
                       <Link
                         href="#"
                         underline="none"
-                        sx={{ color: "#1976d2", fontWeight: "bold", mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                        sx={{ color: "#1976d2", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
                       >
-
-
                         Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1976d2", }} />
                       </Link>
                     </Box>
@@ -793,139 +804,7 @@ const RepairServices = () => {
        {/* Footer Section */}
       <Box sx={{ bgcolor: "#f9f9f9", px: 8, py: 6, background: '#0b2d55', margin:'10px', borderTopRightRadius: '55px',
               borderTopLeftRadius: '55px' }}>
-        {/* Top Grid */}
-        <Grid container spacing={4}>
-          {/* 1. Logo + Sub-brand */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Box mb={2}>
-              <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-            </Box>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              A unit of
-            </Typography>
-            <Box>
-              <img
-                src={Brand1}
-                alt="Electro Flux"
-                style={{ height: 70 }}
-              />
-            </Box>
-          </Grid>
-
-          {/* 2. Sitemap */}
-          <Grid item xs={12} sm={6} md={2} color={'white'}>
-            <Typography fontWeight="bold" gutterBottom>
-              Sitemap
-            </Typography>
-            {["Home", "Abouts", "Growers", "Merchants", "Contact"].map((item) => (
-              <Typography key={item} variant="body2" sx={{ mb: 0.5, }}>
-                <Link href="#" underline="none"  sx={{ color:'white'}} color="text.primary">
-                  {item}
-                </Link>
-              </Typography>
-            ))}
-          </Grid>
-
-          {/* 3. Socials */}
-          <Grid item xs={12} sm={6} md={2} color={'white'}>
-            <Typography fontWeight="bold" gutterBottom color={'white'}>
-              Socials
-            </Typography>
-            {["Facebook", "Linkedin", "Instagram", "Twitter"].map((item) => (
-              <Typography key={item} variant="body2"  sx={{ mb: 0.5, color:'white' }}>
-                <Link href="#" sx={{ color:'white'}} underline="none" color="text.primary">
-                  {item}
-                </Link>
-              </Typography>
-            ))}
-          </Grid>
-
-          {/* 4. Office & Newsletter */}
-          <Grid item xs={12} sm={6} md={5}>
-            <Typography fontWeight="bold" color={'white'} gutterBottom>
-              Head Office
-            </Typography>
-            <Typography variant="body2"  color="text.primary" sx={{ mb: 2, color:'white' }}>
-              Xilliams Corner Wine © 2017. 1112 A Market St # Ste B22,
-              Charlottesville, CA 45565
-            </Typography>
-
-            <Typography fontWeight="bold" color={'white'} gutterBottom>
-              News letter
-            </Typography>
-            <TextField 
-              placeholder="Enter your email address"
-              variant="standard"
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <MailOutlineIcon
-                        sx={{
-                          color: "#1976d2"
-                        }}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        {/* Bottom Line */}
-        <Grid container spacing={2} sx={{ mt: 6, color: 'white'}}>
-          <Grid item xs={3}>
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontFamily: "Fira Sans",
-                textDecoration: "underline",
-                textDecorationColor: "#1976d2",
-                textUnderlineOffset: "4px",
-                color: 'white'
-              }}
-              variant="body2"
-              fontWeight="medium"
-            >
-              contact@lift.agency
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontFamily: "Space Grotesk",
-                textDecoration: "underline",
-                textDecorationColor: "#1976d2",
-                textUnderlineOffset: "4px",
-                color: 'white'
-              }}
-              variant="body2"
-              fontWeight="medium"
-            >
-              (123) 456-7890
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}></Grid> {/* Empty spacer under socials column */}
-
-          <Grid item xs={3}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{
-                fontSize: "14px",
-                fontFamily: "Regular",
-                color: 'white'
-              }}
-            >
-              © 2020 Lift Media All rights reserved.
-            </Typography>
-          </Grid>
-        </Grid>
+        <Footer/>
 
       </Box>
 
@@ -937,12 +816,24 @@ const topImageStyle = {
   width: '100%',
   height: '329px',
   overflow: 'hidden',
+  position: 'relative', 
 };
 
 const imageStyle = {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
+};
+
+const overlayBoxStyle = {
+  position: 'absolute',
+  bottom: '5px',    
+  left: '50px',      
+  backgroundColor: '#F1F2F4',
+  width:'283px',
+  height:'66px',
+  padding: '14px 60px;',
+  textAlign: 'center',
 };
 
 const faultsList = [

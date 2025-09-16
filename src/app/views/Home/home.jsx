@@ -1230,11 +1230,7 @@ fontWeight: 600,
                 component="img"
                 src={RentingMagnet} // <- replace this with your actual path
                 alt="Magnet Excavator"
-                sx={{ 
-                  width: "100%",
-                  // width: "710px", 
-                  // height: "584px",
-                  borderRadius: 2 }}
+                sx={{ width: "100%", borderRadius: 2 }}
               />
             </Grid>
 
