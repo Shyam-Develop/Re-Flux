@@ -34,7 +34,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import rentserviceimg from "../../../assets/RentService.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import videoFile from "../../../assets/Electroflux_basic_ edit.mp4"; // ✅ put your video file here
+import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
 import WhatsApp from "../../../assets/whatsappimg.jpg";
 import RepairsectionCard from "app/components/Card/RepairsectionCard";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -61,51 +61,49 @@ import { typography } from "app/utils/constant";
 import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import BeforeAfterCard from "app/components/Card/BeforeAfterCard";
-import HeroSection from "app/components/Card/HomeVideoCard";
-import HomeVideoCard from "app/components/Card/HomeVideoCard";
 
 
 const UploadBox = ({ label }) => {
-  return (
-    <Box sx={{ my: 3 }}>
-      <Typography variant="h6" gutterBottom>{label}</Typography>
-      <label htmlFor="upload-input">
-        <Box
-          sx={{
-            border: '2px dashed #ccc',
-            borderRadius: 2,
-            p: 4,
-            textAlign: 'center',
-            cursor: 'pointer',
-            transition: 'border-color 0.3s ease',
-            '&:hover': { borderColor: 'primary.main' },
-          }}
-        >
-          <IconButton component="span" size="large">
-            <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
-          </IconButton>
-          <Typography>
-            <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Select image in jpeg, PNG
-          </Typography>
+    return (
+        <Box sx={{ my: 3 }}>
+            <Typography variant="h6" gutterBottom>{label}</Typography>
+            <label htmlFor="upload-input">
+                <Box
+                    sx={{
+                        border: '2px dashed #ccc',
+                        borderRadius: 2,
+                        p: 4,
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                        transition: 'border-color 0.3s ease',
+                        '&:hover': { borderColor: 'primary.main' },
+                    }}
+                >
+                    <IconButton component="span" size="large">
+                        <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+                    </IconButton>
+                    <Typography>
+                        <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                        Select image in jpeg, PNG
+                    </Typography>
+                </Box>
+            </label>
+            <input
+                id="upload-input"
+                type="file"
+                accept="image/jpeg, image/png"
+                style={{ display: 'none' }}
+            />
         </Box>
-      </label>
-      <input
-        id="upload-input"
-        type="file"
-        accept="image/jpeg, image/png"
-        style={{ display: 'none' }}
-      />
-    </Box>
-  );
+    );
 };
 const HomePage = () => {
   const navigate = useNavigate();
   //=================VIDEO-Loading===============================//
-
+  const [selected, setSelected] = useState(null);
+  const [loadingId, setLoadingId] = useState(null);
   const items = [
     { id: "01", title: "Repair", head: "Magnet down? We’ll get your lift back fast.", text: " Coil rewinds (Class F/H), terminals/leads, junction boxes & controllers—returned to spec with a load-test certificate. Clear Turn Around Time bands and Pan-India pickup/install.", button: "Request a Repair Quote" },
     { id: "02", title: "Rent", head: "Rent electro-lifting magnets, ready when you are", text: "Circular, rectangular, and suspension (oil/air-cooled) magnets with controllers and cables. Pan-India logistics, load-tested before dispatch.", button: "Check Availability" },
@@ -404,12 +402,15 @@ height: "62px",
           onClick={handleClickOpen}
           variant="contained"
           sx={{
+            fontFamily: "Inter-Medium",
             bgcolor: "#b3570d", // orange/brown shade
             borderRadius: "25px",
             px: 3,
             py: 1,
             // fontWeight: "bold",
-            fontSize: "16px",
+            fontSize: "14px",
+            fontWeight: 500,
+            lineHeight: "1.5",
             "&:hover": {
               bgcolor: "#944708",
             },
@@ -419,32 +420,60 @@ height: "62px",
         </Button>
 
         {/* Links */}
-        <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 4 }}>
+        <Box 
+        sx={{
+           mt: 2, 
+           display: "flex", 
+           justifyContent: "center",
+            gap: 4,
+              ...typography.buttonLink,
+             textDecoration: "underline", 
+              fontWeight: 600,
+               color: "#0e8bf1ff", 
+            }}>
           <Link
             href="#"
-            underline="none"
+            // underline="none"
             sx={{
-              color: "primary.main",
+               color: "#0e8bf1ff",
               display: "flex",
               alignItems: "center",
-              fontWeight: 500,
+             ...typography.buttonLink,
+             textDecoration: "underline", 
+              fontWeight: 600,
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            WhatsApp Photos <ArrowRightAltIcon sx={{ ml: 0.5, fontSize: 20 }} />
+            WhatsApp Photos <ArrowRightAltIcon 
+            sx={{ 
+    ml: 0.5, 
+    fontSize: 20,
+    mt: '2px', // shift it slightly upward
+    position: 'relative',
+    top: '5px', // or use top instead of mt for finer control
+  }} 
+              />
           </Link>
           <Link
             href="#"
-            underline="none"
+            // underline="none"
             sx={{
-              color: "primary.main",
+               color: "#0e8bf1ff",
               display: "flex",
               alignItems: "center",
               fontWeight: 500,
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            Book Site Visit <ArrowRightAltIcon sx={{ ml: 0.5, fontSize: 20 }} />
+            Book Site Visit <ArrowRightAltIcon 
+          sx={{ 
+    ml: 0.5, 
+    fontSize: 20,
+    mt: '2px', // shift it slightly upward
+    position: 'relative',
+    top: '5px', // or use top instead of mt for finer control
+  }} 
+              />
           </Link>
         </Box>
       </Box>
@@ -467,10 +496,11 @@ height: "62px",
           variant="h4"
           sx={{
             mt: 6,
-            fontWeight: 700,
+            fontWeight: 600,
             color: "#1c2434",
             textAlign: "left", // center align like screenshot
-            fontFamily: "Inter, sans-serif",
+            ...typography.h3RBold,
+
           }}
         >
           Before and after case studies
@@ -483,7 +513,9 @@ height: "62px",
             fontWeight: 600,
             color: "#1c2434",
             textAlign: "left", // center align
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "SpaceGrotesk-Regular",
+            fontSize: "32px",
+            lineHeight: "1.2",
             ml: 8,
           }}
         >
@@ -496,30 +528,90 @@ height: "62px",
             mt: 1,
             ml: 8,
             color: "text.secondary",
-            textAlign: "left", // center align text
-            // maxWidth: 700,
-            // mx: "auto",                 // centers horizontally
-            fontSize: "1rem",
-            fontFamily: "Inter, sans-serif",
+            textAlign: "left", 
+            fontWeight: 400,
+            // mx: "auto",                 
+            ...typography.bodyBase
           }}
         >
           Understanding growing demand and exceeding expectations from our
           customers in repairing
         </Typography>
         {/* Image Section */}{" "}
-        <BeforeAfterCard />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "1092px",
+            height: "447px"
+          }}
+        >
+          {" "}
+          {/* Left Arrow */}{" "}
+          <IconButton
+            sx={{
+              left: 10,
+              bgcolor: "#1c2434",
+              color: "white",
+              "&:hover": { bgcolor: "#344050" },
+            }}
+          >
+            {" "}
+            <ArrowBackIcon />{" "}
+          </IconButton>{" "}
+          {/* Before Image */}{" "}
+          <Box
+            component="img"
+            src={before}
+            alt="Before"
+            sx={{
+              width: "40%",
+              borderRadius: 2,
+              objectFit: "cover",
+              mt: 8,
+            }}
+          />{"Before"}
+          {/* After Image */}{" "}
+          <Box
+            component="img"
+            src={after}
+            alt="After"
+            sx={{
+               width: "40%", 
+              borderRadius: 2, objectFit: "cover" }}
+          />{"After "}
+          {/* Right Arrow */}{" "}
+          <IconButton
+            sx={{
+      //       height: 48,
+      // width: 48,
+      right: 40,
+              bgcolor: "#1c2434",
+              color: "white",
+              "&:hover": { bgcolor: "#344050" },
+            }}
+          >
+            {" "}
+            <ArrowForwardIcon />{" "}
+          </IconButton>{" "}
+        </Box>
         <Box sx={{ textAlign: "center", py: 6 }}>
           {/* Top Button */}
           <Button
             onClick={() => navigate("/home/ViewCaseStudy")}
             variant="contained"
             sx={{
+              fontFamily: "Inter-Medium",
+              fontWeight: 500,
+lineHeight: "1.5",
               bgcolor: "#b3570d", // orange/brown shade
               borderRadius: "25px",
               px: 3,
               py: 1,
+              mb: 5, 
               // fontWeight: "bold",
-              fontSize: "16px",
+              fontSize: "14px",
               "&:hover": {
                 bgcolor: "#944708",
               },
@@ -534,11 +626,14 @@ height: "62px",
       <Typography
         variant="h4"
         sx={{
-          fontWeight: 700,
+          fontWeight: 600,
+          fontSize: "48px",
+          lineHeight: "1.2",
           color: "#1c2434",
           mb: 2,
           ml: 5,
-          fontFamily: "Inter, sans-serif",
+          mt: 10,
+          fontFamily: "Space Grotesk, Regular",
         }}
       >
         ElectroMagnet Repair
@@ -557,131 +652,128 @@ height: "62px",
         Coil rewinds, terminal rebuilds, housing & controllers — restored to
         spec with certified load testing
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh", // full viewport height
-          bgcolor: "#f5f5f5", // optional background
-        }}
-      >
+     <Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    border: "1px solid #ddd",
+    borderRadius: 3,
+    ml: 5,
+    px: 4,
+    py: 4,
+    gap: 6,
+    bgcolor: "white",
+  }}
+>
+  {/* Left - Features with vertical timeline */}
+  <Box sx={{ flex: 1, position: "relative" }}>
+    {/* Continuous Vertical Line */}
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: "10px", // adjust to align with icons
+        width: "2px",
+        bgcolor: "#ccc",
+        borderRadius: 1,
+      }}
+    />
+
+    {features.map((item, index) => {
+      const isActive = hoveredIndex === index;
+
+      return (
         <Box
+          key={index}
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "1312px",
-            height: "708px",
-            opacity: 1,
-            border: "1px solid #ddd",
-            borderRadius: "12px", // Radius/radius-12
-            // px: "32px",           // padding-left + padding-right
-            // py: "24px",           // padding-top + padding-bottom
-            gap: "12px",
-            bgcolor: "white",
+            alignItems: "flex-start",
+            mb: 4,
+            cursor: "pointer",
+            position: "relative",
           }}
+          onMouseEnter={() => setHoveredIndex(index)}
         >
-          {/* Left - Features with vertical timeline */}
-          <Box
-            sx={{
-              flex: 1,
-              position: "relative",
-              width: 570,
-              height: 660,
-              opacity: 1,
-            }}
-          >
-            {/* Continuous Vertical Line */}
-
-
-            {features.map((item, index) => {
-              const isActive = activeIndex === index;
-
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    width: 570,
-                    height: 165,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    gap: "20px",
-                    px: "32px", // padding-left/right
-                    py: "32px", // padding-top/bottom
-                    borderLeft: isActive
-                      ? "4px solid #1976d2"
-                      : "4px solid transparent",
-                    opacity: 1,
-                    position: "relative",
-                    cursor: "pointer",
-                    borderRadius: 1,
-                    left: 10,
-                    transition: "all 0.3s ease",
-                  }}
-                  onClick={() => handleTabClick(index)}
-                >
-                  {/* Icon + Title */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <CalendarMonthIcon
-                      sx={{
-                        fontSize: 20,
-                        color: isActive ? "#1976d2" : "#666",
-                        transition: "0.3s",
-                      }}
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 600,
-                        color: isActive ? "#1976d2" : "#1c2434",
-                        fontFamily: "Inter, sans-serif",
-                        transition: "0.3s",
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                  </Box>
-
-                  {/* Description */}
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      fontFamily: "Inter, sans-serif",
-                      transition: "0.3s",
-                      ml: 4,
-                    }}
-                  >
-                    {item.desc}
-                  </Typography>
-                </Box>
-              );
-            })}
-          </Box>
-
-          {/* Right - Dynamic Image */}
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {/* Highlighted section of the vertical line */}
+          {isActive && (
             <Box
-              component="img"
-              src={features[hoveredIndex].image}
-              alt="ElectroMagnet Repair"
               sx={{
-                width: "570px",
-                height: "567px",
-                borderRadius: "20px",
-                objectFit: "cover",
-                opacity: 1,
-                transition: "0.5s",
+                position: "absolute",
+                left: "10px",
+                width: "2px",
+                bgcolor: "#1976d2",
+                height: "100%",
+                borderRadius: 1,
               }}
             />
+          )}
+
+          {/* Icon + Text */}
+          <Box sx={{ ml: 4 }}>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <CalendarMonthIcon
+                sx={{
+                  fontSize: 20,
+                  color: isActive ? "#1976d2" : "#666",
+                  mr: 1,
+                  transition: "0.3s",
+                }}
+              />
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  ...typography.h3B1,
+                  fontWeight: 400,
+                  color: isActive ? "#1976d2" : "#1c2434",
+                  transition: "0.3s",
+                }}
+              >
+                {item.title}
+              </Typography>
+            </Box>
+
+            <Typography
+              variant="body2"
+              sx={{
+                // color: isActive ? "#1976d2" : "text.secondary",
+                ...typography.bodyBasemedium,
+                fontWeight: 400,
+                transition: "0.3s",
+                ml: 4
+              }}
+            >
+              {item.desc}
+            </Typography>
           </Box>
         </Box>
-      </Box>
+      );
+    })}
+  </Box>
+
+  {/* Right - Dynamic Image */}
+  <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+    <Box
+      component="img"
+      src={features[hoveredIndex].image}
+      alt="ElectroMagnet Repair"
+      sx={{
+        width: "100%",
+        maxWidth: 600,
+        borderRadius: 3,
+        objectFit: "cover",
+        transition: "0.5s",
+      }}
+    />
+  </Box>
+</Box>
       {/* Why Choose Reflux Section */}
 
       <Box
         sx={{
+          // width: "904px",
+          height: "809px",
           width: "100%",
           py: 10,
           px: { xs: 2, md: 6 },
@@ -691,67 +783,84 @@ height: "62px",
         <Grid container spacing={6} alignItems="flex-start">
           {/* Column 1 - Left Text */}
           <Grid item xs={12} md={4}>
-            <Box
-              sx={{
-                display: "flex",
-                mt: 10,
-                ml: 5,
-                flexDirection: "column",
-                alignItems: { xs: "center", md: "flex-start" },
-                textAlign: { xs: "center", md: "left" },
-                position: "relative", // 👈 needed for positioning arrow & text
-              }}
-            >
-              {/* Heading */}
-              <Typography variant="h4" fontWeight={700} gutterBottom>
-                Why Choose <br /> Reflux?
-              </Typography>
+          <Box
+  sx={{
+    display: "flex",
+    mt: 10,
+    ml: 5,
+    flexDirection: "column",
+    alignItems: { xs: "center", md: "flex-start" },
+    textAlign: { xs: "center", md: "left" },
+    position: "relative", // 👈 needed for positioning arrow & text
+  }}
+>
+  {/* Heading */}
+  <Typography
+  sx={{
+    fontFamily: "SpaceGrotesk-Regular",
+    fontSize: "32px",
+    fontWeight: 600,
+    lineHeight: "1.2"
+  }}
+  //  variant="h4"
+  //   fontWeight={700} 
+  //   gutterBottom
+    >
+    Why Choose <br /> Reflux?
+  </Typography>
 
-              {/* Sub text */}
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                mb={3}
-                sx={{ maxWidth: "320px" }}
-              >
-                We handle service and upkeep — you focus on getting the job done.
-              </Typography>
+  {/* Sub text */}
+  <Typography
+    // variant="body1"
+    color="text.secondary"
+    mb={3}
+    sx={{ 
+      ...typography.bodyBase,
+      fontWeight: 400,
+      maxWidth: "320px"
+     }}
+  >
+    We handle service and upkeep — you focus on getting the job done.
+  </Typography>
 
-              {/* Button */}
-              <Button
-                variant="contained"
-                onClick={() => navigate("/about-us")}
-                sx={{
-                  borderRadius: "25px",
-                  px: 3,
-                  backgroundColor: "#00A99D",
-                  "&:hover": { backgroundColor: "#00897B" },
-                }}
-              >
-                About Us
-              </Button>
+  {/* Button */}
+  <Button
+    variant="contained"
+    onClick={() => navigate("/about-us")}
+    sx={{
+fontFamily: "SpaceGrotesk-Regular",
+fontSize: "16px",
+fontWeight: 600,
+      borderRadius: "10px",
+      px: 3,
+      backgroundColor: "#00A99D",
+      "&:hover": { backgroundColor: "#00897B" },
+    }}
+  >
+    About Us
+  </Button>
 
-              {/* Handwritten text + arrow (absolute positioned) */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: -50, // adjust based on spacing
-                  right: { xs: "10%", md: "20%" }, // responsive placement
-                  textAlign: "right",
-                }}
-              >
-
-                <Box
-                  component="img"
-                  src={about} // 👈 replace with your arrow asset
-                  alt="Arrow"
-                  sx={{
-                    width: 120,
-                    mt: 1,
-                  }}
-                />
-              </Box>
-            </Box>
+  {/* Handwritten text + arrow (absolute positioned) */}
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: -50, // adjust based on spacing
+      right: { xs: "10%", md: "20%" }, // responsive placement
+      textAlign: "right",
+    }}
+  >
+   
+    <Box
+      component="img"
+      src={about} // 👈 replace with your arrow asset
+      alt="Arrow"
+      sx={{
+        width: 120,
+        mt: 1,
+      }}
+    />
+  </Box>
+</Box>
 
           </Grid>
 
@@ -768,16 +877,23 @@ height: "62px",
                   },
                 }}
               >
-                <Typography variant="h6" fontWeight={600} gutterBottom>
+                <Typography
+                sx={{
+                  ...typography.h3medium,
+                  fontWeight: 500
+                }}
+                 >
                   Repair vs Replace ROI Instantly
                 </Typography>
                 <Link
-                  component="button"
-                  variant="body2"
+                  // component="button"
+                  // variant="body2"
                   color="text.secondary"
                   underline="hover"
                   onClick={handleOpen}
                   sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
                     cursor: "pointer",
                   }}
                 >
@@ -804,24 +920,32 @@ height: "62px",
             >
               {[...Array(3)].map((_, i) => (
                 <Box key={i} sx={{ mb: 6 }}>
-                  <Typography variant="h6" fontWeight={600} gutterBottom>
+                  <Typography
+                    sx={{
+                  ...typography.h3medium,
+                  fontWeight: 500
+                }}
+                   >
                     Repair vs Replace ROI Instantly
                   </Typography>
                   <Link
-                    component="button"
-                    variant="body2"
                     color="text.secondary"
-                    underline="hover"
-                    onClick={handleOpen}
-                    sx={{
-                      cursor: "pointer",
-                    }}
+                  underline="hover"
+                  onClick={handleOpen}
+                  sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
+                    cursor: "pointer",
+                  }}
                   >
                     Our ROI Calculator shows payback and TCO (repair vs rental
                     vs replace) in seconds — make data-backed decisions.
                   </Link>
                   <Divider
-                    sx={{ mt: 1, borderColor: "#00A99D", width: "400px" }}
+                    sx={{ 
+                      mt: 1,
+                       borderColor: "#00A99D",
+                        width: "400px" }}
                   />
                 </Box>
               ))}
@@ -844,10 +968,18 @@ height: "62px",
               p: 4,
             }}
           >
-            <Typography variant="h6" fontWeight={600} gutterBottom>
+            <Typography 
+            sx={{
+                  ...typography.h3medium,
+                  fontWeight: 500
+                }}
+            >
               ROI Calculator Info
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+            variant="body2" 
+            color="text.secondary"
+            >
               This modal opens when you click the subtitle link. You can replace
               this with more details, links, or actions.
             </Typography>
@@ -866,12 +998,13 @@ height: "62px",
       {/* View all magnets for rent Section*/}
       <Box>
         <Typography
-          component={Link}
-          to="/home/Rentals"
+        component={Link}
+        to="/home/Rentals"
           sx={{
-            fontSize: "1.5rem", // or "h4" variant below
+           ...typography.h3R,
+            // fontSize: "1.5rem", 
             color: "#1a4dab",
-            fontWeight: "bold",
+            fontWeight: 600,
             ml: 110,
           }}
         >
@@ -902,11 +1035,13 @@ height: "62px",
             <Grid item xs={12} md={6}>
               <Typography
                 sx={{
+                  ...typography.h3RBold,
+                  fontWeight: 600,
                   color: "#092f7aff",
                 }}
-                variant="h3"
-                fontWeight="bold"
-                gutterBottom
+                // variant="h3"
+                // fontWeight="bold"
+                // gutterBottom
               >
                 Why Renting Magnets is Smarter
               </Typography>
@@ -925,25 +1060,40 @@ height: "62px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          fontWeight: "bold",
-                          fontSize: "1rem",
+                          fontFamily: "SpaceGrotesk-Bold",
+                        fontWeight: 700,
+                        fontSize: "24px",
                         }}
-                        fontWeight="bold"
+                       
                       >
                         {index + 1}
                       </Typography>
                     </ListItemIcon>
                     <ListItemText
                       sx={{
+                    
                         ml: 2,
                       }}
                       primary={
-                        <Typography variant="subtitle1" fontWeight="bold">
+                        <Typography
+                        
+                     sx={{
+                          fontFamily: "SpaceGrotesk-Bold",
+                        fontWeight: 700,
+                        fontSize: "24px",
+                     }}
+                        >
                           {item.title}
                         </Typography>
                       }
                       secondary={
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography 
+                       sx={{
+                        ...typography.h3medium,
+                        fontWeight: 500
+                       }}
+                        color="textSecondary"
+                        >
                           {item.description}
                         </Typography>
                       }
@@ -979,37 +1129,37 @@ height: "62px",
           </Button>
         </Box>
       </Box>
-      <Testimonials />
+      <Testimonials/>
       {/* ROI Calculator */}
       <Box>
         <Typography
-          sx={{
-            ml: 8,
-          }}
-          variant="h3"
-          fontWeight="bold"
-          gutterBottom
+           sx={{
+             ml: 8,
+             ...typography.h3RB,
+             fontWeight: 700,
+           }}
         >
           ROI Calculator
         </Typography>
         <Typography
-          variant="h5"
-          sx={{
-            mb: 4,
-            color: "text.secondary",
-            ml: 8,
-          }}
-        >
+            sx={{ 
+                   ...typography.h3B1,
+                   fontWeight: 400,
+                   mb: 4,
+                 color: "text.secondary",
+                 ml: 8
+                 }}>
           Get powerful lifting magnets when you need them — without the upfront
           cost. Flexible rental plans, quick installation, and reliable
           performance for every project!
         </Typography>
         <Typography
           sx={{
-            fontSize: "1.5rem", // or "h4" variant below
-            color: "#1a4dab",
-            fontWeight: "bold",
-            ml: 120,
+            ...typography.h3R,
+              textDecoration: "underline",
+               color: "#1a4dab",
+               fontWeight: 600,
+            ml: 110,
           }}
         >
           View All ROI Calculators
@@ -1082,11 +1232,16 @@ height: "62px",
                   >
                     <Box
                       display="flex"
-                      sx={{}}
+               
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <Typography variant="subtitle1" fontWeight="bold">
+                      <Typography 
+                   sx={{
+                              ...typography.h3B1,
+                              fontWeight: 700
+                             }}
+                       >
                         {item.title}
                       </Typography>
                       <IconButton
@@ -1098,7 +1253,13 @@ height: "62px",
                         <ArrowForwardIosIcon fontSize="small" />
                       </IconButton>
                     </Box>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography 
+                      sx={{
+                             ...typography.bodyBase,
+                             fontWeight: 400,
+                               color: "text.secondary",
+                            }}
+                    >
                       {item.description}
                     </Typography>
                   </Box>
@@ -1244,9 +1405,9 @@ height: "62px",
             ml: 8,
             // mt: 5
           }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
+          //   variant="h3"
+          //   fontWeight="bold"
+          //   gutterBottom
         >
           FAQs
         </Typography>
@@ -1295,7 +1456,7 @@ height: "62px",
                     ...typography.h3B1,
                     fontWeight: 400,
                   }}
-                //  fontWeight="bold"
+                  //  fontWeight="bold"
                 >
                   {item.question}
                 </Typography>
@@ -1349,9 +1510,9 @@ height: "62px",
             ml: 8,
             // mt: 5
           }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
+          //   variant="h3"
+          //   fontWeight="bold"
+          //   gutterBottom
         >
           Blogs
         </Typography>
@@ -1381,9 +1542,9 @@ height: "62px",
                   borderRadius: 3,
                   boxShadow: 0,
                   bgcolor: "#fafafa",
-                  cursor: 'pointer'
+                  cursor:'pointer'
                 }}
-                onClick={() => navigate("/home/BlogDetails")}>
+               onClick={() => navigate("/home/BlogPost")}>
                 <CardMedia
                   component="img"
                   image={blogData[0].image}
@@ -1721,233 +1882,233 @@ height: "62px",
           </Grid>
         </Grid>
       </Box>
-      {/* Dialog */}
-      <Dialog
-        open={BrowseDialogopen}
-        onClose={handledialogClose}
-        maxWidth="sm"
-        fullWidth
-        sx={{
-          "& .MuiDialog-paper": {
-            borderRadius: "16px",
-            height: "100vh", // 👈 fixed height
-            maxHeight: "100vh", // 👈 prevent overflow beyond screen
-          },
-        }}
-      >
-        <DialogContent>
-          {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-          <CardContent>
-            <Typography
-              sx={{
-                textAlign: "left",
-              }}
-              variant="h6"
-              gutterBottom
-            >
-              Tell us what you need
-            </Typography>
-            <Typography
-              //  variant="h6"
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                color: "#111",
-              }}
-            >
-              Company Name *
-            </Typography>
-            <TextField
-              placeholder="Ex: John"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-
-            />
-
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                marginTop: 2,
-              }}
-            >
-              Contact Person *
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-
-            />
-
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                marginTop: 2,
-              }}
-            >
-              Phone *
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-
-            />
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-
-                color: "#111",
-                marginTop: 2,
-              }}
-            >
-              Email *
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-
-            />
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                marginTop: 2,
-              }}
-            >
-              Enquiry for *
-            </Typography>
-            <FormControl fullWidth>
-              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-              <Select
-
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-
-              >
-                <MenuItem
-                  value={10}
+       {/* Dialog */}
+          <Dialog
+            open={BrowseDialogopen}
+            onClose={handledialogClose}
+            maxWidth="sm"
+            fullWidth
+            sx={{
+              "& .MuiDialog-paper": {
+                borderRadius: "16px",
+                height: "100vh", // 👈 fixed height
+                maxHeight: "100vh", // 👈 prevent overflow beyond screen
+              },
+            }}
+          >
+            <DialogContent>
+              {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+              <CardContent>
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                  }}
+                  variant="h6"
+                  gutterBottom
                 >
-                  1-5
-                </MenuItem>
-                <MenuItem
-                  value={20}
+                  Tell us what you need
+                </Typography>
+                <Typography
+                  //  variant="h6"
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    color: "#111",
+                  }}
                 >
-                  6-10
-                </MenuItem>
-                <MenuItem
-                  value={30}
+                  Company Name *
+                </Typography>
+                <TextField
+                  placeholder="Ex: John"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+                 
+                />
+
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    marginTop: 2,
+                  }}
                 >
-                  10-20
-                </MenuItem>
-                <MenuItem
-                  //  sx={{
-                  //   color: theme.palette.primary.contrastText
-                  // }}
-                  value={30}
+                  Contact Person *
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+              
+                />
+
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    marginTop: 2,
+                  }}
                 >
-                  20+
-                </MenuItem>
-              </Select>
-            </FormControl>
+                  Phone *
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+                 
+                />
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                 
+                    color: "#111",
+                    marginTop: 2,
+                  }}
+                >
+                  Email *
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  name="name"
+                  id="name"
+                 
+                />
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    marginTop: 2,
+                  }}
+                >
+                  Enquiry for *
+                </Typography>
+                <FormControl fullWidth>
+                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                  <Select
+                    
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    
+                  >
+                    <MenuItem
+                      value={10}
+                    >
+                      1-5
+                    </MenuItem>
+                    <MenuItem
+                      value={20}
+                    >
+                      6-10
+                    </MenuItem>
+                    <MenuItem
+                      value={30}
+                    >
+                      10-20
+                    </MenuItem>
+                    <MenuItem
+                      //  sx={{
+                      //   color: theme.palette.primary.contrastText
+                      // }}
+                      value={30}
+                    >
+                      20+
+                    </MenuItem>
+                  </Select>
+                </FormControl>
 
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                // marginTop: 5,
-              }}
-            >
-              Message
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              multiline
-              minRows={3}
-              name="name"
-              id="name"
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    // marginTop: 5,
+                  }}
+                >
+                  Message
+                </Typography>
+                <TextField
+                  placeholder="example@gmail.com"
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  name="name"
+                  id="name"
+                  
+                />
+                <Typography
+                  sx={{
+                    textAlign: "left",
+                    fontSize: "15px",
+                    // ...typography.h6,
+                    // fontWeight: 500,
+                    color: "#111",
+                    // color: theme.palette.primary.contrastText
+                    // marginTop: 5,
+                  }}
+                >
+                  Photos/Videos
+                </Typography>
+                <UploadBox/>
 
-            />
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                // marginTop: 5,
-              }}
-            >
-              Photos/Videos
-            </Typography>
-            <UploadBox />
-
-          </CardContent>
-          {/* Buttons */}
-          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
-            <Button
-              variant="text"
-              startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
-              sx={{
-                color: "black", // text color
-                textTransform: "none", // keep normal text
-                fontWeight: 500,
-                fontSize: "14px",
-                "&:hover": {
-                  backgroundColor: "transparent", // no hover background
-                },
-              }}
-            >
-              Send on WhatsApp
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Submit Message
-            </Button>
-          </Box>
-
-          <Box mt={2}>
-            <Button fullWidth variant="outlined">
-              Continue to details
-            </Button>
-          </Box>
-          {/* </Card> */}
-        </DialogContent>
-      </Dialog>
+              </CardContent>
+               {/* Buttons */}
+                                                  <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+                                                     <Button
+  variant="text"
+  startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+  sx={{
+    color: "black", // text color
+    textTransform: "none", // keep normal text
+    fontWeight: 500,
+    fontSize: "14px",
+    "&:hover": {
+      backgroundColor: "transparent", // no hover background
+    },
+  }}
+>
+  Send on WhatsApp
+</Button>
+                                                      <Button
+                                                          fullWidth
+                                                          variant="contained"
+                                                          color="primary"
+                                                      >
+                                                          Submit Message
+                                                      </Button>
+                                                  </Box>
+              
+                                                  <Box mt={2}>
+                                                      <Button fullWidth variant="outlined">
+                                                          Continue to details
+                                                      </Button>
+                                                  </Box>
+              {/* </Card> */}
+            </DialogContent>
+          </Dialog>
     </Box>
   );
 };
@@ -2051,9 +2212,9 @@ const services = [
             </Card>
           ))}
         </Box> */}
-{/* </Box> */ }
+        {/* </Box> */}
 
-{/* <Box
+         {/* <Box
             sx={{
               position: "absolute",
               top: 0,

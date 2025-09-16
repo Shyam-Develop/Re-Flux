@@ -871,9 +871,7 @@ fontWeight: 400,
           }}
         >
           <Box display="flex" 
-          sx={{
-
-          }}
+     
           justifyContent="space-between" alignItems="center">
             <Typography
            sx={{

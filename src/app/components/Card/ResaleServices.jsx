@@ -15,6 +15,7 @@ import buyExchange from "../../../assets/BuyExchange.png";
 import SellExchange from "../../../assets/SellExchange.png";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import { typography } from "app/utils/constant";
 
 
 const services = [
@@ -43,10 +44,11 @@ export default function ResaleServices() {
         disableElevation
         disableRipple
         sx={{
+            ...typography.bodySmall,
           marginBottom: 2,
           textTransform: "none",
-          fontSize: "0.8rem",
-          fontWeight: 500,
+          // fontSize: "0.8rem",
+          fontWeight: 400,
           color: "#1a4dab",
           backgroundColor: "rgba(36,121,233,0.08)",
           borderRadius: "20px",
@@ -62,10 +64,25 @@ export default function ResaleServices() {
         Resale Services
       </Button>
 
-      <Typography variant="h3" fontWeight="bold" gutterBottom>
+      <Typography
+       sx={{
+              ...typography.h3RB,
+              fontWeight: 700,
+            }}
+      //  variant="h3"
+      //   fontWeight="bold"
+      //    gutterBottom
+         >
         Buy, Sell & Exchange Magnets
       </Typography>
-      <Typography variant="h5" sx={{ mb: 4, color: "text.secondary" }}>
+      <Typography
+       variant="h5"
+        sx={{
+  ...typography.h3B1,
+        fontWeight: 400, 
+        mb: 4, 
+        color: "text.secondary" 
+        }}>
         Get powerful lifting magnets when you need them — without the upfront
         cost. Flexible rental plans, quick installation, and reliable
         performance for every project!
@@ -139,9 +156,11 @@ export default function ResaleServices() {
                   }}
                 >
                   <Typography
-                    variant="h6"
-                    fontWeight="bold"
+                    // variant="h6"
+                    // fontWeight="bold"
                     sx={{
+                      ...typography.h3B1,
+                      fontWeight: 400,
                       color:
                         hoveredCard === service.id ? "white" : "text.primary",
                     }}
@@ -151,8 +170,13 @@ export default function ResaleServices() {
                 </Box>
 
                 <Typography
-                  variant="body2"
-                  color={hoveredCard === service.id ? "white" : "text.secondary"}
+                  // variant="body2"
+                  sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
+                    color : hoveredCard === service.id ? "white" : "text.secondary",
+
+                  }}
                 >
                   {service.desc}
                 </Typography>
@@ -170,8 +194,9 @@ export default function ResaleServices() {
                         borderRadius: "999px",
                         px: 4,
                         py: 1,
-                        fontWeight: 500,
-                        fontSize: "0.85rem",
+                       fontFamily: "Inter-Medium",
+              fontWeight: 500,
+lineHeight: "1.5",
                         "&:hover": {
                           backgroundColor: "#944d13",
                         },
