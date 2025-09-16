@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import rentserviceimg from "../../../assets/RentService.png";
 import { useNavigate } from "react-router-dom";
+import { typography } from "app/utils/constant";
 
 export default function RentServicesCard({ services }) {
 
@@ -21,16 +22,19 @@ export default function RentServicesCard({ services }) {
   
 
   return (
-    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+    <Box sx={{ 
+      p: { xs: 2, md: 6 },
+       backgroundColor: "#f9fafb" }}>
       {/* Section Tag */}
       <Button
         disableElevation
         disableRipple
         sx={{
+          ...typography.bodySmall,
           mb: 2,
           textTransform: "none",
-          fontSize: "0.8rem",
-          fontWeight: 500,
+          // fontSize: "0.8rem",
+          fontWeight: 400,
           color: "#1a4dab",
           backgroundColor: "rgba(36,121,233,0.08)",
           borderRadius: "20px",
@@ -43,10 +47,26 @@ export default function RentServicesCard({ services }) {
       </Button>
 
       {/* Heading */}
-      <Typography variant="h3" fontWeight="bold" gutterBottom>
+      <Typography
+      sx={{
+        ...typography.h3RB,
+        fontWeight: 700,
+      }}
+      //  variant="h3" 
+      //  fontWeight="bold" 
+      //  gutterBottom
+       >
         Rent Industrial Services With Magnets With Ease
       </Typography>
-      <Typography variant="h5" sx={{ mb: 4, color: "text.secondary" }}>
+      <Typography 
+      variant="h5" 
+      sx={{
+        ...typography.h3B1,
+        fontWeight: 400, 
+        mb: 4, 
+        color: "text.secondary" 
+        }}
+        >
         Get powerful lifting magnets when you need them — without the upfront
         cost. Flexible rental plans, quick installation, and reliable
         performance for every project!
@@ -107,7 +127,13 @@ export default function RentServicesCard({ services }) {
                   <Chip
                     label="Available for Rent"
                     size="small"
-                    sx={{ bgcolor: "#2e7d32", color: "white", fontWeight: 500 }}
+                    sx={{ 
+                      fontFamily: "Inter, Regular",
+                      fontSize: "14px",
+                      bgcolor: "#2e7d32", 
+                      color: "white", 
+                      fontWeight: 500 
+                    }}
                   />
                   <Chip
                     label="Safety Tested"
@@ -127,12 +153,25 @@ export default function RentServicesCard({ services }) {
                     alignItems: "center",
                   }}
                 >
-                  <Typography variant="subtitle1" fontWeight="bold">
+                  <Typography 
+                  sx={{
+                    ...typography.h3B1,
+                    fontSize: "24px",
+                    fontWeight: 400,
+
+                  }}
+                  // variant="subtitle1" 
+                  // fontWeight="bold"
+                  >
                     {service.title}
                   </Typography>
                   <Typography
-                    variant="body2"
-                    sx={{ fontWeight: 600, color: "green" }}
+                    // variant="body2"
+                    sx={{ 
+                      ...typography.h3B1,
+                      fontWeight: 600, 
+                      color: "green"
+                     }}
                   >
                     Starting at ${service.price}
                   </Typography>
@@ -140,9 +179,16 @@ export default function RentServicesCard({ services }) {
 
                 {/* Sub Type */}
                 <Typography
-                  variant="body2"
+                  // variant="body2"
                   color="text.secondary"
-                  sx={{ mb: 2 }}
+              
+                       sx={{
+                      ...typography.bodyBase,
+                      fontWeight: 400,
+                        mb: 2
+                    }}
+                  
+                  
                 >
                   {service.type}
                 </Typography>
@@ -156,18 +202,44 @@ export default function RentServicesCard({ services }) {
                   }}
                 >
                   <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
+                    <Typography 
+                    sx={{
+                      ...typography.h3medium,
+                      fontWeight: 500,
+                    }}
+                    // variant="subtitle2" 
+                    // fontWeight="bold"
+                    >
                       Lift Capacity
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                    sx={{
+                      ...typography.bodyBase,
+                      fontWeight: 400,
+                    }} 
+                    // variant="body2" 
+                    color="text.secondary"
+                    >
                       {service.liftCapacity}
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="subtitle2" fontWeight="bold">
+                    <Typography 
+                  sx={{
+                     ...typography.h3medium,
+                      fontWeight: 500,
+                  }}
+                    >
                       Power Supply
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                    //  variant="body2"
+                       sx={{
+                      ...typography.bodyBase,
+                      fontWeight: 400,
+                    }}
+                      color="text.secondary"
+                      >
                       {service.powerSupply}
                     </Typography>
                   </Box>
@@ -175,8 +247,13 @@ export default function RentServicesCard({ services }) {
 
                 {/* Sizes */}
                 <Typography
-                  variant="body2"
-                  sx={{ color: "text.secondary", mt: 1 }}
+                  // variant="body2"
+                  sx={{ 
+                     ...typography.h3medium,
+                      fontWeight: 500,
+                    color: "text.secondary",
+                     mt: 1 
+                    }}
                 >
                   {service.sizes}
                 </Typography>
@@ -190,6 +267,9 @@ export default function RentServicesCard({ services }) {
                   variant="contained"
                   className="availability-btn"
                   sx={{
+                    fontFamily: "Inter-SemiBold",
+                    fontWeight:600,
+                    fontSize: "16px",
                     borderRadius: 1,
                     textTransform: "none",
                     backgroundColor: "#0b2d55",
