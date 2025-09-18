@@ -8,7 +8,7 @@ const services = [
     title: "Right bridge strategy",
     type: "Rental unit eliminated production loss",
     icon: HandshakeIcon,
-     image: handshake1,
+    image: handshake1,
   },
   {
     id: 2,
@@ -68,111 +68,112 @@ export default function Whyitworkcard() {
               }}
             >
               {/* Icon in circle */}
-             <Box
-  sx={{
-    width: 56,
-    height: 56,
-    borderRadius: "50%",
-    backgroundColor: "#f3f4f6",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    mb: 2,
-    overflow: "hidden", // ensures image stays inside circle
-  }}
->
-  <Box
-    component="img"
-    src={service.image}
-    alt="service icon"
-    sx={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      borderRadius: "50%", // fully round image
-    }}
-  />
-</Box>
+              <Box
+                sx={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: "50%",
+                  backgroundColor: "#f3f4f6",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mb: 2,
+                  overflow: "hidden", // ensures image stays inside circle
+                }}
+              >
+                <Box
+                  component="img"
+                  src={service.image}
+                  alt="service icon"
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "50%", // fully round image
+                  }}
+                />
+              </Box>
 
               {/* Text Content */}
-              <CardContent sx={{ p: 0,
+              <CardContent sx={{
+                p: 0,
                 textAlign: "left",
-                 
-               }}>
+
+              }}>
                 <Typography
-               sx={{
-                fontFamily: "Space Grotesk Regular",
-                fontWeight: 600,
-                fontSize: "28px",
-                // color: "#111827",
-                color: "inherit",
-                 
-               }}
-                 >
+                  sx={{
+                    fontFamily: "Space Grotesk Regular",
+                    fontWeight: 600,
+                    fontSize: "28px",
+                    // color: "#111827",
+                    color: "inherit",
+
+                  }}
+                >
                   {service.title}
                 </Typography>
                 <Typography
-               sx={{
-                fontFamily: "Fira Sans Regular",
-                fontWeight: 400,
-                fontSize: "18px",
-                // color: "#111827",
-                color: "inherit",
-                 
-               }}
-                 >
+                  sx={{
+                    fontFamily: "Fira Sans Regular",
+                    fontWeight: 400,
+                    fontSize: "18px",
+                    // color: "#111827",
+                    color: "inherit",
+
+                  }}
+                >
                   {service.type}
                 </Typography>
               </CardContent>
-           <Box sx={{ p: 2, pt: 0 }}>
-  <Button
-    fullWidth
-    variant="contained"
-    className="view-more-btn"
-    sx={{
-      mt: 2,
-      borderRadius: 2,
-      textTransform: "none",
-      bgcolor: "#b45309",
-      color: "white",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: 1, // space between text and icon
-      transition: "opacity 0.3s ease, transform 0.3s ease",
-      opacity: 0,
-      transform: "translateY(10px)",
-      textDecoration: "underline",
+              <Box sx={{ p: 2, pt: 0 }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  className="view-more-btn"
+                  sx={{
+                    mt: 2,
+                    borderRadius: 2,
+                    textTransform: "none",
+                    bgcolor: "#b45309",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 1, // space between text and icon
+                    transition: "opacity 0.3s ease, transform 0.3s ease",
+                    opacity: 0,
+                    transform: "translateY(10px)",
+                    textDecoration: "underline",
 
-      ".MuiCard-root:hover &": {
-        opacity: 1,
-        transform: "translateY(0)",
-         textDecoration: "underline",
-         bgcolor: "#b45309",
-      color: "white",
-      },
+                    ".MuiCard-root:hover &": {
+                      opacity: 1,
+                      transform: "translateY(0)",
+                      textDecoration: "underline",
+                      bgcolor: "#b45309",
+                      color: "white",
+                    },
 
-      "&:hover .arrow-icon": {
-        opacity: 1,
-        transform: "translateX(4px)",
-         textDecoration: "underline",
-         bgcolor: "#b45309",
-      color: "white",
-      },
-    }}
-  >
-    View More
-    <ArrowForwardIcon
-      className="arrow-icon"
-      sx={{
-        fontSize: 20,
-        transition: "all 0.3s ease",
-        opacity: 0,
-        transform: "translateX(0)",
-      }}
-    />
-  </Button>
-</Box>
+                    "&:hover .arrow-icon": {
+                      opacity: 1,
+                      transform: "translateX(4px)",
+                      textDecoration: "underline",
+                      bgcolor: "#b45309",
+                      color: "white",
+                    },
+                  }}
+                >
+                  View More
+                  <ArrowForwardIcon
+                    className="arrow-icon"
+                    sx={{
+                      fontSize: 20,
+                      transition: "all 0.3s ease",
+                      opacity: 0,
+                      transform: "translateX(0)",
+                    }}
+                  />
+                </Button>
+              </Box>
 
             </Card>
           );

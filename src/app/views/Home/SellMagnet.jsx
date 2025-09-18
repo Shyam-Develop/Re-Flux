@@ -83,8 +83,11 @@ import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
 import { typography } from "app/utils/constant";
 import { grey } from "@mui/material/colors";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
+import { useNavigate } from 'react-router-dom';
 
 const SellMagnet = () => {
+
+   const navigate=useNavigate()
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -1125,6 +1128,7 @@ const SellMagnet = () => {
                   borderRadius: 3,
                   boxShadow: 0,
                   bgcolor: "#fafafa",
+                   cursor:'pointer'
                 }}
               >
                 <CardMedia
@@ -1135,14 +1139,16 @@ const SellMagnet = () => {
                     borderRadius: 3,
                     height: 350,
                     objectFit: "cover",
+                    
                   }}
-                />
+                onClick={()=>navigate("/home/BlogDetails")}/>
                 <CardContent>
                   <Typography
                     sx={{
                       fontFamily: "Plus Jakarta Sans, Medium",
                       fontWeight: 600,
                       fontSize: "20px",
+                     
                     }}
                   >
                     {blogData[0].title}
@@ -1200,7 +1206,7 @@ const SellMagnet = () => {
                         bgcolor: "#fdfdfd",
                         boxShadow: 0,
                       }}
-                    >
+                    onClick={()=>navigate("/home/Blogpost")}>
                       <CardMedia
                         component="img"
                         image={item.image}

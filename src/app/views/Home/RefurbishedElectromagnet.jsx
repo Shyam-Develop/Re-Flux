@@ -48,7 +48,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
 import WhatsApp from "../../../assets/whatsappimg.jpg";
 import RepairsectionCard from "app/components/Card/RepairsectionCard";
-// import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+
 import serviceimg from "../../../assets/Repairservice.png";
 import before from "../../../assets/beforecstudy.png";
 import after from "../../../assets/aftercstudy.png";
@@ -84,6 +85,8 @@ import { typography } from "app/utils/constant";
 import { grey } from "@mui/material/colors";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import Refurbishedmagnet from "../../../assets/topbarservice1.jpg"
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+
 import { useNavigate } from "react-router-dom";
 
 
@@ -101,6 +104,46 @@ const RefurbishedElectromagnet = () => {
   const handledialogClose = () => {
     setBrowseDialogOpen(false);
   };
+
+
+
+  const UploadBox = ({ label }) => {
+      return (
+          <Box sx={{ my: 3 }}>
+              <Typography variant="h6" gutterBottom>{label}</Typography>
+              <label htmlFor="upload-input">
+                  <Box
+                      sx={{
+                          border: '2px dashed #ccc',
+                          borderRadius: 2,
+                          p: 4,
+                          textAlign: 'center',
+                          cursor: 'pointer',
+                          transition: 'border-color 0.3s ease',
+                          '&:hover': { borderColor: 'primary.main' },
+                      }}
+                  >
+                      <IconButton component="span" size="large">
+                          <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+                      </IconButton>
+                      <Typography>
+                          <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                          Select image in jpeg, PNG
+                      </Typography>
+                  </Box>
+              </label>
+              <input
+                  id="upload-input"
+                  type="file"
+                  accept="image/jpeg, image/png"
+                  style={{ display: 'none' }}
+              />
+          </Box>
+      );
+  };
+
 
 //Refurbished Magnet
   const Refurbished = [
@@ -1032,7 +1075,7 @@ const RefurbishedElectromagnet = () => {
                   color: "#0B5ED7",
                   textDecoration: "underline",
                 }}
-              >
+              onClick={handleClickOpen} >
                 Request a Quote
               </Link>
             </Box>
@@ -1226,8 +1269,9 @@ const RefurbishedElectromagnet = () => {
             color: "#1a4dab",
             fontWeight: 600,
             ml: 2,
+            cursor:'pointer'
           }}
-        >
+         onClick={() => navigate("/home/SellMagnet")}>
           View More
           <ArrowRightAltIcon
             sx={{
@@ -1566,8 +1610,9 @@ const RefurbishedElectromagnet = () => {
                   borderRadius: 3,
                   boxShadow: 0,
                   bgcolor: "#fafafa",
+                  cursor:'pointer'
                 }}
-              >
+               onClick={() => navigate("/home/BlogDetails")} >
                 <CardMedia
                   component="img"
                   image={blogData[0].image}
@@ -1610,7 +1655,7 @@ const RefurbishedElectromagnet = () => {
                       display: "inline-flex",
                       alignItems: "center",
                     }}
-                  >
+                >
                     Discover More{" "}
                     <ArrowForwardIosIcon
                       sx={{
@@ -1640,8 +1685,9 @@ const RefurbishedElectromagnet = () => {
                         py: 1,
                         bgcolor: "#fdfdfd",
                         boxShadow: 0,
+                        cursor:'pointer'
                       }}
-                    >
+                    onClick={() => navigate("/home/Blogpost")}>
                       <CardMedia
                         component="img"
                         image={item.image}
@@ -1708,6 +1754,237 @@ const RefurbishedElectromagnet = () => {
         </Box>
       </Box>
       {/* Rent Services instaed */}
+
+
+        <Dialog
+              open={BrowseDialogopen}
+              onClose={handledialogClose}
+              maxWidth="sm"
+              fullWidth
+              sx={{
+                "& .MuiDialog-paper": {
+                  borderRadius: "16px",
+                  height: "100vh", // 👈 fixed height
+                  maxHeight: "100vh", // 👈 prevent overflow beyond screen
+                },
+              }}
+            >
+              <DialogContent>
+                {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+                <CardContent>
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                    }}
+                    variant="h6"
+                    gutterBottom
+                  >
+                    Tell us what you need
+                  </Typography>
+                  <Typography
+                    //  variant="h6"
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+                      color: "#111",
+                    }}
+                  >
+                    Company Name *
+                  </Typography>
+                  <TextField
+                    placeholder="Ex: John"
+                    variant="outlined"
+                    fullWidth
+                    name="name"
+                    id="name"
+      
+                  />
+      
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+                      // ...typography.h6,
+                      // fontWeight: 500,
+                      color: "#111",
+                      // color: theme.palette.primary.contrastText
+                      marginTop: 2,
+                    }}
+                  >
+                    Contact Person *
+                  </Typography>
+                  <TextField
+                    placeholder="example@gmail.com"
+                    variant="outlined"
+                    fullWidth
+                    name="name"
+                    id="name"
+      
+                  />
+      
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+                      // ...typography.h6,
+                      // fontWeight: 500,
+                      color: "#111",
+                      // color: theme.palette.primary.contrastText
+                      marginTop: 2,
+                    }}
+                  >
+                    Phone *
+                  </Typography>
+                  <TextField
+                    placeholder="example@gmail.com"
+                    variant="outlined"
+                    fullWidth
+                    name="name"
+                    id="name"
+      
+                  />
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+      
+                      color: "#111",
+                      marginTop: 2,
+                    }}
+                  >
+                    Email *
+                  </Typography>
+                  <TextField
+                    placeholder="example@gmail.com"
+                    variant="outlined"
+                    fullWidth
+                    name="name"
+                    id="name"
+      
+                  />
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+                      // ...typography.h6,
+                      // fontWeight: 500,
+                      color: "#111",
+                      // color: theme.palette.primary.contrastText
+                      marginTop: 2,
+                    }}
+                  >
+                    Enquiry for *
+                  </Typography>
+                  <FormControl fullWidth>
+                    {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                    <Select
+      
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+      
+                    >
+                      <MenuItem
+                        value={10}
+                      >
+                        1-5
+                      </MenuItem>
+                      <MenuItem
+                        value={20}
+                      >
+                        6-10
+                      </MenuItem>
+                      <MenuItem
+                        value={30}
+                      >
+                        10-20
+                      </MenuItem>
+                      <MenuItem
+                        //  sx={{
+                        //   color: theme.palette.primary.contrastText
+                        // }}
+                        value={30}
+                      >
+                        20+
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+      
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+                      // ...typography.h6,
+                      // fontWeight: 500,
+                      color: "#111",
+                      // color: theme.palette.primary.contrastText
+                      // marginTop: 5,
+                    }}
+                  >
+                    Message
+                  </Typography>
+                  <TextField
+                    placeholder="example@gmail.com"
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    minRows={3}
+                    name="name"
+                    id="name"
+      
+                  />
+                  <Typography
+                    sx={{
+                      textAlign: "left",
+                      fontSize: "15px",
+                      // ...typography.h6,
+                      // fontWeight: 500,
+                      color: "#111",
+                      // color: theme.palette.primary.contrastText
+                      // marginTop: 5,
+                    }}
+                  >
+                    Photos/Videos
+                  </Typography>
+                  <UploadBox />
+      
+                </CardContent>
+                {/* Buttons */}
+                <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+                  <Button
+                    variant="text"
+                    startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+                    sx={{
+                      color: "black", // text color
+                      textTransform: "none", // keep normal text
+                      fontWeight: 500,
+                      fontSize: "14px",
+                      "&:hover": {
+                        backgroundColor: "transparent", // no hover background
+                      },
+                    }}
+                  >
+                    Send on WhatsApp
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                  >
+                    Submit Message
+                  </Button>
+                </Box>
+      
+                <Box mt={2}>
+                  <Button fullWidth variant="outlined">
+                    Continue to details
+                  </Button>
+                </Box>
+                {/* </Card> */}
+              </DialogContent>
+            </Dialog>
+      
+
+
 
       <SellRentServicesCard services={services} />
       {/* Footer Section */}

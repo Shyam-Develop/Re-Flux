@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Box,
   Typography,
@@ -8,6 +8,9 @@ import {
   Grid,
   Button,
   Chip,
+  IconButton,
+  Dialog, DialogContent, TextField, FormControl, Select, MenuItem,
+  
 } from "@mui/material";
 import Scope1 from "../../../assets/Scope1.png";
 import Scope2 from "../../../assets/Scope2.png";
@@ -16,6 +19,8 @@ import Scope4 from "../../../assets/Scope4.png";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { typography } from "app/utils/constant";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 
 
@@ -83,6 +88,60 @@ const services = [
 ];
 
 export default function RepairServicesPageCard() {
+
+   // This is dialogue for while click
+   const UploadBox = ({ label }) => {
+       return (
+           <Box sx={{ my: 3 }}>
+               <Typography variant="h6" gutterBottom>{label}</Typography>
+               <label htmlFor="upload-input">
+                   <Box
+                       sx={{
+                           border: '2px dashed #ccc',
+                           borderRadius: 2,
+                           p: 4,
+                           textAlign: 'center',
+                           cursor: 'pointer',
+                           transition: 'border-color 0.3s ease',
+                           '&:hover': { borderColor: 'primary.main' },
+                       }}
+                   >
+                       <IconButton component="span" size="large">
+                           <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+                       </IconButton>
+                       <Typography>
+                           <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+                       </Typography>
+                       <Typography variant="caption" color="text.secondary">
+                           Select image in jpeg, PNG
+                       </Typography>
+                   </Box>
+               </label>
+               <input
+                   id="upload-input"
+                   type="file"
+                   accept="image/jpeg, image/png"
+                   style={{ display: 'none' }}
+               />
+           </Box>
+       );
+   };
+   
+   
+     const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
+   
+     const handleClickOpen = () => {
+       setBrowseDialogOpen(true);
+     };
+   
+     const handledialogClose = () => {
+       setBrowseDialogOpen(false);
+     };
+
+
+
+
+
   return (
 <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
   {/* Swiper Container */}
@@ -207,9 +266,238 @@ export default function RepairServicesPageCard() {
       textTransform: "none",
       "&:hover": { bgcolor: "#92400e" },
     }}
-  >
+   onClick={handleClickOpen}>
     Get a repair quote
   </Button>
+
+
+
+    <Dialog
+          open={BrowseDialogopen}
+          onClose={handledialogClose}
+          maxWidth="sm"
+          fullWidth
+          sx={{
+            "& .MuiDialog-paper": {
+              borderRadius: "16px",
+              height: "100vh", // 👈 fixed height
+              maxHeight: "100vh", // 👈 prevent overflow beyond screen
+            },
+          }}
+        >
+          <DialogContent>
+            {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+            <CardContent>
+              <Typography
+                sx={{
+                  textAlign: "left",
+                }}
+                variant="h6"
+                gutterBottom
+              >
+                Tell us what you need
+              </Typography>
+              <Typography
+                //  variant="h6"
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  color: "#111",
+                }}
+              >
+                Company Name *
+              </Typography>
+              <TextField
+                placeholder="Ex: John"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+  
+              />
+  
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  marginTop: 2,
+                }}
+              >
+                Contact Person *
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+  
+              />
+  
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  marginTop: 2,
+                }}
+              >
+                Phone *
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+  
+              />
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+  
+                  color: "#111",
+                  marginTop: 2,
+                }}
+              >
+                Email *
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+  
+              />
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  marginTop: 2,
+                }}
+              >
+                Enquiry for *
+              </Typography>
+              <FormControl fullWidth>
+                {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                <Select
+  
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+  
+                >
+                  <MenuItem
+                    value={10}
+                  >
+                    1-5
+                  </MenuItem>
+                  <MenuItem
+                    value={20}
+                  >
+                    6-10
+                  </MenuItem>
+                  <MenuItem
+                    value={30}
+                  >
+                    10-20
+                  </MenuItem>
+                  <MenuItem
+                    //  sx={{
+                    //   color: theme.palette.primary.contrastText
+                    // }}
+                    value={30}
+                  >
+                    20+
+                  </MenuItem>
+                </Select>
+              </FormControl>
+  
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  // marginTop: 5,
+                }}
+              >
+                Message
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                multiline
+                minRows={3}
+                name="name"
+                id="name"
+  
+              />
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  // marginTop: 5,
+                }}
+              >
+                Photos/Videos
+              </Typography>
+              <UploadBox />
+  
+            </CardContent>
+            {/* Buttons */}
+            <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+              <Button
+                variant="text"
+                startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+                sx={{
+                  color: "black", // text color
+                  textTransform: "none", // keep normal text
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  "&:hover": {
+                    backgroundColor: "transparent", // no hover background
+                  },
+                }}
+              >
+                Send on WhatsApp
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
+                Submit Message
+              </Button>
+            </Box>
+  
+            <Box mt={2}>
+              <Button fullWidth variant="outlined">
+                Continue to details
+              </Button>
+            </Box>
+            {/* </Card> */}
+          </DialogContent>
+        </Dialog>
 </Box>
   );
 }

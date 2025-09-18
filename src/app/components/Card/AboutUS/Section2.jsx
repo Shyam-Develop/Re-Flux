@@ -4,7 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import img2 from "../../../../assets/aboutusSection2.png"
+import img2 from "../../../../assets/aboutusSection2.png";
+import { useNavigate } from 'react-router-dom';
+
 const steps = [
   { step: "Step 1", title: "Diagnose", description: "Intake inspection, electrical tests, root-cause analysis.", image: img2 },
   { step: "Step 2", title: "Quote", description: "Scope, parts, TAT band, warranty & price approval.", image: img2 },
@@ -15,6 +17,7 @@ const steps = [
 ];
 
 export default function HowWeWorkSwiper() {
+  const navigate=useNavigate()
   return (
     <Box sx={{ maxWidth: 1200, mx: "auto", px: 2, py: 6 }}>
       {/* Section Heading */}
@@ -92,7 +95,7 @@ export default function HowWeWorkSwiper() {
             fontSize: "1rem",
             color: "#2563eb",
           }}
-        >
+        onClick={()=>navigate("/home/ViewCaseStudy")}>
           View Case Study
         </Button>
       </Box>

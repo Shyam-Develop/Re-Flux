@@ -1475,13 +1475,16 @@ sx={{
 />
 </Box>
 
+
+
 <Box
   sx={{
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    px: { xs: 4, md: 12 },
-    py: { xs: 4, md: 6 },
+    paddingLeft:'1px',
+     px: { xs: 1, md: 7 },
+     py: { xs: 4, md: 6 },
     flexDirection: { xs: "column", md: "row" },
   }}
 >
