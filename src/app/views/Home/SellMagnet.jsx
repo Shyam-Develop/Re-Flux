@@ -86,6 +86,7 @@ import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import { useNavigate } from "react-router-dom";
 
 const SellMagnet = () => {
+
   const [hoveredIndex, setHoveredIndex] = useState(0);
 const navigate=useNavigate();
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -1127,6 +1128,7 @@ const navigate=useNavigate();
                   borderRadius: 3,
                   boxShadow: 0,
                   bgcolor: "#fafafa",
+                   cursor:'pointer'
                 }}
               >
                 <CardMedia
@@ -1137,14 +1139,16 @@ const navigate=useNavigate();
                     borderRadius: 3,
                     height: 350,
                     objectFit: "cover",
+                    
                   }}
-                />
+                onClick={()=>navigate("/home/BlogDetails")}/>
                 <CardContent>
                   <Typography
                     sx={{
                       fontFamily: "Plus Jakarta Sans, Medium",
                       fontWeight: 600,
                       fontSize: "20px",
+                     
                     }}
                   >
                     {blogData[0].title}
@@ -1202,7 +1206,7 @@ const navigate=useNavigate();
                         bgcolor: "#fdfdfd",
                         boxShadow: 0,
                       }}
-                    >
+                    onClick={()=>navigate("/home/Blogpost")}>
                       <CardMedia
                         component="img"
                         image={item.image}

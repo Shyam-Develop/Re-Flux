@@ -28,10 +28,11 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
     <Paper
       elevation={0}
       sx={{
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fbfbfb',
         borderRadius: '10px',
         p: 4,
-        mb: 6,
+        // mb: 6,
+        width:'1197px'
       }}
     >
       <Grid
@@ -54,8 +55,8 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
               src={image}
               alt={title}
               sx={{
-                width: '100%',
-                height: '100%',
+                width: '447px',
+                height: '450.5px',
                 objectFit: 'cover',
                 transition: 'transform 0.3s ease',
                 display: 'block',
@@ -69,7 +70,7 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
 
 
         {/* Content */}
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={7} sx={{ width:'686px', height:'508px' }}>
           {/* Title */}
           <Typography sx={{ ...typography.h2, color:'#1A2438', mb:3 }}>
             {title}
@@ -80,16 +81,17 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
             Common faults
           </Typography>
 
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3 }}>
+          <Box sx={{ display: 'flex',  flexWrap: 'wrap', gap: 2, mb: 3 }}>
             {faults.map((fault, index) => (
               <Chip
                 key={index}
                 label={fault}
                 variant="outlined"
                 sx={{
+                  width:'202px',
                   height: 44,
-                  fontSize: '18px',
-                  px: 4,
+                  ...typography.h5,
+                    
                   borderRadius: '999px',
                   border: '1px solid #ccc',
                   display: 'flex',
@@ -112,15 +114,17 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
           onClick={()=>navigate("/home/RepairServicesPage")}
             variant="contained"
             sx={{
-              backgroundColor: '#27274c',
+              backgroundColor: '#1C2D4B',
               borderRadius: '10px',
-              marginTop: '10%',
+              marginTop: '17%',
               textTransform: 'none',
               px: 5,
               py: 2,
               fontSize: '18px',
-              width: '100%',
-              padding: '7px'
+              width: '622px',
+              height:'50px',
+              padding: '9px'
+              
             }}
           >
             View Details
@@ -135,6 +139,8 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
 };
 
 const RepairServices = () => {
+
+  const navigate=useNavigate()
 
   //ROI Calculator
   const roiData = [
@@ -256,14 +262,14 @@ const RepairServices = () => {
       </Box>
 
       {/* Top Text Section */}
-      <Box sx={{ padding: '80px 120px' }}>
+      <Box sx={{ padding: '60px 120px'}}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Typography sx={{ ...typography.h1, color:'#1A2438' }}>
               Rent Industrial Magnets with Ease
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} >
             <Typography sx={{ ...typography.bodyBase, color:'#99A0AE'  }}>
               Get powerful lifting magnets when you need them — without the upfront cost.
               Flexible rental plans, quick installation, and reliable performance for every project.
@@ -451,15 +457,16 @@ const RepairServices = () => {
         </Box>
 
         {/* Product Cards */}
-        <Grid container spacing={4}>
+        <Grid container spacing={4} >
           {refurbishedProducts.map((product, idx) => (
-            <Grid item xs={12} md={4} key={idx}>
+            <Grid item xs={12} md={4} key={idx} sx={{width:'1440px', height:'584px'}}>
               <Box
                 sx={{
                   borderRadius: 3,
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                  border:'1px solid #dbdbdb',
+                  //boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                   p: 2,
-                  bgcolor: 'background.paper',
+                  //bgcolor: 'background.paper',
                   display: 'flex',
                   flexDirection: 'column',
                   width: '430px',
@@ -713,15 +720,17 @@ const RepairServices = () => {
                 borderRadius: 3,
                 boxShadow: 0,
                 bgcolor: "#fafafa",
+                cursor:'pointer'
               }}
-            >
+             onClick={() => navigate("/home/BlogDetails")}>
               <CardMedia
                 component="img"
                 image={blogData[0].image}
                 alt={blogData[0].title}
                 sx={{
                   borderRadius: 3,
-                  height: 350,
+                  width: '628px',
+                  height: '300px',
                   objectFit: "cover",
                 }}
               />
@@ -736,14 +745,14 @@ const RepairServices = () => {
                   href="#"
                   underline="none"
                   sx={{
-                    color: "#1976d2",
+                    color: "#1F77D6",
                     ...typography.bodyBasemedium,
                     mt: 1,
                     display: "inline-flex",
                     alignItems: "center"
                   }}
                 >
-                  Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1976d2", }} />
+                  Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
                 </Link>
               </CardContent>
             </Card>
@@ -770,15 +779,15 @@ const RepairServices = () => {
                       image={item.image}
                       alt={item.title}
                       sx={{
-                        width: 80,
-                        height: 100,
+                        width: '130px',
+                        height: '141px',
                         borderRadius: 2,
                         objectFit: "cover",
                         mr: 2,
                       }}
                     />
                     <Box>
-                      <Typography sx={{...typography.h5, color:'#0E1109'}}>
+                      <Typography sx={{...typography.h4, color:'#0E1109', width:'474px', height:'62px'}}>
                         {item.title}
                       </Typography>
                       <Typography sx={{...typography.bodyBase, color:'#677489'}}>
@@ -787,9 +796,9 @@ const RepairServices = () => {
                       <Link
                         href="#"
                         underline="none"
-                        sx={{ color: "#1976d2", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                        sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
                       >
-                        Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1976d2", }} />
+                        Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
                       </Link>
                     </Box>
                   </Card>
