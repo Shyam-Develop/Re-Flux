@@ -83,10 +83,11 @@ import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
 import { typography } from "app/utils/constant";
 import { grey } from "@mui/material/colors";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
+import { useNavigate } from "react-router-dom";
 
 const SellMagnet = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
-
+const navigate=useNavigate();
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -1118,6 +1119,7 @@ const SellMagnet = () => {
             {/* Left Column (Featured Post) */}
             <Grid item xs={12} md={6}>
               <Card
+               onClick={()=>navigate("/home/BlogDetails")}
                 sx={{
                   display: "flex",
                   flexDirection: "column",

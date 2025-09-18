@@ -44,6 +44,7 @@ import RepairServicesPageCard from "app/components/Card/RepairServicesPageCard";
 import ProcessCards from "app/components/Card/HowweworkCard";
 import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
 import { typography } from "app/utils/constant";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -56,7 +57,7 @@ import { typography } from "app/utils/constant";
 
 
 const RepairServicesPage = () => {
-
+const navigate=useNavigate();
    const [hoveredIndex, setHoveredIndex] = useState(0);
 
      const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -755,6 +756,7 @@ fontWeight: 400,
           <Box sx={{ textAlign: "center", py: 6 }}>
         {/* Top Button */}
         <Button
+         onClick={() => navigate("/home/ViewCaseStudy")}
           variant="contained"
           sx={{
             bgcolor: "#b3570d", // orange/brown shade
