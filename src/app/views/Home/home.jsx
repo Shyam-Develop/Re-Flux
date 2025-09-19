@@ -1139,7 +1139,7 @@ fontWeight: 600,
              ...typography.h3RB,
              fontWeight: 700,
            }}
-        >
+         >
           ROI Calculator
         </Typography>
         <Typography
@@ -1162,7 +1162,8 @@ fontWeight: 600,
                fontWeight: 600,
             ml: 110,
           }}
-        >
+        component={Link}
+          to="/repair-replace/roi-cal">
           View All ROI Calculators
           <ArrowRightAltIcon
             sx={{
@@ -1186,7 +1187,8 @@ fontWeight: 600,
                     boxShadow: 3,
                     height: 320,
                   }}
-                >
+                 onClick={() => navigate("/repair-replace")}
+                  >
                   {/* Background Image */}
                   <CardMedia
                     component="img"
