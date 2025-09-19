@@ -46,6 +46,7 @@ import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
 import { typography } from "app/utils/constant";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useNavigate } from 'react-router-dom';
+import BrowseDialog from "app/components/DialogBox";
 
 
 
@@ -95,7 +96,7 @@ const UploadBox = ({ label }) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
-
+ const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setBrowseDialogOpen(true);
   };
@@ -251,10 +252,9 @@ const UploadBox = ({ label }) => {
     setExpanded(expanded === index ? null : index);
   };
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
   return (
     <Box
       sx={{
@@ -432,7 +432,7 @@ const UploadBox = ({ label }) => {
             fontWeight: 600,
             textTransform: "none",
           }}
-            onClick={handleClickOpen}
+            onClick={()=>setOpen(true)}
         >
           <span style={{ textDecoration: "underline" }}>Not sure what’s wrong?</span>{" "}
           Send photos/video on WhatsApp.
@@ -1281,10 +1281,10 @@ const UploadBox = ({ label }) => {
           </Grid>
         </Grid>
       </Box>
+   <BrowseDialog open={open} onClose={() => setOpen(false)} />
 
 
-
-      <Dialog
+      {/* <Dialog
         open={BrowseDialogopen}
         onClose={handledialogClose}
         maxWidth="sm"
@@ -1299,7 +1299,7 @@ const UploadBox = ({ label }) => {
       >
         <DialogContent>
           {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-          <CardContent>
+          {/* <CardContent>
             <Typography
               sx={{
                 textAlign: "left",
@@ -1403,9 +1403,9 @@ const UploadBox = ({ label }) => {
             >
               Enquiry for *
             </Typography>
-            <FormControl fullWidth>
+            <FormControl fullWidth> */}
               {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-              <Select
+              {/* <Select
 
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -1475,9 +1475,9 @@ const UploadBox = ({ label }) => {
             </Typography>
             <UploadBox />
 
-          </CardContent>
+          </CardContent> */}
           {/* Buttons */}
-          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+          {/* <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
             <Button
               variant="text"
               startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
@@ -1506,10 +1506,10 @@ const UploadBox = ({ label }) => {
             <Button fullWidth variant="outlined">
               Continue to details
             </Button>
-          </Box>
-          {/* </Card> */}
+          </Box> */}
+          {/* </Card> 
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
 
 

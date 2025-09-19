@@ -29,21 +29,22 @@ export default function HowWeWorkSwiper() {
       </Typography>
 
       {/* Swiper */}
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={20}
-        slidesPerView={1}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
-          1280: { slidesPerView: 5 }, // show 5 at desktop
-        }}
-        pagination={{
-          clickable: true,
-          bulletClass: "custom-bullet",
-          bulletActiveClass: "custom-bullet-active",
-        }}
-      >
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={20}
+              slidesPerView={3} // show 3 at a time
+              pagination={{
+                clickable: true,
+              }}
+              style={{
+                paddingBottom: "40px", // space for pagination line
+              }}
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                600: { slidesPerView: 2 },
+                960: { slidesPerView: 3 },
+              }}
+            >
         {steps.map((item, index) => (
           <SwiperSlide key={index}>
             <Card
@@ -101,20 +102,23 @@ export default function HowWeWorkSwiper() {
       </Box>
 
       {/* Custom Swiper styles */}
-      <style>{`
-        .custom-bullet {
-          background: #d1d5db; /* gray */
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          display: inline-block;
-          margin: 0 4px;
-          opacity: 1;
-        }
-        .custom-bullet-active {
-          background: #2563eb !important; /* blue for active */
-        }
-      `}</style>
+       <style>
+        {`
+          .swiper-pagination {
+            bottom: 0 !important;
+          }
+          .swiper-pagination-bullet {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+            background: #d1d5db; /* gray */
+            opacity: 1;
+          }
+          .swiper-pagination-bullet-active {
+            background: #2563eb !important; /* blue active */
+          }
+        `}
+      </style>
     </Box>
   );
 }

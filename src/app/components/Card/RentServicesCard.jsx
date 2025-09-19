@@ -15,6 +15,7 @@ import { Navigation } from "swiper/modules";
 import rentserviceimg from "../../../assets/RentService.png";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
+import { Pagination } from "swiper/modules";
 
 export default function RentServicesCard({ services }) {
 
@@ -23,6 +24,7 @@ export default function RentServicesCard({ services }) {
 
   return (
     <Box sx={{ 
+     
       p: { xs: 2, md: 6 },
        backgroundColor: "#f9fafb" }}>
       {/* Section Tag */}
@@ -73,17 +75,22 @@ export default function RentServicesCard({ services }) {
       </Typography>
 
       {/* Swiper */}
-      <Swiper
-        modules={[Navigation]}
-        navigation
-        spaceBetween={24}
-        slidesPerView={3}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          900: { slidesPerView: 3 },
-        }}
-      >
+        <Swiper
+                   modules={[Pagination]}
+                   spaceBetween={20}
+                   slidesPerView={3} // show 3 at a time
+                   pagination={{
+                     clickable: true,
+                   }}
+                   style={{
+                     paddingBottom: "40px", // space for pagination line
+                   }}
+                   breakpoints={{
+                     0: { slidesPerView: 1 },
+                     600: { slidesPerView: 2 },
+                     960: { slidesPerView: 3 },
+                   }}
+                 >
         {services.map((service) => (
           <SwiperSlide key={service.id}>
             <Card
@@ -280,6 +287,25 @@ export default function RentServicesCard({ services }) {
                 </Button>
               </Box>
             </Card>
+               {/* Custom Swiper styles */}
+       {/* Custom Swiper styles */}
+       <style>
+        {`
+          .swiper-pagination {
+            bottom: 0 !important;
+          }
+          .swiper-pagination-bullet {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+            background: #d1d5db; /* gray */
+            opacity: 1;
+          }
+          .swiper-pagination-bullet-active {
+            background: #2563eb !important; /* blue active */
+          }
+        `}
+      </style>  
           </SwiperSlide>
         ))}
       </Swiper>
