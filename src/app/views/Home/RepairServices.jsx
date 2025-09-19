@@ -20,6 +20,7 @@ import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
 import { useNavigate } from 'react-router-dom';
 import { typography } from 'app/utils/constant';
+import Footer from 'app/components/Card/Footer';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
  const navigate=useNavigate()
@@ -812,139 +813,7 @@ const RepairServices = () => {
        {/* Footer Section */}
       <Box sx={{ bgcolor: "#f9f9f9", px: 8, py: 6, background: '#0b2d55', margin:'10px', borderTopRightRadius: '55px',
               borderTopLeftRadius: '55px' }}>
-        {/* Top Grid */}
-        <Grid container spacing={4}>
-          {/* 1. Logo + Sub-brand */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Box mb={2}>
-              <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-            </Box>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              A unit of
-            </Typography>
-            <Box>
-              <img
-                src={Brand1}
-                alt="Electro Flux"
-                style={{ height: 70 }}
-              />
-            </Box>
-          </Grid>
-
-          {/* 2. Sitemap */}
-          <Grid item xs={12} sm={6} md={2} color={'white'}>
-            <Typography fontWeight="bold" gutterBottom>
-              Sitemap
-            </Typography>
-            {["Home", "Abouts", "Growers", "Merchants", "Contact"].map((item) => (
-              <Typography key={item} variant="body2" sx={{ mb: 0.5, }}>
-                <Link href="#" underline="none"  sx={{ color:'white'}} color="text.primary">
-                  {item}
-                </Link>
-              </Typography>
-            ))}
-          </Grid>
-
-          {/* 3. Socials */}
-          <Grid item xs={12} sm={6} md={2} color={'white'}>
-            <Typography fontWeight="bold" gutterBottom color={'white'}>
-              Socials
-            </Typography>
-            {["Facebook", "Linkedin", "Instagram", "Twitter"].map((item) => (
-              <Typography key={item} variant="body2"  sx={{ mb: 0.5, color:'white' }}>
-                <Link href="#" sx={{ color:'white'}} underline="none" color="text.primary">
-                  {item}
-                </Link>
-              </Typography>
-            ))}
-          </Grid>
-
-          {/* 4. Office & Newsletter */}
-          <Grid item xs={12} sm={6} md={5}>
-            <Typography fontWeight="bold" color={'white'} gutterBottom>
-              Head Office
-            </Typography>
-            <Typography variant="body2"  color="text.primary" sx={{ mb: 2, color:'white' }}>
-              Xilliams Corner Wine © 2017. 1112 A Market St # Ste B22,
-              Charlottesville, CA 45565
-            </Typography>
-
-            <Typography fontWeight="bold" color={'white'} gutterBottom>
-              News letter
-            </Typography>
-            <TextField 
-              placeholder="Enter your email address"
-              variant="standard"
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <MailOutlineIcon
-                        sx={{
-                          color: "#1976d2"
-                        }}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        {/* Bottom Line */}
-        <Grid container spacing={2} sx={{ mt: 6, color: 'white'}}>
-          <Grid item xs={3}>
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontFamily: "Fira Sans",
-                textDecoration: "underline",
-                textDecorationColor: "#1976d2",
-                textUnderlineOffset: "4px",
-                color: 'white'
-              }}
-              variant="body2"
-              fontWeight="medium"
-            >
-              contact@lift.agency
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Typography
-              sx={{
-                fontSize: "24px",
-                fontFamily: "Space Grotesk",
-                textDecoration: "underline",
-                textDecorationColor: "#1976d2",
-                textUnderlineOffset: "4px",
-                color: 'white'
-              }}
-              variant="body2"
-              fontWeight="medium"
-            >
-              (123) 456-7890
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}></Grid> {/* Empty spacer under socials column */}
-
-          <Grid item xs={3}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{
-                fontSize: "14px",
-                fontFamily: "Regular",
-                color: 'white'
-              }}
-            >
-              © 2020 Lift Media All rights reserved.
-            </Typography>
-          </Grid>
-        </Grid>
+        <Footer/>
 
       </Box>
 

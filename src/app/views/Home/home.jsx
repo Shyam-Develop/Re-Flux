@@ -61,6 +61,7 @@ import { typography } from "app/utils/constant";
 import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import HomeVideoCard from "app/components/Card/HomeVideoCard";
 
 
 const UploadBox = ({ label }) => {
@@ -105,21 +106,12 @@ const HomePage = () => {
   const [selected, setSelected] = useState(null);
   const [loadingId, setLoadingId] = useState(null);
   const items = [
-    { id: "01", title: "Repair" },
-    { id: "02", title: "Rent" },
-    { id: "03", title: "Buy" },
-    { id: "04", title: "Sell/exchange" },
+    { id: "01", title: "Repair", head: "Magnet down? We’ll get your lift back fast.", text: " Coil rewinds (Class F/H), terminals/leads, junction boxes & controllers—returned to spec with a load-test certificate. Clear Turn Around Time bands and Pan-India pickup/install.", button: "Request a Repair Quote" },
+    { id: "02", title: "Rent", head: "Rent electro-lifting magnets, ready when you are", text: "Circular, rectangular, and suspension (oil/air-cooled) magnets with controllers and cables. Pan-India logistics, load-tested before dispatch.", button: "Check Availability" },
+    { id: "03", title: "Buy", head: "Certified refurbished magnets—ready to work, warranty included.", text: "Each unit is tested, load-certified and documented. Warranty 3–12 months. Pan-India dispatch and install support.", button: "Browse Inventory" },
+    { id: "04", title: "Sell/exchange", head: "Sell or exchange your magnet—quick valuation, easy logistics.", text: "Share a few photos and specs. We’ll reply with a buyback range or exchange offer and arrange Pan-India pickup.", button: "Start Sell / Exchange" },
   ];
 
-  const handleClick = (id) => {
-    setSelected(id);
-    setLoadingId(id);
-
-    // Simulate loading (2 sec)
-    setTimeout(() => {
-      setLoadingId(null);
-    }, 100000);
-  };
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -309,12 +301,11 @@ const HomePage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
+    
     <Box
       sx={{
-        width: "100%",
-        height: "100vh",
-        // position: "relative",
-        // overflow: "hidden",
+        width: "1440px",
+       
       }}
     >
       {/* 🔹 Background Video */}
@@ -336,256 +327,91 @@ const HomePage = () => {
           zIndex: -1,
         }}
       /> */}
-      <video
-        // playsInline
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          position: "absolute",
-          //   top: 0,
-          //   left: 0,
-          //   zIndex: -1,
-        }}
-        src={videoFile}
-        autoPlay
-        muted
-        loop
-        class="video.mp4"
-      ></video>
+      <HomeVideoCard
+        videoFile={videoFile}
+        items={items}
+        WhatsApp={WhatsApp}
+      />
 
-      {/* 🔹 Foreground Content */}
       <Box
+        width="1440px"
+        height="1564px"
         sx={{
-          position: "relative",
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          height: "100%",
-          color: "white",
-          textAlign: "left", // ✅ left align
-          maxWidth: "700px", // ✅ restrict width like in screenshot
-          pl: 8, // ✅ padding from left
+          pt: 5, // Spacing/space-40 → MUI spacing(5) = 40px
+          pb: 5, // same
+          gap: 4, // gap: 32px → spacing(4) = 32px
+          transform: "rotate(0deg)", // angle
+          opacity: 1,
+          mx: "auto"
         }}
       >
-        {/* Heading */}
-        <Typography
-          variant="h2"
-          sx={{ fontWeight: "bold", mb: 2, lineHeight: 1.2 }}
-        >
-          Certified refurbished magnets—ready to work, warranty included.
-        </Typography>
-
-        {/* Subtext */}
-        <Typography variant="h6" sx={{ mb: 3, opacity: 0.9 }}>
-          Each unit is tested, load-certified and documented. Warranty 3–12
-          months. Pan-India dispatch and install support.
-        </Typography>
-
-        {/* Buttons Row */}
-        <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
-          <Button
-            onClick={handleClickOpen}
-            variant="contained"
-            color="warning"
-            sx={{ borderRadius: "25px", px: 3 }}
-          >
-            Browse Inventory
-          </Button>
-         
-
-          {/* WhatsApp Button */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <Box
-              component="img"
-              src={WhatsApp}
-              alt="WhatsApp"
-              sx={{ width: 32, height: 32 }}
-            />
-            <Link
-              onClick={() => navigate("/home/RepairServicesPage")}
-              sx={{
-                px: 1,
-                color: "white",
-                textDecoration: "none",
-                fontWeight: 500,
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              WhatsApp an Engineer
-            </Link>
-          </Box>
-        </Box>
-        <Typography
-          sx={{
-            fontWeight: 500,
-            textDecoration: "underline",
-            cursor: "pointer",
-            display: "inline-block",
-          }}
-        >
-          What “Refurbished” Means? →
-        </Typography>
-        {/* 🔹 Small Cards Row (moved outside WhatsApp box) */}
-        <Box sx={{ display: "flex", gap: 3, mb: 3, mt: 3 }}>
-          {items.map((item) => {
-            const isSelected = selected === item.id;
-            const isLoading = loadingId === item.id;
-
-            return (
-              <Card
-                key={item.id}
-                onClick={() => handleClick(item.id)}
+         <Button
+                disableElevation
+                disableRipple
                 sx={{
-                  width: 208,
-                  height: 93,
-                  borderRadius: "16px",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  borderColor: isSelected ? "#1C2D4B" : "rgba(0,0,0,0.12)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  padding: "12px 16px",
-                  cursor: "pointer",
-                  backgroundColor: isSelected ? "#1C2D4B" : "white",
-                  color: isSelected ? "white" : "black",
-                  transition: "all 0.3s ease",
+                  marginBottom: 2,
+                  textTransform: "none",           // keep text as-is
+                  fontSize: "0.8rem",              // smaller font
+                  fontWeight: 500,                 // medium weight
+                  color: "#1a4dab",                // dark blue text
+                  backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+                  borderRadius: "20px",            // pill shape
+                  px: 2,                           // horizontal padding
+                  py: 0.5,                         // vertical padding
+                  boxShadow: "none",               // remove shadow
                   "&:hover": {
-                    backgroundColor: isSelected ? "#1C2D4B" : "#f5f5f5",
+                    backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+                    boxShadow: "none",
                   },
                 }}
               >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  gap={1}
-                >
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: isSelected ? "white" : "text.secondary",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {item.id}
-                  </Typography>
-                </Box>
+                Repair Services
+              </Button>
+              <Box
+  sx={{
+    width: "1280px",
+    height: "132px",
+    gap: "8px",
+    transform: "rotate(0deg)",
+    opacity: 1,
+    margin: "0 auto",
+  }}
+>
+              {/* Heading */}
+              <Typography variant="h3" fontWeight="bold" gutterBottom>
+                Our Repair Services
+              </Typography>
+              <Typography  sx={{ mb: 4,...typography.h4, color: "#6B768A",
+                width: "1280px",
+height: "62px",
 
-                <Typography variant="subtitle1" sx={{ fontWeight: 600, mt: 1 }}>
-                  {item.title}
-                </Typography>
-              </Card>
-            );
-          })}
-        </Box>
-        
+               }}>
+                Get powerful lifting magnets when you need them — without the upfront
+                cost. Flexible rental plans, quick installation, and reliable
+                performance for every project!
+              </Typography>
+              </Box>
+        <RepairsectionCard
+        // onClick={() => navigate("/home/RepairServicesPage")}
+        />
 
-        {/* Extra link */}
       </Box>
 
-      {/* 🔹 Right Side Card */}
-      <Card
-        sx={{
-          position: "absolute",
-          top: "7%",
-          right: "5%",
-          width: 320,
-          borderRadius: 2,
-          boxShadow: 3,
-          zIndex: 2,
-        }}
-      >
-        <CardContent>
-          <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-            Peace of mind
-          </Typography>
-          <Typography sx={{ color: "teal", fontWeight: "bold", mb: 1 }}>
-            We’ve got you covered
-          </Typography>
-          <Link
-            sx={{
-              display: "block",
-              mb: 2,
-              fontWeight: 500,
-              textDecoration: "underline",
-              color: "primary.main",
-            }}
-          >
-            View All Magnets for rent →
-          </Link>
-
-          <Divider sx={{ mb: 2 }} />
-
-          {/* Items */}
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Repair
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Magnet down? Get a fast repair quote.
-            </Typography>
-            <Link sx={{ fontWeight: 500, textDecoration: "underline" }}>
-              Request a Quote
-            </Link>
-          </Box>
-
-          {/* <Divider sx={{ mb: 2 }} /> */}
-
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Rent
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Need a temporary magnet today?
-            </Typography>
-            <Link sx={{ fontWeight: 500, textDecoration: "underline" }}>
-              Request a Quote
-            </Link>
-          </Box>
-
-          <Divider sx={{ mb: 2 }} />
-
-          <Box>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              Resale (Refurbished)
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Certified units with warranty buy/sell/exchange.
-            </Typography>
-            <Link sx={{ fontWeight: 500, textDecoration: "underline" }}>
-              Request a Quote
-            </Link>
-          </Box>
-        </CardContent>
-      </Card>
-
-      <RepairsectionCard
-      // onClick={() => navigate("/home/RepairServicesPage")}
-      />
       <Box sx={{ textAlign: "center", py: 6 }}>
         {/* Top Button */}
         <Button
           onClick={handleClickOpen}
           variant="contained"
           sx={{
+            fontFamily: "Inter-Medium",
             bgcolor: "#b3570d", // orange/brown shade
             borderRadius: "25px",
             px: 3,
             py: 1,
             // fontWeight: "bold",
-            fontSize: "16px",
+            fontSize: "14px",
+            fontWeight: 500,
+            lineHeight: "1.5",
             "&:hover": {
               bgcolor: "#944708",
             },
@@ -595,32 +421,60 @@ const HomePage = () => {
         </Button>
 
         {/* Links */}
-        <Box sx={{ mt: 2, display: "flex", justifyContent: "center", gap: 4 }}>
+        <Box 
+        sx={{
+           mt: 2, 
+           display: "flex", 
+           justifyContent: "center",
+            gap: 4,
+              ...typography.buttonLink,
+             textDecoration: "underline", 
+              fontWeight: 600,
+               color: "#0e8bf1ff", 
+            }}>
           <Link
             href="#"
-            underline="none"
+            // underline="none"
             sx={{
-              color: "primary.main",
+               color: "#0e8bf1ff",
               display: "flex",
               alignItems: "center",
-              fontWeight: 500,
+             ...typography.buttonLink,
+             textDecoration: "underline", 
+              fontWeight: 600,
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            WhatsApp Photos <ArrowRightAltIcon sx={{ ml: 0.5, fontSize: 20 }} />
+            WhatsApp Photos <ArrowRightAltIcon 
+            sx={{ 
+    ml: 0.5, 
+    fontSize: 20,
+    mt: '2px', // shift it slightly upward
+    position: 'relative',
+    top: '5px', // or use top instead of mt for finer control
+  }} 
+              />
           </Link>
           <Link
             href="#"
-            underline="none"
+            // underline="none"
             sx={{
-              color: "primary.main",
+               color: "#0e8bf1ff",
               display: "flex",
               alignItems: "center",
               fontWeight: 500,
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            Book Site Visit <ArrowRightAltIcon sx={{ ml: 0.5, fontSize: 20 }} />
+            Book Site Visit <ArrowRightAltIcon 
+          sx={{ 
+    ml: 0.5, 
+    fontSize: 20,
+    mt: '2px', // shift it slightly upward
+    position: 'relative',
+    top: '5px', // or use top instead of mt for finer control
+  }} 
+              />
           </Link>
         </Box>
       </Box>
@@ -643,10 +497,11 @@ const HomePage = () => {
           variant="h4"
           sx={{
             mt: 6,
-            fontWeight: 700,
+            fontWeight: 600,
             color: "#1c2434",
             textAlign: "left", // center align like screenshot
-            fontFamily: "Inter, sans-serif",
+            ...typography.h3RBold,
+
           }}
         >
           Before and after case studies
@@ -659,7 +514,9 @@ const HomePage = () => {
             fontWeight: 600,
             color: "#1c2434",
             textAlign: "left", // center align
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "SpaceGrotesk-Regular",
+            fontSize: "32px",
+            lineHeight: "1.2",
             ml: 8,
           }}
         >
@@ -672,11 +529,10 @@ const HomePage = () => {
             mt: 1,
             ml: 8,
             color: "text.secondary",
-            textAlign: "left", // center align text
-            // maxWidth: 700,
-            // mx: "auto",                 // centers horizontally
-            fontSize: "1rem",
-            fontFamily: "Inter, sans-serif",
+            textAlign: "left", 
+            fontWeight: 400,
+            // mx: "auto",                 
+            ...typography.bodyBase
           }}
         >
           Understanding growing demand and exceeding expectations from our
@@ -688,13 +544,15 @@ const HomePage = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: 3,
+            width: "1092px",
+            height: "447px"
           }}
         >
           {" "}
           {/* Left Arrow */}{" "}
           <IconButton
             sx={{
+              left: 10,
               bgcolor: "#1c2434",
               color: "white",
               "&:hover": { bgcolor: "#344050" },
@@ -720,11 +578,16 @@ const HomePage = () => {
             component="img"
             src={after}
             alt="After"
-            sx={{ width: "40%", borderRadius: 2, objectFit: "cover" }}
+            sx={{
+               width: "40%", 
+              borderRadius: 2, objectFit: "cover" }}
           />{"After "}
           {/* Right Arrow */}{" "}
           <IconButton
             sx={{
+      //       height: 48,
+      // width: 48,
+      right: 40,
               bgcolor: "#1c2434",
               color: "white",
               "&:hover": { bgcolor: "#344050" },
@@ -740,12 +603,16 @@ const HomePage = () => {
             onClick={() => navigate("/home/ViewCaseStudy")}
             variant="contained"
             sx={{
+              fontFamily: "Inter-Medium",
+              fontWeight: 500,
+lineHeight: "1.5",
               bgcolor: "#b3570d", // orange/brown shade
               borderRadius: "25px",
               px: 3,
               py: 1,
+              mb: 5, 
               // fontWeight: "bold",
-              fontSize: "16px",
+              fontSize: "14px",
               "&:hover": {
                 bgcolor: "#944708",
               },
@@ -760,11 +627,14 @@ const HomePage = () => {
       <Typography
         variant="h4"
         sx={{
-          fontWeight: 700,
+          fontWeight: 600,
+          fontSize: "48px",
+          lineHeight: "1.2",
           color: "#1c2434",
           mb: 2,
           ml: 5,
-          fontFamily: "Inter, sans-serif",
+          mt: 10,
+          fontFamily: "Space Grotesk, Regular",
         }}
       >
         ElectroMagnet Repair
@@ -783,131 +653,128 @@ const HomePage = () => {
         Coil rewinds, terminal rebuilds, housing & controllers — restored to
         spec with certified load testing
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh", // full viewport height
-          bgcolor: "#f5f5f5", // optional background
-        }}
-      >
+     <Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    border: "1px solid #ddd",
+    borderRadius: 3,
+    ml: 5,
+    px: 4,
+    py: 4,
+    gap: 6,
+    bgcolor: "white",
+  }}
+>
+  {/* Left - Features with vertical timeline */}
+  <Box sx={{ flex: 1, position: "relative" }}>
+    {/* Continuous Vertical Line */}
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: "10px", // adjust to align with icons
+        width: "2px",
+        bgcolor: "#ccc",
+        borderRadius: 1,
+      }}
+    />
+
+    {features.map((item, index) => {
+      const isActive = hoveredIndex === index;
+
+      return (
         <Box
+          key={index}
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "1312px",
-            height: "708px",
-            opacity: 1,
-            border: "1px solid #ddd",
-            borderRadius: "12px", // Radius/radius-12
-            // px: "32px",           // padding-left + padding-right
-            // py: "24px",           // padding-top + padding-bottom
-            gap: "12px",
-            bgcolor: "white",
+            alignItems: "flex-start",
+            mb: 4,
+            cursor: "pointer",
+            position: "relative",
           }}
+          onMouseEnter={() => setHoveredIndex(index)}
         >
-          {/* Left - Features with vertical timeline */}
-          <Box
-            sx={{
-              flex: 1,
-              position: "relative",
-              width: 570,
-              height: 660,
-              opacity: 1,
-            }}
-          >
-            {/* Continuous Vertical Line */}
-           
-
-            {features.map((item, index) => {
-              const isActive = activeIndex === index;
-
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    width: 570,
-                    height: 165,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    gap: "20px",
-                    px: "32px", // padding-left/right
-                    py: "32px", // padding-top/bottom
-                    borderLeft: isActive
-                      ? "4px solid #1976d2"
-                      : "4px solid transparent",
-                    opacity: 1,
-                    position: "relative",
-                    cursor: "pointer",
-                    borderRadius: 1,
-                    left: 10,
-                    transition: "all 0.3s ease",
-                  }}
-                  onClick={() => handleTabClick(index)}
-                >
-                  {/* Icon + Title */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <CalendarMonthIcon
-                      sx={{
-                        fontSize: 20,
-                        color: isActive ? "#1976d2" : "#666",
-                        transition: "0.3s",
-                      }}
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 600,
-                        color: isActive ? "#1976d2" : "#1c2434",
-                        fontFamily: "Inter, sans-serif",
-                        transition: "0.3s",
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                  </Box>
-
-                  {/* Description */}
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      fontFamily: "Inter, sans-serif",
-                      transition: "0.3s",
-                      ml: 4,
-                    }}
-                  >
-                    {item.desc}
-                  </Typography>
-                </Box>
-              );
-            })}
-          </Box>
-
-          {/* Right - Dynamic Image */}
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {/* Highlighted section of the vertical line */}
+          {isActive && (
             <Box
-              component="img"
-              src={features[hoveredIndex].image}
-              alt="ElectroMagnet Repair"
               sx={{
-                width: "570px",
-                height: "567px",
-                borderRadius: "20px",
-                objectFit: "cover",
-                opacity: 1,
-                transition: "0.5s",
+                position: "absolute",
+                left: "10px",
+                width: "2px",
+                bgcolor: "#1976d2",
+                height: "100%",
+                borderRadius: 1,
               }}
             />
+          )}
+
+          {/* Icon + Text */}
+          <Box sx={{ ml: 4 }}>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <CalendarMonthIcon
+                sx={{
+                  fontSize: 20,
+                  color: isActive ? "#1976d2" : "#666",
+                  mr: 1,
+                  transition: "0.3s",
+                }}
+              />
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  ...typography.h3B1,
+                  fontWeight: 400,
+                  color: isActive ? "#1976d2" : "#1c2434",
+                  transition: "0.3s",
+                }}
+              >
+                {item.title}
+              </Typography>
+            </Box>
+
+            <Typography
+              variant="body2"
+              sx={{
+                // color: isActive ? "#1976d2" : "text.secondary",
+                ...typography.bodyBasemedium,
+                fontWeight: 400,
+                transition: "0.3s",
+                ml: 4
+              }}
+            >
+              {item.desc}
+            </Typography>
           </Box>
         </Box>
-      </Box>
+      );
+    })}
+  </Box>
+
+  {/* Right - Dynamic Image */}
+  <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+    <Box
+      component="img"
+      src={features[hoveredIndex].image}
+      alt="ElectroMagnet Repair"
+      sx={{
+        width: "100%",
+        maxWidth: 600,
+        borderRadius: 3,
+        objectFit: "cover",
+        transition: "0.5s",
+      }}
+    />
+  </Box>
+</Box>
       {/* Why Choose Reflux Section */}
 
       <Box
         sx={{
+          // width: "904px",
+          height: "809px",
           width: "100%",
           py: 10,
           px: { xs: 2, md: 6 },
@@ -929,16 +796,30 @@ const HomePage = () => {
   }}
 >
   {/* Heading */}
-  <Typography variant="h4" fontWeight={700} gutterBottom>
+  <Typography
+  sx={{
+    fontFamily: "SpaceGrotesk-Regular",
+    fontSize: "32px",
+    fontWeight: 600,
+    lineHeight: "1.2"
+  }}
+  //  variant="h4"
+  //   fontWeight={700} 
+  //   gutterBottom
+    >
     Why Choose <br /> Reflux?
   </Typography>
 
   {/* Sub text */}
   <Typography
-    variant="body1"
+    // variant="body1"
     color="text.secondary"
     mb={3}
-    sx={{ maxWidth: "320px" }}
+    sx={{ 
+      ...typography.bodyBase,
+      fontWeight: 400,
+      maxWidth: "320px"
+     }}
   >
     We handle service and upkeep — you focus on getting the job done.
   </Typography>
@@ -948,7 +829,10 @@ const HomePage = () => {
     variant="contained"
     onClick={() => navigate("/about-us")}
     sx={{
-      borderRadius: "25px",
+fontFamily: "SpaceGrotesk-Regular",
+fontSize: "16px",
+fontWeight: 600,
+      borderRadius: "10px",
       px: 3,
       backgroundColor: "#00A99D",
       "&:hover": { backgroundColor: "#00897B" },
@@ -994,16 +878,23 @@ const HomePage = () => {
                   },
                 }}
               >
-                <Typography variant="h6" fontWeight={600} gutterBottom>
+                <Typography
+                sx={{
+                  ...typography.h3medium,
+                  fontWeight: 500
+                }}
+                 >
                   Repair vs Replace ROI Instantly
                 </Typography>
                 <Link
-                  component="button"
-                  variant="body2"
+                  // component="button"
+                  // variant="body2"
                   color="text.secondary"
                   underline="hover"
                   onClick={handleOpen}
                   sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
                     cursor: "pointer",
                   }}
                 >
@@ -1030,24 +921,32 @@ const HomePage = () => {
             >
               {[...Array(3)].map((_, i) => (
                 <Box key={i} sx={{ mb: 6 }}>
-                  <Typography variant="h6" fontWeight={600} gutterBottom>
+                  <Typography
+                    sx={{
+                  ...typography.h3medium,
+                  fontWeight: 500
+                }}
+                   >
                     Repair vs Replace ROI Instantly
                   </Typography>
                   <Link
-                    component="button"
-                    variant="body2"
                     color="text.secondary"
-                    underline="hover"
-                    onClick={handleOpen}
-                    sx={{
-                      cursor: "pointer",
-                    }}
+                  underline="hover"
+                  onClick={handleOpen}
+                  sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
+                    cursor: "pointer",
+                  }}
                   >
                     Our ROI Calculator shows payback and TCO (repair vs rental
                     vs replace) in seconds — make data-backed decisions.
                   </Link>
                   <Divider
-                    sx={{ mt: 1, borderColor: "#00A99D", width: "400px" }}
+                    sx={{ 
+                      mt: 1,
+                       borderColor: "#00A99D",
+                        width: "400px" }}
                   />
                 </Box>
               ))}
@@ -1070,10 +969,18 @@ const HomePage = () => {
               p: 4,
             }}
           >
-            <Typography variant="h6" fontWeight={600} gutterBottom>
+            <Typography 
+            sx={{
+                  ...typography.h3medium,
+                  fontWeight: 500
+                }}
+            >
               ROI Calculator Info
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+            variant="body2" 
+            color="text.secondary"
+            >
               This modal opens when you click the subtitle link. You can replace
               this with more details, links, or actions.
             </Typography>
@@ -1095,9 +1002,10 @@ const HomePage = () => {
         component={Link}
         to="/home/Rentals"
           sx={{
-            fontSize: "1.5rem", // or "h4" variant below
+           ...typography.h3R,
+            // fontSize: "1.5rem", 
             color: "#1a4dab",
-            fontWeight: "bold",
+            fontWeight: 600,
             ml: 110,
           }}
         >
@@ -1128,11 +1036,13 @@ const HomePage = () => {
             <Grid item xs={12} md={6}>
               <Typography
                 sx={{
+                  ...typography.h3RBold,
+                  fontWeight: 600,
                   color: "#092f7aff",
                 }}
-                variant="h3"
-                fontWeight="bold"
-                gutterBottom
+                // variant="h3"
+                // fontWeight="bold"
+                // gutterBottom
               >
                 Why Renting Magnets is Smarter
               </Typography>
@@ -1151,25 +1061,40 @@ const HomePage = () => {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          fontWeight: "bold",
-                          fontSize: "1rem",
+                          fontFamily: "SpaceGrotesk-Bold",
+                        fontWeight: 700,
+                        fontSize: "24px",
                         }}
-                        fontWeight="bold"
+                       
                       >
                         {index + 1}
                       </Typography>
                     </ListItemIcon>
                     <ListItemText
                       sx={{
+                    
                         ml: 2,
                       }}
                       primary={
-                        <Typography variant="subtitle1" fontWeight="bold">
+                        <Typography
+                        
+                     sx={{
+                          fontFamily: "SpaceGrotesk-Bold",
+                        fontWeight: 700,
+                        fontSize: "24px",
+                     }}
+                        >
                           {item.title}
                         </Typography>
                       }
                       secondary={
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography 
+                       sx={{
+                        ...typography.h3medium,
+                        fontWeight: 500
+                       }}
+                        color="textSecondary"
+                        >
                           {item.description}
                         </Typography>
                       }
@@ -1209,33 +1134,33 @@ const HomePage = () => {
       {/* ROI Calculator */}
       <Box>
         <Typography
-          sx={{
-            ml: 8,
-          }}
-          variant="h3"
-          fontWeight="bold"
-          gutterBottom
+           sx={{
+             ml: 8,
+             ...typography.h3RB,
+             fontWeight: 700,
+           }}
         >
           ROI Calculator
         </Typography>
         <Typography
-          variant="h5"
-          sx={{
-            mb: 4,
-            color: "text.secondary",
-            ml: 8,
-          }}
-        >
+            sx={{ 
+                   ...typography.h3B1,
+                   fontWeight: 400,
+                   mb: 4,
+                 color: "text.secondary",
+                 ml: 8
+                 }}>
           Get powerful lifting magnets when you need them — without the upfront
           cost. Flexible rental plans, quick installation, and reliable
           performance for every project!
         </Typography>
         <Typography
           sx={{
-            fontSize: "1.5rem", // or "h4" variant below
-            color: "#1a4dab",
-            fontWeight: "bold",
-            ml: 120,
+            ...typography.h3R,
+              textDecoration: "underline",
+               color: "#1a4dab",
+               fontWeight: 600,
+            ml: 110,
           }}
         >
           View All ROI Calculators
@@ -1308,11 +1233,16 @@ const HomePage = () => {
                   >
                     <Box
                       display="flex"
-                      sx={{}}
+               
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <Typography variant="subtitle1" fontWeight="bold">
+                      <Typography 
+                   sx={{
+                              ...typography.h3B1,
+                              fontWeight: 700
+                             }}
+                       >
                         {item.title}
                       </Typography>
                       <IconButton
@@ -1324,7 +1254,13 @@ const HomePage = () => {
                         <ArrowForwardIosIcon fontSize="small" />
                       </IconButton>
                     </Box>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography 
+                      sx={{
+                             ...typography.bodyBase,
+                             fontWeight: 400,
+                               color: "text.secondary",
+                            }}
+                    >
                       {item.description}
                     </Typography>
                   </Box>
@@ -1609,7 +1545,7 @@ const HomePage = () => {
                   bgcolor: "#fafafa",
                   cursor:'pointer'
                 }}
-               onClick={() => navigate("/home/BlogDetails")}>
+               onClick={() => navigate("/home/BlogPost")}>
                 <CardMedia
                   component="img"
                   image={blogData[0].image}

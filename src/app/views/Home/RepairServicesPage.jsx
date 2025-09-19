@@ -880,69 +880,67 @@ const UploadBox = ({ label }) => {
                     }}
                   />
 
-                  {/* Overlay White Card */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      backgroundColor: "white",
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      px: 2,
-                      py: 1.5,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 0.5,
-                      "&:hover": {
-                        bgcolor: "#0b2d55",
-                        color: "white",
-                        "& .MuiTypography-root": { color: "white", transform: "scale(1.05)" },
-                        "& .MuiDivider-root": { borderColor: "rgba(255,255,255,0.3)" },
-                        "& .MuiIconButton-root": {
-                          backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
-                          color: "white",             // icon turns white
-                        },
-                      }
-                    }}
-                  >
-                    <Box display="flex"
-                      sx={{
-
-                      }}
-                      justifyContent="space-between" alignItems="center">
-                      <Typography
-                        sx={{
-                          ...typography.h3B1,
-                          fontWeight: 700
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        sx={{
-                          backgroundColor: "#f0f0f0",
-                        }}
-                      >
-                        <ArrowForwardIosIcon fontSize="small" />
-                      </IconButton>
-                    </Box>
-                    <Typography
-                      sx={{
-                        ...typography.bodyBase,
-                        fontWeight: 400,
-                        color: "text.secondary",
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+        {/* Overlay White Card */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 16,
+            left: 16,
+            right: 16,
+            backgroundColor: "white",
+            borderRadius: 2,
+            boxShadow: 1,
+            px: 2,
+            py: 1.5,
+            display: "flex",
+            flexDirection: "column",
+            gap: 0.5,
+             "&:hover": {
+      bgcolor: "#0b2d55",
+      color: "white",
+      "& .MuiTypography-root": { color: "white", transform: "scale(1.05)" },
+      "& .MuiDivider-root": { borderColor: "rgba(255,255,255,0.3)" },
+      "& .MuiIconButton-root": {
+        backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
+        color: "white",             // icon turns white
+      },
+    }
+          }}
+        >
+          <Box display="flex" 
+     
+          justifyContent="space-between" alignItems="center">
+            <Typography
+           sx={{
+            ...typography.h3B1,
+            fontWeight: 700
+           }}
+             >
+              {item.title}
+            </Typography>
+            <IconButton
+              size="small"
+              sx={{
+                backgroundColor: "#f0f0f0",
+              }}
+            >
+              <ArrowForwardIosIcon fontSize="small" />
+            </IconButton>
+          </Box>
+          <Typography
+         sx={{
+          ...typography.bodyBase,
+          fontWeight: 400,
+            color: "text.secondary",
+         }}
+           >
+            {item.description}
+          </Typography>
+        </Box>
+      </Card>
+    </Grid>
+  ))}
+</Grid>
 
         </Box>
 
