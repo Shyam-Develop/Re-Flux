@@ -35,182 +35,127 @@ const services = [
   },
 ];
 
-export default function ResaleServices() {
+const ResaleServices = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-  <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+    <Box sx={{ px: 4, py: 6, backgroundColor: "#f9fafb" }}>
+      {/* Top Label */}
       <Button
-        disableElevation
         disableRipple
+        disableElevation
         sx={{
-            ...typography.bodySmall,
-          marginBottom: 2,
-          textTransform: "none",
-          // fontSize: "0.8rem",
-          fontWeight: 400,
-          color: "#1a4dab",
           backgroundColor: "rgba(36,121,233,0.08)",
+          color: "#2F6FBA",
           borderRadius: "20px",
+          textTransform: "none",
           px: 2,
           py: 0.5,
-          boxShadow: "none",
+          mb: 2,
+          fontWeight: 500,
+          ...typography.bodySmall,
           "&:hover": {
             backgroundColor: "rgba(36,121,233,0.15)",
-            boxShadow: "none",
           },
         }}
       >
         Resale Services
       </Button>
 
-      <Typography
-       sx={{
-              ...typography.h3RB,
-              fontWeight: 700,
-            }}
-      //  variant="h3"
-      //   fontWeight="bold"
-      //    gutterBottom
-         >
+      {/* Title and Subtitle */}
+      <Typography sx={{ ...typography.displayL, color:'#1C2D4B' }} gutterBottom>
         Buy, Sell & Exchange Magnets
       </Typography>
       <Typography
-       variant="h5"
-        sx={{
-  ...typography.h3B1,
-        fontWeight: 400, 
-        mb: 4, 
-        color: "text.secondary" 
-        }}>
+        sx={{ width:'1312px', height:'62px', ...typography.h4, color:'#99A0AE', mb: 4 }}
+      >
         Get powerful lifting magnets when you need them — without the upfront
         cost. Flexible rental plans, quick installation, and reliable
         performance for every project!
       </Typography>
 
-      <Swiper
-        modules={[Navigation]}
-        spaceBetween={24}
-        slidesPerView={3}
-        navigation
-        onSlideChange={() => setHoveredCard(null)} // reset hover on slide change
-        style={{ paddingBottom: 32 }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          900: { slidesPerView: 3 },
-        }}
-      >
+      {/* Card Layout */}
+      <Grid container spacing={4}>
         {services.map((service) => (
-          <SwiperSlide key={service.id}>
+          <Grid item xs={12} md={6} key={service.id}>
             <Card
               onMouseEnter={() => setHoveredCard(service.id)}
               onMouseLeave={() => setHoveredCard(null)}
               sx={{
-                objectFit: "cover",
                 borderRadius: 3,
-                boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
-                transition: "all 0.5s ease-in-out",
+                boxShadow: 3,
                 overflow: "hidden",
-                position: "relative",
-                bgcolor: hoveredCard === service.id ? "#0b2d55" : "white",
-                color: hoveredCard === service.id ? "white" : "inherit",
                 height: "100%",
-                display: "flex",
-                flexDirection: "column",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                backgroundColor:
+                  hoveredCard === service.id ? "#1a2a44" : "#f5f7fa",
+                color: hoveredCard === service.id ? "#fff" : "#000",
               }}
             >
-              <Box
+              {/* Image */}
+              <CardMedia
+                component="img"
+                image={service.img}
+                alt={service.title}
                 sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  p: 3,
+                  height: 260,
+                  padding: '30px',
+                  borderRadius: '35px',
+                  objectFit: "cover",
+                  transition: "transform 0.4s ease",
+                  transform:
+                    hoveredCard === service.id ? "scale(1.05)" : "scale(1)",
                 }}
-              >
-                <CardMedia
-                  component="img"
-                  image={service.img}
-                  alt={service.title}
-                  className="card-img"
-                  sx={{
-                    width: "100%",
-                    maxHeight: 200,
-                    objectFit: "cover",
-                    borderRadius: 2,
-                    transition: "transform 0.5s ease-in-out",
-                    transform:
-                      hoveredCard === service.id ? "scale(1.05)" : "scale(1)",
-                  }}
-                />
-              </Box>
+              />
 
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: 1,
-                  }}
-                >
-                  <Typography
-                    // variant="h6"
-                    // fontWeight="bold"
-                    sx={{
-                      ...typography.h3B1,
-                      fontWeight: 400,
-                      color:
-                        hoveredCard === service.id ? "white" : "text.primary",
-                    }}
-                  >
-                    {service.title}
-                  </Typography>
-                </Box>
-
+              {/* Content */}
+              <CardContent>
                 <Typography
-                  // variant="body2"
+                  variant="h6"
+                  fontWeight={600}
+                  sx={{ color: hoveredCard === service.id ? "#fff" : "#000" }}
+                >
+                  {service.title}
+                </Typography>
+                <Typography
+                  variant="body2"
                   sx={{
-                    ...typography.bodyBase,
-                    fontWeight: 400,
-                    color : hoveredCard === service.id ? "white" : "text.secondary",
-
+                    mt: 1,
+                    mb: 2,
+                    color:
+                      hoveredCard === service.id ? "rgba(255,255,255,0.8)" : "text.secondary",
                   }}
                 >
                   {service.desc}
                 </Typography>
 
+                {/* View More button only on hover */}
                 {hoveredCard === service.id && (
-                  <Box sx={{ mt: 3, textAlign: "center" }}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        textDecoration: "underline",
-                        width: "100%",
-                        backgroundColor: "#b46119",
-                        color: "white",
-                        textTransform: "none",
-                        borderRadius: "999px",
-                        px: 4,
-                        py: 1,
-                       fontFamily: "Inter-Medium",
-              fontWeight: 500,
-lineHeight: "1.5",
-                        "&:hover": {
-                          backgroundColor: "#944d13",
-                        },
-                      }}
-                    >
-                      View More
-                    </Button>
-                  </Box>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#b3570d",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      borderRadius: "25px",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "#944708",
+                      },
+                    }}
+                  >
+                    View More
+                  </Button>
                 )}
               </CardContent>
             </Card>
-          </SwiperSlide>
+          </Grid>
         ))}
-      </Swiper>
+      </Grid>
     </Box>
   );
-}
+};
+
+export default ResaleServices;

@@ -1263,7 +1263,8 @@ const RefurbishedElectromagnet = () => {
         </Box>
       </Box>
 
-       <Typography
+       <Link
+       href="/home/SellMagnet"
           sx={{
             ...typography.h3R,
             color: "#1a4dab",
@@ -1282,7 +1283,7 @@ const RefurbishedElectromagnet = () => {
               fontSize: "3rem",
             }}
           />
-        </Typography>
+        </Link>
         </Box>
      
 
@@ -1603,6 +1604,7 @@ const RefurbishedElectromagnet = () => {
             {/* Left Column (Featured Post) */}
             <Grid item xs={12} md={6}>
               <Card
+          onClick={()=>navigate("/home/BlogDetails")}
                 sx={{
                   display: "flex",
                   flexDirection: "column",

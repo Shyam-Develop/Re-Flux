@@ -57,193 +57,198 @@ const services = [
 
 export default function RepairsectionCard() {
   const navigate = useNavigate();
-    const theme = useTheme();
-    const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
-<Box
-            display="grid"
-            gap="20px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            sx={{
-                "& > div": {
-                    gridColumn: isNonMobile ? undefined : "span 4",
-                },
-                // padding: "10px",
-            }}
-        >
-            <Box sx={{ gridColumn: "span 4"}}>
     <Box
+      display="grid"
+      gap="20px"
+      
+      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
-        width: "1300px",
-        height: "559px",
-        gap: "32px",
-        transform: "rotate(0deg)",
-        opacity: 1,
-        margin: "0 auto", // centers horizontally
+        marginTop: '20px',
+        "& > div": {
+          gridColumn: isNonMobile ? undefined : "span 4",
+        },
+        // padding: "10px",
       }}
     >
+      <Box sx={{ gridColumn: "span 4" }}>
+        <Box
+          sx={{
+            width: "1300px",
+            height: "559px",
+            gap: "32px",
+            transform: "rotate(0deg)",
+            opacity: 1,
+            margin: "0 auto",
+          }}
+        >
 
-      {/* Cards */}
-      <Grid container spacing={3}>
-        {services.map((service) => (
-          <Grid item xs={12} sm={6} md={4} key={service.id}>
-            <Box sx={{ p: 2 }}>
-              <Box
-                onClick={() => navigate("/home/RepairServicesPage")}
-                sx={{
-                  width: 412,              // px
-                  height: 559,             // px
-                  gap: 4,                  // 32px → theme.spacing(4)
-                  transform: "rotate(0deg)",
-                  opacity: 1,
-                  borderRadius: 2,         // 16px → theme.spacing(2)
-                  borderWidth: 2,
-                  borderStyle: "solid",
-                  borderColor: "grey.400", // pick a theme color
-                  p: 2,                    // 16px → theme.spacing(2)
-                  boxSizing: "border-box",
-                }}
-
-              >
-                {/* Image */}
-                <Box
-                  component="img"
-                  src={service.img}
-                  alt={service.title}
-                  sx={{
-                    width: 380, // px
-                    height: 260, // px
-                    borderRadius: "5px",
-                    objectFit: "cover",
-                  }}
-                />
-
-                {/* Content */}
-
-                {/* Title + Arrow */}
-                <Box
-                  sx={{
-                    mt: 5,
-                    width: "365px",
-                    height: "235px",
-                    gap: "8px",
-                    opacity: 1,
-                  }}
-                >
+          {/* Cards */}
+          <Grid container spacing={3}>
+            {services.map((service) => (
+              <Grid item xs={12} sm={6} md={4} key={service.id} >
+                <Box sx={{ p: 2, }}>
                   <Box
+                    onClick={() => navigate("/home/RepairServicesPage")}
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      mb: 1,
+                      width: 412,              // px
+                      height: 559,             // px
+                      gap: 4,                  // 32px → theme.spacing(4)
+                      transform: "rotate(0deg)",
+                      opacity: 1,
+                      borderRadius: 2,         // 16px → theme.spacing(2)
+                      borderWidth: 2,
+                      borderStyle: "solid",
+                      borderColor: "grey.400", // pick a theme color
+                      p: 2,                    // 16px → theme.spacing(2)
+                      boxSizing: "border-box",
                     }}
+
                   >
-                    <Typography sx={{
-                      ...typography.h3,
-                      color: "#1B2F43"
-                    }}>
-                      {service.title}
-                    </Typography>
-                    <IconButton
-                      size="small"
+                    {/* Image */}
+                    <Box
+                      component="img"
+                      src={service.img}
+                      alt={service.title}
                       sx={{
-                        color: "text.secondary",
-                        backgroundColor: "#f1f3f4",
+                        width: 380, // px
+                        height: 260, // px
+                        borderRadius: "5px",
+                        objectFit: "cover",
+                      }}
+                    />
+
+                    {/* Content */}
+
+                    {/* Title + Arrow */}
+                    <Box
+                      sx={{
+                        mt: 5,
+                        width: "365px",
+                        height: "235px",
+                        gap: "8px",
+                        opacity: 1,
                       }}
                     >
-                      <ArrowForwardIosIcon fontSize="small" />
-                    </IconButton>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          mb: 1,
+                        }}
+                      >
+                        <Typography sx={{
+                          ...typography.h3,
+                          color: "#1B2F43"
+                        }}>
+                          {service.title}
+                        </Typography>
+                        <IconButton
+                          size="small"
+                          sx={{
+                            color: "text.secondary",
+                            backgroundColor: "#f1f3f4",
+                          }}
+                        >
+                          <ArrowForwardIosIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+
+                      {/* Description */}
+                      <Typography
+
+                        sx={{
+                          ...typography.bodyBase,
+                          color: "#666666",
+                          mb: 1
+                        }}
+                      >
+                        {service.desc}
+                      </Typography>
+
+                      {/* Turnaround Time */}
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#0E1626"
+                      }}>
+                        Turnaround Time
+                      </Typography>
+                      <Typography sx={{
+                        ...typography.bodyBase,
+                        color: "#677489"
+                      }}>
+                        {service.turnaround.join(" / ")}
+                      </Typography>
+                    </Box>
                   </Box>
+                </Box>
+              </Grid>
+            ))}
 
-                  {/* Description */}
+            {/* View All Services link */}
+            <Grid sx={{ textAlign: "center", mt: 4 }}>
+              <Typography component="a"
+                href="/home/RepairServices"
+                sx={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  color: '#1a4dab',
+                  textDecoration: 'none',
+                  display: 'inline-block',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  "&:hover": {
+                    textDecoration: 'underline',
+                    transform: 'scale(1.05)',
+                  },
+                  margin: '70px',
+                  marginTop: '75%',
+                }}
+              >
+                View All Services →
+              </Typography>
+            </Grid>
+            {/* <Grid item xs={12} sm={6} md={4}>
+                <Box sx={{ mt: 2 ,
+                  display:"flex",
+                  justifyContent:"center",
+                  alignContent:"center"
+                }}>
                   <Typography
-
+                    component="a"
+                    href="/home/RepairServices"
                     sx={{
-                      ...typography.bodyBase,
-                      color: "#666666",
-                      mb: 1
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#1a4dab",
+                      textDecoration: "none",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        textDecoration: "underline",
+                      },
                     }}
                   >
-                    {service.desc}
-                  </Typography>
-
-                  {/* Turnaround Time */}
-                  <Typography sx={{
-                    ...typography.h5,
-                    color: "#0E1626"
-                  }}>
-                    Turnaround Time
-                  </Typography>
-                  <Typography sx={{
-                    ...typography.bodyBase,
-                    color: "#677489"
-                  }}>
-                    {service.turnaround.join(" / ")}
+                    View All Services →
                   </Typography>
                 </Box>
-              </Box>
-            </Box>
+              </Grid> */}
+
+
           </Grid>
-        ))}
-
-       {/* View All Services link */}
-        <Grid sx={{ textAlign: "center", mt: 4 }}>
-          <Typography component="a"
-            href="/home/RepairServices"
-            sx={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              color: '#1a4dab',
-              textDecoration: 'none',
-              display: 'inline-block',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              "&:hover": {
-                textDecoration: 'underline',
-                transform: 'scale(1.05)',
-              },
-              margin: '70px',
-              marginTop: '55%',
-            }}
-          >
-            View All Services →
-          </Typography>
-        </Grid>
-{/* <Grid item xs={12} sm={6} md={4}>
-  <Box sx={{ mt: 2 ,
-    display:"flex",
-    justifyContent:"center",
-    alignContent:"center"
-  }}>
-    <Typography
-      component="a"
-      href="/home/RepairServices"
-      sx={{
-        fontSize: "16px",
-        fontWeight: 600,
-        color: "#1a4dab",
-        textDecoration: "none",
-        cursor: "pointer",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "4px",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          textDecoration: "underline",
-        },
-      }}
-    >
-      View All Services →
-    </Typography>
-  </Box>
-</Grid> */}
 
 
-      </Grid>
+        </Box>
+      </Box>
 
 
-    </Box>
-    </Box>
+
     </Box>
   );
 }
