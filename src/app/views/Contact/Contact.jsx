@@ -35,9 +35,10 @@ const ContactUs = () => {
 const dispatch=useDispatch();
 
     //=================MAP=====================//
-    const googleMapsUrl =
-        "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
-    const mapRef = useRef(null);
+    // const googleMapsUrl =
+    //     "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
+const googleMapsLink = "https://www.google.com/maps/search/?api=1&query=13.104444,80.173889";
+const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15571.234567!2d80.173889!3d13.104444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4vXXXXXXXXXX";
 
     // useEffect(() => {
     //     // Load Google Maps script
@@ -324,7 +325,7 @@ if(response.payload.Status === "Y"){
 
 
                     {/* MAP ROWS */}
-                    {[1, 2, 3].map((item) => (
+                    {[1,].map((item) => (
                         <Box
                             key={item}
                             sx={{
@@ -338,33 +339,33 @@ if(response.payload.Status === "Y"){
                             }}
                         >
                             {/* Map Section */}
-                            <Paper
-                                elevation={3}
-                                sx={{
-                                    borderRadius: 2,
-                                    overflow: "hidden",
-                                    height: "300px",
-                                    flex: { xs: "1 1 100%", md: "1 1 50%" },
-                                }}
-                            >
-                                <Box
-                                    component="a"
-                                    href={googleMapsUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    sx={{ display: "block", width: "100%", height: "100%" }}
-                                >
-                                    <iframe
-                                        title={`location-map-${item}`}
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                    ></iframe>
-                                </Box>
-                            </Paper>
+                           <Paper
+  elevation={3}
+  sx={{
+    borderRadius: 2,
+    overflow: "hidden",
+    height: "300px",
+    flex: { xs: "1 1 100%", md: "1 1 50%" },
+  }}
+>
+  <Box
+    component="a"
+    href={googleMapsLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{ display: "block", width: "100%", height: "100%" }}
+  >
+    <iframe
+      title={`location-map-${item}`}
+      src={googleMapsEmbed}
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen
+      loading="lazy"
+    ></iframe>
+  </Box>
+</Paper>
 
                             {/* Address Section */}
                             <Box
@@ -385,9 +386,11 @@ if(response.payload.Status === "Y"){
                                     Head Office
                                 </Typography>
                                 <Typography sx={{ ...typography.h5, color: "#0A142F" }}>
-                                    Xilliams Corner Wine © 2017. <br />
+
+                                    76A (NP, 11th St, Periyar Nagar, <br />Pattara Vakkam, Sidco Industrial Estate, Ambattur, Chennai, <br />Tamil Nadu 600058
+                                    {/* Xilliams Corner Wine © 2017. <br />
                                     1112 A Market St # Ste B22, <br />
-                                    Charlottesville, CA 45565
+                                    Charlottesville, CA 45565 */}
                                 </Typography>
                             </Box>
                         </Box>
