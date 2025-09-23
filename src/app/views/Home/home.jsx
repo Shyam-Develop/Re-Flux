@@ -62,6 +62,7 @@ import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HomeVideoCard from "app/components/Card/HomeVideoCard";
+import BrowseDialog from "app/components/DialogBox";
 
 
 const UploadBox = ({ label }) => {
@@ -2111,6 +2112,7 @@ const HomePage = () => {
           {/* </Card> */}
         </DialogContent>
       </Dialog>
+      {/* <BrowseDialog open={open} onClose={close}/> */}
     </Box>
   );
 };

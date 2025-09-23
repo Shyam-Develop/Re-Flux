@@ -16,10 +16,23 @@ import Brand2crea from "../../../assets/Brand2crea.png";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { typography } from "app/utils/constant";
 import Footer from "app/components/Card/Footer";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { PostContactUS } from "app/redux/slice/postSlice";
+
+import { useDispatch } from "react-redux";
+// ✅ Validation Schema
+const validationSchema = Yup.object({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  subject: Yup.string().required("Inquiry subject is required"),
+  message: Yup.string().required("Message is required"),
+});
+
 const ContactUs = () => {
     const theme = useTheme();
     const isNonMobile = useMediaQuery("(min-width:600px)");
-
+const dispatch=useDispatch();
 
     //=================MAP=====================//
     const googleMapsUrl =
@@ -54,6 +67,35 @@ const ContactUs = () => {
     //             });
     //     };
     // }, []);
+    
+    
+const handleSubmit = async(values) => {
+  try {
+    const idata = {
+      Name: values.name,
+      Email: values.email,
+      Subject: values.subject,
+      Message: values.message,
+    };
+
+    console.log("🚀 ~ handleSubmit ~ idata:", idata);
+
+    const response = await dispatch(PostContactUS({ idata }));
+if(response.payload.Status === "Y"){
+  // ✅ success popup
+     alert(`${response.payload.Message}`) 
+  
+}else{
+  
+   alert(`${response.payload.Message}`)
+}
+  
+  } catch (error) {
+    console.error("❌ Error submitting form:", error);
+
+
+  }
+};
     return (
         <Box
             display="grid"
@@ -140,49 +182,117 @@ const ContactUs = () => {
                     </Paper>
 
                     {/* Right Form */}
-                    <Box
-                        sx={{
-                            flex: "1 1 100%",
-                            maxWidth: { xs: "100%", md: "576px" },
-                            minHeight: "590px",
-                            borderRadius: "16px",
-                            border: "1px solid #ccc",
-                            p: { xs: 2, md: 3 },
-                            backgroundColor: "white",
-                            boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
-                            mt: { xs: 3, md: 0 },
-                        }}
-                    >
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                            <Typography>Your Name</Typography>
-                            <TextField fullWidth label="Your Name" placeholder="Enter your name" defaultValue="Arnav Sharma" />
-                            <Typography>Your Email</Typography>
-                            <TextField fullWidth type="email" label="Your Email" placeholder="example@mail.com" />
-                            <Typography>Inquiry Subject</Typography>
-                            <TextField fullWidth select label="Inquiry Subject" defaultValue="">
-                                <MenuItem value="">Choose Your Inquiry Subject</MenuItem>
-                                <MenuItem value="support">Support</MenuItem>
-                                <MenuItem value="sales">Sales</MenuItem>
-                                <MenuItem value="feedback">Feedback</MenuItem>
-                            </TextField>
-                            <Typography>Your Message</Typography>
-                            <TextField fullWidth multiline rows={4} label="Your Message" placeholder="Type your message here..." />
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                sx={{
-                                    backgroundColor: "#facc15",
-                                    color: "black",
-                                    fontWeight: "bold",
-                                    borderRadius: "25px",
-                                    py: 1.5,
-                                    "&:hover": { backgroundColor: "#fbbf24" },
-                                }}
-                            >
-                                Submit Message
-                            </Button>
-                        </Box>
-                    </Box>
+                     <Box
+      sx={{
+        flex: "1 1 100%",
+        maxWidth: { xs: "100%", md: "576px" },
+        minHeight: "590px",
+        borderRadius: "16px",
+        border: "1px solid #ccc",
+        p: { xs: 2, md: 3 },
+        backgroundColor: "white",
+        boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+        mt: { xs: 3, md: 0 },
+      }}
+    >
+      <Formik
+        initialValues={{
+          name: "Arnav Sharma",
+          email: "",
+          subject: "",
+          message: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { resetForm }) => {
+          console.log("Form Submitted:", values);
+          handleSubmit(values)
+          resetForm();
+        }}
+      >
+        {({ errors, touched, handleChange, values }) => (
+          <Form>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+              {/* Name */}
+              <Typography>Your Name</Typography>
+              <TextField
+                fullWidth
+                label="Your Name"
+                name="name"
+                placeholder="Enter your name"
+                value={values.name}
+                onChange={handleChange}
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name && errors.name}
+              />
+
+              {/* Email */}
+              <Typography>Your Email</Typography>
+              <TextField
+                fullWidth
+                type="email"
+                label="Your Email"
+                name="email"
+                placeholder="example@mail.com"
+                value={values.email}
+                onChange={handleChange}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+              />
+
+              {/* Subject */}
+              <Typography>Inquiry Subject</Typography>
+              <TextField
+                fullWidth
+                select
+                label="Inquiry Subject"
+                name="subject"
+                value={values.subject}
+                onChange={handleChange}
+                error={touched.subject && Boolean(errors.subject)}
+                helperText={touched.subject && errors.subject}
+              >
+                <MenuItem value="">Choose Your Inquiry Subject</MenuItem>
+                <MenuItem value="support">Support</MenuItem>
+                <MenuItem value="sales">Sales</MenuItem>
+                <MenuItem value="feedback">Feedback</MenuItem>
+              </TextField>
+
+              {/* Message */}
+              <Typography>Your Message</Typography>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                label="Your Message"
+                name="message"
+                placeholder="Type your message here..."
+                value={values.message}
+                onChange={handleChange}
+                error={touched.message && Boolean(errors.message)}
+                helperText={touched.message && errors.message}
+              />
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  backgroundColor: "#facc15",
+                  color: "black",
+                  fontWeight: "bold",
+                  borderRadius: "25px",
+                  py: 1.5,
+                  "&:hover": { backgroundColor: "#fbbf24" },
+                }}
+              >
+                Submit Message
+              </Button>
+            </Box>
+          </Form>
+        )}
+      </Formik>
+    </Box>
                 </Box>
 
 
