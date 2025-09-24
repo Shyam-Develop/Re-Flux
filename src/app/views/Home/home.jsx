@@ -1879,6 +1879,7 @@ const HomePage = () => {
           {/* </Card> */}
         </DialogContent>
       </Dialog>
+      {/* <BrowseDialog open={open} onClose={close}/> */}
     </Box>
   );
 };

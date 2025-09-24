@@ -223,13 +223,18 @@ const AboutUS = () => {
                         </Box>
                     </Modal>
                 </Box>
+
+                
                 <HowWeWork />
                 {/* OUR CAPABILITIES SECTiON */}
                  
-<       AboutUsRepairServicesPageCard/>
+        <AboutUsRepairServicesPageCard/>
          {/* Industry SECTiON */}
                  
+            {/* //Industries we serve */}
             <IndustriesSwiper/>
+
+
                 {/* Our Brands Section */}
                 <Typography
                     sx={{

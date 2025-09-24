@@ -16,15 +16,29 @@ import Brand2crea from "../../../assets/Brand2crea.png";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { typography } from "app/utils/constant";
 import Footer from "app/components/Card/Footer";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { PostContactUS } from "app/redux/slice/postSlice";
+
+import { useDispatch } from "react-redux";
+// ✅ Validation Schema
+const validationSchema = Yup.object({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  subject: Yup.string().required("Inquiry subject is required"),
+  message: Yup.string().required("Message is required"),
+});
+
 const ContactUs = () => {
     const theme = useTheme();
     const isNonMobile = useMediaQuery("(min-width:600px)");
-
+const dispatch=useDispatch();
 
     //=================MAP=====================//
-    const googleMapsUrl =
-        "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
-    const mapRef = useRef(null);
+    // const googleMapsUrl =
+    //     "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
+const googleMapsLink = "https://www.google.com/maps/search/?api=1&query=13.104444,80.173889";
+const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15571.234567!2d80.173889!3d13.104444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4vXXXXXXXXXX";
 
     // useEffect(() => {
     //     // Load Google Maps script
@@ -54,6 +68,35 @@ const ContactUs = () => {
     //             });
     //     };
     // }, []);
+    
+    
+const handleSubmit = async(values) => {
+  try {
+    const idata = {
+      Name: values.name,
+      Email: values.email,
+      Subject: values.subject,
+      Message: values.message,
+    };
+
+    console.log("🚀 ~ handleSubmit ~ idata:", idata);
+
+    const response = await dispatch(PostContactUS({ idata }));
+if(response.payload.Status === "Y"){
+  // ✅ success popup
+     alert(`${response.payload.Message}`) 
+  
+}else{
+  
+   alert(`${response.payload.Message}`)
+}
+  
+  } catch (error) {
+    console.error("❌ Error submitting form:", error);
+
+
+  }
+};
     return (
         <Box
             display="grid"
@@ -140,49 +183,117 @@ const ContactUs = () => {
                     </Paper>
 
                     {/* Right Form */}
-                    <Box
-                        sx={{
-                            flex: "1 1 100%",
-                            maxWidth: { xs: "100%", md: "576px" },
-                            minHeight: "590px",
-                            borderRadius: "16px",
-                            border: "1px solid #ccc",
-                            p: { xs: 2, md: 3 },
-                            backgroundColor: "white",
-                            boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
-                            mt: { xs: 3, md: 0 },
-                        }}
-                    >
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                            <Typography>Your Name</Typography>
-                            <TextField fullWidth label="Your Name" placeholder="Enter your name" defaultValue="Arnav Sharma" />
-                            <Typography>Your Email</Typography>
-                            <TextField fullWidth type="email" label="Your Email" placeholder="example@mail.com" />
-                            <Typography>Inquiry Subject</Typography>
-                            <TextField fullWidth select label="Inquiry Subject" defaultValue="">
-                                <MenuItem value="">Choose Your Inquiry Subject</MenuItem>
-                                <MenuItem value="support">Support</MenuItem>
-                                <MenuItem value="sales">Sales</MenuItem>
-                                <MenuItem value="feedback">Feedback</MenuItem>
-                            </TextField>
-                            <Typography>Your Message</Typography>
-                            <TextField fullWidth multiline rows={4} label="Your Message" placeholder="Type your message here..." />
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                sx={{
-                                    backgroundColor: "#facc15",
-                                    color: "black",
-                                    fontWeight: "bold",
-                                    borderRadius: "25px",
-                                    py: 1.5,
-                                    "&:hover": { backgroundColor: "#fbbf24" },
-                                }}
-                            >
-                                Submit Message
-                            </Button>
-                        </Box>
-                    </Box>
+                     <Box
+      sx={{
+        flex: "1 1 100%",
+        maxWidth: { xs: "100%", md: "576px" },
+        minHeight: "590px",
+        borderRadius: "16px",
+        border: "1px solid #ccc",
+        p: { xs: 2, md: 3 },
+        backgroundColor: "white",
+        boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+        mt: { xs: 3, md: 0 },
+      }}
+    >
+      <Formik
+        initialValues={{
+          name: "Arnav Sharma",
+          email: "",
+          subject: "",
+          message: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { resetForm }) => {
+          console.log("Form Submitted:", values);
+          handleSubmit(values)
+          resetForm();
+        }}
+      >
+        {({ errors, touched, handleChange, values }) => (
+          <Form>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+              {/* Name */}
+              <Typography>Your Name</Typography>
+              <TextField
+                fullWidth
+                label="Your Name"
+                name="name"
+                placeholder="Enter your name"
+                value={values.name}
+                onChange={handleChange}
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name && errors.name}
+              />
+
+              {/* Email */}
+              <Typography>Your Email</Typography>
+              <TextField
+                fullWidth
+                type="email"
+                label="Your Email"
+                name="email"
+                placeholder="example@mail.com"
+                value={values.email}
+                onChange={handleChange}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+              />
+
+              {/* Subject */}
+              <Typography>Inquiry Subject</Typography>
+              <TextField
+                fullWidth
+                select
+                label="Inquiry Subject"
+                name="subject"
+                value={values.subject}
+                onChange={handleChange}
+                error={touched.subject && Boolean(errors.subject)}
+                helperText={touched.subject && errors.subject}
+              >
+                <MenuItem value="">Choose Your Inquiry Subject</MenuItem>
+                <MenuItem value="support">Support</MenuItem>
+                <MenuItem value="sales">Sales</MenuItem>
+                <MenuItem value="feedback">Feedback</MenuItem>
+              </TextField>
+
+              {/* Message */}
+              <Typography>Your Message</Typography>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                label="Your Message"
+                name="message"
+                placeholder="Type your message here..."
+                value={values.message}
+                onChange={handleChange}
+                error={touched.message && Boolean(errors.message)}
+                helperText={touched.message && errors.message}
+              />
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  backgroundColor: "#facc15",
+                  color: "black",
+                  fontWeight: "bold",
+                  borderRadius: "25px",
+                  py: 1.5,
+                  "&:hover": { backgroundColor: "#fbbf24" },
+                }}
+              >
+                Submit Message
+              </Button>
+            </Box>
+          </Form>
+        )}
+      </Formik>
+    </Box>
                 </Box>
 
 
@@ -214,7 +325,7 @@ const ContactUs = () => {
 
 
                     {/* MAP ROWS */}
-                    {[1, 2, 3].map((item) => (
+                    {[1,].map((item) => (
                         <Box
                             key={item}
                             sx={{
@@ -228,33 +339,33 @@ const ContactUs = () => {
                             }}
                         >
                             {/* Map Section */}
-                            <Paper
-                                elevation={3}
-                                sx={{
-                                    borderRadius: 2,
-                                    overflow: "hidden",
-                                    height: "300px",
-                                    flex: { xs: "1 1 100%", md: "1 1 50%" },
-                                }}
-                            >
-                                <Box
-                                    component="a"
-                                    href={googleMapsUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    sx={{ display: "block", width: "100%", height: "100%" }}
-                                >
-                                    <iframe
-                                        title={`location-map-${item}`}
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                    ></iframe>
-                                </Box>
-                            </Paper>
+                           <Paper
+  elevation={3}
+  sx={{
+    borderRadius: 2,
+    overflow: "hidden",
+    height: "300px",
+    flex: { xs: "1 1 100%", md: "1 1 50%" },
+  }}
+>
+  <Box
+    component="a"
+    href={googleMapsLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{ display: "block", width: "100%", height: "100%" }}
+  >
+    <iframe
+      title={`location-map-${item}`}
+      src={googleMapsEmbed}
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen
+      loading="lazy"
+    ></iframe>
+  </Box>
+</Paper>
 
                             {/* Address Section */}
                             <Box
@@ -275,9 +386,11 @@ const ContactUs = () => {
                                     Head Office
                                 </Typography>
                                 <Typography sx={{ ...typography.h5, color: "#0A142F" }}>
-                                    Xilliams Corner Wine © 2017. <br />
+
+                                    76A (NP, 11th St, Periyar Nagar, <br />Pattara Vakkam, Sidco Industrial Estate, Ambattur, Chennai, <br />Tamil Nadu 600058
+                                    {/* Xilliams Corner Wine © 2017. <br />
                                     1112 A Market St # Ste B22, <br />
-                                    Charlottesville, CA 45565
+                                    Charlottesville, CA 45565 */}
                                 </Typography>
                             </Box>
                         </Box>
