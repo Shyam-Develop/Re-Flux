@@ -19,7 +19,7 @@ const steps = [
 export default function HowWeWorkSwiper() {
   const navigate=useNavigate()
   return (
-    <Box sx={{ maxWidth: 1200, mx: "auto", px: 2, py: 6 }}>
+    <Box sx={{ width: '1440px', height:'734px', px: 2, py: 6 }}>
       {/* Section Heading */}
       <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, textAlign: "left" }}>
         How we work
@@ -29,39 +29,41 @@ export default function HowWeWorkSwiper() {
       </Typography>
 
       {/* Swiper */}
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={20}
-        slidesPerView={1}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
-          1280: { slidesPerView: 5 }, // show 5 at desktop
-        }}
-        pagination={{
-          clickable: true,
-          bulletClass: "custom-bullet",
-          bulletActiveClass: "custom-bullet-active",
-        }}
-      >
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={0}
+              slidesPerView={5} // show 3 at a time
+              pagination={{
+                clickable: true,
+              }}
+              style={{
+                paddingBottom: "40px", // space for pagination line
+              }}
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                600: { slidesPerView: 2 },
+                960: { slidesPerView: 3 },
+              }}
+            >
         {steps.map((item, index) => (
           <SwiperSlide key={index}>
             <Card
               sx={{
-                borderRadius: 2,
+                borderRadius: 0,
                 border: "1px solid #e5e7eb",
                 boxShadow: "none",
                 overflow: "hidden",
-                height: "100%",
+                width:'250px',
+                height: "418px",
               }}
             >
               <Box
                 component="img"
                 src={item.image}
                 alt={item.title}
-                sx={{ width: "100%", height: 160, objectFit: "cover" }}
+                sx={{ width: "250px", height: '250px', objectFit: "cover" }}
               />
-              <CardContent sx={{ p: 2 }}>
+              <CardContent sx={{  width:'250px', height:'148px' }}>
                 <Chip
                   label={item.step}
                   size="small"
@@ -101,20 +103,23 @@ export default function HowWeWorkSwiper() {
       </Box>
 
       {/* Custom Swiper styles */}
-      <style>{`
-        .custom-bullet {
-          background: #d1d5db; /* gray */
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          display: inline-block;
-          margin: 0 4px;
-          opacity: 1;
-        }
-        .custom-bullet-active {
-          background: #2563eb !important; /* blue for active */
-        }
-      `}</style>
+       <style>
+        {`
+          .swiper-pagination {
+            bottom: 0 !important;
+          }
+          .swiper-pagination-bullet {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+            background: #d1d5db; /* gray */
+            opacity: 1;
+          }
+          .swiper-pagination-bullet-active {
+            background: #2563eb !important; /* blue active */
+          }
+        `}
+      </style>
     </Box>
   );
 }

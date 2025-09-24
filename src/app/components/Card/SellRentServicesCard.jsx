@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -13,75 +13,57 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import rentserviceimg from "../../../assets/RentService.png";
+import { Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
 
 export default function SellRentServicesCard({ services }) {
   const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
-      {/* Section Tag */}
-      {/* <Button
-        disableElevation
-        disableRipple
-        sx={{
-          mb: 2,
-          textTransform: "none",
-          fontSize: "0.8rem",
-          fontWeight: 500,
-          color: "#1a4dab",
-          backgroundColor: "rgba(36,121,233,0.08)",
-          borderRadius: "20px",
-          px: 2,
-          py: 0.5,
-          "&:hover": { backgroundColor: "rgba(36,121,233,0.15)" },
-        }}
-      >
-        Rent Services
-      </Button> */}
+    <Box sx={{ width: '1440px', height: '880px', backgroundColor: "#f9fafb" }}>
 
       {/* Heading */}
       <Typography
         sx={{
-          ...typography.h3RB,
-          fontWeight: 700,
-          color: "#1C2D4B",
+          ml: 8,
+          ...typography.displayL,
+          color: '#1C2D4B'
         }}
-      >
-        Rent instead ?
+        variant="h3" fontWeight="bold" gutterBottom>
+        Rent Instead?
       </Typography>
+
       <Typography
-        //   variant="h5"
-        sx={{
-          ...typography.h3B1,
+        variant="h5" sx={{
           mb: 4,
-          color: "text.secondary",
-        }}
-      >
-        Check Out these rentals
+          color: '#1C2D4B',
+          ...typography.h4,
+          ml: 8
+        }}>
+        Check out these rentals
       </Typography>
 
       {/* Swiper */}
       <Swiper
-        modules={[Navigation]}
-        navigation
-        spaceBetween={24}
+        spaceBetween={0}
         slidesPerView={3}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          900: { slidesPerView: 3 },
-        }}
+        centeredSlides={false}
+        style={{ padding: "0 40px" }}
+        grabCursor={true}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        pagination={false} // disable default swiper pagination
       >
         {services.map((service) => (
           <SwiperSlide key={service.id}>
             <Card
               sx={{
+                width: "416px", // ✅ fixed card size
+                height: "573px",
                 borderRadius: 2,
                 border: "1px solid #e0e0e0",
                 overflow: "hidden",
-                height: "100%",
                 display: "flex",
                 flexDirection: "column",
                 transition: "all 0.3s ease-in-out",
@@ -89,17 +71,14 @@ export default function SellRentServicesCard({ services }) {
                   boxShadow: "0px 6px 16px rgba(0,0,0,0.1)",
                   transform: "translateY(-4px)",
                 },
+                mx: "auto",
               }}
             >
               {/* Image */}
-              <Box sx={{ position: "relative", mx: 2, my: 2 }}>
+              <Box sx={{ position: "relative", mx: "auto", mt: 2 }}>
                 <Box
                   sx={{
-                    height: 160,
-                    width: "100%",
-                    borderRadius: 2,
                     overflow: "hidden",
-                    backgroundColor: "#fff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -110,9 +89,9 @@ export default function SellRentServicesCard({ services }) {
                     image={service.img}
                     alt={service.title}
                     sx={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover", // ✅ Show full image (no cropping)
+                      width: "384px", // ✅ fixed image container
+                      height: "240px",
+                      objectFit: "cover",
                     }}
                   />
                 </Box>
@@ -132,92 +111,61 @@ export default function SellRentServicesCard({ services }) {
                     label="Available for Rent"
                     size="small"
                     sx={{
-                      fontFamily: "Inter-Regular",
                       fontSize: "14px",
                       bgcolor: "#2e7d32",
                       color: "white",
                       fontWeight: 400,
+                      borderRadius: 0
                     }}
                   />
                   <Chip
                     label="Safety Tested"
                     size="small"
                     sx={{
-                      fontFamily: "Inter-Regular",
                       fontSize: "14px",
                       bgcolor: "#1565c0",
                       color: "white",
                       fontWeight: 400,
+                      borderRadius: 0
                     }}
                   />
                 </Box>
               </Box>
 
               {/* Content */}
-              <CardContent sx={{ flexGrow: 1 }}>
+              <CardContent
+                sx={{
+                  flexGrow: 1,
+                  width: "384px",
+                  height: "183px",
+                  mx: "auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  p: 0,
+                  mt: 2,
+                }}
+              >
                 {/* Title + Price */}
                 <Box
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    mb: 1,
                   }}
                 >
-                  <Typography
-                    sx={{
-                      ...typography.h3B1,
-                      color: "#111",
-                      fontWeight: 400,
-                    }}
-                  >
-                    {service.title}
+                  <Typography sx={{ ...typography.h4, color: "#0b0b0b" }}>
+                    Circular Lifting Magnet
                   </Typography>
                   <Typography
-                    variant="body2"
-                    sx={{
-                      ...typography.h3B1,
-                      fontWeight: 400,
-                      color: "#1565c0",
-                    }}
+                    sx={{ ...typography.h4, color: "#5937E0" }} // purple color for price
                   >
-                    ${service.price}
+                    $25
                   </Typography>
                 </Box>
 
-                {/* Sub Type */}
-                  <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                <Typography
-                 
-                  color="text.secondary"
-                  sx={{ 
-                    mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px"
-                 }}
-                >
-                  {service.type}
-                </Typography>
-                    <Typography
-                    color="text.secondary"
-                   sx={{ 
-                    mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px"
-                 }}
-                  >
-                    {service.subtitile}
-                  </Typography>
-                  </Box>
-
-                {/* Lift + Power */}
+                {/* Two-column details */}
                 <Box
                   sx={{
                     display: "flex",
@@ -226,118 +174,55 @@ export default function SellRentServicesCard({ services }) {
                   }}
                 >
                   <Box>
-                    <Typography 
-                  sx={{ 
-                    // mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    color: "#111"
-                 }}
-                    >
+                    <Typography sx={{ ...typography.h6, color: "#0E1626" }}>
                       Lift Capacity
                     </Typography>
-                    <Typography 
-                    color="text.secondary"
-                  sx={{ 
-                    mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px"
-                 }}
-                    >
-                      {service.liftCapacity}
+                    <Typography sx={{ ...typography.bodySmall, color: "#677489" }}>
+                      2.5 Tons
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography
-                      sx={{ 
-                    // mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    color: "#111"
-                 }}
-                     >
+                    <Typography sx={{ ...typography.h6, color: "#0E1626" }}>
                       Power Supply
                     </Typography>
-                    <Typography 
-                    color="text.secondary"
-                  sx={{ 
-                    mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px"
-                 }}
-                     >
-                      {service.powerSupply}
+                    <Typography sx={{ ...typography.bodySmall, color: "#677489" }}>
+                      220V / 110V
                     </Typography>
                   </Box>
-                   <Box>
-                    <Typography
-                  sx={{ 
-                    // mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    color: "#111"
-                 }}
-                     >
+                  <Box>
+                    <Typography sx={{ ...typography.h6, color: "#0E1626" }}>
                       Power Supply
                     </Typography>
-                    <Typography
-                     color="text.secondary"
-                  sx={{ 
-                    mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px"
-                 }}
-                     >
-                      {service.powerSupply}
+                    <Typography sx={{ ...typography.bodySmall, color: "#677489" }}>
+                      220V / 110V
                     </Typography>
                   </Box>
                 </Box>
 
-                {/* Sizes */}
-                 <Typography 
-               sx={{ 
-                    // mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    color: "#111"
-                 }}
-                 >
+                {/* Size Options */}
+                <Box>
+                  <Typography sx={{ fontWeight: 600, fontSize: "14px", color: "#222" }}>
                     Size Options
-                    </Typography>
-                <Typography
-                 color="text.secondary"
-                  sx={{ 
-                    mb: 2,
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontWeight: 600,
-                    fontSize: "16px"
-                 }}
-                >
-                  {service.sizes}
-                </Typography>
+                  </Typography>
+                  <Typography sx={{ fontSize: "14px", color: "#555" }}>
+                    700mm / 900mm / 1200mm
+                  </Typography>
+                </Box>
               </CardContent>
-
               {/* Button */}
-              <Box sx={{ p: 2, pt: 0 }}>
+              <Box sx={{ p: 2, pt: 0, paddingTop: '50px' }}>
                 <Button
                   onClick={() => navigate("/home/CheckAvailabilty")}
                   fullWidth
                   variant="contained"
-                  className="availability-btn"
                   sx={{
-                     p: 2,
-                    ...typography.buttonSBold,
-                    borderRadius: 1,
+                    width: "384px",
+                    height: "50px",
+                    borderRadius: 4,
                     textTransform: "none",
-                    backgroundColor: "#0b2d55",
-                    "&:hover": { backgroundColor: "#204e77ff" },
+                    backgroundColor: "#1C2D4B",
+                    "&:hover": { backgroundColor: "#1C2D4B" },
+                    mx: "auto",
                   }}
                 >
                   View Details
@@ -347,6 +232,30 @@ export default function SellRentServicesCard({ services }) {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 3,
+        }}
+      >
+        {services.map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              width: 30,
+              height: 3,
+              borderRadius: 2,
+              backgroundColor: index <= activeIndex ? "#1C2D4B" : "#d3d3d3",
+              mx: 0.5,
+              transition: "background-color 0.3s ease",
+            }}
+          />
+        ))}
+      </Box>
+
+
     </Box>
   );
 }

@@ -60,11 +60,10 @@ import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
-import Repairservicemagnet from "../../../assets/repairservicemagnet.png";
-import RepairServicesPageCard from "app/components/Card/RepairServicesPageCard";
-import ProcessCards from "app/components/Card/HowweworkCard";
-import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
+import Roi1 from '../../../assets/Roi1.png';
+import Roi2 from '../../../assets/Roi2.png';
 import { typography } from "app/utils/constant";
+import Footer from 'app/components/Card/Footer';
 import Checkavailimage from "../../../assets/aftercstudy.png";
 import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
@@ -75,32 +74,27 @@ import handshake1 from "../../../assets/handshake3.jpg";
 //specs
 const specData = [
   {
-    label: 'Mechanical',
+    label: "Mechanical",
     properties: [
-      'Diameter',
-      'Overall height',
-      'Net weight',
-      'Face area',
-      'IP rating',
-      'Lifting eye/hanger',
+      "Diameter",
+      "Overall height",
+      "Net weight",
+      "Face area",
+      "IP rating",
+      "Lifting eye/hanger",
     ],
   },
   {
-    label: 'Electrical',
-    properties: [
-      'Voltage',
-      'Current',
-      'Power consumption',
-      'Control voltage',
-    ],
+    label: "Electrical",
+    properties: ["Voltage", "Current", "Power consumption", "Control voltage"],
   },
   {
-    label: 'Performance',
+    label: "Performance",
     properties: [
-      'Duty cycle',
-      'Max temp',
-      'Lifting force',
-      'Magnetic field strength',
+      "Duty cycle",
+      "Max temp",
+      "Lifting force",
+      "Magnetic field strength",
     ],
   },
 ];
@@ -150,8 +144,7 @@ const renderSpecGrid = (properties) => (
 const CheckAvailabilty = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const [mainImage, setMainImage] = useState(Checkavailimage);
-  const thumbnailImages = [Checkavailimage, Blogs1, Blogs2, Blogs3];
-
+  const thumbnailImages = [Roi1, Roi2, Roi2, Roi2, Roi2];
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -473,6 +466,8 @@ const CheckAvailabilty = () => {
             flexWrap: "wrap",
             gap: 4,
             justifyContent: "space-between",
+            width: '1441px',
+            height: '644px'
           }}
         >
           {/* Left Side: Thumbnails + Main Image */}
@@ -492,10 +487,10 @@ const CheckAvailabilty = () => {
               src={Checkavailimage}
               alt="Main Lifting Magnet"
               sx={{
-                width: "100%",
+                width: "887px",
+                height: "500px",
                 borderRadius: "10px",
                 objectFit: "cover",
-                height: { xs: "auto", md: 400 },
               }}
             />
             {/* Thumbnails Row */}
@@ -508,8 +503,8 @@ const CheckAvailabilty = () => {
                   alt={`Thumbnail ${index + 1}`}
                   onClick={() => setMainImage(img)}
                   sx={{
-                    width: 80,
-                    height: 80,
+                    width: '148px',
+                    height: '124px',
                     borderRadius: "6px",
                     objectFit: "cover",
                     border: mainImage === img ? "2px solid #E17A00" : "2px solid transparent",
@@ -523,12 +518,14 @@ const CheckAvailabilty = () => {
           {/* Right Form */}
           <Box
             sx={{
-              width: { xs: "100%", md: "35%" },
-              height: "370px",
+              width: '452px',
+              height: "411px",
               border: "1px solid #E17A00",
               borderRadius: "12px",
               padding: "24px",
-              display: "flex",
+              marginRight: '90px',
+              marginTop: '40px',
+              // display: "flex",
               flexDirection: "column",
               gap: 2,
             }}
@@ -746,117 +743,171 @@ const CheckAvailabilty = () => {
       </Box>
 
 
-     {/* Specs Accordion */}
-          <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
-          <Typography variant="h6" fontSize={'48px'} fontWeight="bold" gutterBottom>
-            Specs
-          </Typography>
+      {/* Specs Accordion */}
+      <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+        <Typography variant="h6" fontSize={"48px"} fontWeight="bold" gutterBottom>
+          Specs
+        </Typography>
 
-          {specData.map((section, index) => (
-            <Accordion key={index} defaultExpanded={index === 0} sx={{ mb: 2 }}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ backgroundColor: '#f9f9f9' }}>
-                <Typography fontWeight="bold">{section.label}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {renderSpecGrid(section.properties)}
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </Box>
+        {specData.map((section, index) => (
+          <Accordion
+            key={index}
+            defaultExpanded={index === 0}
+            sx={{
+              mb: 2,
+              borderRadius: "12px",
+              border: "1px solid #e5e7eb",
+              boxShadow: "none",
+            }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{ backgroundColor: "#fff" }}
+            >
+              <Typography fontWeight="bold" fontSize="20px">
+                {section.label}
+              </Typography>
+            </AccordionSummary>
+
+            <AccordionDetails sx={{ p: 3, backgroundColor: "#fff" }}>
+              <Grid container spacing={2}>
+                {section.properties.map((prop, i) => (
+                  <Grid item xs={6} sm={4} md={3} key={i}>
+                    <Box
+                      sx={{
+                        borderRadius: "12px",
+                        p: 2,
+                        height: "100px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        backgroundColor: "#fff",
+                        border: "1px solid #e5e7eb",
+                        color: "#111827",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          backgroundColor: "#1C2D4B",
+                          color: "#fff",
+                          borderColor: "#1C2D4B",
+                        },
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                        {prop}
+                      </Typography>
+                      <Typography sx={{ fontSize: "14px", color: "inherit", mt: 1 }}>
+                        ∅ diameter_mm mm
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Box>
+
 
       {/* Section Heading */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
-      <Typography
-        // variant="h5"
-        // fontWeight="bold"
-        sx={{
-          textAlign: "left",
-          ml: 5,
-          color: "#1c2434",
-          fontWeight: 600,
-          fontFamily: "Space Grotesk, Regular",
-          fontSize: "48px",
-          // lineHeight: "110px"
-        }}
-      >
-        What's included
-      </Typography>
+        <Typography
+          sx={{
+            textAlign: "left",
+            mb: 4,
+            color: "#1c2434",
+            fontWeight: 600,
+            fontFamily: "Space Grotesk, Regular",
+            fontSize: "48px",
+          }}
+        >
+          What's included
+        </Typography>
 
-        <Grid container spacing={2}>
-                    {includedItems.map((item, index) => (
-                      <Grid item xs={12} md={4} key={index}>
-                        <Card
-                          variant="outlined"
-                          sx={{
-                            height: '100%',
-                            transition: 'all 0.3s ease',
-                            backgroundColor: '#fff',
-                            color: '#000',
-                            '&:hover': {
-                              backgroundColor: '#0D1F3A',
-                              color: '#fff',
-                              '& .hover-button': {
-                                display: 'flex',
-                              },
-                              '& .MuiSvgIcon-root': {
-                                color: '#fff',
-                              },
-                            },
-                          }}
-                        >
-                          <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                            <Box>{item.icon}</Box>
-        
-                            <Typography variant="subtitle1" fontWeight="bold">
-                              {item.title}
-                            </Typography>
-        
-                            <Typography variant="body2" color="inherit">
-                              {item.desc}
-                            </Typography>
-        
-                            {/* Always render the button, only show on hover */}
-                            <Box
-                              className="hover-button"
-                              sx={{
-                                mt: 2,
-                                display: 'none',
-                              }}
-                            >
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  backgroundColor: '#C97833',
-                                  borderRadius: '24px',
-                                  textTransform: 'none',
-                                  fontWeight: 'bold',
-                                  px: 3,
-                                  py: 1,
-                                  '&:hover': {
-                                    backgroundColor: '#b2652a',
-                                  },
-                                }}
-                              >
-                                View More
-                              </Button>
-                            </Box>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-       </Box>
-        
+        <Grid container spacing={3}>
+          {includedItems.map((item, index) => (
+            <Grid item key={index}>
+              <Card
+                sx={{
+                  width: "350px",
+                  height: "224px",
+                  borderRadius: "16px",
+                  border: "1px solid #e5e7eb",
+                  backgroundColor: "#fff",
+                  color: "#1c2434",
+                  position: "relative",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    backgroundColor: "#1C2D4B",
+                    color: "#fff",
+                    "& .view-more-btn": {
+                      opacity: 1,
+                      transform: "translateY(0)",
+                    },
+                  },
+                }}
+              >
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    height: "100%",
+                  }}
+                >
+                  {/* Handshake Icon */}
+                  <Box>{item.icon}</Box>
+
+                  {/* Title */}
+                  <Typography variant="subtitle1" fontWeight="bold">
+                    {item.title}
+                  </Typography>
+
+                  {/* Description */}
+                  <Typography variant="body2" color="inherit">
+                    {item.desc}
+                  </Typography>
+
+                  {/* View More Button (hidden until hover) */}
+                  <Button
+                    className="view-more-btn"
+                    sx={{
+                      mt: 2,
+                      backgroundColor: "#C97833",
+                      borderRadius: "24px",
+                      textTransform: "none",
+                      fontWeight: "bold",
+                      px: 3,
+                      py: 1,
+                      opacity: 0,                       // hidden by default
+                      transform: "translateY(10px)",    // slightly below
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        backgroundColor: "#b2652a",
+                      },
+                    }}
+                  >
+                    View More →
+                  </Button>
+                </CardContent>
+              </Card>
+
+
+
+
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
 
       {/* <Whyitworkcard /> */}
 
       {/*ElectroMagnet Repair Section */}
-      <Typography
+     <Typography
         variant="h4"
         sx={{
-
           color: "#1c2434",
-          mb: 2,
           ml: 5,
           fontWeight: 600,
           fontFamily: "Space Grotesk, Regular",
@@ -869,121 +920,136 @@ const CheckAvailabilty = () => {
 
       <Box
         sx={{
+          width: "1440px",
+          height: "857px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          px: 4,
-          py: 4,
-          gap: 6,
+          justifyContent: "center",
           bgcolor: "white",
         }}
       >
-        {/* Left - Features with vertical timeline */}
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {/* Continuous Vertical Line */}
+        {/* Inner container */}
+        <Box
+          sx={{
+            width: "1228px",
+            height: "708px",
+            display: "flex",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: 3,
+            p: 4,
+            bgcolor: "white",
+          }}
+        >
+          {/* Left - Features */}
           <Box
             sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "10px", // adjust to align with icons
-              width: "2px",
-              bgcolor: "#ccc",
-              borderRadius: 1,
+              width: "570px",
+              height: "660px",
+              position: "relative",
             }}
-          />
-
-          {features.map((item, index) => {
-            const isActive = hoveredIndex === index;
-
-            return (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  mb: 4,
-                  cursor: "pointer",
-                  position: "relative",
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-              >
-                {/* Highlighted section of the vertical line */}
-                {isActive && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: "10px",
-                      width: "2px",
-                      bgcolor: "#1976d2",
-                      height: "100%",
-                      borderRadius: 1,
-                    }}
-                  />
-                )}
-
-                {/* Icon + Text */}
-                <Box sx={{ ml: 4 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <CalendarMonthIcon
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                bottom: '100px',
+                left: "10px",
+                width: "2px",
+                bgcolor: "#ccc",
+                borderRadius: 1,
+              }}
+            />
+            {features.map((item, index) => {
+              const isActive = hoveredIndex === index;
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    mb: 4,
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                >
+                  {isActive && (
+                    <Box
                       sx={{
-                        fontSize: 20,
-                        color: isActive ? "#1976d2" : "#666",
-                        mr: 1,
-                        transition: "0.3s",
+                        position: "absolute",
+                        left: "10px",
+                        width: "2px",
+                        bgcolor: "#1976d2",
+                        height: "100%",
+                        borderRadius: 1,
                       }}
                     />
+                  )}
+                  <Box sx={{ ml: 4, paddingTop: '5px' }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                      <CalendarMonthIcon
+                        sx={{
+                          fontSize: 20,
+                          color: isActive ? "#1976d2" : "#666",
+                          mr: 1,
+                          transition: "0.3s",
+                        }}
+                      />
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          ...typography.h3B1,
+                          fontWeight: 400,
+                          color: isActive ? "#1976d2" : "#1c2434",
+                          transition: "0.3s",
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                    </Box>
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{
-                        ...typography.h3B1,
+                        ...typography.bodyBasemedium,
                         fontWeight: 400,
-                        color: isActive ? "#1976d2" : "#1c2434",
                         transition: "0.3s",
+                        ml: 4,
                       }}
                     >
-                      {item.title}
+                      {item.desc}
                     </Typography>
                   </Box>
-
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      // color: isActive ? "#1976d2" : "text.secondary",
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                      transition: "0.3s",
-                      ml: 4
-                    }}
-                  >
-                    {item.desc}
-                  </Typography>
                 </Box>
-              </Box>
-            );
-          })}
-        </Box>
+              );
+            })}
+          </Box>
 
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {/* Right - Image */}
           <Box
-            component="img"
-            src={features[hoveredIndex].image}
-            alt="ElectroMagnet Repair"
             sx={{
-              width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
+              width: "570px",
+              height: "567px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={features[hoveredIndex].image}
+              alt="ElectroMagnet Repair"
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 3,
+                objectFit: "cover",
+                transition: "0.5s",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
-
 
 
 
@@ -1098,269 +1164,9 @@ const CheckAvailabilty = () => {
       </Box>
 
       {/* Footer Section */}
-      <Box
-        component="footer"
-        sx={{
-          backgroundColor: "#0b2d55",
-          color: "#fff",
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
-          width: "100%",
-          px: { xs: 4, md: 12 },
-          py: { xs: 6, md: 10 },
-        }}
-      >
-        <Grid container spacing={4}>
-          {/* 1. Left Column: Brand and Unit Info */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Box mb={2}>
-                <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-              </Box>
-              <Box display="flex" alignItems="center" mt={2}>
-                <Typography
-                  //  variant="body2" 
-                  sx={{
-                    fontFamily: "Space Grotesk, Regular",
-                    fontWeight: 700,
-                    fontSize: "28px",
-                    lineHeight: "120%",
-                    mr: 1,
-                  }}
-                >
-                  A unit of
-                </Typography>
-                <Box component="span">
-                  <img src={Brand1} alt="Electro Flux" style={{ height: 40 }} />
-                </Box>
-              </Box>
-            </Box>
-          </Grid>
-
-          {/* 2. Middle Column: Contact Info */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  fontFamily: "Space Grotesk, Regular",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Contact
-              </Typography>
-
-              <Typography
-                //  variant="body2" 
-                sx={{
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                  textAlign: "left"
-                }}>
-                Xilliams Corner Wine © 2017. <br />
-                1112 A Market St # Ste B22,<br />
-                Charlottesville, CA 45565
-              </Typography>
-
-              <Typography
-                sx={{
-                  mt: 2,
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                  borderBottom: "2px solid #1976d2",
-                }}
-              >(123) 456-7890</Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  display: "inline-block",
-                  borderBottom: "2px solid #1976d2",
-                  pb: "2px",
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular"
-                }}
-              >
-                contact@lift.agency
-              </Typography>
-            </Box>
-          </Grid>
-
-          {/* 3. Right Column: Links + Scroll Icon + Copyright */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  fontFamily: "Space Grotesk, Regular",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Links
-              </Typography>
-
-              {["Facebook", "Instagram", "Youtube"].map((item) => (
-                <Typography key={item}
-                  sx={{
-                    mb: 1,
-                    lineHeight: "130%",
-                    fontWeight: 500,
-                    fontSize: "20px",
-                    fontFamily: "Space Grotesk, Regular"
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-
-              <Typography
-
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  fontFamily: "Space Grotesk, Bold",
-                  mt: 2,
-                  lineHeight: "130%"
-                }}
-
-              >
-                Wall of Love ❤️
-              </Typography>
-
-              {/* Divider under Wall of Love */}
-              <Box
-                sx={{
-                  width: 30,
-                  height: 2,
-                  backgroundColor: "#fff",
-                  my: 1,
-                }}
-              />
-
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  fontFamily: "Space Grotesk, Bold",
-                  mt: 3,
-                  lineHeight: "130%"
-                }}
-              >
-                Sitemap</Typography>
-
-              {/* Scroll to Top Icon */}
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  border: "1px solid #fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  mb: 2,
-                  ml: 20
-                }}
-              >
-                <ArrowUpwardIcon sx={{ color: "#fff" }} />
-              </Box>
-
-              <Typography variant="caption" sx={{ color: "#ccc" }}>
-                © 2020 Lift Media All rights reserved.
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-
-      <Box
-        sx={{
-          position: 'sticky',   // sticky or fixed if you want it always visible even while scrolling
-          bottom: 0,
-          left: 0,
-          right: 0,
-          bgcolor: '#fff',
-          zIndex: 1300,          // high zIndex to stay on top of other content
-          boxShadow: '0 -2px 8px rgba(0,0,0,0.1)', // subtle shadow on top
-        }}
-      >
-        <Box sx={{ mt: 1, width: '100%', px: { xs: 2, md: 6 } }}>
-          <Typography sx={{ color: 'white' }}>
-            © 2020 Lift Media All rights reserved.
-          </Typography>
-          <Divider
-            sx={{
-              borderColor: '#131414ff',
-              bgcolor: '#131414ff',
-            }}
-          />
-        </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: "1px",
-            px: { xs: 4, md: 12 },
-            py: { xs: 4, md: 6 },
-            flexDirection: { xs: 'column', md: 'row' },
-          }}
-        >
-          {/* Left Content */}
-          <Box sx={{ width: 1000, textAlign: { xs: 'center', md: 'left' } }}>
-            <Typography
-              sx={{
-                fontWeight: 500,
-                fontSize: '20px',
-                color: '#111827',
-                fontFamily: 'Space Grotesk, Regular',
-                mb: 1,
-              }}
-            >
-              Perfect Chat? Share dates & site on WhatsApp
-            </Typography>
+      <Box >
+            <Footer/>
           </Box>
-
-          {/* Right Button */}
-          <Button
-            variant="contained"
-            sx={{
-              fontFamily: 'Space Grotesk, Regular',
-              mt: { xs: 3, md: 0 },
-              backgroundColor: '#a45514',
-              borderRadius: '999px',
-              width: '30%',
-              fontWeight: 500,
-              fontSize: '20px',
-              textTransform: 'none',
-              '&:hover': {
-                backgroundColor: '#6b3b10',
-              },
-            }}
-          >
-            WhatsApp an Engineer
-          </Button>
-        </Box>
-      </Box>
 
     </Box>
   );

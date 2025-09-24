@@ -17,7 +17,7 @@ import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {Link, useNavigate } from "react-router-dom";  // or any other ico
-import { typography } from "app/utils/constant";
+import { typography, RefluxSvg } from "app/utils/constant";
 const MenuButton = styled(Button)(({ theme }) => ({
   flex: 1, // equal width for all buttons
   position: "relative",
@@ -86,9 +86,26 @@ export default function TopbarWithMegaMenu() {
     >
       <Box display="flex" alignItems="center" height={64}>
         {/* Logo */}
-        <Typography variant="h6" sx={{ flex: 0.5, fontWeight: "bold" }}>
-          ReFlux Magnets
-        </Typography>
+        <Box sx={{ width: "425px", height: "170px" }}>
+                    <RefluxSvg />
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        fontWeight: "bold",
+                        letterSpacing: "2px",
+                        lineHeight: 1,
+                        color: "#fff",
+                      }}
+                    >
+                      ReFlux
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{ letterSpacing: "15px", color: "#fff" }}
+                    >
+                      MAGNETS
+                    </Typography>
+                  </Box>
         <Box display="flex" flex={1} justifyContent="space-evenly">
           {["Services", "Rental", "Resale", "Contact", "More"].map((menu) => (
             <React.Fragment key={menu}>

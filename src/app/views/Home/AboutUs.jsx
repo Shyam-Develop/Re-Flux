@@ -226,10 +226,10 @@ const AboutUS = () => {
                 <HowWeWork />
                 {/* OUR CAPABILITIES SECTiON */}
                  
-<AboutUsRepairServicesPageCard/>
+<       AboutUsRepairServicesPageCard/>
          {/* Industry SECTiON */}
                  
-<IndustriesSwiper/>
+            <IndustriesSwiper/>
                 {/* Our Brands Section */}
                 <Typography
                     sx={{

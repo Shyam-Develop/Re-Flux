@@ -46,56 +46,57 @@ import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
 import { typography } from "app/utils/constant";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useNavigate } from 'react-router-dom';
+import BrowseDialog from "app/components/DialogBox";
 
 
 
 
 const RepairServicesPage = () => {
 
-    const navigate=useNavigate()
+  const navigate = useNavigate()
 
-  
-const UploadBox = ({ label }) => {
+
+  const UploadBox = ({ label }) => {
     return (
-        <Box sx={{ my: 3 }}>
-            <Typography variant="h6" gutterBottom>{label}</Typography>
-            <label htmlFor="upload-input">
-                <Box
-                    sx={{
-                        border: '2px dashed #ccc',
-                        borderRadius: 2,
-                        p: 4,
-                        textAlign: 'center',
-                        cursor: 'pointer',
-                        transition: 'border-color 0.3s ease',
-                        '&:hover': { borderColor: 'primary.main' },
-                    }}
-                >
-                    <IconButton component="span" size="large">
-                        <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
-                    </IconButton>
-                    <Typography>
-                        <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                        Select image in jpeg, PNG
-                    </Typography>
-                </Box>
-            </label>
-            <input
-                id="upload-input"
-                type="file"
-                accept="image/jpeg, image/png"
-                style={{ display: 'none' }}
-            />
-        </Box>
+      <Box sx={{ my: 3 }}>
+        <Typography variant="h6" gutterBottom>{label}</Typography>
+        <label htmlFor="upload-input">
+          <Box
+            sx={{
+              border: '2px dashed #ccc',
+              borderRadius: 2,
+              p: 4,
+              textAlign: 'center',
+              cursor: 'pointer',
+              transition: 'border-color 0.3s ease',
+              '&:hover': { borderColor: 'primary.main' },
+            }}
+          >
+            <IconButton component="span" size="large">
+              <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+            </IconButton>
+            <Typography>
+              <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Select image in jpeg, PNG
+            </Typography>
+          </Box>
+        </label>
+        <input
+          id="upload-input"
+          type="file"
+          accept="image/jpeg, image/png"
+          style={{ display: 'none' }}
+        />
+      </Box>
     );
-};
+  };
 
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setBrowseDialogOpen(true);
   };
@@ -251,10 +252,31 @@ const UploadBox = ({ label }) => {
     setExpanded(expanded === index ? null : index);
   };
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
+  const topImageStyle = {
+    width: '100%',
+    height: '329px',
+    overflow: 'hidden',
+    position: 'relative',
+  };
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const imageStyle = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  };
+
+  const overlayBoxStyle = {
+    position: 'absolute',
+    bottom: '5px',
+    left: '50px',
+    backgroundColor: '#F1F2F4',
+    width: '283px',
+    height: '66px',
+    padding: '14px 60px;',
+    textAlign: 'center',
+  };
+
   return (
     <Box
       sx={{
@@ -265,112 +287,54 @@ const UploadBox = ({ label }) => {
       }}
     >
       {/* Background Image */}
-      <Box
-        component="img"
-        src={Repairservicemagnet}
-        alt="Circular Lifting Magnet"
-        sx={{
-          width: "100%",
-          height: "50%",
-          objectFit: "cover",
-        }}
-      />
 
-      {/* Overlay Label */}
-      <Box
-        sx={{
-          ...typography.h3R,
-          position: "absolute",
-          bottom: 325,
-          left: 20,
-          bgcolor: "#e5e7eb",
-          px: 3,
-          py: 1,
-          width: 250,
-          // fontSize: "25px",
-          textAlign: "center",
-          //   borderRadius: 1,
-          fontWeight: 600,
-        }}
-      >
-        Services
+      <Box sx={topImageStyle}>
+        <img src={Repairservicemagnet} alt="Top Banner" style={imageStyle} />
+
+        <Box sx={overlayBoxStyle} >
+          <Typography sx={{ ...typography.h3, color: '#000000' }}>Services</Typography>
+        </Box>
       </Box>
 
       {/* Content Section */}
-      <Box
-        sx={{
-          bgcolor: "white",
-          p: 4,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: 4, // spacing between left and right
-        }}
-      >
-        {/* Left Side - Title */}
-        <Typography
-          // variant="h5"
-          // fontWeight="bold"
-          sx={{
-            fontSize: "40px",
-            fontWeight: 600,
-            lineHeight: "110px",
-            color: "#1c2434",
-            minWidth: 500,
-            fontFamily: "Space Grotesk Reguar"
-          }} // fixed width so it stays left
-        >
-          Circular Lifting Magnet
-        </Typography>
-
-        {/* Right Side - Paragraph + Link */}
-        <Box sx={{ maxWidth: 780 }}>
-          <Typography
-            //  variant="body2" 
-            sx={{
-              mb: 2,
-              color: "text.secondary",
-              ...typography.bodySmall,
-              fontWeight: 400
-            }}>
-            Get powerful lifting magnets when you need them — without the upfront
-            cost. Flexible rental plans, quick installation, and reliable
-            performance for every project.
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#1d4ed8",
-              ...typography.bodyStrongB,
-              fontWeight: 600,
-              textDecoration: "underline",
-              cursor: "pointer"
-            }}
-          >
-            Request a quote →
-          </Typography>
-        </Box>
+      <Box sx={{ padding: '60px 120px', backgroundColor: '#fff' }}>
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={5}>
+            <Typography sx={{ ...typography.h1, color: '#1A2438' }}>
+              Circular Lifting Magnet
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={7} sx={{ paddingLeft: '1px' }}  >
+            <Typography sx={{ ...typography.bodyBase, color: '#99A0AE', }}>
+              Get powerful lifting magnets when you need them — without the upfront cost.
+              Flexible rental plans, quick installation, and reliable performance for every project.
+            </Typography>
+            <Typography sx={{ ...typography.bodyStrong, color: '#2F6FBA', fontSize: '18px', fontWeight: 600 }}>
+              <Link>Request a Quote </Link>
+            </Typography>
+          </Grid>
+        </Grid>
       </Box>
+
+
+
+
+
       {/* Fault section */}
 
       <Box
         sx={{
           bgcolor: "white",
           p: 4,
-          ml: 2
-
+          ml: 4
         }}>
         {/* Section Heading */}
         <Typography
-          // variant="h5"
-          // fontWeight="bold"
           sx={{
-            //  mb: 1,
-            color: "#1c2434",
+            ...typography.displayM,
+            color: "#0E1109",
             fontWeight: 600,
             fontFamily: "Space Grotesk, Regular",
-            fontSize: "48px",
-            // lineHeight: "110px"
           }}
         >
           Common faults we fix
@@ -378,20 +342,17 @@ const UploadBox = ({ label }) => {
 
         {/* Sub Text */}
         <Typography
-          //    variant="body2" 
           sx={{
-            fontFamily: "Space Grotesk, Regular",
-            fontWeight: 400,
-            // lineHeight: "130px",
+            ...typography.h4,
             mb: 2,
-            color: "text.secondary",
+            color: "#677489",
             fontSize: "24px"
           }}>
           Self-diagnose quickly—share photos on WhatsApp for a fast quote.
         </Typography>
 
         {/* Chips Section */}
-        <Stack direction="row" flexWrap="wrap" gap={2} sx={{ mb: 3 }}>
+        <Stack direction="row" flexWrap="wrap" gap={2} sx={{ mb: 3, width: '1280px', height: '100px' }}>
           {[
             "Loose junctions",
             "Capacity drop",
@@ -399,6 +360,8 @@ const UploadBox = ({ label }) => {
             "Pole-shoe wear",
             "Loose junctions",
             "Pole-shoe wear",
+            "Loose junctions",
+            "Capacity drop",
           ].map((item, index) => (
             <Chip
               key={index}
@@ -432,7 +395,7 @@ const UploadBox = ({ label }) => {
             fontWeight: 600,
             textTransform: "none",
           }}
-            onClick={handleClickOpen}
+          onClick={() => setOpen(true)}
         >
           <span style={{ textDecoration: "underline" }}>Not sure what’s wrong?</span>{" "}
           Send photos/video on WhatsApp.
@@ -440,26 +403,22 @@ const UploadBox = ({ label }) => {
       </Box>
       <Divider
         sx={{
-          borderColor: "#131414ff", // light grey border
-          // OR
-          bgcolor: "#131414ff",     // background color if vertical
+          borderColor: "#131414ff",
+          bgcolor: "#131414ff",
         }}
       />
 
 
+
+      {/* Scope Of Work */}
       <Box
         sx={{
-          //  bgcolor: "white",
           p: 4,
           ml: 2
-
         }}>
         {/* Section Heading */}
         <Typography
-          // variant="h5"
-          // fontWeight="bold"
           sx={{
-            //  mb: 1,
             color: "#1c2434",
             fontWeight: 600,
             fontFamily: "Space Grotesk, Regular",
@@ -472,11 +431,9 @@ const UploadBox = ({ label }) => {
 
         {/* Sub Text */}
         <Typography
-          //    variant="body2" 
           sx={{
             fontFamily: "Space Grotesk Regular",
             fontWeight: 400,
-            // lineHeight: "130px",
             mb: 2,
             color: "text.secondary",
             fontSize: "24px"
@@ -484,18 +441,19 @@ const UploadBox = ({ label }) => {
           Electrical and mechanical restoration with document testing.
         </Typography>
 
-
         <RepairServicesPageCard />
 
         <Divider
           sx={{
-            borderColor: "#131414ff", // light grey border
-            // OR
-            bgcolor: "#131414ff",     // background color if vertical
+            borderColor: "#131414ff",
+            bgcolor: "#131414ff",
           }}
         />
-
       </Box>
+
+
+
+      {/* How We Work section*/}
       <Box>
         <Typography
           // variant="h5"
@@ -506,6 +464,7 @@ const UploadBox = ({ label }) => {
             fontWeight: 600,
             fontFamily: "Space Grotesk, Regular",
             fontSize: "48px",
+
             // lineHeight: "110px"
           }}
         >
@@ -514,7 +473,6 @@ const UploadBox = ({ label }) => {
 
         {/* Sub Text */}
         <Typography
-          //    variant="body2" 
           sx={{
             ml: 6,
             fontFamily: "Space Grotesk Regular",
@@ -527,29 +485,16 @@ const UploadBox = ({ label }) => {
           Electrical and mechanical restoration with document testing.
         </Typography>
         <ProcessCards />
-        <Typography
 
-          sx={{
-            ...typography.bodyBase,
-            color: "#1d4ed8",
-            fontWeight: 600,
-            cursor: "pointer",
-            textAlign: "center",
-            // fontSize:"24px",
-            textDecoration: "underline"
-          }}
-        >
-          Sample load-test certificate (PDF) →
-        </Typography>
       </Box>
+
+
 
       {/*ElectroMagnet Repair Section */}
       <Typography
         variant="h4"
         sx={{
-
           color: "#1c2434",
-          mb: 2,
           ml: 5,
           fontWeight: 600,
           fontFamily: "Space Grotesk, Regular",
@@ -562,120 +507,137 @@ const UploadBox = ({ label }) => {
 
       <Box
         sx={{
+          width: "1440px",
+          height: "857px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          px: 4,
-          py: 4,
-          gap: 6,
+          justifyContent: "center",
           bgcolor: "white",
         }}
       >
-        {/* Left - Features with vertical timeline */}
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {/* Continuous Vertical Line */}
+        {/* Inner container */}
+        <Box
+          sx={{
+            width: "1228px",
+            height: "708px",
+            display: "flex",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: 3,
+            p: 4,
+            bgcolor: "white",
+          }}
+        >
+          {/* Left - Features */}
           <Box
             sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "10px", // adjust to align with icons
-              width: "2px",
-              bgcolor: "#ccc",
-              borderRadius: 1,
+              width: "570px",
+              height: "660px",
+              position: "relative",
             }}
-          />
-
-          {features.map((item, index) => {
-            const isActive = hoveredIndex === index;
-
-            return (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  mb: 4,
-                  cursor: "pointer",
-                  position: "relative",
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-              >
-                {/* Highlighted section of the vertical line */}
-                {isActive && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: "10px",
-                      width: "2px",
-                      bgcolor: "#1976d2",
-                      height: "100%",
-                      borderRadius: 1,
-                    }}
-                  />
-                )}
-
-                {/* Icon + Text */}
-                <Box sx={{ ml: 4 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <CalendarMonthIcon
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                bottom: '100px',
+                left: "10px",
+                width: "2px",
+                bgcolor: "#ccc",
+                borderRadius: 1,
+              }}
+            />
+            {features.map((item, index) => {
+              const isActive = hoveredIndex === index;
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    mb: 4,
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                >
+                  {isActive && (
+                    <Box
                       sx={{
-                        fontSize: 20,
-                        color: isActive ? "#1976d2" : "#666",
-                        mr: 1,
-                        transition: "0.3s",
+                        position: "absolute",
+                        left: "10px",
+                        width: "2px",
+                        bgcolor: "#1976d2",
+                        height: "100%",
+                        borderRadius: 1,
                       }}
                     />
+                  )}
+                  <Box sx={{ ml: 4, paddingTop: '5px' }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                      <CalendarMonthIcon
+                        sx={{
+                          fontSize: 20,
+                          color: isActive ? "#1976d2" : "#666",
+                          mr: 1,
+                          transition: "0.3s",
+                        }}
+                      />
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          ...typography.h3B1,
+                          fontWeight: 400,
+                          color: isActive ? "#1976d2" : "#1c2434",
+                          transition: "0.3s",
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                    </Box>
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{
-                        ...typography.h3B1,
+                        ...typography.bodyBasemedium,
                         fontWeight: 400,
-                        color: isActive ? "#1976d2" : "#1c2434",
                         transition: "0.3s",
+                        ml: 4,
                       }}
                     >
-                      {item.title}
+                      {item.desc}
                     </Typography>
                   </Box>
-
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      // color: isActive ? "#1976d2" : "text.secondary",
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                      transition: "0.3s",
-                      ml: 4
-                    }}
-                  >
-                    {item.desc}
-                  </Typography>
                 </Box>
-              </Box>
-            );
-          })}
-        </Box>
+              );
+            })}
+          </Box>
 
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {/* Right - Image */}
           <Box
-            component="img"
-            src={features[hoveredIndex].image}
-            alt="ElectroMagnet Repair"
             sx={{
-              width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
+              width: "570px",
+              height: "567px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={features[hoveredIndex].image}
+              alt="ElectroMagnet Repair"
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 3,
+                objectFit: "cover",
+                transition: "0.5s",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
+
 
 
       {/* Before and After Case Studies */}
@@ -685,12 +647,10 @@ const UploadBox = ({ label }) => {
           // zIndex: 1,
           // display: "flex",
           flexDirection: "column",
-          // justifyContent: "center",
           height: "100%",
           color: "white",
-          textAlign: "left", // ✅ left align
-          // maxWidth: "700px", // ✅ restrict width like in screenshot
-          pl: 8, // ✅ padding from left
+          textAlign: "left", 
+          pl: 8, // ✅ 
         }}
       >
         <Typography
@@ -701,7 +661,6 @@ const UploadBox = ({ label }) => {
             fontWeight: 600,
             color: "#1c2434",
             textAlign: "left",
-
           }}
         >
           Before and after case studies
@@ -765,7 +724,9 @@ const UploadBox = ({ label }) => {
             src={before}
             alt="Before"
             sx={{
-              width: "40%", borderRadius: 2, objectFit: "cover",
+              width: "516.1px",
+              height:'305.5px',
+              objectFit: "cover",
               mt: 8
             }}
           />{" "}
@@ -774,7 +735,9 @@ const UploadBox = ({ label }) => {
             component="img"
             src={after}
             alt="After"
-            sx={{ width: "40%", borderRadius: 2, objectFit: "cover" }}
+            sx={{  width: "516.1px",
+              height:'305.5px',
+                objectFit: "cover" }}
           />{" "}
           {/* Right Arrow */}{" "}
           <IconButton
@@ -805,11 +768,13 @@ const UploadBox = ({ label }) => {
                 bgcolor: "#944708",
               },
             }}
-          onClick={()=>navigate("/home/ViewCaseStudy")} >
+            onClick={() => navigate("/home/ViewCaseStudy")} >
             View Case Study
           </Button>
         </Box>
       </Box>
+
+      
 
       {/* ROI Calculator */}
       <Box>
@@ -855,7 +820,7 @@ const UploadBox = ({ label }) => {
             }}
           />
         </Typography>
-        <Box sx={{ maxWidth: 1200, mx: "auto", px: 2 }}>
+        <Box sx={{ width: '1440px', height:'400px', mx: "auto", px: 2 }}>
           <Grid container spacing={4} justifyContent="center">
             {roiData.map((item, index) => (
               <Grid item xs={12} sm={6} md={6} key={index}>
@@ -874,79 +839,80 @@ const UploadBox = ({ label }) => {
                     image={item.image}
                     alt={item.title}
                     sx={{
-                      height: "100%",
-                      width: "100%",
+                      height: "400px",
+                      width: "690px",
                       objectFit: "cover",
                     }}
                   />
 
-        {/* Overlay White Card */}
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 16,
-            left: 16,
-            right: 16,
-            backgroundColor: "white",
-            borderRadius: 2,
-            boxShadow: 1,
-            px: 2,
-            py: 1.5,
-            display: "flex",
-            flexDirection: "column",
-            gap: 0.5,
-             "&:hover": {
-      bgcolor: "#0b2d55",
-      color: "white",
-      "& .MuiTypography-root": { color: "white", transform: "scale(1.05)" },
-      "& .MuiDivider-root": { borderColor: "rgba(255,255,255,0.3)" },
-      "& .MuiIconButton-root": {
-        backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
-        color: "white",             // icon turns white
-      },
-    }
-          }}
-        >
-          <Box display="flex" 
-     
-          justifyContent="space-between" alignItems="center">
-            <Typography
-           sx={{
-            ...typography.h3B1,
-            fontWeight: 700
-           }}
-             >
-              {item.title}
-            </Typography>
-            <IconButton
-              size="small"
-              sx={{
-                backgroundColor: "#f0f0f0",
-              }}
-            >
-              <ArrowForwardIosIcon fontSize="small" />
-            </IconButton>
-          </Box>
-          <Typography
-         sx={{
-          ...typography.bodyBase,
-          fontWeight: 400,
-            color: "text.secondary",
-         }}
-           >
-            {item.description}
-          </Typography>
-        </Box>
-      </Card>
-    </Grid>
-  ))}
-</Grid>
+                  {/* Overlay White Card */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 16,
+                      left: 16,
+                      right: 16,
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      boxShadow: 1,
+                      px: 2,
+                      py: 1.5,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 0.5,
+                      "&:hover": {
+                        bgcolor: "#0b2d55",
+                        color: "white",
+                        "& .MuiTypography-root": { color: "white", transform: "scale(1.05)" },
+                        "& .MuiDivider-root": { borderColor: "rgba(255,255,255,0.3)" },
+                        "& .MuiIconButton-root": {
+                          backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
+                          color: "white",             // icon turns white
+                        },
+                      }
+                    }}
+                  >
+                    <Box display="flex"
+
+                      justifyContent="space-between" alignItems="center">
+                      <Typography
+                        sx={{
+                          ...typography.h3B1,
+                          fontWeight: 700
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        sx={{
+                          backgroundColor: "#f0f0f0",
+                        }}
+                      >
+                        <ArrowForwardIosIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                    <Typography
+                      sx={{
+                        ...typography.bodyBase,
+                        fontWeight: 400,
+                        color: "text.secondary",
+                      }}
+                    >
+                      {item.description}
+                    </Typography>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
         </Box>
 
 
 
       </Box>
+
 
       {/* Resale Refurbished Section */}
 
@@ -959,7 +925,8 @@ const UploadBox = ({ label }) => {
           textDecoration: "underline",
           color: "#1a4dab",
           fontWeight: 600,
-          ml: 115
+          ml: 120,
+          cursor:'pointer'
         }}
       >
         View All Magnets for Sale
@@ -989,17 +956,16 @@ const UploadBox = ({ label }) => {
             ...typography.bodySmall,
             marginBottom: 2,
             ml: 8,
-            textTransform: "none", // keep text as-is
-            // fontSize: "0.8rem", // smaller font
-            fontWeight: 400, // medium weight
-            color: "#1a4dab", // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px", // pill shape
-            px: 2, // horizontal padding
-            py: 0.5, // vertical padding
-            boxShadow: "none", // remove shadow
+            textTransform: "none",
+            fontWeight: 400, 
+            color: "#1a4dab", 
+            backgroundColor: "rgba(36,121,233,0.08)", 
+            borderRadius: "20px", 
+            px: 2, 
+            py: 0.5,
+            boxShadow: "none", 
             "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+              backgroundColor: "rgba(36,121,233,0.15)", 
               boxShadow: "none",
             },
           }}
@@ -1281,10 +1247,10 @@ const UploadBox = ({ label }) => {
           </Grid>
         </Grid>
       </Box>
+      <BrowseDialog open={open} onClose={() => setOpen(false)} />
 
 
-
-      <Dialog
+      {/* <Dialog
         open={BrowseDialogopen}
         onClose={handledialogClose}
         maxWidth="sm"
@@ -1299,7 +1265,7 @@ const UploadBox = ({ label }) => {
       >
         <DialogContent>
           {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-          <CardContent>
+      {/* <CardContent>
             <Typography
               sx={{
                 textAlign: "left",
@@ -1403,9 +1369,9 @@ const UploadBox = ({ label }) => {
             >
               Enquiry for *
             </Typography>
-            <FormControl fullWidth>
-              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-              <Select
+            <FormControl fullWidth> */}
+      {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+      {/* <Select
 
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -1475,9 +1441,9 @@ const UploadBox = ({ label }) => {
             </Typography>
             <UploadBox />
 
-          </CardContent>
-          {/* Buttons */}
-          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+          </CardContent> */}
+      {/* Buttons */}
+      {/* <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
             <Button
               variant="text"
               startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
@@ -1506,10 +1472,10 @@ const UploadBox = ({ label }) => {
             <Button fullWidth variant="outlined">
               Continue to details
             </Button>
-          </Box>
-          {/* </Card> */}
+          </Box> */}
+      {/* </Card> 
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
 
 

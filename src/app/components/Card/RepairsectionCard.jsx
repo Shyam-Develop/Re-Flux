@@ -17,6 +17,7 @@ import { typography } from "app/utils/constant";
 import { useTheme } from "@emotion/react";
 
 
+
 const services = [
   {
     id: 1,
@@ -63,7 +64,7 @@ export default function RepairsectionCard() {
     <Box
       display="grid"
       gap="20px"
-      
+
       gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
         marginTop: '20px',
@@ -88,24 +89,39 @@ export default function RepairsectionCard() {
           {/* Cards */}
           <Grid container spacing={3}>
             {services.map((service) => (
-              <Grid item xs={12} sm={6} md={4} key={service.id} >
-                <Box sx={{ p: 2, }}>
+              <Grid item xs={12} sm={6} md={4} key={service.id}>
+                <Box sx={{ p: 2 }}>
                   <Box
                     onClick={() => navigate("/home/RepairServicesPage")}
                     sx={{
-                      width: 412,              // px
-                      height: 559,             // px
-                      gap: 4,                  // 32px → theme.spacing(4)
-                      transform: "rotate(0deg)",
-                      opacity: 1,
-                      borderRadius: 2,         // 16px → theme.spacing(2)
-                      borderWidth: 2,
+                      width: 412,
+                      height: 559,
+                      borderRadius: 2,
+                      borderWidth: 1,
                       borderStyle: "solid",
-                      borderColor: "grey.400", // pick a theme color
-                      p: 2,                    // 16px → theme.spacing(2)
+                      borderColor: "grey.400",
+                      p: '15px',
                       boxSizing: "border-box",
-                    }}
+                      backgroundColor: "#f6f9fcff",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
 
+                      "&:hover": {
+                        transform: "scale(1.03)",
+                        backgroundColor: "#1C2D4B",
+                        color: "#fff",
+                        borderColor: "transparent",
+                        "& .MuiTypography-root": { color: "#fff" },
+                        "& .MuiIconButton-root": {
+                          backgroundColor: "#6aa9ff",
+                          color: "#fff",
+                        },
+                        "& .MuiDivider-root": {
+                          backgroundColor: "#fff",   
+                          borderColor: "#fff",       
+                        },
+                      },
+                    }}
                   >
                     {/* Image */}
                     <Box
@@ -113,25 +129,20 @@ export default function RepairsectionCard() {
                       src={service.img}
                       alt={service.title}
                       sx={{
-                        width: 380, // px
-                        height: 260, // px
+                        width: 380,
+                        height: 260,
                         borderRadius: "5px",
                         objectFit: "cover",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+
+                          transform: "scale(1.05)",
+                        },
                       }}
                     />
 
                     {/* Content */}
-
-                    {/* Title + Arrow */}
-                    <Box
-                      sx={{
-                        mt: 5,
-                        width: "365px",
-                        height: "235px",
-                        gap: "8px",
-                        opacity: 1,
-                      }}
-                    >
+                    <Box sx={{ mt: 5, width: "365px", height: "235px" }}>
                       <Box
                         sx={{
                           display: "flex",
@@ -140,46 +151,33 @@ export default function RepairsectionCard() {
                           mb: 1,
                         }}
                       >
-                        <Typography sx={{
-                          ...typography.h3,
-                          color: "#1B2F43"
-                        }}>
+                        <Typography sx={{ ...typography.h3, color: "#1B2F43" }}>
                           {service.title}
                         </Typography>
                         <IconButton
                           size="small"
                           sx={{
-                            color: "text.secondary",
+                            width: '40px',
+                            height: '40px',
+                            color: "rgb(82 86 94)",
                             backgroundColor: "#f1f3f4",
+                            transition: "all 0.3s ease",
                           }}
                         >
                           <ArrowForwardIosIcon fontSize="small" />
                         </IconButton>
                       </Box>
 
-                      {/* Description */}
-                      <Typography
+                      <Divider />
 
-                        sx={{
-                          ...typography.bodyBase,
-                          color: "#666666",
-                          mb: 1
-                        }}
-                      >
+                      <Typography sx={{ ...typography.bodyBase, color: "#666", mb: 1 }}>
                         {service.desc}
                       </Typography>
 
-                      {/* Turnaround Time */}
-                      <Typography sx={{
-                        ...typography.h5,
-                        color: "#0E1626"
-                      }}>
+                      <Typography sx={{ ...typography.h5, color: "#0E1626" }}>
                         Turnaround Time
                       </Typography>
-                      <Typography sx={{
-                        ...typography.bodyBase,
-                        color: "#677489"
-                      }}>
+                      <Typography sx={{ ...typography.bodyBase, color: "#677489" }}>
                         {service.turnaround.join(" / ")}
                       </Typography>
                     </Box>
@@ -188,7 +186,6 @@ export default function RepairsectionCard() {
               </Grid>
             ))}
 
-            {/* View All Services link */}
             <Grid sx={{ textAlign: "center", mt: 4 }}>
               <Typography component="a"
                 href="/home/RepairServices"
@@ -211,37 +208,8 @@ export default function RepairsectionCard() {
                 View All Services →
               </Typography>
             </Grid>
-            {/* <Grid item xs={12} sm={6} md={4}>
-                <Box sx={{ mt: 2 ,
-                  display:"flex",
-                  justifyContent:"center",
-                  alignContent:"center"
-                }}>
-                  <Typography
-                    component="a"
-                    href="/home/RepairServices"
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#1a4dab",
-                      textDecoration: "none",
-                      cursor: "pointer",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "4px",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        textDecoration: "underline",
-                      },
-                    }}
-                  >
-                    View All Services →
-                  </Typography>
-                </Box>
-              </Grid> */}
-
-
           </Grid>
+
 
 
         </Box>
@@ -252,6 +220,8 @@ export default function RepairsectionCard() {
     </Box>
   );
 }
+
+
 
 
 

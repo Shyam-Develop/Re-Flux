@@ -15,35 +15,22 @@ import {
   Divider,
   IconButton,
   Grid,
-  Modal,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  InputAdornment,
-  Dialog,
-  DialogContent,
-  FormControl,
-  Select,
-  MenuItem,
+
   Stack,
   Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import SearchIcon from "@mui/icons-material/Search";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import ind1 from "../../../assets/industry1.png";
+import ind2 from "../../../assets/industry2.png";
+import ind3 from "../../../assets/industry3.png";
+import Footer from 'app/components/Card/Footer';
+
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
@@ -92,6 +79,34 @@ import Refurbishedmagnet from "../../../assets/topbarservice1.jpg";
 import Checkavailimage from "../../../assets/aftercstudy.png";
 import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 import Refurbisheddetailimg from "../../../assets/Refurbishdetail.png";
+
+
+const industries = [
+  {
+    id: 1,
+    title: "Food Processing Industry",
+    description: "Maintain a clean and inviting environment by regularly dusting.",
+    img: ind1,
+  },
+  {
+    id: 2,
+    title: "Warehouse Operations",
+    description: "Maintain a fresh and organized space with consistent dusting, mopping, and surface care.",
+    img: ind2
+  },
+  {
+    id: 3,
+    title: "Metal Industries",
+    description: "Keep your facility clean and safe with professional upkeep.",
+    img: ind3,
+  },
+  {
+    id: 4,
+    title: "Healthcare Facilities",
+    description: "Ensure hygiene and cleanliness for patient safety.",
+    img: ind1,
+  },
+];
 
 const RefurbishedDetail = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -330,7 +345,34 @@ const RefurbishedDetail = () => {
     },
   ];
 
- 
+
+  const specData = [
+    {
+      label: "Mechanical",
+      properties: [
+        "Diameter",
+        "Overall height",
+        "Net weight",
+        "Face area",
+        "IP rating",
+        "Lifting eye/hanger",
+      ],
+    },
+    {
+      label: "Electrical",
+      properties: ["Voltage", "Current", "Power consumption", "Control voltage"],
+    },
+    {
+      label: "Performance",
+      properties: [
+        "Duty cycle",
+        "Max temp",
+        "Lifting force",
+        "Magnetic field strength",
+      ],
+    },
+  ];
+
 
   const faqData = [
     {
@@ -418,7 +460,7 @@ const RefurbishedDetail = () => {
       }}
     >
       {/* image and forms */}
-      <Box sx={{ padding: "40px 60px" }}>
+      <Box sx={{ padding: "40px 60px", width: '1441px', height: '796px' }}>
         {/* Image + Form Section */}
         <Box
           sx={{
@@ -443,10 +485,10 @@ const RefurbishedDetail = () => {
               src={Refurbisheddetailimg}
               alt="Main Lifting Magnet"
               sx={{
-                width: "100%",
+                width: "664px",
                 borderRadius: "10px",
                 objectFit: "cover",
-                height: { xs: "auto", md: 400 },
+                height: '432px',
               }}
             />
             {/* Thumbnails Row */}
@@ -459,11 +501,10 @@ const RefurbishedDetail = () => {
                   alt={`Thumbnail ${index + 1}`}
                   onClick={() => setMainImage(img)}
                   sx={{
-                    width: 80,
-                    height: 80,
+                    width: '148px',
+                    height: '124px',
                     borderRadius: "6px",
                     objectFit: "cover",
-                    //   border: mainImage === img ? "2px solid #E17A00" : "2px solid transparent",
                     cursor: "pointer",
                     transition: "border 0.2s ease",
                   }}
@@ -472,51 +513,56 @@ const RefurbishedDetail = () => {
             </Box>
           </Box>
           {/* Right Form */}
+
+
           {/* Right Form */}
           <Box
             sx={{
-              width: { xs: "100%", md: "45%" },
+              width: '600px',
+              height: '394px',
               display: "flex",
               flexDirection: "column",
               gap: 2,
             }}
           >
             {/* Title */}
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 700,
-                fontSize: "49px",
-                fontFamily: "SpaceGrotesk-Regular",
-                lineHeight: 1.3,
-                letterSpacing: "-0.56%",
-                color: "#18294C",
-              }}
-            >
-              Circular Lifting Magnet
-            </Typography>
+            <Box sx={{ width: '619px', height: '164px' }}>
+              <Typography
+                variant="h4"
+                sx={{
+                  width: '619px',
+                  height: '62px',
+                  ...typography.displayL,
 
-            {/* Description */}
-            <Typography
-              sx={{
-                fontWeight: 500,
-                ...typography.h3medium,
-                color: "#6B7280",
-                maxWidth: "100%",
-              }}
-            >
-              NISMO has become the embodiment of Nissan’s outstanding
-              performance, inspired by the most unforgiving proving ground, the
-              ”race track”.
-            </Typography>
+                  color: "#18294C",
+                }}
+              >
+                Circular Lifting Magnet
+              </Typography>
+
+              {/* Description */}
+              <Typography
+                sx={{
+                  width: '619px',
+                  height: '78px',
+                  ...typography.h5,
+                  color: "#6B7280",
+                  maxWidth: "100%",
+                  marginTop: '20px'
+                }}
+              >
+                NISMO has become the embodiment of Nissan’s outstanding
+                performance, inspired by the most unforgiving proving ground, the
+                ”race track”.
+              </Typography>
+            </Box>
 
             {/* Spec Grid in Single Row */}
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                width: "100%",
-                gap: 8,
+
               }}
             >
               {/* Column 1 */}
@@ -525,7 +571,7 @@ const RefurbishedDetail = () => {
                   sx={{
                     color: "#9CA3AF",
                     fontWeight: 500,
-                    ...typography.h3medium,
+                    ...typography.h5,
                   }}
                 >
                   Diameter
@@ -534,7 +580,7 @@ const RefurbishedDetail = () => {
                   sx={{
                     color: "#9CA3AF",
                     fontWeight: 500,
-                    ...typography.h3medium,
+                    ...typography.h5,
                     mt: 1,
                   }}
                 >
@@ -546,8 +592,8 @@ const RefurbishedDetail = () => {
                 <Typography
                   sx={{
                     fontWeight: 700,
-                    ...typography.h3B1,
-                    color: "#1F2937",
+                    ...typography.h4,
+                    color: "#596780",
                   }}
                 >
                   1500
@@ -555,8 +601,8 @@ const RefurbishedDetail = () => {
                 <Typography
                   sx={{
                     fontWeight: 700,
-                    ...typography.h3B1,
-                    color: "#1F2937",
+                    ...typography.h4,
+                    color: "#596780",
                   }}
                 >
                   1500
@@ -648,7 +694,6 @@ const RefurbishedDetail = () => {
                   px: 15,
                   ml: 15,
                   py: 1.5,
-                  borderRadius: "6px",
                   fontWeight: 700,
                   textTransform: "none",
                   fontSize: "16px",
@@ -666,199 +711,92 @@ const RefurbishedDetail = () => {
       </Box>
 
       {/* Specs section */}
-
-      <Box sx={{ padding: "40px 60px", bgcolor: "#fff" }}>
-        {/* Title */}
-        <Typography
-          sx={{
-            ...typography.h3RBold,
-            fontWeight: 600,
-            mb: 2,
-          }}
-        >
+      <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+        <Typography variant="h6" fontSize={"48px"} fontWeight="bold" gutterBottom>
           Specs
         </Typography>
 
-        {/* Mechanical Accordion */}
-        <Accordion
-          sx={{
-            boxShadow: "none",
-            border: "1px solid #ddd",
-            borderRadius: "6px",
-            mb: 2,
-            "&:before": { display: "none" },
-          }}
-          defaultExpanded
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+        {specData.map((section, index) => (
+          <Accordion
+            key={index}
+            defaultExpanded={index === 0}
             sx={{
-              padding: "0 16px",
-              minHeight: 48,
-              "& .MuiAccordionSummary-content": { margin: 0 },
+              mb: 2,
+              borderRadius: "12px",
+              border: "1px solid #e5e7eb",
+              boxShadow: "none",
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "32px",
-                lineHeight: "1.2",
-              }}
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{ backgroundColor: "#fff" }}
             >
-              Mechanical
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ padding: "16px" }}>
-            <Grid container spacing={2}>
-              {specs.map(({ label, value }) => (
-                <Grid item xs={12} sm={6} md={3} lg={2} key={label}>
-                  <Box
-                    sx={{
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      padding: 2,
-                      minHeight: "80px",
-                    }}
-                  >
-                    <Typography fontWeight={500} variant="body1" mb={0.5}>
-                      {label}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {value}
-                    </Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
+              <Typography fontWeight="bold" fontSize="20px">
+                {section.label}
+              </Typography>
+            </AccordionSummary>
 
-        {/* Electrical Accordion */}
-        <Accordion
-          sx={{
-            boxShadow: "none",
-            border: "1px solid #ddd",
-            borderRadius: "6px",
-            mb: 2,
-            "&:before": { display: "none" },
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            sx={{
-              padding: "0 16px",
-              minHeight: 48,
-              "& .MuiAccordionSummary-content": { margin: 0 },
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "32px",
-                lineHeight: "1.2",
-              }}
-            >
-              Electrical
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ padding: "16px" }}>
-            <Grid container spacing={2}>
-              {specs.map(({ label, value }) => (
-                <Grid item xs={12} sm={6} md={3} lg={2} key={label}>
-                  <Box
-                    sx={{
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      padding: 2,
-                      minHeight: "80px",
-                    }}
-                  >
-                    <Typography fontWeight={500} variant="body1" mb={0.5}>
-                      {label}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {value}
-                    </Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-
-        {/* Performance Accordion */}
-        <Accordion
-          sx={{
-            boxShadow: "none",
-            border: "1px solid #ddd",
-            borderRadius: "6px",
-            "&:before": { display: "none" },
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            sx={{
-              padding: "0 16px",
-              minHeight: 48,
-              "& .MuiAccordionSummary-content": { margin: 0 },
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "32px",
-                lineHeight: "1.2",
-              }}
-            >
-              Performance
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ padding: "16px" }}>
-            <Grid container spacing={2}>
-              {specs.map(({ label, value }) => (
-                <Grid item xs={12} sm={6} md={3} lg={2} key={label}>
-                  <Box
-                    sx={{
-                      border: "1px solid #ddd",
-                      borderRadius: "8px",
-                      padding: 2,
-                      minHeight: "80px",
-                    }}
-                  >
-                    <Typography fontWeight={500} variant="body1" mb={0.5}>
-                      {label}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {value}
-                    </Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
+            <AccordionDetails sx={{ p: 3, backgroundColor: "#fff" }}>
+              <Grid container spacing={2}>
+                {section.properties.map((prop, i) => (
+                  <Grid item xs={6} sm={4} md={3} key={i}>
+                    <Box
+                      sx={{
+                        borderRadius: "12px",
+                        p: 2,
+                        height: "100px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        backgroundColor: "#fff",
+                        border: "1px solid #e5e7eb",
+                        color: "#111827",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          backgroundColor: "#1C2D4B",
+                          color: "#fff",
+                          borderColor: "#1C2D4B",
+                        },
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                        {prop}
+                      </Typography>
+                      <Typography sx={{ fontSize: "14px", color: "inherit", mt: 1 }}>
+                        ∅ diameter_mm mm
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </Box>
-      {/* Section Heading */}
-      <Typography
-        // variant="h5"
-        // fontWeight="bold"
-        sx={{
-          textAlign: "left",
-          ml: 5,
-          color: "#1c2434",
-          fontWeight: 600,
-          fontFamily: "Space Grotesk, Regular",
-          fontSize: "48px",
-          // lineHeight: "110px"
-        }}
-      >
-        What's included
-      </Typography>
 
-      <WhatsincludedCard />
+      {/* Section Heading */}
+
+
+
+      <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+        <Typography
+          sx={{
+            textAlign: "left",
+            mb: 4,
+            color: "#1c2434",
+            fontWeight: 600,
+            fontFamily: "Space Grotesk, Regular",
+            fontSize: "48px",
+          }}
+        >
+          What's included
+        </Typography>
+        <WhatsincludedCard />
+
+      </Box>
+
+
 
       <Box
         sx={{
@@ -938,23 +876,26 @@ const RefurbishedDetail = () => {
           }}
         />
 
+
+      </Box>
+
+
+      <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
         <Typography
-          // variant="h5"
-          // fontWeight="bold"
           sx={{
             textAlign: "left",
-            ml: 5,
+            mb: 4,
             color: "#1c2434",
             fontWeight: 600,
             fontFamily: "Space Grotesk, Regular",
             fontSize: "48px",
-            // lineHeight: "110px"
           }}
         >
-          Fit & compatibility
+          Fit & Compatibility
         </Typography>
 
         <WhatsincludedCard />
+
       </Box>
 
       {/* Use Cases  */}
@@ -965,325 +906,113 @@ const RefurbishedDetail = () => {
       >
         <Typography
           sx={{
-            ml: 10,
-            ...typography.h3RB,
-            fontWeight: 700,
-            color: "#02102cff",
+            color: "#1c2434",
+            fontWeight: 600,
+            fontFamily: "Space Grotesk, Regular",
+            fontSize: "48px",
           }}
         >
-          Use cases
-        </Typography>
-        <Typography
-          variant="h5"
-          sx={{
-            mb: 4,
-            color: "text.secondary",
-            ...typography.h3B1,
-            fontWeight: 400,
-            ml: 10,
-          }}
-        >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
+          Use Cases
         </Typography>
 
-        <Box sx={{ maxWidth: 1200, mx: "auto", px: 2 }}>
-          <Grid container spacing={4} justifyContent="center">
-            {useCase.map((item, index) => (
-              <Grid item xs={12} sm={6} md={6} key={index}>
-                <Card
+        <Swiper
+          modules={[Pagination]}
+          spaceBetween={20}
+          slidesPerView={3} // show 3 at a time
+          pagination={{
+            clickable: true,
+          }}
+          style={{
+            paddingBottom: "40px", // space for pagination line
+          }}
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            600: { slidesPerView: 2 },
+            960: { slidesPerView: 3 },
+          }}
+        >
+          {industries.map((industry) => (
+            <SwiperSlide key={industry.id}>
+              <Card
+                sx={{
+                  borderRadius: 3,
+                  overflow: "hidden",
+                  position: "relative",
+                  height: 260,
+                  boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+                }}
+              >
+                {/* Background Image */}
+                <CardMedia
+                  component="img"
+                  image={industry.img}
+                  alt={industry.title}
                   sx={{
-                    position: "relative",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 3,
-                    height: 320,
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+
+                {/* Floating Overlay Box */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 16,          // lift the box a bit above the bottom
+                    left: 16,
+                    right: 16,
+                    bgcolor: "white",
+                    p: 2,
+                    borderRadius: 2,
+                    boxShadow: "0px 4px 12px rgba(0,0,0,0.15)", // floating effect
                   }}
                 >
-                  {/* Background Image */}
-                  <CardMedia
-                    component="img"
-                    image={item.image}
-                    alt={item.title}
+                  <Typography sx={{
+                    ...typography.h4,
+                    color: "#0B121E",
+                    mt: 0.5
+                  }}>
+                    {industry.title}
+                  </Typography>
+                  <Typography
                     sx={{
-                      height: "100%",
-                      width: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  {/* Overlay White Card */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      backgroundColor: "white",
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      px: 2,
-                      py: 1.5,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 0.5,
-                    //   "&:hover": {
-                    //     textAlign: "left",
-                    //     bgcolor: "#0b2d55",
-                    //     color: "white",
-                    //     "& .MuiTypography-root": {
-                    //       color: "white",
-                    //       transform: "scale(1.05)",
-                    //     },
-                    //     "& .MuiDivider-root": {
-                    //       borderColor: "rgba(255,255,255,0.3)",
-                    //     },
-                    //     "& .MuiIconButton-root": {
-                    //       backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
-                    //       color: "white", // icon turns white
-                    //     },
-                    //   },
+                      ...typography.bodyBase,
+                      color: "#99A0AE",
+                      mt: 0.5
                     }}
                   >
-                    <Box
-                      display="flex"
-                      sx={{}}
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "24px",
-                          fontFamily: "SpaceGrotesk-Bold",
-                          fontWeight: 700,
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        sx={{
-                          backgroundColor: "#f0f0f0",
-                        }}
-                      >
-                        <ArrowForwardIosIcon fontSize="small" />
-                      </IconButton>
-                    </Box>
-                    <Typography
-                      sx={{
-                        ...typography.bodyBase,
-                        fontWeight: 400,
-                        color: "#bdbdbd",
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+                    {industry.description}
+                  </Typography>
+                </Box>
+              </Card>
+
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* Custom Progressbar Style */}
+        <style>
+          {`
+          .swiper-pagination {
+            bottom: 0 !important;
+          }
+          .swiper-pagination-bullet {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+            background: #d1d5db; /* gray */
+            opacity: 1;
+          }
+          .swiper-pagination-bullet-active {
+            background: #2563eb !important; /* blue active */
+          }
+        `}
+        </style>
       </Box>
 
       {/* Footer Section */}
-      <Box
-        component="footer"
-        sx={{
-          mt: 5,
-          backgroundColor: "#0b2d55",
-          color: "#fff",
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
-          width: "100%",
-          px: { xs: 4, md: 1 },
-          py: { xs: 6, md: 2 },
-        }}
-      >
-        <Grid container spacing={4}>
-          {/* 1. Left Column: Brand and Unit Info */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Box mb={2}>
-                <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-              </Box>
-              <Box display="flex" alignItems="center" mt={2}>
-                <Typography
-                  //  variant="body2"
-                  sx={{
-                    fontFamily: "Space Grotesk, Regular",
-                    fontWeight: 700,
-                    fontSize: "28px",
-                    lineHeight: "120%",
-                    mr: 1,
-                  }}
-                >
-                  A unit of
-                </Typography>
-                <Box component="span">
-                  <img src={Brand1} alt="Electro Flux" style={{ height: 40 }} />
-                </Box>
-              </Box>
-            </Box>
-          </Grid>
-
-          {/* 2. Middle Column: Contact Info */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  fontFamily: "Space Grotesk, Regular",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Contact
-              </Typography>
-
-              <Typography
-                //  variant="body2"
-                sx={{
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                  textAlign: "left",
-                }}
-              >
-                Xilliams Corner Wine © 2017. <br />
-                1112 A Market St # Ste B22,
-                <br />
-                Charlottesville, CA 45565
-              </Typography>
-
-              <Typography
-                sx={{
-                  mt: 2,
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                  borderBottom: "2px solid #1976d2",
-                }}
-              >
-                (123) 456-7890
-              </Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  display: "inline-block",
-                  borderBottom: "2px solid #1976d2",
-                  pb: "2px",
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                }}
-              >
-                contact@lift.agency
-              </Typography>
-            </Box>
-          </Grid>
-
-          {/* 3. Right Column: Links + Scroll Icon + Copyright */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  fontFamily: "Space Grotesk, Regular",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Links
-              </Typography>
-
-              {["Facebook", "Instagram", "Youtube"].map((item) => (
-                <Typography
-                  key={item}
-                  sx={{
-                    mb: 1,
-                    lineHeight: "130%",
-                    fontWeight: 500,
-                    fontSize: "20px",
-                    fontFamily: "Space Grotesk, Regular",
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  fontFamily: "Space Grotesk, Bold",
-                  mt: 2,
-                  lineHeight: "130%",
-                }}
-              >
-                Wall of Love ❤️
-              </Typography>
-
-              {/* Divider under Wall of Love */}
-              <Box
-                sx={{
-                  width: 30,
-                  height: 2,
-                  backgroundColor: "#fff",
-                  my: 1,
-                }}
-              />
-
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  fontFamily: "Space Grotesk, Bold",
-                  mt: 3,
-                  lineHeight: "130%",
-                }}
-              >
-                Sitemap
-              </Typography>
-
-              {/* Scroll to Top Icon */}
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  border: "1px solid #fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  mb: 2,
-                  ml: 20,
-                }}
-              >
-                <ArrowUpwardIcon sx={{ color: "#fff" }} />
-              </Box>
-
-              <Typography variant="caption" sx={{ color: "#ccc" }}>
-                © 2020 Lift Media All rights reserved.
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+      <Box>
+        <Footer />
       </Box>
     </Box>
   );

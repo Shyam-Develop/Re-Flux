@@ -553,12 +553,13 @@ const Rentals = () => {
       <Box sx={{ px: 8, py: 6 }}>
         <Grid container spacing={3}>
           {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ width: '668px',
+                height: '462px',}}>
             <Card
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: "100%",
+                
                 borderRadius: 3,
                 boxShadow: 0,
                 bgcolor: "#fafafa",

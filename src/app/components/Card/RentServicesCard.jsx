@@ -14,6 +14,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
+import { Pagination } from "swiper/modules";
 
 export default function RentServicesCard({ services }) {
   const navigate = useNavigate();
@@ -65,43 +66,56 @@ export default function RentServicesCard({ services }) {
 
       {/* Swiper */}
       <Swiper
-        modules={[Navigation]}
-        navigation
-        spaceBetween={24}
+        modules={[Pagination]}
+        spaceBetween={20}
         slidesPerView={3}
+        pagination={{ clickable: true }}
+        style={{ paddingBottom: "40px" }}
         breakpoints={{
           0: { slidesPerView: 1 },
           600: { slidesPerView: 2 },
-          900: { slidesPerView: 3 },
+          960: { slidesPerView: 3 },
         }}
       >
         {services.map((service) => (
           <SwiperSlide key={service.id}>
             <Card
               sx={{
-                borderRadius: 3,
+                padding: "15px",
+                borderRadius: '20px',
                 border: "1px solid #e0e0e0",
+                backgroundColor:'#FAFAFA',
                 overflow: "hidden",
-                height: "100%",
+                width: "416px",
+                height: "628px",
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "center",
+                transition: "all 0.4s ease",
+                "&:hover": {
+                  transform: "scale(1.03)",
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                   borderRadius: '20px',
+                },
+                "&:hover .MuiButton-root": {
+                  backgroundColor: '#b18028',
+                  color: "#fff",
+                },
               }}
             >
-              {/* Image with zoom on hover */}
+              {/* Image */}
               <Box sx={{ position: "relative", overflow: "hidden" }}>
                 <CardMedia
                   component="img"
                   image={service.img}
                   alt={service.title}
                   sx={{
-                    height: 220,
-                    width: "100%",
-                    objectFit: "contain",
-                    backgroundColor: "#fff",
+                    width: "384px",
+                    height: "240px",
+                    objectFit: "cover",
                     transition: "transform 0.4s ease",
-                    "&:hover": {
-                      transform: "scale(1.08)",
-                    },
+                    "&:hover": { transform: "scale(1.08)" },
                   }}
                 />
 
@@ -113,6 +127,7 @@ export default function RentServicesCard({ services }) {
                     left: 10,
                     right: 10,
                     display: "flex",
+                   
                     justifyContent: "space-between",
                   }}
                 >
@@ -120,109 +135,102 @@ export default function RentServicesCard({ services }) {
                     label="Available for Rent"
                     size="small"
                     sx={{
-                      fontSize: "13px",
-                      bgcolor: "#2e7d32",
-                      color: "white",
-                      fontWeight: 500,
+                      ...typography.bodyBase,
+                      fontSize: "14px",
+                      bgcolor: "#1B7B4E",
+                      color: "#F1F2F4",
+                      borderRadius:'0px',
                     }}
                   />
                   <Chip
                     label="Safety Tested"
                     size="small"
-                    sx={{
-                      fontSize: "13px",
-                      bgcolor: "#1565c0",
-                      color: "white",
-                      fontWeight: 500,
-                    }}
+                    sx={{ ...typography.bodyBase, fontSize:'14px', bgcolor: "#2F6FBA", borderRadius:'0px', color: "#F1F2F4" }}
                   />
                 </Box>
               </Box>
 
               {/* Content */}
-              <CardContent sx={{ flexGrow: 1 }}>
+              <CardContent
+                sx={{
+                  width: "100%",
+                  flexGrow: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  p: 2,
+                }}
+              >
                 {/* Title + Price */}
                 <Box
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      ...typography.h3B1,
-                      fontSize: "20px",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {service.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      ...typography.h3B1,
-                      fontWeight: 600,
-                      color: "green",
-                    }}
-                  >
-                    Starting at ${service.price}
-                  </Typography>
-                </Box>
-
-                {/* Sub Type */}
-                <Typography
-                  color="text.secondary"
-                  sx={{
-                    ...typography.bodyBase,
-                    fontWeight: 400,
-                    mb: 2,
-                  }}
-                >
-                  {service.type}
-                </Typography>
-
-                {/* Lift + Power */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
+                    alignItems: "flex-start",
                     mb: 1,
                   }}
                 >
                   <Box>
                     <Typography
                       sx={{
-                        ...typography.h3medium,
-                        fontWeight: 500,
+                        ...typography.h4,
+                        fontSize:'24px',
+                        lineHeight: '130%',
                       }}
+                    >
+                      {service.title}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        ...typography.h6,
+                        fontSize: "16px",
+                       // color: "#00000099",
+                      }}
+                    >
+                      {service.type}
+                    </Typography>
+                  </Box>
+                  <Typography
+                    sx={{
+                      ...typography.h6,
+                      fontSize: "16px",
+                      fontWeight: 600,
+                     
+                    }}
+                  >
+                    Starting at 
+                    <Typography sx={{ ...typography.h4, color:"#178270"}}  >${service.price}</Typography>
+                  </Typography>
+                </Box>
+
+                {/* Lift Capacity + Power Supply */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: '20px'
+                  }}
+                >
+                  <Box>
+                    <Typography
+                      sx={{ ...typography.h5 }}
                     >
                       Lift Capacity
                     </Typography>
                     <Typography
-                      sx={{
-                        ...typography.bodyBase,
-                        fontWeight: 400,
-                        color: "text.secondary",
-                      }}
+                      sx={{ fontSize: "18px", ...typography.bodyBase , color:'#677489' }}
                     >
                       {service.liftCapacity}
                     </Typography>
                   </Box>
                   <Box>
                     <Typography
-                      sx={{
-                        ...typography.h3medium,
-                        fontWeight: 500,
-                      }}
+                      sx={{ fontSize: "14px", fontWeight: 600 }}
                     >
                       Power Supply
                     </Typography>
                     <Typography
-                      sx={{
-                        ...typography.bodyBase,
-                        fontWeight: 400,
-                        color: "text.secondary",
-                      }}
+                      sx={{ fontSize: "18px", ...typography.bodyBase , color:'#677489'}}
                     >
                       {service.powerSupply}
                     </Typography>
@@ -230,20 +238,28 @@ export default function RentServicesCard({ services }) {
                 </Box>
 
                 {/* Sizes */}
-                <Typography
-                  sx={{
-                    ...typography.h3medium,
-                    fontWeight: 500,
-                    color: "text.secondary",
-                    mt: 1,
-                  }}
-                >
-                  {service.sizes}
-                </Typography>
+                <Box sx={{width:'262px', height:'59px', marginBottom: '35px'}}>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      ...typography.h5, 
+                      color:'#0E1626',
+                      LineHeight : '130%'
+                    }}
+                  >
+                    {service.sizes}
+                  </Typography>
+                   <Typography
+                      sx={{ fontSize: "18px", ...typography.bodyBase , color:'#677489'}}
+                    >
+                      View Details
+                    </Typography>
+                </Box>
               </CardContent>
 
+
               {/* Button */}
-              <Box sx={{ p: 2, pt: 0 }}>
+              <Box sx={{ p: 2, pt: 0, width: "100%" }}>
                 <Button
                   onClick={() => navigate("/home/CheckAvailabilty")}
                   fullWidth
@@ -253,17 +269,51 @@ export default function RentServicesCard({ services }) {
                     fontSize: "16px",
                     borderRadius: 1.5,
                     textTransform: "none",
-                    backgroundColor: "#0b2d55",
-                    "&:hover": { backgroundColor: "#08365f" },
+                    backgroundColor: "#0b2d55", // normal state
+                    color: "#fff",
+                    "&:hover": {
+                      backgroundColor: "#1C2D4B", // hover state
+                    },
                   }}
                 >
                   Check Availability
                 </Button>
               </Box>
+
             </Card>
           </SwiperSlide>
         ))}
+
+        {/* Custom Swiper styles */}
+        <style>
+          {`
+        .swiper-pagination {
+          bottom: 0 !important;
+        }
+        .swiper-pagination-bullet {
+          width: 30px;
+          height: 3px;
+          border-radius: 2px;
+          background: #d1d5db;
+          opacity: 1;
+        }
+        .swiper-pagination-bullet-active {
+          background: #2563eb !important;
+        }
+      `}
+        </style>
       </Swiper>
     </Box>
+
+
+
   );
 }
+
+
+
+
+
+
+
+

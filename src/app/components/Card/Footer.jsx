@@ -8,147 +8,189 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  Button
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import { typography, RefluxSvg } from 'app/utils/constant';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+
 
 // Replace these imports with your actual brand logos
 import Brand1 from '../../../assets/Brand1.png';
 
 const Footer = () => {
   return (
-    <Box
-      sx={{
-        bgcolor: "#0b2d55",
-        px: { xs: 3, sm: 6, md: 8 },
-        py: 6,
-        mt: 4,
-        borderTopRightRadius: "55px",
-        borderTopLeftRadius: "55px",
-      }}
-    >
-      {/* Top Grid */}
-      <Grid container spacing={4}>
-        {/* 1. Logo + Sub-brand */}
-        <Grid item xs={12} sm={6} md={3}>
-          <Box mb={2}>
-            <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-          </Box>
-          <Typography variant="body2" sx={{ mb: 1, color: "white" }}>
-            A unit of
-          </Typography>
-          <Box>
-            <img src={Brand1} alt="Electro Flux" style={{ height: 70 }} />
-          </Box>
-        </Grid>
-
-        {/* 2. Sitemap */}
-        <Grid item xs={12} sm={6} md={2} sx={{ color: "white" }}>
-          <Typography fontWeight="bold" gutterBottom>
-            Sitemap
-          </Typography>
-          {["Home", "Abouts", "Growers", "Merchants", "Contact"].map((item) => (
-            <Typography key={item} variant="body2" sx={{ mb: 0.5 }}>
-              <Link href="#" underline="none" sx={{ color: "white" }}>
-                {item}
-              </Link>
-            </Typography>
-          ))}
-        </Grid>
-
-        {/* 3. Socials */}
-        <Grid item xs={12} sm={6} md={2} sx={{ color: "white" }}>
-          <Typography fontWeight="bold" gutterBottom>
-            Socials
-          </Typography>
-          {["Facebook", "Linkedin", "Instagram", "Twitter"].map((item) => (
-            <Typography key={item} variant="body2" sx={{ mb: 0.5 }}>
-              <Link href="#" underline="none" sx={{ color: "white" }}>
-                {item}
-              </Link>
-            </Typography>
-          ))}
-        </Grid>
-
-        {/* 4. Office & Newsletter */}
-        <Grid item xs={12} sm={6} md={5}>
-          <Typography fontWeight="bold" gutterBottom sx={{ color: "white" }}>
-            Head Office
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 2, color: "white" }}>
-            Xilliams Corner Wine © 2017. 1112 A Market St # Ste B22,
-            Charlottesville, CA 45565
-          </Typography>
-
-          <Typography fontWeight="bold" gutterBottom sx={{ color: "white" }}>
-            Newsletter
-          </Typography>
-          <TextField
-            placeholder="Enter your email address"
-            variant="standard"
-            fullWidth
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <MailOutlineIcon sx={{ color: "#1976d2" }} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Bottom Line */}
-      <Grid container spacing={2} sx={{ mt: 6, color: "white" }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Typography
-            sx={{
-              fontSize: "24px",
-              fontFamily: "Fira Sans",
-              textDecoration: "underline",
-              textDecorationColor: "#1976d2",
-              textUnderlineOffset: "4px",
-            }}
-            variant="body2"
-            fontWeight="medium"
-          >
-            contact@lift.agency
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={3}>
-          <Typography
-            sx={{
-              fontSize: "24px",
-              fontFamily: "Space Grotesk",
-              textDecoration: "underline",
-              textDecorationColor: "#1976d2",
-              textUnderlineOffset: "4px",
-            }}
-            variant="body2"
-            fontWeight="medium"
-          >
-            (123) 456-7890
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={3}></Grid> {/* Spacer */}
-
-        <Grid item xs={12} sm={6} md={3}>
-          <Typography
-            variant="caption"
-            sx={{
-              fontSize: "14px",
-              fontFamily: "Regular",
-              color: "white",
-            }}
-          >
-            © 2020 Lift Media All rights reserved.
-          </Typography>
-        </Grid>
-      </Grid>
-    </Box>
+      <Box
+           component="footer"
+           sx={{
+             backgroundColor: '#112B55',
+             color: '#fff',
+             borderTopLeftRadius: '50px',
+             borderTopRightRadius: '50px',
+             paddingLeft: '10%',
+             paddingRight: '40px',
+             paddingTop: '65px',
+             mt: 10,
+             position: 'relative',
+             margin: '3%',
+             
+           }}
+         >
+           <Grid container spacing={4} justifyContent="space-between" alignItems="flex-start">
+             {/* Left Column */}
+             <Grid item xs={12} md={4}>
+               {/* Logo container - flex row */}
+               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+                 <Box>
+                   <RefluxSvg />
+                 </Box>
+                 <Box>
+                   <Typography
+                     variant="h3"
+                     sx={{ fontWeight: 'bold', width:'253.16px', height:'55.11px', letterSpacing: '2px', color: '#fff', lineHeight: 1 }}
+                   >
+                     ReFlux
+                   </Typography>
+                   <Typography variant="caption" sx={{ letterSpacing: '15px', width:'19px', height:'17px' }}>
+                       MAGNETS
+                   </Typography>
+                 </Box>
+               </Box>
+   
+               {/* A unit of + brand image */}
+               <Box mt={6} display="flex" alignItems="center" gap={3}>
+                 <Typography variant="h5                                                                                           ">A unit of</Typography>
+                 <Box component="img" src={Brand1} alt="Electroflux" sx={{ height: 70 }} />
+               </Box>
+             </Grid>
+   
+             {/* Middle Column */}
+             <Grid item xs={12} md={4}>
+               {/* Contact Button */}
+               <Button
+                 variant="outlined"
+                 sx={{
+                   color: '#fff',
+                   borderColor: '#fff',
+                   borderRadius: '20px',
+                   textTransform: 'none',
+                   mb: 2,
+                   px: 3,
+                   py: 0.5,
+                   fontSize: '0.8rem',
+                 }}
+               >
+                 Contact
+               </Button>
+   
+               {/* Contact details */}
+               <Typography variant="body2" lineHeight={1.6}>
+                 Xilliams Corner Wine © 2017.<br />
+                 1112 A Market St # Ste B22,<br />
+                 Charlottesville, CA 45565
+               </Typography>
+               <Typography variant="body2" sx={{ mt: 2, color: '#BFD8F9' }}>
+                 (123) 456-7890
+               </Typography>
+               <Typography
+                 variant="body2"
+                 sx={{
+                   mt: 1,
+                   color: '#BFD8F9',
+                   textDecoration: 'underline',
+                   width: 'fit-content',
+                   cursor: 'pointer',
+                 }}
+               >
+                 contact@lift.agency
+               </Typography>
+             </Grid>
+   
+             {/* Right Column */}
+             <Grid item xs={12} md={3}>
+               {/* Links Button */}
+               <Button
+                 variant="outlined"
+                 sx={{
+                   color: '#fff',
+                   borderColor: '#fff',
+                   borderRadius: '20px',
+                   textTransform: 'none',
+                   mb: 2,
+                   px: 3,
+                   py: 0.5,
+                   fontSize: '0.8rem',
+                 }}
+               >
+                 Links
+               </Button>
+   
+               {/* Links list */}
+               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                 <Link href="#" underline="none" color="#fff" variant="body2">
+                   Facebook
+                 </Link>
+                 <Link href="#" underline="none" color="#fff" variant="body2">
+                   Instagram
+                 </Link>
+                 <Link href="#" underline="none" color="#fff" variant="body2">
+                   Youtube
+                 </Link>
+                 <Link
+                   href="#"
+                   underline="none"
+                   variant="body2"
+                   sx={{
+                     display: 'flex',
+                     alignItems: 'center',
+                     color: '#fff',
+                     fontWeight: 600,
+                   }}
+                 >
+                   Wall of Love <span style={{ color: 'red', marginLeft: 6 }}>❤️</span>
+                 </Link>
+                 <Box sx={{ height: 1, backgroundColor: '#fff', width: 30, mt: 1 }} />
+                 <Link
+                   href="#"
+                   underline="none"
+                   variant="body2"
+                   sx={{ fontWeight: 600, color: '#fff' }}
+                 >
+                   Sitemap
+                 </Link>
+               </Box>
+             </Grid>
+           </Grid>
+   
+           {/* Bottom bar */}
+           <Box
+             sx={{
+               display: 'flex',
+               justifyContent: 'space-between',
+               alignItems: 'center',
+               mt: 6,
+             }}
+           >
+             <Typography variant="caption" sx={{ color: '#ccc', paddingLeft: '70%'}}>
+               © 2020 Lift Media All rights reserved.
+             </Typography>
+   
+             <IconButton
+               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+               sx={{
+                 border: '1px solid white',
+                 borderRadius: '50%',
+                 color: 'white',
+                 backgroundColor: '#112B55',
+                 '&:hover': {
+                   backgroundColor: '#1b3a6b',
+                 },
+               }}
+             >
+               <ArrowUpwardIcon />
+             </IconButton>
+           </Box>
+         </Box>
   );
 };
 

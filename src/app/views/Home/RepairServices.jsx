@@ -19,7 +19,7 @@ import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
 import { useNavigate } from 'react-router-dom';
-import { typography } from 'app/utils/constant';
+import { typography, RefluxSvg } from 'app/utils/constant';
 import Footer from 'app/components/Card/Footer';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
@@ -714,11 +714,12 @@ const RepairServices = () => {
           <Grid item xs={12} md={6}>
             <Card
               sx={{
-                display: "flex",
+                //display: "flex",
                 flexDirection: "column",
-                height: "100%",
+                // width:'668px',
+                // height:'462px', 
                 borderRadius: 3,
-                boxShadow: 0,
+                // boxShadow: 0,
                 bgcolor: "#fafafa",
                 cursor:'pointer'
               }}
@@ -752,7 +753,7 @@ const RepairServices = () => {
                     alignItems: "center"
                   }}
                 >
-                  Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
+                  Discover More <ArrowForwardIosIcon sx={{ ml: 1.5, color: "#1F77D6", }} />
                 </Link>
               </CardContent>
             </Card>
@@ -811,10 +812,8 @@ const RepairServices = () => {
 
 
        {/* Footer Section */}
-      <Box sx={{ bgcolor: "#f9f9f9", px: 8, py: 6, background: '#0b2d55', margin:'10px', borderTopRightRadius: '55px',
-              borderTopLeftRadius: '55px' }}>
+      <Box >
         <Footer/>
-
       </Box>
 
     </>
@@ -855,3 +854,8 @@ const faultsList = [
 ];
 
 export default RepairServices;
+
+
+
+
+

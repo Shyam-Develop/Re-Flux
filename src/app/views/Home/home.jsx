@@ -62,7 +62,7 @@ import about from '../../../assets/homeAbout.png';
 import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HomeVideoCard from "app/components/Card/HomeVideoCard";
-
+import Footer from 'app/components/Card/Footer';
 
 const UploadBox = ({ label }) => {
   return (
@@ -672,8 +672,8 @@ const HomePage = () => {
           px: 4,
           py: 4,
           gap: 6,
-          width:'1312px',
-          height:'708px',
+          width: '1312px',
+          height: '708px',
           bgcolor: "white",
         }}
       >
@@ -800,7 +800,7 @@ const HomePage = () => {
           sx={{
             width: "904px",
             height: "809px",
-            position: "relative",      
+            position: "relative",
             top: "67px",
             left: "268px",
             gap: "128px",
@@ -1153,7 +1153,7 @@ const HomePage = () => {
           </Button>
         </Box>
       </Box>
-      
+
       <Testimonials />
 
 
@@ -1188,7 +1188,7 @@ const HomePage = () => {
             textDecoration: "underline",
             color: "#1a4dab",
             fontWeight: 600,
-            ml: 110,
+            ml: 130,
           }}
         >
           View All ROI Calculators
@@ -1202,7 +1202,7 @@ const HomePage = () => {
             }}
           />
         </Typography>
-        <Box sx={{ maxWidth: 1200, mx: "auto", px: 2 }}>
+        <Box sx={{ width:'1440px', height:'400px', mx: "auto", px: 2 }}>
           <Grid container spacing={4} justifyContent="center">
             {roiData.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
@@ -1398,520 +1398,260 @@ const HomePage = () => {
         </Grid>
       </Box>
 
+
+
       {/* FAQs Section */}
-      <Box
+      <Button
+        disableElevation
+        disableRipple
         sx={{
-          mt: 5,
+          marginBottom: 2,
+          ml: 8,
+          textTransform: "none",           // keep text as-is
+          fontSize: "0.8rem",              // smaller font
+          fontWeight: 500,                 // medium weight
+          color: "#1a4dab",                // dark blue text
+          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+          borderRadius: "20px",            // pill shape
+          px: 2,                           // horizontal padding
+          py: 0.5,                         // vertical padding
+          boxShadow: "none",               // remove shadow
+          "&:hover": {
+            backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+            boxShadow: "none",
+          },
         }}
       >
-        <Button
-          disableElevation
-          disableRipple
-          sx={{
-            ...typography.bodySmall,
-            marginBottom: 2,
-            ml: 8,
-            textTransform: "none", // keep text as-is
-            // fontSize: "0.8rem", // smaller font
-            fontWeight: 400, // medium weight
-            color: "#1a4dab", // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px", // pill shape
-            px: 2, // horizontal padding
-            py: 0.5, // vertical padding
-            boxShadow: "none", // remove shadow
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-              boxShadow: "none",
-            },
-          }}
-        >
-          FAQs
-        </Button>
-        <Typography
-          sx={{
-            ...typography.h3RB,
-            fontWeight: 700,
-            ml: 8,
-            // mt: 5
-          }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
-        >
-          FAQs
-        </Typography>
-        <Typography
-          //   variant="h5"
-          sx={{
-            ...typography.h3B1,
-            fontWeight: 400,
-            mb: 4,
-            color: "text.secondary",
-            ml: 8,
-          }}
-        >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
-        </Typography>
-        <Box sx={{ px: 8, py: 6 }}>
-          {faqData.map((item, index) => (
-            <Accordion
-              key={index}
-              expanded={expanded === index}
-              onChange={() => handleChange(index)}
-              disableGutters
-              elevation={0}
-              sx={{
-                backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-                borderRadius: 2,
-                mb: 1,
-                px: 2,
-              }}
+        FAQs
+      </Button>
+      <Typography
+        sx={{
+          ml: 8,
+          // mt: 5
+          ...typography.displayL,
+          color: '#1C2D4B'
+        }}
+        variant="h3" fontWeight="bold" gutterBottom>
+        FAQs
+      </Typography>
+      <Typography
+        variant="h5" sx={{
+          mb: 4,
+          color: '#1C2D4B',
+          ...typography.h4,
+          ml: 8
+        }}>
+        Get powerful lifting magnets when you need them — without the upfront
+        cost. Flexible rental plans, quick installation, and reliable
+        performance for every project!
+      </Typography>
+      <Box sx={{ px: 8, py: 6 }}>
+        {faqData.map((item, index) => (
+          <Accordion
+            key={index}
+            expanded={expanded === index}
+            onChange={() => handleChange(index)}
+            disableGutters
+            elevation={0}
+            sx={{
+              backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
+              borderRadius: 2,
+              mb: 1,
+              px: 2,
+            }}
+          >
+            <AccordionSummary
+              expandIcon={
+                <IconButton>
+                  {expanded === index ? (
+                    <RemoveIcon sx={{ color: "#1976d2" }} />
+                  ) : (
+                    <AddIcon sx={{ color: "#1976d2" }} />
+                  )}
+                </IconButton>
+              }
             >
-              <AccordionSummary
-                expandIcon={
-                  <IconButton>
-                    {expanded === index ? (
-                      <RemoveIcon sx={{ color: "#1976d2" }} />
-                    ) : (
-                      <AddIcon sx={{ color: "#1976d2" }} />
-                    )}
-                  </IconButton>
-                }
-              >
-                <Typography
-                  sx={{
-                    ...typography.h3B1,
-                    fontWeight: 400,
-                  }}
-                //  fontWeight="bold"
-                >
-                  {item.question}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography
-                  sx={{
-                    ...typography.bodyBase,
-                    fontWeight: 400,
-                  }}
-                  color="text.secondary"
-                >
-                  {item.answer}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </Box>
+              <Typography sx={{ ...typography.h4, color: '#0E1109' }}>
+                {item.question}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography sx={{ ...typography.bodyBase, color: '#0E1109' }}>
+                {item.answer}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </Box>
+
+
 
       {/* Blogs Section */}
-      <Box>
-        <Button
-          disableElevation
-          disableRipple
-          sx={{
-            ...typography.bodySmall,
-            marginBottom: 2,
-            ml: 8,
-            textTransform: "none", // keep text as-is
-            fontSize: "0.8rem", // smaller font
-            fontWeight: 400, // medium weight
-            color: "#1a4dab", // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px", // pill shape
-            px: 2, // horizontal padding
-            py: 0.5, // vertical padding
-            boxShadow: "none", // remove shadow
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-              boxShadow: "none",
-            },
-          }}
-        >
-          Blogs
-        </Button>
-        <Typography
-          sx={{
-            ...typography.h3RB,
-            fontWeight: 700,
-            ml: 8,
-            // mt: 5
-          }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
-        >
-          Blogs
-        </Typography>
-        <Typography
-          variant="h5"
-          sx={{
-            ...typography.h3B1,
-            fontWeight: 400,
-            mb: 4,
-            color: "text.secondary",
-            ml: 8,
-          }}
-        >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
-        </Typography>
-        <Box sx={{ px: 8, py: 6 }}>
-          <Grid container spacing={3}>
-            {/* Left Column (Featured Post) */}
-            <Grid item xs={12} md={6}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                  borderRadius: 3,
-                  boxShadow: 0,
-                  bgcolor: "#fafafa",
-                  cursor: 'pointer'
-                }}
-                onClick={() => navigate("/home/BlogDetails")}>
-                <CardMedia
-                  component="img"
-                  image={blogData[0].image}
-                  alt={blogData[0].title}
-                  sx={{
-                    borderRadius: 3,
-                    height: 350,
-                    objectFit: "cover",
-                  }}
-                />
-                <CardContent>
-                  <Typography
-                    sx={{
-                      fontFamily: "Plus Jakarta Sans, Medium",
-                      fontWeight: 600,
-                      fontSize: "20px",
-                    }}
-                  >
-                    {blogData[0].title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontFamily: "Plus Jakarta Sans, Medium",
-                      fontWeight: 400,
-                      fontSize: "18px",
-                    }}
-                    color="text.secondary"
-                  >
-                    {blogData[0].author} • {blogData[0].date}
-                  </Typography>
-                  <Link
-                    href="#"
-                    underline="none"
-                    sx={{
-                      color: "#1976d2",
-                      fontFamily: "Plus Jakarta Sans, Medium",
-                      fontSize: "16px",
-                      fontWeight: 500,
-                      mt: 1,
-                      display: "inline-flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    Discover More{" "}
-                    <ArrowForwardIosIcon
-                      sx={{
-                        ml: 0.5,
-                        color: "#1976d2",
-                        fontFamily: "Plus Jakarta Sans, Medium",
-                        fontSize: "16px",
-                        fontWeight: 500,
-                      }}
-                    />
-                  </Link>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Right Column (Other Posts) */}
-            <Grid item xs={12} md={6}>
-              <Grid container spacing={2} direction="column">
-                {blogData.slice(1).map((item, idx) => (
-                  <Grid item key={idx}>
-                    <Card
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        borderRadius: 3,
-                        px: 2,
-                        py: 1,
-                        bgcolor: "#fdfdfd",
-                        boxShadow: 0,
-                      }}
-                    >
-                      <CardMedia
-                        component="img"
-                        image={item.image}
-                        alt={item.title}
-                        sx={{
-                          width: 80,
-                          height: 100,
-                          borderRadius: 2,
-                          objectFit: "cover",
-                          mr: 2,
-                        }}
-                      />
-                      <Box>
-                        <Typography
-                          sx={{
-                            fontFamily: "Plus Jakarta Sans, Medium",
-                            fontWeight: 600,
-                            fontSize: "20px",
-                          }}
-                        >
-                          {item.title}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontFamily: "Plus Jakarta Sans, Medium",
-                            fontWeight: 400,
-                            fontSize: "18px",
-                          }}
-                          color="text.secondary"
-                        >
-                          {item.author} • {item.date}
-                        </Typography>
-                        <Link
-                          href="#"
-                          underline="none"
-                          sx={{
-                            fontFamily: "Plus Jakarta Sans, Medium",
-                            fontSize: "16px",
-                            fontWeight: 500,
-                            color: "#1976d2",
-                            mt: 0.5,
-                            display: "inline-flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          Discover More{" "}
-                          <ArrowForwardIosIcon
-                            sx={{
-                              ml: 0.5,
-                              color: "#1976d2",
-                              fontFamily: "Plus Jakarta Sans, Medium",
-                              fontSize: "16px",
-                              fontWeight: 500,
-                            }}
-                          />
-                        </Link>
-                      </Box>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-
-      {/* Footer Section */}
-      <Box
-        component="footer"
+      <Button
+        disableElevation
+        disableRipple
         sx={{
-          backgroundColor: "#0b2d55",
-          color: "#fff",
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
-          width: "100%",
-          px: { xs: 4, md: 1 },
-          py: { xs: 6, md: 2 },
+          marginBottom: 2,
+          ml: 8,
+          textTransform: "none",
+          fontSize: "0.8rem",
+          fontWeight: 500,
+          color: "#1a4dab",
+          backgroundColor: "rgba(36,121,233,0.08)",
+          borderRadius: "20px",
+          px: 2,
+          py: 0.5,
+          boxShadow: "none",
+          "&:hover": {
+            backgroundColor: "rgba(36,121,233,0.15)",
+            boxShadow: "none",
+          },
         }}
       >
-        <Grid container spacing={4}>
-          {/* 1. Left Column: Brand and Unit Info */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Box mb={2}>
-                <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-              </Box>
-              <Box display="flex" alignItems="center" mt={2}>
-                <Typography
-                  //  variant="body2"
-                  sx={{
-                    fontFamily: "Space Grotesk, Regular",
-                    fontWeight: 700,
-                    fontSize: "28px",
-                    lineHeight: "120%",
-                    mr: 1,
-                  }}
-                >
-                  A unit of
-                </Typography>
-                <Box component="span">
-                  <img src={Brand1} alt="Electro Flux" style={{ height: 40 }} />
-                </Box>
-              </Box>
-            </Box>
-          </Grid>
-
-          {/* 2. Middle Column: Contact Info */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography
+        Blogs
+      </Button>
+      <Typography
+        sx={{
+          ml: 8,
+          ...typography.displayL,
+          color: '#1C2D4B'
+        }}
+        variant="h3" fontWeight="bold" gutterBottom>
+        Blogs
+      </Typography>
+      <Typography
+        variant="h5" sx={{
+          mb: 4,
+          color: '#1C2D4B',
+          ...typography.h4,
+          ml: 8
+        }}>
+        Get powerful lifting magnets when you need them — without the upfront
+        cost. Flexible rental plans, quick installation, and reliable
+        performance for every project!
+      </Typography>
+      <Box sx={{ px: 8, py: 6, width: '1440px', height: '591px', }}>
+        <Grid container spacing={3}>
+          {/* Left Column (Featured Post) */}
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                // width:'668px',
+                // height:'462px',
+                borderRadius: 3,
+                boxShadow: 0,
+                bgcolor: "#fafafa",
+                cursor: 'pointer',
+                padding: '20px'
+              }}
+              onClick={() => navigate("/home/BlogDetails")}>
+              <CardMedia
+                component="img"
+                image={blogData[0].image}
+                alt={blogData[0].title}
                 sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  fontFamily: "Space Grotesk, Regular",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Contact
-              </Typography>
-
-              <Typography
-                //  variant="body2"
-                sx={{
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                  textAlign: "left",
-                }}
-              >
-                Xilliams Corner Wine © 2017. <br />
-                1112 A Market St # Ste B22,
-                <br />
-                Charlottesville, CA 45565
-              </Typography>
-
-              <Typography
-                sx={{
-                  mt: 2,
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                  borderBottom: "2px solid #1976d2",
-                }}
-              >
-                (123) 456-7890
-              </Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  display: "inline-block",
-                  borderBottom: "2px solid #1976d2",
-                  pb: "2px",
-                  lineHeight: "130%",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  fontFamily: "Space Grotesk, Regular",
-                }}
-              >
-                contact@lift.agency
-              </Typography>
-            </Box>
-          </Grid>
-
-          {/* 3. Right Column: Links + Scroll Icon + Copyright */}
-          <Grid item xs={12} md={4}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  fontFamily: "Space Grotesk, Regular",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Links
-              </Typography>
-
-              {["Facebook", "Instagram", "Youtube"].map((item) => (
-                <Typography
-                  key={item}
-                  sx={{
-                    mb: 1,
-                    lineHeight: "130%",
-                    fontWeight: 500,
-                    fontSize: "20px",
-                    fontFamily: "Space Grotesk, Regular",
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  fontFamily: "Space Grotesk, Bold",
-                  mt: 2,
-                  lineHeight: "130%",
-                }}
-              >
-                Wall of Love ❤️
-              </Typography>
-
-              {/* Divider under Wall of Love */}
-              <Box
-                sx={{
-                  width: 30,
-                  height: 2,
-                  backgroundColor: "#fff",
-                  my: 1,
+                  borderRadius: 3,
+                  width: '628px',
+                  height: '300px',
+                  objectFit: "cover",
                 }}
               />
+              <CardContent>
+                <Typography sx={{ ...typography.h5, color: '#0E1109' }} gutterBottom>
+                  {blogData[0].title}
+                </Typography>
+                <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
+                  {blogData[0].author} • {blogData[0].date}
+                </Typography>
+                <Link
+                  href="#"
+                  underline="none"
+                  sx={{
+                    color: "#1F77D6",
+                    ...typography.bodyBasemedium,
+                    mt: 1,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px", // consistent spacing
+                  }}
+                >
+                  Discover More
+                  <ArrowForwardIosIcon
+                    fontSize="small" // makes it 20px instead of 24px
+                    sx={{
+                      color: "#1F77D6",
+                      position: "relative",
+                      top: "5px" // nudges it down slightly to align with baseline
+                    }}
+                  />
+                </Link>
+              </CardContent>
+            </Card>
+          </Grid>
 
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  fontFamily: "Space Grotesk, Bold",
-                  mt: 3,
-                  lineHeight: "130%",
-                }}
-              >
-                Sitemap
-              </Typography>
-
-              {/* Scroll to Top Icon */}
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  border: "1px solid #fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  mb: 2,
-                  ml: 20,
-                }}
-              >
-                <ArrowUpwardIcon sx={{ color: "#fff" }} />
-              </Box>
-
-              <Typography variant="caption" sx={{ color: "#ccc" }}>
-                © 2020 Lift Media All rights reserved.
-              </Typography>
-            </Box>
+          {/* Right Column (Other Posts) */}
+          <Grid item xs={12} md={6}>
+            <Grid container spacing={2} direction="column">
+              {blogData.slice(1).map((item, idx) => (
+                <Grid item key={idx}>
+                  <Card
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: 3,
+                      px: 2,
+                      py: 1,
+                      bgcolor: "#fdfdfd",
+                      boxShadow: 0,
+                    }}
+                   >
+                    <CardMedia
+                      component="img"
+                      image={item.image}
+                      alt={item.title}
+                      sx={{
+                        width: '130px',
+                        height: '141px',
+                        borderRadius: 2,
+                        objectFit: "cover",
+                        mr: 2,
+                      }}
+                    />
+                    <Box>
+                      <Typography sx={{ ...typography.h4, color: '#0E1109', width: '474px', height: '62px' }}>
+                        {item.title}
+                      </Typography>
+                      <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
+                        {item.author} • {item.date}
+                      </Typography>
+                      <Link
+                        href="#"
+                        underline="none"
+                        sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                     >
+                        Discover More 
+                     <ArrowForwardIosIcon sx={{
+                          color: "#1F77D6",
+                          position: "relative",
+                          top: "7px"                     
+                      }}/>
+                      </Link>
+                    </Box>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
         </Grid>
       </Box>
+
+      {/* Footer Section */}
+     <Box >
+        <Footer/>
+      </Box>
+      
       {/* Dialog */}
       <Dialog
         open={BrowseDialogopen}

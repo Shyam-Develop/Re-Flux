@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import { Box, Typography, Card, CardContent, CardMedia, Chip } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -21,19 +21,61 @@ export default function ProcessCards() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <Box sx={{ p: 1, position: 'relative' }}>
+    <Box
+      sx={{
+        width: "1440px",
+        height: "750px",  //in figma 895px
+        mx: "auto",
+        p: 0, // remove extra padding
+        position: "relative",
+      }}
+    >
       <Swiper
-        spaceBetween={20}
+        spaceBetween={30} 
         slidesPerView={3}
+        centeredSlides={false} 
+        style={{ padding: "0 60px" }} 
         grabCursor={true}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         pagination={false}
       >
         {steps.map((item, index) => (
-          <SwiperSlide key={index}>
-            <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
-              <CardMedia component="img" height="200" image={item.img} alt={item.title} />
-              <CardContent>
+          <SwiperSlide key={index} style={{ width: "400px" }}>
+            <Card
+              sx={{
+                width: "400px",
+                height: "574px",
+                borderRadius: 0,
+                boxShadow: 3,
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+              }}
+            >
+              {/* Image */}
+              <CardMedia
+                component="img"
+                image={item.img}
+                alt={item.title}
+                sx={{
+                  width: "400px",
+                  height: "400px",
+                  objectFit: "cover",
+                }}
+              />
+
+              {/* Content */}
+              <CardContent
+                sx={{
+                  width: "400px",
+                  height: "154px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  px: 2,
+                  py: 2,
+                }}
+              >
                 <Chip
                   label={item.step}
                   size="small"
@@ -41,28 +83,30 @@ export default function ProcessCards() {
                     backgroundColor: "#f0f6ff",
                     color: "#1a4dab",
                     fontWeight: 500,
-                    fontFamily: "Plus Jakarta Sans-Medium",
+                    fontFamily: "Plus Jakarta Sans, sans-serif",
                     fontSize: "14px",
-                    mb: 1
+                    mb: 1,
+                    alignSelf: "flex-start",
                   }}
                 />
-                <Typography 
-                // variant="h6" 
-                sx={{ 
-                  ...typography.h3R,
-                  fontWeight: 600, 
-                color: "#1a1a1a" 
-                }}>
+                <Typography
+                  sx={{
+                    ...typography.h3,
+                    fontSize: "20px",
+                    color: "#1a1a1a",
+                    mb: 1,
+                  }}
+                >
                   {item.title}
                 </Typography>
-                <Typography 
-              
-                sx={{ 
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                  color: "text.secondary" 
-
-                }}>
+                <Typography
+                  sx={{
+                    ...typography.bodyBase,
+                    fontWeight: 400,
+                    fontSize: "18px",
+                    color: "#99A0AE",
+                  }}
+                >
                   {item.desc}
                 </Typography>
               </CardContent>
@@ -71,11 +115,11 @@ export default function ProcessCards() {
         ))}
       </Swiper>
 
-      {/* Custom progress line (like image1) */}
+      {/* Progress bar */}
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
+          display: "flex",
+          justifyContent: "center",
           mt: 3,
         }}
       >
@@ -86,13 +130,29 @@ export default function ProcessCards() {
               width: 30,
               height: 3,
               borderRadius: 2,
-              backgroundColor: index <= activeIndex ? '#0066cc' : '#d3d3d3',
+              backgroundColor: index <= activeIndex ? "#0066cc" : "#d3d3d3",
               mx: 0.5,
-              transition: 'background-color 0.3s ease',
+              transition: "background-color 0.3s ease",
             }}
           />
         ))}
       </Box>
+
+
+       <Typography
+                sx={{
+                  ...typography.bodyBase,
+                  color: "#1d4ed8",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textAlign: "center",
+                  mt:4,
+                  textDecoration: "underline"
+                }}
+              >
+                Sample load-test certificate (PDF) →
+              </Typography>
     </Box>
+
   );
 }
