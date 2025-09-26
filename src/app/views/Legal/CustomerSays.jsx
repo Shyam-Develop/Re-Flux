@@ -179,7 +179,12 @@ export default function Testimonials() {
 
 
           {/* Footer Section */}
-          <Footer />
+          <Box >
+            <Footer />
+          </Box>
+
+
+
         </Box>
       </Box>
     </Box>
