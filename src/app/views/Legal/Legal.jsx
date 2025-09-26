@@ -31,8 +31,8 @@ const Legal = () => {
           gridColumn: isNonMobile ? undefined : "span 4",
         },
         padding: "10px",
-        width:'1440px',
-        height:'1770px'
+        width: '1440px',
+        height: '1770px'
       }}
     >
       <Box sx={{ gridColumn: "span 4", p: 2 }}>
@@ -40,14 +40,14 @@ const Legal = () => {
         <Box
           sx={{
             gridColumn: "span 4",
-            p: { xs: 2, md: 4 }, 
+            p: { xs: 2, md: 4 },
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center", 
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Box sx={{ width: '1312px', height:'1586px' }}>
+          <Box sx={{ width: '1312px', height: '1586px' }}>
             {/* Heading */}
             <Typography
               sx={{ ...typography.displayL, color: "#1A2438", mb: 2 }}
@@ -56,7 +56,7 @@ const Legal = () => {
             </Typography>
 
             {/* Subtitle */}
-            <Typography  sx={{ ...typography.h4, mb: 4, color: "#1C2D4B" }}>
+            <Typography sx={{ ...typography.h4, mb: 4, color: "#1C2D4B" }}>
               Reflux is a brand of Electro Flux Private Limited ("Electro Flux", "we",
               "us", "our"). We operate the Reflux service for repair, rental and
               resale of electro-lifting magnets.
@@ -116,7 +116,7 @@ const Legal = () => {
                 Policy, and any product-specific terms.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.2 Who may use the Site
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -124,7 +124,7 @@ const Legal = () => {
                 individuals 18+ acting on behalf of an organization.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.3 Services shown on the Site
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }} component="div">
@@ -142,7 +142,7 @@ const Legal = () => {
                 assess your asset and issue a written quotation.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.4 Quotes & Orders
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -152,7 +152,7 @@ const Legal = () => {
                 that are unsafe, technically infeasible, or non-compliant.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.5 Pricing & Taxes
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -161,7 +161,7 @@ const Legal = () => {
                 are extra.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.6 Content & IP
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -174,14 +174,14 @@ const Legal = () => {
             <Divider sx={{ mt: 5 }} />
             {/* Commercial Terms */}
             <Typography
-             
-              sx={{ ...typography.h3,color:"#0B121E", mt: 6, mb: 2 }}
+
+              sx={{ ...typography.h3, color: "#0B121E", mt: 6, mb: 2 }}
             >
               Commercial Terms — Repair, Rental & Resale (summary)
             </Typography>
 
             <Box sx={{ lineHeight: 1.8 }}>
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 2.1 Inspection & diagnosis
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -189,7 +189,7 @@ const Legal = () => {
                 defects may alter scope, price and TAT after intake testing.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 2.2 Turnaround (TAT) bands
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -198,7 +198,7 @@ const Legal = () => {
                 safety.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.3 Services shown on the Site
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }} component="div">
@@ -216,7 +216,7 @@ const Legal = () => {
                 assess your asset and issue a written quotation.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.4 Quotes & Orders
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -227,7 +227,7 @@ const Legal = () => {
                 non-compliant.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.5 Pricing & Taxes
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -236,7 +236,7 @@ const Legal = () => {
                 are extra.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.6 Content & IP
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -250,9 +250,9 @@ const Legal = () => {
 
 
         {/* Footer Section */}
-      <Box >
-              <Footer/>
-            </Box>
+        <Box >
+          <Footer />
+        </Box>
       </Box>
     </Box>
     // </Container>
