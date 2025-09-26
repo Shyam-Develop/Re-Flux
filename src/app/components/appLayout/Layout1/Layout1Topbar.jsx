@@ -18,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {Link, useNavigate } from "react-router-dom";  // or any other ico
 import { typography } from "app/utils/constant";
+import { themeShadows } from "app/components/baseTheme/themeColors";
 const MenuButton = styled(Button)(({ theme }) => ({
   flex: 1, // equal width for all buttons
   position: "relative",
@@ -55,7 +56,23 @@ const MenuButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-
+const TopbarRoot = styled("div")(({ theme }) => ({
+  top: 0,
+  zIndex: 96,
+  transition: "all 0.3s ease",
+  boxShadow: themeShadows[8],
+  height:100,
+}));
+ 
+const TopbarContainer = styled(Box)(({ theme }) => ({
+  padding: "8px 20px 8px 18px",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  background: theme.palette.card,
+  borderBottom: `1px solid ${theme.palette.border}`,
+}));
 export default function TopbarWithMegaMenu() {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
