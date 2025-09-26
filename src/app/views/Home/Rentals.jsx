@@ -181,7 +181,8 @@ const Rentals = () => {
         </Toolbar>
       </Box>
 
-      <Box sx={{ maxWidth: '1296px', mx: 'auto' }}>
+              {/* <Box sx={{ maxWidth: '1296px', mx: 'auto' }}> */}
+      <Box sx={{  }}>
 
         <Box sx={{ fontFamily: 'Arial, sans-serif' }}>
 

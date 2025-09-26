@@ -745,77 +745,76 @@ const RepairReplace = () => {
         </Box>
 
         {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-<Box 
- sx={{
-display: "flex",
+        <Box
+          sx={{
+            display: "flex",
             flexDirection: "column",
-    width: "1440px",
-    height: "880px",
-    // pt: "40px",                 // padding-top
-    // pb: "40px",                 // padding-bottom
-    // display: "flex",            // required if using gap
-    gap: "32px",
-    transform: "rotate(0deg)",  // replaces angle: 0 deg
-    opacity: 1,
-    boxSizing: "border-box",
-    mb:5
-  }}
->  
-
-
-        <Typography
-          sx={{
-            ...typography.displayL,
-            color: "#1A2438",
-            textAlign: "left",
+            width: "1440px",
+            height: "880px",
+            // pt: "40px",                 // padding-top
+            // pb: "40px",                 // padding-bottom
+            // display: "flex",            // required if using gap
+            gap: "32px",
+            transform: "rotate(0deg)",  // replaces angle: 0 deg
+            opacity: 1,
+            boxSizing: "border-box",
+            mb: 5
           }}
         >
-          Rent instead?
-        </Typography>
-        <Typography
-          sx={{
-            ...typography.h4,
-            color: "#99A0AE",
-            textAlign: "left",
-          }}
-        >
-          Check out this Rentals
-        </Typography>
-        <Box sx={{
-          display: "flex",
+
+          <Typography
+            sx={{
+              ...typography.displayL,
+              color: "#1A2438",
+              textAlign: "left",
+            }}
+          >
+            Rent instead?
+          </Typography>
+          <Typography
+            sx={{
+              ...typography.h4,
+              color: "#99A0AE",
+              textAlign: "left",
+            }}
+          >
+            Check out this Rentals
+          </Typography>
+          <Box sx={{
+            display: "flex",
             flexDirection: "row",
-        }}>
-        <EquipmentSwiper data={cardData} />
+          }}>
+            <EquipmentSwiper data={cardData} />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              ml: 110,
+              // justifyContent: "flex-end",
+              mt: 2, // optional margin top
+            }}
+          >
+            <Button
+              sx={{
+                ...typography.h3,
+                color: "#2F6FBA",
+                textTransform: "none",
+                textDecoration: "underline",
+              }}
+              endIcon={
+                <ArrowRightAltIcon
+                  sx={{
+                    // width: 60,
+                    opacity: 1,
+                    borderWidth: "3.3px",
+                  }}
+                />
+              }
+            >
+              View all magnets for rent
+            </Button>
+          </Box>
         </Box>
-               <Box
-  sx={{
-    display: "flex",
-    ml:110,
-    // justifyContent: "flex-end",
-    mt: 2, // optional margin top
-  }}
->
-  <Button
-    sx={{
-      ...typography.h3,
-      color: "#2F6FBA",
-      textTransform: "none",
-      textDecoration: "underline",
-    }}
-    endIcon={
-      <ArrowRightAltIcon
-        sx={{
-          // width: 60,
-          opacity: 1,
-          borderWidth: "3.3px",
-        }}
-      />
-    }
-  >
-    View all magnets for rent
-  </Button>
-</Box>
-</Box>
 
         {/* Footer Section */}
         <Box

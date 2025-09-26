@@ -850,7 +850,7 @@ const RefurbishedElectromagnet = () => {
                          variant="contained"
                          fullWidth
                          sx={{ backgroundColor: '#1a73e8', width: '406px', height: '44px', textTransform: 'none', ...typography.bodyStrong }}
-                       >
+                        onClick={() => navigate("/home/RefurbishedDetail")}>
                          Buy now
                        </Button>
                      </Box>

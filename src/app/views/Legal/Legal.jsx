@@ -20,14 +20,16 @@ const Legal = () => {
   return (
     // <Container maxWidth="md" sx={{ py: 6 }}>
     <Box
-      display="grid"
-      gap="20px"
-      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+      // display="grid"
+      // gap="20px"
+      // gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
         "& > div": {
           gridColumn: isNonMobile ? undefined : "span 4",
         },
         padding: "10px",
+        width:'1440px',
+        height:'1770px'
       }}
     >
       <Box sx={{ gridColumn: "span 4", p: 2 }}>
@@ -35,14 +37,14 @@ const Legal = () => {
         <Box
           sx={{
             gridColumn: "span 4",
-            p: { xs: 2, md: 4 }, // ✅ equal padding on all sides
+            p: { xs: 2, md: 4 }, 
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center", // ✅ vertical alignment
-            alignItems: "center", // ✅ horizontal alignment
+            justifyContent: "center", 
+            alignItems: "center",
           }}
         >
-          <Box sx={{ maxWidth: 900, width: "100%" }}>
+          <Box sx={{ width: '1312px', height:'1586px' }}>
             {/* Heading */}
             <Typography
               sx={{ ...typography.displayL, color: "#1A2438", mb: 2 }}

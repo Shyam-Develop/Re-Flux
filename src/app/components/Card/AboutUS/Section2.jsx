@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import img2 from "../../../../assets/aboutusSection2.png";
 import { useNavigate } from 'react-router-dom';
+import { typography } from "app/utils/constant";
 
 const steps = [
   { step: "Step 1", title: "Diagnose", description: "Intake inspection, electrical tests, root-cause analysis.", image: img2 },
@@ -17,34 +18,47 @@ const steps = [
 ];
 
 export default function HowWeWorkSwiper() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   return (
-    <Box sx={{ width: '1440px', height:'734px', px: 2, py: 6 }}>
+    <Box sx={{ width: '1440px', height: '734px', px: 2, py: 6 }}>
       {/* Section Heading */}
-      <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, textAlign: "left" }}>
+
+      <Typography
+        sx={{
+          ...typography.displayL,
+          color: "#1C2D4B",
+          mt: 5
+        }}
+        gutterBottom>
         How we work
       </Typography>
-      <Typography variant="body1" sx={{ color: "#4b5563", textAlign: "left", mb: 6 }}>
+      <Typography
+        variant="h5" sx={{
+          ...typography.h5,
+          color: "#99A0AE",
+          mb: 4,
+
+        }}>
         Electrical and mechanical restoration with documented testing.
       </Typography>
 
       {/* Swiper */}
-            <Swiper
-              modules={[Pagination]}
-              spaceBetween={0}
-              slidesPerView={5} // show 3 at a time
-              pagination={{
-                clickable: true,
-              }}
-              style={{
-                paddingBottom: "40px", // space for pagination line
-              }}
-              breakpoints={{
-                0: { slidesPerView: 1 },
-                600: { slidesPerView: 2 },
-                960: { slidesPerView: 3 },
-              }}
-            >
+      <Swiper
+        modules={[Pagination]}
+        spaceBetween={0}
+        slidesPerView={5} // show 3 at a time
+        pagination={{
+          clickable: true,
+        }}
+        style={{
+          paddingBottom: "40px", // space for pagination line
+        }}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          960: { slidesPerView: 3 },
+        }}
+      >
         {steps.map((item, index) => (
           <SwiperSlide key={index}>
             <Card
@@ -53,7 +67,7 @@ export default function HowWeWorkSwiper() {
                 border: "1px solid #e5e7eb",
                 boxShadow: "none",
                 overflow: "hidden",
-                width:'250px',
+                width: '250px',
                 height: "418px",
               }}
             >
@@ -63,7 +77,7 @@ export default function HowWeWorkSwiper() {
                 alt={item.title}
                 sx={{ width: "250px", height: '250px', objectFit: "cover" }}
               />
-              <CardContent sx={{  width:'250px', height:'148px' }}>
+              <CardContent sx={{ width: '250px', height: '148px' }}>
                 <Chip
                   label={item.step}
                   size="small"
@@ -97,13 +111,13 @@ export default function HowWeWorkSwiper() {
             fontSize: "1rem",
             color: "#2563eb",
           }}
-        onClick={()=>navigate("/home/ViewCaseStudy")}>
+          onClick={() => navigate("/home/ViewCaseStudy")}>
           View Case Study
         </Button>
       </Box>
 
       {/* Custom Swiper styles */}
-       <style>
+      <style>
         {`
           .swiper-pagination {
             bottom: 0 !important;
