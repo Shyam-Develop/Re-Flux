@@ -15,6 +15,8 @@ import ROIimage from '../../../assets/ROICalculator.jpg';
 import EquipmentSwiper from "app/components/Card/RepairReplaceCard";
 import Repair from "../../../assets/RRimage.jpg"
 import { Link, useNavigate } from "react-router-dom";
+import Footer from 'app/components/Card/Footer';
+
 const validationSchema = Yup.object().shape({
   project1: Yup.string().required("Required"),
   project2: Yup.string().required("Required"),
@@ -745,198 +747,81 @@ const RepairReplace = () => {
         </Box>
 
         {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-<Box 
- sx={{
-display: "flex",
+        <Box
+          sx={{
+            display: "flex",
             flexDirection: "column",
-    width: "1440px",
-    height: "880px",
-    // pt: "40px",                 // padding-top
-    // pb: "40px",                 // padding-bottom
-    // display: "flex",            // required if using gap
-    gap: "32px",
-    transform: "rotate(0deg)",  // replaces angle: 0 deg
-    opacity: 1,
-    boxSizing: "border-box",
-    mb:5
-  }}
->  
-
-
-        <Typography
-          sx={{
-            ...typography.displayL,
-            color: "#1A2438",
-            textAlign: "left",
+            width: "1440px",
+            height: "880px",
+            // pt: "40px",                 // padding-top
+            // pb: "40px",                 // padding-bottom
+            // display: "flex",            // required if using gap
+            gap: "32px",
+            transform: "rotate(0deg)",  // replaces angle: 0 deg
+            opacity: 1,
+            boxSizing: "border-box",
+            mb: 5
           }}
         >
-          Rent instead?
-        </Typography>
-        <Typography
-          sx={{
-            ...typography.h4,
-            color: "#99A0AE",
-            textAlign: "left",
-          }}
-        >
-          Check out this Rentals
-        </Typography>
-        <Box sx={{
-          display: "flex",
+
+          <Typography
+            sx={{
+              ...typography.displayL,
+              color: "#1A2438",
+              textAlign: "left",
+            }}
+          >
+            Rent instead?
+          </Typography>
+          <Typography
+            sx={{
+              ...typography.h4,
+              color: "#99A0AE",
+              textAlign: "left",
+            }}
+          >
+            Check out this Rentals
+          </Typography>
+          <Box sx={{
+            display: "flex",
             flexDirection: "row",
-        }}>
-        <EquipmentSwiper data={cardData} />
+          }}>
+            <EquipmentSwiper data={cardData} />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              ml: 110,
+              // justifyContent: "flex-end",
+              mt: 2, // optional margin top
+            }}
+          >
+            <Button
+              sx={{
+                ...typography.h3,
+                color: "#2F6FBA",
+                textTransform: "none",
+                textDecoration: "underline",
+              }}
+              endIcon={
+                <ArrowRightAltIcon
+                  sx={{
+                    // width: 60,
+                    opacity: 1,
+                    borderWidth: "3.3px",
+                  }}
+                />
+              }
+            >
+              View all magnets for rent
+            </Button>
+          </Box>
         </Box>
-               <Box
-  sx={{
-    display: "flex",
-    ml:110,
-    // justifyContent: "flex-end",
-    mt: 2, // optional margin top
-  }}
->
-  <Button
-    sx={{
-      ...typography.h3,
-      color: "#2F6FBA",
-      textTransform: "none",
-      textDecoration: "underline",
-    }}
-    endIcon={
-      <ArrowRightAltIcon
-        sx={{
-          // width: 60,
-          opacity: 1,
-          borderWidth: "3.3px",
-        }}
-      />
-    }
-  >
-    View all magnets for rent
-  </Button>
-</Box>
-</Box>
 
         {/* Footer Section */}
-        <Box
-          component="footer"
-          sx={{
-            backgroundColor: "#0b2d55",
-            color: "#fff",
-            borderTopLeftRadius: 32,
-            borderTopRightRadius: 32,
-            width: "100%",
-            px: { xs: 4, md: 12 },
-            py: { xs: 6, md: 10 },
-          }}
-        >
-          <Grid container spacing={4} alignItems="flex-start">
-            {/* 1. Left: Logo + Sub-brand */}
-            <Grid item xs={12} md={4}>
-              <Box mb={3}>
-                <img src={Brand1} alt="ReFlux Magnets" style={{ height: 60 }} />
-              </Box>
-              <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                A unit of
-              </Typography>
-              <Box>
-                <img src={Brand1} alt="Electro Flux" style={{ height: 60 }} />
-              </Box>
-            </Grid>
-
-            {/* 2. Middle: Contact Info */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Contact
-              </Typography>
-
-              <Typography variant="body2" sx={{ lineHeight: 1.8 }}>
-                Xilliams Corner Wine © 2017. <br />
-                1112 A Market St # Ste B22,<br />
-                Charlottesville, CA 45565
-              </Typography>
-
-              <Typography sx={{ mt: 2 }}>(123) 456-7890</Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  display: "inline-block",
-                  borderBottom: "2px solid #1976d2",
-                  pb: "2px",
-                }}
-              >
-                contact@lift.agency
-              </Typography>
-            </Grid>
-
-            {/* 3. Right: Links + Arrow + Copyright */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Links
-              </Typography>
-
-              {["Facebook", "Instagram", "Youtube"].map((item) => (
-                <Typography key={item} sx={{ mb: 1 }}>
-                  {item}
-                </Typography>
-              ))}
-
-              <Typography sx={{ fontWeight: 700, mt: 2 }}>Wall of Love ❤️</Typography>
-              <Box
-                sx={{
-                  width: 30,
-                  height: 2,
-                  backgroundColor: "#fff",
-                  my: 1,
-                }}
-              />
-              <Typography sx={{ fontWeight: 700, mb: 3 }}>Sitemap</Typography>
-
-              {/* Scroll to top icon */}
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  border: "1px solid #fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  mb: 2,
-                }}
-              >
-                <ArrowUpwardIcon sx={{ color: "#fff" }} />
-              </Box>
-
-              <Typography variant="caption" sx={{ color: "#ccc" }}>
-                © 2020 Lift Media All rights reserved.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
+       <Box >
+               <Footer/>
+             </Box>
       </Box>
     </Box>
 

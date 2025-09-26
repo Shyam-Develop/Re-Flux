@@ -21,16 +21,16 @@ export default function EquipmentSwiper({ data }) {
   return (
     <>
       <Swiper
-         modules={[Pagination]}
-  spaceBetween={30} // better spacing
-  slidesPerView={3.5} // minimum 3 always
-  pagination={{ clickable: true }}
-  style={{ paddingBottom: "40px" }}
-  breakpoints={{
-    0: { slidesPerView: 1 },
-    600: { slidesPerView: 2 },
-    900: { slidesPerView: 3 }, // from 1280px, lock to 3
-  }}
+        modules={[Pagination]}
+        spaceBetween={0} // better spacing
+        slidesPerView={3} // minimum 3 always
+        pagination={{ clickable: true }}
+        style={{ paddingBottom: "40px" }}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          900: { slidesPerView: 3 }, // from 1280px, lock to 3
+        }}
       >
         {data.map((service) => (
           <SwiperSlide key={service.id}>

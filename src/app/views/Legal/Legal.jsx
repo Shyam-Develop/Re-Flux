@@ -13,6 +13,9 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Brand1 from '../../../assets/Brand1.png';
 import Repair from "../../../assets/RRimage.jpg"
 import { typography } from "app/utils/constant";
+import Footer from 'app/components/Card/Footer';
+
+
 const Legal = () => {
 
   const theme = useTheme();
@@ -20,14 +23,16 @@ const Legal = () => {
   return (
     // <Container maxWidth="md" sx={{ py: 6 }}>
     <Box
-      display="grid"
-      gap="20px"
-      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+      // display="grid"
+      // gap="20px"
+      // gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
         "& > div": {
           gridColumn: isNonMobile ? undefined : "span 4",
         },
         padding: "10px",
+        width: '1440px',
+        height: '1770px'
       }}
     >
       <Box sx={{ gridColumn: "span 4", p: 2 }}>
@@ -35,14 +40,14 @@ const Legal = () => {
         <Box
           sx={{
             gridColumn: "span 4",
-            p: { xs: 2, md: 4 }, // ✅ equal padding on all sides
+            p: { xs: 2, md: 4 },
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center", // ✅ vertical alignment
-            alignItems: "center", // ✅ horizontal alignment
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Box sx={{ maxWidth: 900, width: "100%" }}>
+          <Box sx={{ width: '1312px', height: '1586px' }}>
             {/* Heading */}
             <Typography
               sx={{ ...typography.displayL, color: "#1A2438", mb: 2 }}
@@ -51,7 +56,7 @@ const Legal = () => {
             </Typography>
 
             {/* Subtitle */}
-            <Typography  sx={{ ...typography.h4, mb: 4, color: "#1C2D4B" }}>
+            <Typography sx={{ ...typography.h4, mb: 4, color: "#1C2D4B" }}>
               Reflux is a brand of Electro Flux Private Limited ("Electro Flux", "we",
               "us", "our"). We operate the Reflux service for repair, rental and
               resale of electro-lifting magnets.
@@ -111,7 +116,7 @@ const Legal = () => {
                 Policy, and any product-specific terms.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.2 Who may use the Site
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -119,7 +124,7 @@ const Legal = () => {
                 individuals 18+ acting on behalf of an organization.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.3 Services shown on the Site
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }} component="div">
@@ -137,7 +142,7 @@ const Legal = () => {
                 assess your asset and issue a written quotation.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.4 Quotes & Orders
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -147,7 +152,7 @@ const Legal = () => {
                 that are unsafe, technically infeasible, or non-compliant.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.5 Pricing & Taxes
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -156,7 +161,7 @@ const Legal = () => {
                 are extra.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.6 Content & IP
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -169,14 +174,14 @@ const Legal = () => {
             <Divider sx={{ mt: 5 }} />
             {/* Commercial Terms */}
             <Typography
-             
-              sx={{ ...typography.h3,color:"#0B121E", mt: 6, mb: 2 }}
+
+              sx={{ ...typography.h3, color: "#0B121E", mt: 6, mb: 2 }}
             >
               Commercial Terms — Repair, Rental & Resale (summary)
             </Typography>
 
             <Box sx={{ lineHeight: 1.8 }}>
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 2.1 Inspection & diagnosis
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -184,7 +189,7 @@ const Legal = () => {
                 defects may alter scope, price and TAT after intake testing.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 2.2 Turnaround (TAT) bands
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -193,7 +198,7 @@ const Legal = () => {
                 safety.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.3 Services shown on the Site
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }} component="div">
@@ -211,7 +216,7 @@ const Legal = () => {
                 assess your asset and issue a written quotation.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.4 Quotes & Orders
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -222,7 +227,7 @@ const Legal = () => {
                 non-compliant.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.5 Pricing & Taxes
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -231,7 +236,7 @@ const Legal = () => {
                 are extra.
               </Typography>
 
-              <Typography  sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
+              <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.6 Content & IP
               </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }}>
@@ -242,126 +247,11 @@ const Legal = () => {
             </Box>
           </Box>
         </Box>
+
+
         {/* Footer Section */}
-        <Box
-          mt={40}
-          component="footer"
-          sx={{
-            backgroundColor: "#0b2d55",
-            color: "#fff",
-            borderTopLeftRadius: 32,
-            borderTopRightRadius: 32,
-            width: "100%",
-            px: { xs: 4, md: 12 },
-            py: { xs: 6, md: 10 },
-          }}
-        >
-          <Grid container spacing={4} alignItems="flex-start">
-            {/* 1. Left: Logo + Sub-brand */}
-            <Grid item xs={12} md={4}>
-              <Box mb={3}>
-                <img src={Brand1} alt="ReFlux Magnets" style={{ height: 60 }} />
-              </Box>
-              <Typography  sx={{ ...typography.h5, color: "white", mb: 1 }}>
-                A unit of
-              </Typography>
-              <Box>
-                <img src={Brand1} alt="Electro Flux" style={{ height: 60 }} />
-              </Box>
-            </Grid>
-
-            {/* 2. Middle: Contact Info */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Contact
-              </Typography>
-
-              <Typography  sx={{ lineHeight: 1.8 }}>
-                Xilliams Corner Wine © 2017. <br />
-                1112 A Market St # Ste B22,<br />
-                Charlottesville, CA 45565
-              </Typography>
-
-              <Typography sx={{ mt: 2 }}>(123) 456-7890</Typography>
-              <Typography
-                sx={{
-                  mt: 1,
-                  display: "inline-block",
-                  borderBottom: "2px solid #1976d2",
-                  pb: "2px",
-                }}
-              >
-                contact@lift.agency
-              </Typography>
-            </Grid>
-
-            {/* 3. Right: Links + Arrow + Copyright */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  border: "1px solid #fff",
-                  borderRadius: "16px",
-                  px: 2,
-                  py: 0.5,
-                  display: "inline-block",
-                  mb: 2,
-                }}
-              >
-                Links
-              </Typography>
-
-              {["Facebook", "Instagram", "Youtube"].map((item) => (
-                <Typography key={item} sx={{ mb: 1 }}>
-                  {item}
-                </Typography>
-              ))}
-
-              <Typography sx={{ fontWeight: 700, mt: 2 }}>Wall of Love ❤️</Typography>
-              <Box
-                sx={{
-                  width: 30,
-                  height: 2,
-                  backgroundColor: "#fff",
-                  my: 1,
-                }}
-              />
-              <Typography sx={{ fontWeight: 700, mb: 3 }}>Sitemap</Typography>
-
-              {/* Scroll to top icon */}
-              <Box
-                sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  border: "1px solid #fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  mb: 2,
-                }}
-              >
-                <ArrowUpwardIcon sx={{ color: "#fff" }} />
-              </Box>
-
-              <Typography  sx={{ color: "#ccc" }}>
-                © 2020 Lift Media All rights reserved.
-              </Typography>
-            </Grid>
-          </Grid>
+        <Box >
+          <Footer />
         </Box>
       </Box>
     </Box>

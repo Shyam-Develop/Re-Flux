@@ -664,7 +664,7 @@ const RepairServices = () => {
       </Box>
 
 
-      {/* Blogs Section */}
+    {/* Blogs Section */}
       <Button
         disableElevation
         disableRipple
@@ -711,15 +711,15 @@ const RepairServices = () => {
       <Box sx={{ px: 8, py: 6 }}>
         <Grid container spacing={3}>
           {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ width: '668px',
+                height: '462px',}}>
             <Card
               sx={{
-                //display: "flex",
+                display: "flex",
                 flexDirection: "column",
-                // width:'668px',
-                // height:'462px', 
+                
                 borderRadius: 3,
-                // boxShadow: 0,
+                boxShadow: 0,
                 bgcolor: "#fafafa",
                 cursor:'pointer'
               }}
@@ -753,7 +753,7 @@ const RepairServices = () => {
                     alignItems: "center"
                   }}
                 >
-                  Discover More <ArrowForwardIosIcon sx={{ ml: 1.5, color: "#1F77D6", }} />
+                  Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
                 </Link>
               </CardContent>
             </Card>
@@ -773,8 +773,9 @@ const RepairServices = () => {
                       py: 1,
                       bgcolor: "#fdfdfd",
                       boxShadow: 0,
+                      cursor:'pointer'
                     }}
-                  >
+                  onClick={() => navigate("/home/Blogpost")}>
                     <CardMedia
                       component="img"
                       image={item.image}

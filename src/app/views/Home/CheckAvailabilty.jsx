@@ -525,6 +525,7 @@ const CheckAvailabilty = () => {
               padding: "24px",
               marginRight: '90px',
               marginTop: '40px',
+              lineHeight: '5',
               // display: "flex",
               flexDirection: "column",
               gap: 2,

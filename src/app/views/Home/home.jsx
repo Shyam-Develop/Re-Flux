@@ -304,7 +304,7 @@ const HomePage = () => {
 
     <Box
       sx={{
-        width: "1440px",
+        // width: "1440px",
 
       }}
     >
@@ -1181,16 +1181,15 @@ const HomePage = () => {
           performance for every project!
         </Typography>
         <Typography
-          component={Link}
-          to="/repair-replace/roi-cal"
           sx={{
             ...typography.h3R,
             textDecoration: "underline",
             color: "#1a4dab",
             fontWeight: 600,
             ml: 130,
+            cursor:'pointer'
           }}
-        >
+        onClick={() => navigate("/repair-replace/roi-cal")}>
           View All ROI Calculators
           <ArrowRightAltIcon
             sx={{
@@ -1493,17 +1492,17 @@ const HomePage = () => {
         sx={{
           marginBottom: 2,
           ml: 8,
-          textTransform: "none",
-          fontSize: "0.8rem",
-          fontWeight: 500,
-          color: "#1a4dab",
-          backgroundColor: "rgba(36,121,233,0.08)",
-          borderRadius: "20px",
-          px: 2,
-          py: 0.5,
-          boxShadow: "none",
+          textTransform: "none",           // keep text as-is
+          fontSize: "0.8rem",              // smaller font
+          fontWeight: 500,                 // medium weight
+          color: "#1a4dab",                // dark blue text
+          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+          borderRadius: "20px",            // pill shape
+          px: 2,                           // horizontal padding
+          py: 0.5,                         // vertical padding
+          boxShadow: "none",               // remove shadow
           "&:hover": {
-            backgroundColor: "rgba(36,121,233,0.15)",
+            backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
             boxShadow: "none",
           },
         }}
@@ -1514,7 +1513,7 @@ const HomePage = () => {
         sx={{
           ml: 8,
           ...typography.displayL,
-          color: '#1C2D4B'
+          color:'#1C2D4B'
         }}
         variant="h3" fontWeight="bold" gutterBottom>
         Blogs
@@ -1522,31 +1521,30 @@ const HomePage = () => {
       <Typography
         variant="h5" sx={{
           mb: 4,
-          color: '#1C2D4B',
-          ...typography.h4,
+           color: '#1C2D4B',
+         ...typography.h4,
           ml: 8
         }}>
         Get powerful lifting magnets when you need them — without the upfront
         cost. Flexible rental plans, quick installation, and reliable
         performance for every project!
       </Typography>
-      <Box sx={{ px: 8, py: 6, width: '1440px', height: '591px', }}>
+      <Box sx={{ px: 8, py: 6 }}>
         <Grid container spacing={3}>
           {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ width: '668px',
+                height: '462px',}}>
             <Card
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                // width:'668px',
-                // height:'462px',
+                
                 borderRadius: 3,
                 boxShadow: 0,
                 bgcolor: "#fafafa",
-                cursor: 'pointer',
-                padding: '20px'
+                cursor:'pointer'
               }}
-              onClick={() => navigate("/home/BlogDetails")}>
+             onClick={() => navigate("/home/BlogDetails")}>
               <CardMedia
                 component="img"
                 image={blogData[0].image}
@@ -1559,10 +1557,10 @@ const HomePage = () => {
                 }}
               />
               <CardContent>
-                <Typography sx={{ ...typography.h5, color: '#0E1109' }} gutterBottom>
+                <Typography sx={{...typography.h5, color:'#0E1109'}} gutterBottom>
                   {blogData[0].title}
                 </Typography>
-                <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
+                <Typography sx={{...typography.bodyBase, color:'#677489'}}>
                   {blogData[0].author} • {blogData[0].date}
                 </Typography>
                 <Link
@@ -1573,19 +1571,10 @@ const HomePage = () => {
                     ...typography.bodyBasemedium,
                     mt: 1,
                     display: "inline-flex",
-                    alignItems: "center",
-                    gap: "4px", // consistent spacing
+                    alignItems: "center"
                   }}
                 >
-                  Discover More
-                  <ArrowForwardIosIcon
-                    fontSize="small" // makes it 20px instead of 24px
-                    sx={{
-                      color: "#1F77D6",
-                      position: "relative",
-                      top: "5px" // nudges it down slightly to align with baseline
-                    }}
-                  />
+                  Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
                 </Link>
               </CardContent>
             </Card>
@@ -1605,8 +1594,9 @@ const HomePage = () => {
                       py: 1,
                       bgcolor: "#fdfdfd",
                       boxShadow: 0,
+                      cursor:'pointer'
                     }}
-                   >
+                  onClick={() => navigate("/home/Blogpost")}>
                     <CardMedia
                       component="img"
                       image={item.image}
@@ -1620,23 +1610,18 @@ const HomePage = () => {
                       }}
                     />
                     <Box>
-                      <Typography sx={{ ...typography.h4, color: '#0E1109', width: '474px', height: '62px' }}>
+                      <Typography sx={{...typography.h4, color:'#0E1109', width:'474px', height:'62px'}}>
                         {item.title}
                       </Typography>
-                      <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
+                      <Typography sx={{...typography.bodyBase, color:'#677489'}}>
                         {item.author} • {item.date}
                       </Typography>
                       <Link
                         href="#"
                         underline="none"
                         sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
-                     >
-                        Discover More 
-                     <ArrowForwardIosIcon sx={{
-                          color: "#1F77D6",
-                          position: "relative",
-                          top: "7px"                     
-                      }}/>
+                      >
+                        Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
                       </Link>
                     </Box>
                   </Card>

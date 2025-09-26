@@ -241,9 +241,9 @@ export default function RentServicesCard({ services }) {
                 <Box sx={{width:'262px', height:'59px', marginBottom: '35px'}}>
                   <Typography
                     sx={{
-                      fontSize: "14px",
+                      // fontSize: "14px",
                       ...typography.h5, 
-                      color:'#0E1626',
+                      // color:'#0E1626',
                       LineHeight : '130%'
                     }}
                   >

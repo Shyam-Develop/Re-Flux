@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-    Box, Button, Divider, Grid, Link, Modal, Typography, useMediaQuery, useTheme, Paper, TextField,
-    MenuItem, Card,
-  CardMedia,IconButton
+  Box, Button, Divider, Grid, Link, Modal, Typography, useMediaQuery, useTheme, Paper, TextField,
+  MenuItem, Card,
+  CardMedia, IconButton
 } from "@mui/material";
 import ROIimage from '../../../assets/ROICalculator.jpg';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -12,346 +12,231 @@ import EquipmentSwiper from "app/components/Card/RepairReplaceCard";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Brand1 from '../../../assets/Brand1.png';
 import Repair from "../../../assets/RRimage.jpg"
+import Footer from 'app/components/Card/Footer';
 
 const RoiCalculator = () => {
 
-    const theme = useTheme();
-    const isNonMobile = useMediaQuery("(min-width:600px)");
-    return (
-        <Box
-            display="grid"
-            gap="20px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            sx={{
-                "& > div": {
-                    gridColumn: isNonMobile ? undefined : "span 4",
-                },
-                padding: "10px",
-            }}
-        >
-             <Box sx={{ gridColumn: "span 4", p: 2 }}>
-                  <Box
+  const theme = useTheme();
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  return (
+    <Box
+      display="grid"
+      gap="20px"
+      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
-        width: "100%",
-        maxWidth: 1280,
-        mx: "auto",
-        py: 5, // padding top/bottom
+        "& > div": {
+          gridColumn: isNonMobile ? undefined : "span 4",
+        },
+        padding: "10px",
       }}
     >
-      {/* Title & Description */}
-      <Box sx={{ textAlign: "left" }}>
-        <Typography variant="h3" fontWeight="bold" gutterBottom>
-          ROI Calculator
-        </Typography>
-        <Typography
-          variant="h5"
-          sx={{ mb: 4, color: "text.secondary" }}
-        >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
-        </Typography>
-      </Box>
-
-      {/* Cards */}
-   <Box sx={{ px: { xs: 2, md: 6 }, mb: "5%" }}>
-  <Grid container spacing={3} justifyContent="flex-start">
-    {roiData.map((item, index) => (
-      <Grid item key={index}>
-        <Card
+      <Box sx={{ gridColumn: "span 4", p: 2 }}>
+        <Box
           sx={{
-            position: "relative",
-            borderRadius: 3,
-            overflow: "hidden",
-            boxShadow: 3,
-            height: 400,
-            width: 550,
+            width: "100%",
+            maxWidth: 1280,
+            mx: "auto",
+            py: 5, // padding top/bottom
           }}
         >
-          {/* Background Image */}
-          <CardMedia
-            component="img"
-            image={item.image}
-            alt={item.title}
-            sx={{
-              height: "100%",
-              width: "100%",
-              objectFit: "cover",
-            }}
-          />
-
-          {/* Overlay White Card */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 16,
-              left: 16,
-              right: 16,
-              bgcolor: "white",
-              borderRadius: 2,
-              boxShadow: 1,
-              px: 2,
-              py: 1.5,
-              display: "flex",
-              flexDirection: "column",
-              gap: 0.5,
-              transition: "all 0.3s ease",
-              "&:hover": {
-                bgcolor: "#0b2d55",
-                color: "white",
-                "& .MuiTypography-root": { color: "white" },
-                "& .MuiIconButton-root": {
-                  bgcolor: "#4487ebff",
-                  color: "white",
-                },
-              },
-            }}
-          >
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="subtitle1" fontWeight="bold" fontSize="24px">
-                {item.title}
-              </Typography>
-              <IconButton
-                size="small"
-                sx={{
-                  backgroundColor: "#f0f0f0",
-                  width: 40,
-                  height: 40,
-                }}
-              >
-                <ArrowForwardIosIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Typography variant="body2" color="text.secondary" fontSize="18px">
-              {item.description}
+          {/* Title & Description */}
+          <Box sx={{ textAlign: "left" }}>
+            <Typography variant="h3" fontWeight="bold" gutterBottom>
+              ROI Calculator
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{ mb: 4, color: "text.secondary" }}
+            >
+              Get powerful lifting magnets when you need them — without the upfront
+              cost. Flexible rental plans, quick installation, and reliable
+              performance for every project!
             </Typography>
           </Box>
-        </Card>
-      </Grid>
-    ))}
-  </Grid>
-</Box>
 
-    </Box>
-             
-             
-              {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-             
-             <Typography
-                                     sx={{
-                                         ...typography.displayL,
-                                         color: "#1A2438",
-                                         textAlign: "left",
-                                     }}
-                                 >
-                                     Rent instead?
-                                 </Typography>
-                                 <Typography
-                                     sx={{
-                                         ...typography.h4,
-                                         color: "#99A0AE",
-                                         textAlign: "left",
-                                     }}
-                                 >
-                                     Check out this Rentals
-                                 </Typography>
-                 <EquipmentSwiper data={cardData}/>
-             <Box
-               sx={{
-                 display: "flex",
-                 justifyContent: "flex-end", // push button to right
-                 width: "100%", // make sure it spans full row
-                 mt: 2, // optional margin-top
-               }}
-             >
-               <Button
-                 sx={{
-                   ...typography.h3,
-                   color: "#2F6FBA",
-                   textTransform: "none", // keep text case as-is
-                 textDecoration: "underline",
-                 }}
-                 endIcon={
-                   <ArrowRightAltIcon
-                     sx={{
-                       width: 60,
-                       opacity: 1,
-                       borderWidth: "3.3px",
-                     }}
-                   />
-                 }
-               >
-                 View all magnets for rent
-               </Button>
-             </Box>
-             
-             
-                   {/* Footer Section */}
-                 <Box
-                   component="footer"
-                   sx={{
-                     backgroundColor: "#0b2d55",
-                     color: "#fff",
-                     borderTopLeftRadius: 32,
-                     borderTopRightRadius: 32,
-                     width: "100%",
-                     px: { xs: 4, md: 12 },
-                     py: { xs: 6, md: 10 },
-                   }}
-                 >
-                   <Grid container spacing={4} alignItems="flex-start">
-                     {/* 1. Left: Logo + Sub-brand */}
-                     <Grid item xs={12} md={4}>
-                       <Box mb={3}>
-                         <img src={Brand1} alt="ReFlux Magnets" style={{ height: 60 }} />
-                       </Box>
-                       <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                         A unit of
-                       </Typography>
-                       <Box>
-                         <img src={Brand1} alt="Electro Flux" style={{ height: 60 }} />
-                       </Box>
-                     </Grid>
-                 
-                     {/* 2. Middle: Contact Info */}
-                     <Grid item xs={12} md={4}>
-                       <Typography
-                         sx={{
-                           fontWeight: 600,
-                           fontSize: "14px",
-                           border: "1px solid #fff",
-                           borderRadius: "16px",
-                           px: 2,
-                           py: 0.5,
-                           display: "inline-block",
-                           mb: 2,
-                         }}
-                       >
-                         Contact
-                       </Typography>
-                 
-                       <Typography variant="body2" sx={{ lineHeight: 1.8 }}>
-                         Xilliams Corner Wine © 2017. <br />
-                         1112 A Market St # Ste B22,<br />
-                         Charlottesville, CA 45565
-                       </Typography>
-                 
-                       <Typography sx={{ mt: 2 }}>(123) 456-7890</Typography>
-                       <Typography
-                         sx={{
-                           mt: 1,
-                           display: "inline-block",
-                           borderBottom: "2px solid #1976d2",
-                           pb: "2px",
-                         }}
-                       >
-                         contact@lift.agency
-                       </Typography>
-                     </Grid>
-                 
-                     {/* 3. Right: Links + Arrow + Copyright */}
-                     <Grid item xs={12} md={4}>
-                       <Typography
-                         sx={{
-                           fontWeight: 600,
-                           fontSize: "14px",
-                           border: "1px solid #fff",
-                           borderRadius: "16px",
-                           px: 2,
-                           py: 0.5,
-                           display: "inline-block",
-                           mb: 2,
-                         }}
-                       >
-                         Links
-                       </Typography>
-                 
-                       {["Facebook", "Instagram", "Youtube"].map((item) => (
-                         <Typography key={item} sx={{ mb: 1 }}>
-                           {item}
-                         </Typography>
-                       ))}
-                 
-                       <Typography sx={{ fontWeight: 700, mt: 2 }}>Wall of Love ❤️</Typography>
-                       <Box
-                         sx={{
-                           width: 30,
-                           height: 2,
-                           backgroundColor: "#fff",
-                           my: 1,
-                         }}
-                       />
-                       <Typography sx={{ fontWeight: 700, mb: 3 }}>Sitemap</Typography>
-                 
-                       {/* Scroll to top icon */}
-                       <Box
-                         sx={{
-                           width: 40,
-                           height: 40,
-                           borderRadius: "50%",
-                           border: "1px solid #fff",
-                           display: "flex",
-                           alignItems: "center",
-                           justifyContent: "center",
-                           cursor: "pointer",
-                           mb: 2,
-                         }}
-                       >
-                         <ArrowUpwardIcon sx={{ color: "#fff" }} />
-                       </Box>
-                 
-                       <Typography variant="caption" sx={{ color: "#ccc" }}>
-                         © 2020 Lift Media All rights reserved.
-                       </Typography>
-                     </Grid>
-                   </Grid>
-                 </Box>
-             </Box>
+          {/* Cards */}
+          <Box sx={{ px: { xs: 2, md: 6 }, mb: "5%" }}>
+            <Grid container spacing={3} justifyContent="flex-start">
+              {roiData.map((item, index) => (
+                <Grid item key={index}>
+                  <Card
+                    sx={{
+                      position: "relative",
+                      borderRadius: 3,
+                      overflow: "hidden",
+                      boxShadow: 3,
+                      height: 400,
+                      width: 550,
+                    }}
+                  >
+                    {/* Background Image */}
+                    <CardMedia
+                      component="img"
+                      image={item.image}
+                      alt={item.title}
+                      sx={{
+                        height: "100%",
+                        width: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+
+                    {/* Overlay White Card */}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 16,
+                        left: 16,
+                        right: 16,
+                        bgcolor: "white",
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        px: 2,
+                        py: 1.5,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 0.5,
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          bgcolor: "#0b2d55",
+                          color: "white",
+                          "& .MuiTypography-root": { color: "white" },
+                          "& .MuiIconButton-root": {
+                            bgcolor: "#4487ebff",
+                            color: "white",
+                          },
+                        },
+                      }}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="subtitle1" fontWeight="bold" fontSize="24px">
+                          {item.title}
+                        </Typography>
+                        <IconButton
+                          size="small"
+                          sx={{
+                            backgroundColor: "#f0f0f0",
+                            width: 40,
+                            height: 40,
+                          }}
+                        >
+                          <ArrowForwardIosIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                      <Typography variant="body2" color="text.secondary" fontSize="18px">
+                        {item.description}
+                      </Typography>
+                    </Box>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
 
         </Box>
-    );
+
+
+        {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
+
+        <Typography
+          sx={{
+            ...typography.displayL,
+            color: "#1A2438",
+            textAlign: "left",
+          }}
+        >
+          Rent instead?
+        </Typography>
+        <Typography
+          sx={{
+            ...typography.h4,
+            color: "#99A0AE",
+            textAlign: "left",
+          }}
+        >
+          Check out this Rentals
+        </Typography>
+        <EquipmentSwiper data={cardData} />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end", // push button to right
+            width: "100%", // make sure it spans full row
+            mt: 2, // optional margin-top
+          }}
+        >
+          <Button
+            sx={{
+              ...typography.h3,
+              color: "#2F6FBA",
+              textTransform: "none", // keep text case as-is
+              textDecoration: "underline",
+            }}
+            endIcon={
+              <ArrowRightAltIcon
+                sx={{
+                  width: 60,
+                  opacity: 1,
+                  borderWidth: "3.3px",
+                }}
+              />
+            }
+          >
+            View all magnets for rent
+          </Button>
+        </Box>
+
+
+        {/* Footer Section */}
+        <Box >
+          <Footer />
+        </Box>
+      </Box>
+
+    </Box>
+  );
 }
 export default RoiCalculator;
 const roiData = [
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
- {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-     {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
 ];
 
- const cardData = [
+const cardData = [
   {
     id: 1,
     title: "Circular Lifting Magnet",
@@ -361,8 +246,8 @@ const roiData = [
     size: "700mm / 900mm / 1200mm",
     img: Repair,
     status: ["Available for Rent", "Safety Tested"],
-     sizes:"700mm/900mm/1200mm"
-},
+    sizes: "700mm/900mm/1200mm"
+  },
   {
     id: 2,
     title: "Hydraulic Jack",
@@ -370,9 +255,9 @@ const roiData = [
     liftCapacity: "5 Tons",
     powerSupply: ["220V"],
     size: "Standard",
-    img:Repair,
+    img: Repair,
     status: ["Available for Rent", "Certified"],
-    sizes:"700mm/900mm/1200mm"
+    sizes: "700mm/900mm/1200mm"
   },
   {
     id: 3,
@@ -383,7 +268,7 @@ const roiData = [
     size: "Large",
     img: Repair,
     status: ["Available for Rent"],
-       sizes:"700mm/900mm/1200mm"
+    sizes: "700mm/900mm/1200mm"
   },
   {
     id: 4,
@@ -394,7 +279,7 @@ const roiData = [
     size: "Compact",
     img: Repair,
     status: ["Safety Tested"],
-       sizes:"700mm/900mm/1200mm"
+    sizes: "700mm/900mm/1200mm"
   },
   {
     id: 5,
@@ -405,7 +290,7 @@ const roiData = [
     size: "Extra Large",
     img: Repair,
     status: ["Available for Rent"],
-       sizes:"700mm/900mm/1200mm"
+    sizes: "700mm/900mm/1200mm"
   },
   {
     id: 6,
@@ -416,7 +301,7 @@ const roiData = [
     size: "Medium",
     img: Repair,
     status: ["Certified"],
-       sizes:"700mm/900mm/1200mm"
+    sizes: "700mm/900mm/1200mm"
   },
   {
     id: 7,
@@ -427,6 +312,6 @@ const roiData = [
     size: "Compact",
     img: Repair,
     status: ["Available for Rent", "Safety Tested"],
-       sizes:"700mm/900mm/1200mm"
+    sizes: "700mm/900mm/1200mm"
   },
 ];

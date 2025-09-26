@@ -59,6 +59,7 @@ import Roi1 from "../../../assets/Roi1.png";
 import Roi2 from "../../../assets/Roi2.png";
 import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
+import Footer from 'app/components/Card/Footer';
 
 
 
@@ -296,8 +297,7 @@ const images = [
      <Box
       sx={{
         width: "100%",
-        height: "100vh",
-        display: "flex",
+        // display: "flex",
         flexDirection: "column",
         alignItems: "center",
         bgcolor: "white",
@@ -1260,222 +1260,11 @@ fontSize: "18px",
 
 
 
-{/* Footer Section */}
-{/* Footer Section */}
-<Box
-  component="footer"
-  sx={{
-    backgroundColor: "#0b2d55",
-    color: "#fff",
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    width: "100%",
-    px: { xs: 4, md: 12 },
-    py: { xs: 6, md: 10 },
-  }}
->
-  <Grid container spacing={4}>
-    {/* 1. Left Column: Brand and Unit Info */}
-    <Grid item xs={12} md={4}>
-      <Box display="flex" flexDirection="column" alignItems="flex-start">
-        <Box mb={2}>
-          <img src={Brand1} alt="ReFlux Magnets" style={{ height: 40 }} />
-        </Box>
-       <Box display="flex" alignItems="center" mt={2}>
-  <Typography
-  //  variant="body2" 
-   sx={{ 
-    fontFamily: "Space Grotesk, Regular",
-    fontWeight: 700, 
-    fontSize: "28px",
-     lineHeight: "120%",
-    mr: 1 ,
-  }}
-   >
-    A unit of
-  </Typography>
-  <Box component="span">
-    <img src={Brand1} alt="Electro Flux" style={{ height: 40 }} />
-  </Box>
-</Box>
+{/* //Footer Section */}
+
+      <Box >
+        <Footer/>
       </Box>
-    </Grid>
-
-    {/* 2. Middle Column: Contact Info */}
-    <Grid item xs={12} md={4}>
-      <Box display="flex" flexDirection="column" alignItems="flex-start">
-        <Typography
-          sx={{
-            fontWeight: 600,
-            fontSize: "16px",
-            fontFamily: "Space Grotesk, Regular",
-            border: "1px solid #fff",
-            borderRadius: "16px",
-            px: 2,
-            py: 0.5,
-            display: "inline-block",
-            mb: 2,
-          }}
-        >
-          Contact
-        </Typography>
-
-        <Typography
-        //  variant="body2" 
-         sx={{ 
-          lineHeight: "130%",
-          fontWeight: 500,
-          fontSize: "20px",
-          fontFamily: "Space Grotesk, Regular",
-          textAlign: "left"
-          }}>
-          Xilliams Corner Wine © 2017. <br />
-          1112 A Market St # Ste B22,<br />
-          Charlottesville, CA 45565
-        </Typography>
-
-        <Typography 
-        sx={{ 
-          mt: 2 ,
-           lineHeight: "130%",
-          fontWeight: 500,
-          fontSize: "20px",
-          fontFamily: "Space Grotesk, Regular",
-            borderBottom: "2px solid #1976d2",
-        }}
-        >(123) 456-7890</Typography>
-        <Typography
-          sx={{
-            mt: 1,
-            display: "inline-block",
-            borderBottom: "2px solid #1976d2",
-            pb: "2px",
-             lineHeight: "130%",
-          fontWeight: 500,
-          fontSize: "20px",
-          fontFamily: "Space Grotesk, Regular"
-          }}
-        >
-          contact@lift.agency
-        </Typography>
-      </Box>
-    </Grid>
-
-    {/* 3. Right Column: Links + Scroll Icon + Copyright */}
-    <Grid item xs={12} md={4}>
-      <Box display="flex" flexDirection="column" alignItems="flex-start">
-        <Typography
-          sx={{
-            fontWeight: 600,
-            fontSize: "16px",
-            fontFamily: "Space Grotesk, Regular",
-            border: "1px solid #fff",
-            borderRadius: "16px",
-            px: 2,
-            py: 0.5,
-            display: "inline-block",
-            mb: 2,
-          }}
-        >
-          Links
-        </Typography>
-
-        {["Facebook", "Instagram", "Youtube"].map((item) => (
-          <Typography key={item} 
-          sx={{ 
-            mb: 1,
-          lineHeight: "130%",
-          fontWeight: 500,
-          fontSize: "20px",
-          fontFamily: "Space Grotesk, Regular"
-             }}
-             >
-            {item}
-          </Typography>
-        ))}
-
-        <Typography 
-
-        sx={{ 
-          fontWeight: 700, 
-          fontSize: "24px",
-          fontFamily: "Space Grotesk, Bold",
-          mt: 2,
-          lineHeight: "130%" 
-          }}
-
-          >
-          Wall of Love ❤️
-        </Typography>
-
-        {/* Divider under Wall of Love */}
-        <Box
-          sx={{
-            width: 30,
-            height: 2,
-            backgroundColor: "#fff",
-            my: 1,
-          }}
-        />
-
-        <Typography 
-        sx={{ 
-         fontWeight: 700, 
-          fontSize: "24px",
-          fontFamily: "Space Grotesk, Bold",
-          mt: 3,
-          lineHeight: "130%" 
-         }}
-         >
-          Sitemap</Typography>
-
-        {/* Scroll to Top Icon */}
-        <Box
-          sx={{
-            width: 40,
-            height: 40,
-            borderRadius: "50%",
-            border: "1px solid #fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            mb: 2,
-            ml: 20
-          }}
-        >
-          <ArrowUpwardIcon sx={{ color: "#fff" }} />
-        </Box>
-
-        <Typography variant="caption" sx={{ color: "#ccc" }}>
-          © 2020 Lift Media All rights reserved.
-        </Typography>
-      </Box>
-    </Grid>
-  </Grid>
-</Box>
-
-<Box
-sx={{
-  mt: 1,
-  width: "100%"
-}}
->
-    <Typography 
-
-     sx={{ color: "white" }}>
-          © 2020 Lift Media All rights reserved.
-        </Typography>
-<Divider
-  sx={{
-    borderColor: "#131414ff", // light grey border
-    // OR
-    bgcolor: "#131414ff",     // background color if vertical
-  }}
-/>
-</Box>
-
-
 
 <Box
   sx={{
@@ -1551,9 +1340,11 @@ sx={{
   </Button>
 </Box>
 
+{/* Footer Section */}
 
 
     </Box>
+    
   );
 };
 
