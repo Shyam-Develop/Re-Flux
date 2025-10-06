@@ -12,7 +12,7 @@ import {
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import serviceimg from "../../../assets/Repairservice.png";
 import { grey } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
 import { useTheme } from "@emotion/react";
 
@@ -187,8 +187,8 @@ export default function RepairsectionCard() {
             ))}
 
             <Grid sx={{ textAlign: "center", mt: 4 }}>
-              <Typography component="a"
-                href="/home/RepairServices"
+              <Typography component={Link}
+                to="/home/RepairServices"
                 sx={{
                   fontSize: '24px',
                   fontWeight: 'bold',

@@ -8,12 +8,15 @@ import HomePage from "./views/Home/home";
 import RepairRoutes from "./views/Repair/RepairRoutes";
 import LegalRoutes from "./views/Legal/LegalRoutes";
 import ContactRoutes from "./views/Contact/ContactRoues";
-
+import AuthGuard from "./auth/AuthGuard";
 const routes = [
   {
-    element: <AppLayout />,   // ✅ removed AuthGuard wrapper
+    element: (
+      // <AuthGuard>
+        <AppLayout />
+      // </AuthGuard>
+    ),   // ✅ removed AuthGuard wrapper
     children: [
-      { path: "/", element: <Navigate to="/home" replace /> }, // ✅ redirect root to /home
       { path: "/home", element: <HomePage /> },
 
       ...mastersRoutes,
@@ -23,9 +26,27 @@ const routes = [
       ...ContactRoutes,
     ],
   },
-  // ✅ optional: handle unknown routes
+        { path: "/", element: <Navigate to="/home" replace /> }, // ✅ redirect root to /home
+// ✅ optional: handle unknown routes
   { path: "*", element: <NotFound /> },
 ];
+// const routes = [
+//   {
+//     element: <AppLayout />,   // ✅ removed AuthGuard wrapper
+//     children: [
+//       { path: "/", element: <Navigate to="/home" replace /> }, // ✅ redirect root to /home
+//       { path: "/home", element: <HomePage /> },
+
+//       ...mastersRoutes,
+//       ...HomeRoutes,
+//       ...RepairRoutes,
+//       ...LegalRoutes,
+//       ...ContactRoutes,
+//     ],
+//   },
+//   // ✅ optional: handle unknown routes
+//   { path: "*", element: <NotFound /> },
+// ];
 
 export default routes;
 

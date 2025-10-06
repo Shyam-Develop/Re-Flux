@@ -1,5 +1,5 @@
-const { default: Loadable } = require("app/components/Loadable");
-const { lazy } = require("react");
+import Loadable from 'app/components/Loadable';
+import { lazy } from 'react';
 
 const Home = Loadable(lazy(() => import("./home")));
 const RepairServicesPage = Loadable(lazy(() => import("./RepairServicesPage")));

@@ -34,7 +34,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import rentserviceimg from "../../../assets/RentService.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
+import videoFile from "../../../assets/Electroflux_basic_ edit.mp4"; // ✅ put your video file here
 import WhatsApp from "../../../assets/whatsappimg.jpg";
 import RepairsectionCard from "app/components/Card/RepairsectionCard";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
