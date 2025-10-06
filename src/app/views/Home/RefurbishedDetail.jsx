@@ -843,12 +843,12 @@ const RefurbishedDetail = () => {
           sx={{ mb: 3, mt: 2, ml: 5 }}
         >
           {[
-            "Loose junctions",
-            "Capacity drop",
-            "Uneven flux",
-            "Pole-shoe wear",
-            "Loose junctions",
-            "Pole-shoe wear",
+            "Coil rewind",
+            "terminals/leads",
+            "Repaint",
+            // "Pole-shoe wear",
+            // "Loose junctions",
+            // "Pole-shoe wear",
           ].map((item, index) => (
             <Chip
               key={index}

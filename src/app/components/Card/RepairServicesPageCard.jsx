@@ -31,7 +31,7 @@ const services = [
   {
     id: 1,
     title: "Electrical",
-    type: "Rewinds,resin potting,insulation upgrades(class F/H)",
+    type: "Rewinds,resin potting,insulation upgrades(clasdfdfsdfdsfs F/H)",
     liftCapacity: "3 Tons",
     powerSupply: "None Required",
     sizes: "500mm / 800mm / 1000mm",
@@ -40,8 +40,8 @@ const services = [
   },
   {
     id: 2,
-    title: "Electrical",
-    type: "Rewinds,resin potting,insulation upgrades(class F/H)",
+    title: "Electricals",
+    type: "Terminals, leads, junction boxes, temperature sensors",
     liftCapacity: "Varied",
     powerSupply: "Custom",
     sizes: "Custom Sizes Available",
@@ -50,8 +50,8 @@ const services = [
   },
   {
     id: 3,
-    title: "Electrical",
-    type: "Rewinds,resin potting,insulation upgrades(class F/H)",
+    title: "Mechanical",
+    type: "Housing, pole shoes, face machining, gasket/fasteners",
     liftCapacity: "1 Ton",
     powerSupply: "220V",
     sizes: "300mm / 500mm",
@@ -60,8 +60,8 @@ const services = [
   },
   {
     id: 4,
-    title: "Electrical",
-    type: "Rewinds,resin potting,insulation upgrades(class F/H)",
+    title: "Controls",
+    type: "Controllers/rectifiers/PSUs, cabling & connectors",
     liftCapacity: "3 Tons",
     powerSupply: "None Required",
     sizes: "500mm / 800mm / 1000mm",
@@ -70,24 +70,15 @@ const services = [
   },
   {
     id: 5,
-    title: "Electrical",
-    type: "Rewinds,resin potting,insulation upgrades(class F/H)",
+    title: "Testing",
+    type: "Resistence, inductance (H), Insulation(M @500V), no-load current (A)",
     liftCapacity: "Varied",
     powerSupply: "Custom",
     sizes: "Custom Sizes Available",
     price: 100,
     img: Scope4,
   },
-  {
-    id: 6,
-    title: "Electrical",
-    type: "Rewinds,resin potting,insulation upgrades(class F/H)",
-    liftCapacity: "1 Ton",
-    powerSupply: "220V",
-    sizes: "300mm / 500mm",
-    price: 20,
-    img: Scope4,
-  },
+  
 ];
 
 export default function RepairServicesPageCard() {
@@ -178,17 +169,17 @@ export default function RepairServicesPageCard() {
                   "transform 0.35s ease, padding-bottom 0.35s ease, background-color 0.35s ease",
                 overflow: "hidden",
                 "&:hover": {
-                  transform: "scale(1.03)",
+                  transform: "scale(1.003)",
                   backgroundColor: "#0b2d55",
                   color: "white",
-                  paddingBottom: "50px",
+                  paddingBottom: "60px",
                 },
                 "&:hover .MuiTypography-root": {
                   color: "white !important",
                 },
                 "&:hover .view-more-btn": {
                   opacity: 1,
-                  bottom: 16,
+                  bottom: 30,
                   transform: "translate(-50%, 0)",
                 },
               }}

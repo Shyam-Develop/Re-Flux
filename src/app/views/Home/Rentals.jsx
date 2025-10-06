@@ -250,17 +250,33 @@ const Rentals = () => {
                     alt={product.title}
                   />
                   <Chip
-                    label="Available for Rent"
+                    label="🔧 Available for Rent"
                     color="success"
                     size="small"
                     sx={{ position: 'absolute', top: 8, left: 8, borderRadius: '1px' }}
                   />
                   <Chip
-                    label="Safety Tested"
+                    label="🛡️ Safety Tested"
                     color="info"
                     size="small"
                     sx={{ position: 'absolute', top: 8, right: 8, borderRadius: '1px' }}
                   />
+                  <Box
+    className="hover-icon"
+    sx={{
+      position: 'absolute',
+      top: 8,
+      right: 8,
+      width: 24,
+      height: 24,
+      border: '2px solid white',
+      backgroundColor: '#1C2D4B',
+      transform: 'rotate(45deg)',
+      opacity: 0,
+      transition: 'opacity 0.3s ease-in-out',
+      zIndex: 2,
+    }}
+  />
                 </Box>
                 <CardContent>
                   <Typography sx={{ ...typography.h4, color: '#1C2D4B' }}>{product.title}</Typography>

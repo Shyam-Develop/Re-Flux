@@ -148,7 +148,7 @@ const RefurbishedElectromagnet = () => {
 
 
   //Refurbished Magnet
- const refurbishedProducts = [
+  const refurbishedProducts = [
     {
       title: "Circular Lifting Magnet",
       size: "Ø1200 mm",
@@ -291,7 +291,7 @@ const RefurbishedElectromagnet = () => {
       lift: "2.5 Tons",
       power: "220V / 110V",
       size: "700mm / 900mm / 1200mm",
-      img: rentalimg, 
+      img: rentalimg,
     },
     {
       title: "Circular Lifting Magnet",
@@ -303,7 +303,7 @@ const RefurbishedElectromagnet = () => {
       size: "800mm / 1000mm / 1200mm",
       img: rentalimg,
     },
-     {
+    {
       title: "Circular Lifting Magnet",
       subtitle: "Coil",
       price: "$25",
@@ -311,9 +311,9 @@ const RefurbishedElectromagnet = () => {
       lift: "2.5 Tons",
       power: "220V / 110V",
       size: "700mm / 900mm / 1200mm",
-      img: rentalimg, 
+      img: rentalimg,
     },
-     {
+    {
       title: "Circular Lifting Magnet",
       subtitle: "Coil",
       price: "$25",
@@ -321,9 +321,9 @@ const RefurbishedElectromagnet = () => {
       lift: "2.5 Tons",
       power: "220V / 110V",
       size: "700mm / 900mm / 1200mm",
-      img: rentalimg, 
+      img: rentalimg,
     },
-    
+
     // add more cards here
   ];
 
@@ -593,273 +593,230 @@ const RefurbishedElectromagnet = () => {
         </Box>
 
         {/* chip */}
-        <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-          <Box sx={{ flex: 1 }}>
+        <Box sx={{ display: "flex", gap: 4, mt: 10 }}>
+          {/* Diameter */}
+          <Box>
             <Typography
               sx={{
                 ...typography.h3medium,
                 fontWeight: 500,
-                mb: "4px",
-
+                mb: "2px", // reduced margin
               }}
             >
-              Filter By diameter
+              Filter By Diameter
             </Typography>
             <Select
-
               sx={{
-
                 ...typography.bodyBasemedium,
                 fontWeight: 400,
                 border: "1px solid #E17A00",
+                width: "200px",
+                height: "53px",
               }}
-              fullWidth size="small" defaultValue="">
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="All"
-              >
-                All
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="option1"
-              >
-                Option 1
-              </MenuItem>
+              size="small"
+              defaultValue="All"
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="option1">Option 1</MenuItem>
             </Select>
           </Box>
-          <Box sx={{ flex: 1 }}>
+
+          {/* Capacity */}
+          <Box>
             <Typography
               sx={{
                 ...typography.h3medium,
                 fontWeight: 500,
-                mb: "4px",
+                mb: "2px",
               }}
             >
               Capacity
             </Typography>
             <Select
               sx={{
-                border: "1px solid #E17A00",
                 ...typography.bodyBasemedium,
                 fontWeight: 400,
+                border: "1px solid #E17A00",
+                width: "200px",
+                height: "53px",
               }}
-              fullWidth size="small" defaultValue="">
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="All"
-              >
-                All
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="option1"
-              >
-                Option 1
-              </MenuItem>
+              size="small"
+              defaultValue="All"
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="option1">Option 1</MenuItem>
             </Select>
           </Box>
 
-          <Box sx={{ flex: 1 }}>
+          {/* Duty Cycle */}
+          <Box>
             <Typography
               sx={{
                 ...typography.h3medium,
                 fontWeight: 500,
-                mb: "4px",
+                mb: "2px",
               }}
             >
               Duty Cycle
             </Typography>
             <Select
               sx={{
-                border: "1px solid #E17A00",
                 ...typography.bodyBasemedium,
                 fontWeight: 400,
+                border: "1px solid #E17A00",
+                width: "200px",
+                height: "53px",
               }}
-              fullWidth size="small" defaultValue="">
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="All"
-              >
-                All
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="option1"
-              >
-                Option 1
-              </MenuItem>
+              size="small"
+              defaultValue="All"
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="option1">Option 1</MenuItem>
             </Select>
           </Box>
-          <Box sx={{ flex: 1 }}>
+
+          {/* Voltage */}
+          <Box>
             <Typography
               sx={{
                 ...typography.h3medium,
                 fontWeight: 500,
-                mb: "4px",
-
+                mb: "2px",
               }}
             >
               Voltage
             </Typography>
             <Select
-
               sx={{
                 ...typography.bodyBasemedium,
                 fontWeight: 400,
                 border: "1px solid #E17A00",
+                width: "200px",
+                height: "53px",
               }}
-              fullWidth size="small" defaultValue="">
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="All"
-              >
-                All
-              </MenuItem>
-              <MenuItem
-                sx={{
-                  ...typography.bodyBasemedium,
-                  fontWeight: 400,
-                }}
-                value="option1"
-              >
-                Option 1
-              </MenuItem>
+              size="small"
+              defaultValue="All"
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="option1">Option 1</MenuItem>
             </Select>
           </Box>
-
-
         </Box>
 
-        {/* Refurbished section */}
-         <Box sx={{  pb: 10 , marginTop:'20px'}}>
-               
-               {/* Product Cards */}
-               <Grid container spacing={4}  >
-                 {refurbishedProducts.map((product, idx) => (
-                   <Grid item xs={12} md={4} key={idx} sx={{width:'1440px', height:'584px', marginTop:'20px'}}>
-                     <Box
-                       sx={{
-                         borderRadius: 3,
-                         border:'1px solid #dbdbdb',
-                         //boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                         p: 2,
-                         //bgcolor: 'background.paper',
-                         display: 'flex',
-                         flexDirection: 'column',
-                         width: '430px',
-                         height: '584px'
-                       }}
-                     >
-                       {/* Title & size */}
-                       <Typography sx={{ ...typography.h4, color:'#0B121E', width: '406px', height: '31px' }}>
-                         {product.title}
-                       </Typography>
-                       <Typography sx={{ ...typography.h5, color:'#00000099', mb: 1 }}>
-                         {product.size}
-                       </Typography>
-                       <Typography sx={{ ...typography.bodySmall, color:'#00000099', mb: 1 }}>
-                         Certified: {product.certified}
-                       </Typography>
-       
-                       {/* Image with badges */}
-                       <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', mb: 2 }}>
-                         <Box
-                           component="img"
-                           src={product.imgSrc}
-                           alt={product.title}
-                           sx={{ width: '460px', height: '240px', objectFit: 'cover' }}
-                         />
-       
-                         {/* Badges */}
-                         <Chip
-                           label="Available for Rent"
-                           size="small"
-                           sx={{
-                             position: 'absolute',
-                             top: 8,
-                             left: 8,
-                             bgcolor: '#1b5e20',
-                             color: 'white',
-                             fontWeight: 'bold',
-                             fontSize: 10,
-                           }}
-                         />
-                         <Chip
-                           label="Safety Tested"
-                           size="small"
-                           color="info"
-                           sx={{
-                             position: 'absolute',
-                             bottom: '20px',
-                             left: '8px',
-                             fontWeight: '700',
-                             fontSize: '15px',
-                             borderRadius: '3px'
-                           }}
-                         />
-                       </Box>
-       
-                       {/* Specs */}
-                       <Grid container spacing={2} sx={{ mb: 2, width: '406px', height: '47px' }}>
-                         <Grid item xs={6}>
-                           <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Lift Capacity</Typography>
-                           <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
-                             {product.liftCapacity}
-                           </Typography>
-                         </Grid>
-                         <Grid item xs={6}>
-                           <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Power Supply</Typography>
-                           <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
-                             {product.powerSupply}
-                           </Typography>
-                         </Grid>
-                       </Grid>
-       
-                       {/* Included */}
-                       <Box sx={{ mb: 3, marginBottom: '30px', marginTop: '30px' }}>
-                         <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Included</Typography>
-                         <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
-                           {product.included}
-                         </Typography>
-                       </Box>
-       
-                       {/* Buy Now button */}
-                       <Button
-                         variant="contained"
-                         fullWidth
-                         sx={{ backgroundColor: '#1a73e8', width: '406px', height: '44px', textTransform: 'none', ...typography.bodyStrong }}
-                        onClick={() => navigate("/home/RefurbishedDetail")}>
-                         Buy now
-                       </Button>
-                     </Box>
-                   </Grid>
-                 ))}
-               </Grid>
-         </Box>
 
-         
+        {/* Refurbished section */}
+        <Box sx={{ pb: 10, marginTop: '20px' }}>
+
+          {/* Product Cards */}
+          <Grid container spacing={4}  >
+            {refurbishedProducts.map((product, idx) => (
+              <Grid item xs={12} md={4} key={idx} sx={{ width: '1440px', height: '584px', marginTop: '20px' }}>
+                <Box
+                  sx={{
+                    borderRadius: 3,
+                    border: '1px solid #dbdbdb',
+                    //boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                    p: 2,
+                    //bgcolor: 'background.paper',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '430px',
+                    height: '584px'
+                  }}
+                >
+                  {/* Title & size */}
+                  <Typography sx={{ ...typography.h4, color: '#0B121E', width: '406px', height: '31px' }}>
+                    {product.title}
+                  </Typography>
+                  <Typography sx={{ ...typography.h5, color: '#00000099', mb: 1 }}>
+                    {product.size}
+                  </Typography>
+                  <Typography sx={{ ...typography.bodySmall, color: '#00000099', mb: 1 }}>
+                    Certified: {product.certified}
+                  </Typography>
+
+                  {/* Image with badges */}
+                  <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', mb: 2 }}>
+                    <Box
+                      component="img"
+                      src={product.imgSrc}
+                      alt={product.title}
+                      sx={{ width: '460px', height: '240px', objectFit: 'cover' }}
+                    />
+
+                    {/* Badges */}
+                    <Chip
+                      label="🔧 Available for Rent"
+                      size="small"
+                      sx={{
+                        position: 'absolute',
+                        ...typography.bodyBasemedium,
+                        top: 8,
+                        left: 8,
+                        bgcolor: '#1b5e20',
+                        color: 'white',
+                        fontWeight: '400',
+                        fontSize: '14px',
+                        borderRadius: '2px'
+                      }}
+                    />
+                    <Chip
+                      label="🛡️ Safety Tested"
+                      size="small"
+                      color="info"
+                      sx={{
+                        ...typography.bodyBasemedium,
+                        position: 'absolute',
+                        bottom: '20px',
+                        left: '8px',
+                        fontWeight: '400',
+                        fontSize: '14px',
+                        borderRadius: '2px'
+                      }}
+                    />
+
+
+                  </Box>
+
+                  {/* Specs */}
+                  <Grid container spacing={2} sx={{ mb: 2, width: '406px', height: '47px' }}>
+                    <Grid item xs={6}>
+                      <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Lift Capacity</Typography>
+                      <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
+                        {product.liftCapacity}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Power Supply</Typography>
+                      <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
+                        {product.powerSupply}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  {/* Included */}
+                  <Box sx={{ mb: 3, marginBottom: '30px', marginTop: '30px' }}>
+                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Included</Typography>
+                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
+                      {product.included}
+                    </Typography>
+                  </Box>
+
+                  {/* Buy Now button */}
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    sx={{ backgroundColor: '#1a73e8', width: '406px', height: '44px', textTransform: 'none', ...typography.bodyStrong }}
+                    onClick={() => navigate("/home/RefurbishedDetail")}>
+                    Buy now
+                  </Button>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+
         {/* Left - Features with vertical timeline */}
 
         <Box
@@ -1001,7 +958,7 @@ const RefurbishedElectromagnet = () => {
             ...typography.h3RBold,
             fontWeight: 600,
             ml: 2,
-            
+
           }}
         >
           Sell or exchange your used magnet
@@ -1024,8 +981,8 @@ const RefurbishedElectromagnet = () => {
             // py: 6,
             backgroundColor: "#f9fafb",
             ml: 2,
-            width:'1280px',
-            height:'252px'
+            // width: '1280px',
+            // height: '252px'
           }}
         >
           {/* Grid-like Card Layout */}
@@ -1220,7 +1177,8 @@ const RefurbishedElectromagnet = () => {
             ...typography.h3R,
             color: "#1a4dab",
             fontWeight: 600,
-            ml: 106,
+            textDecoration:'underline',
+            ml: 115,
           }}
         >
           View All ROI Calculators
@@ -1234,7 +1192,8 @@ const RefurbishedElectromagnet = () => {
             }}
           />
         </Typography>
-        <Box sx={{ maxWidth: 1280, heigth:'400px', mx: "auto", px: 2 }}>
+        
+        <Box sx={{ maxWidth: 1280, heigth: '400px', mx: "auto", px: 2 }}>
           <Grid container spacing={4} justifyContent="center">
             {roiData.map((item, index) => (
               <Grid item xs={12} sm={6} md={6} key={index}>
@@ -1264,8 +1223,8 @@ const RefurbishedElectromagnet = () => {
                     sx={{
                       position: "absolute",
                       bottom: 16,
-                      width:'564px',
-                      height:'146px',
+                      width: '564px',
+                      height: '146px',
                       left: 16,
                       right: 16,
                       backgroundColor: "white",
@@ -1447,9 +1406,9 @@ const RefurbishedElectromagnet = () => {
 
 
 
-     {/* Blogs Section */}
-     <Box>
-     <Button
+      {/* Blogs Section */}
+      <Box>
+        <Button
           disableElevation
           disableRipple
           sx={{
@@ -1473,129 +1432,129 @@ const RefurbishedElectromagnet = () => {
         >
           Blogs
         </Button>
-      <Typography
-        sx={{
-          ml: 8,
-          ...typography.displayL,
-          color:'#1C2D4B'
-        }}
-        variant="h3" fontWeight="bold" gutterBottom>
-        Blogs
-      </Typography>
-      <Typography
-        variant="h5" sx={{
-          mb: 4,
-           color: '#1C2D4B',
-         ...typography.h4,
-          ml: 8
-        }}>
-        Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
-      </Typography>
-      <Box sx={{ px: 8, py: 6 }}>
-        <Grid container spacing={3}>
-          {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6}>
-            <Card
-              sx={{
-                //display: "flex",
-                flexDirection: "column",
-                // width:'668px',
-                // height:'462px', 
-                borderRadius: 3,
-                // boxShadow: 0,
-                bgcolor: "#fafafa",
-                cursor:'pointer'
-              }}
-             onClick={() => navigate("/home/BlogDetails")}>
-              <CardMedia
-                component="img"
-                image={blogData[0].image}
-                alt={blogData[0].title}
+        <Typography
+          sx={{
+            ml: 8,
+            ...typography.displayL,
+            color: '#1C2D4B'
+          }}
+          variant="h3" fontWeight="bold" gutterBottom>
+          Blogs
+        </Typography>
+        <Typography
+          variant="h5" sx={{
+            mb: 4,
+            color: '#1C2D4B',
+            ...typography.h4,
+            ml: 8
+          }}>
+          Get powerful lifting magnets when you need them — without the upfront
+          cost. Flexible rental plans, quick installation, and reliable
+          performance for every project!
+        </Typography>
+        <Box sx={{ px: 8, py: 6 }}>
+          <Grid container spacing={3}>
+            {/* Left Column (Featured Post) */}
+            <Grid item xs={12} md={6}>
+              <Card
                 sx={{
+                  //display: "flex",
+                  flexDirection: "column",
+                  // width:'668px',
+                  // height:'462px', 
                   borderRadius: 3,
-                  width: '628px',
-                  height: '300px',
-                  objectFit: "cover",
+                  // boxShadow: 0,
+                  bgcolor: "#fafafa",
+                  cursor: 'pointer'
                 }}
-              />
-              <CardContent>
-                <Typography sx={{...typography.h5, color:'#0E1109'}} gutterBottom>
-                  {blogData[0].title}
-                </Typography>
-                <Typography sx={{...typography.bodyBase, color:'#677489'}}>
-                  {blogData[0].author} • {blogData[0].date}
-                </Typography>
-                <Link
-                  href="#"
-                  underline="none"
+                onClick={() => navigate("/home/BlogDetails")}>
+                <CardMedia
+                  component="img"
+                  image={blogData[0].image}
+                  alt={blogData[0].title}
                   sx={{
-                    color: "#1F77D6",
-                    ...typography.bodyBasemedium,
-                    mt: 1,
-                    display: "inline-flex",
-                    alignItems: "center"
+                    borderRadius: 3,
+                    width: '628px',
+                    height: '300px',
+                    objectFit: "cover",
                   }}
-                >
-                  Discover More <ArrowForwardIosIcon sx={{ ml: 1.5, color: "#1F77D6", }} />
-                </Link>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Right Column (Other Posts) */}
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} direction="column">
-              {blogData.slice(1).map((item, idx) => (
-                <Grid item key={idx}>
-                  <Card
+                />
+                <CardContent>
+                  <Typography sx={{ ...typography.h5, color: '#0E1109' }} gutterBottom>
+                    {blogData[0].title}
+                  </Typography>
+                  <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
+                    {blogData[0].author} • {blogData[0].date}
+                  </Typography>
+                  <Link
+                    href="#"
+                    underline="none"
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderRadius: 3,
-                      px: 2,
-                      py: 1,
-                      bgcolor: "#fdfdfd",
-                      boxShadow: 0,
-                      cursor:'pointer'
+                      color: "#1F77D6",
+                      ...typography.bodyBasemedium,
+                      mt: 1,
+                      display: "inline-flex",
+                      alignItems: "center"
                     }}
-                   onClick={() => navigate("/home/Blogpost")}>
-                    <CardMedia
-                      component="img"
-                      image={item.image}
-                      alt={item.title}
+                  >
+                    Discover More <ArrowForwardIosIcon sx={{ ml: 1.5, color: "#1F77D6", }} />
+                  </Link>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Right Column (Other Posts) */}
+            <Grid item xs={12} md={6}>
+              <Grid container spacing={2} direction="column">
+                {blogData.slice(1).map((item, idx) => (
+                  <Grid item key={idx}>
+                    <Card
                       sx={{
-                        width: '130px',
-                        height: '141px',
-                        borderRadius: 2,
-                        objectFit: "cover",
-                        mr: 2,
+                        display: "flex",
+                        alignItems: "center",
+                        borderRadius: 3,
+                        px: 2,
+                        py: 1,
+                        bgcolor: "#fdfdfd",
+                        boxShadow: 0,
+                        cursor: 'pointer'
                       }}
-                    />
-                    <Box>
-                      <Typography sx={{...typography.h4, color:'#0E1109', width:'474px', height:'62px'}}>
-                        {item.title}
-                      </Typography>
-                      <Typography sx={{...typography.bodyBase, color:'#677489'}}>
-                        {item.author} • {item.date}
-                      </Typography>
-                      <Link
-                        href="#"
-                        underline="none"
-                        sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
-                      >
-                        Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
-                      </Link>
-                    </Box>
-                  </Card>
-                </Grid>
-              ))}
+                      onClick={() => navigate("/home/Blogpost")}>
+                      <CardMedia
+                        component="img"
+                        image={item.image}
+                        alt={item.title}
+                        sx={{
+                          width: '130px',
+                          height: '141px',
+                          borderRadius: 2,
+                          objectFit: "cover",
+                          mr: 2,
+                        }}
+                      />
+                      <Box>
+                        <Typography sx={{ ...typography.h4, color: '#0E1109', width: '474px', height: '62px' }}>
+                          {item.title}
+                        </Typography>
+                        <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
+                          {item.author} • {item.date}
+                        </Typography>
+                        <Link
+                          href="#"
+                          underline="none"
+                          sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                        >
+                          Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
+                        </Link>
+                      </Box>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Box>
-     </Box>
 
 
       {/* Rent Services instaed */}
@@ -1834,9 +1793,9 @@ const RefurbishedElectromagnet = () => {
       <SellRentServicesCard services={services} />
 
       {/* Footer Section */}
-       <Box >
-             <Footer/>
-           </Box>
+      <Box >
+        <Footer />
+      </Box>
 
     </Box>
   );

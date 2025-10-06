@@ -53,11 +53,12 @@ export default function HowWeWorkSwiper() {
         style={{
           paddingBottom: "40px", // space for pagination line
         }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
-        }}
+        // breakpoints={{
+        //   0: { slidesPerView: 1 },
+        //   600: { slidesPerView: 2 },
+        //   960: { slidesPerView: 3 },
+        //   960: { slidesPerView: 4 },
+        // }}
       >
         {steps.map((item, index) => (
           <SwiperSlide key={index}>

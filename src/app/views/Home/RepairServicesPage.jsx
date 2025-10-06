@@ -297,24 +297,59 @@ const RepairServicesPage = () => {
       </Box>
 
       {/* Content Section */}
-      <Box sx={{ padding: '60px 120px', backgroundColor: '#fff' }}>
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={5}>
-            <Typography sx={{ ...typography.h1, color: '#1A2438' }}>
-              Circular Lifting Magnet
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={7} sx={{ paddingLeft: '1px' }}  >
-            <Typography sx={{ ...typography.bodyBase, color: '#99A0AE', }}>
-              Get powerful lifting magnets when you need them — without the upfront cost.
-              Flexible rental plans, quick installation, and reliable performance for every project.
-            </Typography>
-            <Typography sx={{ ...typography.bodyStrong, color: '#2F6FBA', fontSize: '18px', fontWeight: 600 }}>
-              <Link>Request a Quote </Link>
-            </Typography>
-          </Grid>
-        </Grid>
+   <Box sx={{ padding: '60px 120px', backgroundColor: '#fff' }}>
+  <Grid container spacing={4} alignItems="center">
+    {/* Left Heading */}
+    <Grid item xs={12} md={5}>
+      <Typography
+        sx={{
+          fontSize: '36px',
+          fontWeight: 700,
+          lineHeight: '44px',
+          color: '#1A2438',
+          ...typography.h1
+        }}
+      >
+        Circular Lifting <br /> Magnet
+      </Typography>
+    </Grid>
+
+    {/* Right Content */}
+    <Grid item xs={12} md={7}>
+      <Box sx={{ maxWidth: '600px' }}> {/* Increase this width */}
+        <Typography
+          sx={{
+            fontSize: '16px',
+            lineHeight: '26px',
+            color: '#99A0AE',
+            ...typography.bodyBase
+          }}
+        >
+          Get powerful lifting magnets when you need them — without the upfront
+          cost. Flexible rental plans, quick installation, and reliable
+          performance for every project.
+        </Typography>
+
+        <Typography
+          sx={{
+            fontSize: '18px',
+            fontWeight: 600,
+            color: '#2F6FBA',
+            mt: 2,
+            ...typography.bodyStrong
+          }}
+        >
+          <Link href="#" underline="none">
+            Request a quote →
+          </Link>
+        </Typography>
       </Box>
+    </Grid>
+  </Grid>
+</Box>
+
+
+
 
 
 
@@ -395,7 +430,7 @@ const RepairServicesPage = () => {
             fontWeight: 600,
             textTransform: "none",
           }}
-          onClick={() => setOpen(true)}
+           onClick={() => handleClickOpen()}
         >
           <span style={{ textDecoration: "underline" }}>Not sure what’s wrong?</span>{" "}
           Send photos/video on WhatsApp.
@@ -489,7 +524,6 @@ const RepairServicesPage = () => {
       </Box>
 
 
-
       {/*ElectroMagnet Repair Section */}
       <Typography
         variant="h4"
@@ -504,7 +538,6 @@ const RepairServicesPage = () => {
         Symptoms & Faults
       </Typography>
 
-
       <Box
         sx={{
           width: "1440px",
@@ -512,7 +545,8 @@ const RepairServicesPage = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          bgcolor: "white",
+          // bgcolor: "white",
+          paddingBottom:'100px'
         }}
       >
         {/* Inner container */}
@@ -525,7 +559,7 @@ const RepairServicesPage = () => {
             border: "1px solid #ddd",
             borderRadius: 3,
             p: 4,
-            bgcolor: "white",
+            // bgcolor: "white",
           }}
         >
           {/* Left - Features */}
@@ -704,6 +738,7 @@ const RepairServicesPage = () => {
             alignItems: "center",
             justifyContent: "center",
             gap: 3,
+            paddingLeft:'30px'
           }}
         >
           {" "}
@@ -713,6 +748,7 @@ const RepairServicesPage = () => {
               bgcolor: "#1c2434",
               color: "white",
               "&:hover": { bgcolor: "#344050" },
+              left:40
             }}
           >
             {" "}
@@ -727,7 +763,8 @@ const RepairServicesPage = () => {
               width: "516.1px",
               height:'305.5px',
               objectFit: "cover",
-              mt: 8
+              mt: 8,
+              right: '40px'
             }}
           />{" "}
           {/* After Image */}{" "}
@@ -742,6 +779,7 @@ const RepairServicesPage = () => {
           {/* Right Arrow */}{" "}
           <IconButton
             sx={{
+              right:40,
               bgcolor: "#1c2434",
               color: "white",
               "&:hover": { bgcolor: "#344050" },
@@ -806,7 +844,8 @@ const RepairServicesPage = () => {
             textDecoration: "underline",
             color: "#1a4dab",
             fontWeight: 600,
-            ml: 110
+            ml: 110,
+            borderBottom:'1px solid #1a4dab'
           }}
         >
           View All ROI Calculators
@@ -928,7 +967,7 @@ const RepairServicesPage = () => {
           ml: 120,
           cursor:'pointer'
         }}
-      >
+      onClick={() => navigate("/home/SellMagnet")}>
         View All Magnets for Sale
         <ArrowRightAltIcon
           sx={{
@@ -990,7 +1029,6 @@ const RepairServicesPage = () => {
           sx={{
             ...typography.h3B1,
             fontWeight: 400,
-            mb: 4,
             color: "text.secondary",
             ml: 8,
           }}
@@ -999,7 +1037,7 @@ const RepairServicesPage = () => {
           cost. Flexible rental plans, quick installation, and reliable
           performance for every project!
         </Typography>
-        <Box sx={{ px: 8, py: 6 }}>
+        <Box sx={{ px: 8, py: 3 }}>
           {faqData.map((item, index) => (
             <Accordion
               key={index}
@@ -1061,11 +1099,237 @@ const RepairServicesPage = () => {
 
       <BrowseDialog open={open} onClose={() => setOpen(false)} />
 
+   <Dialog
+        open={BrowseDialogopen}
+        onClose={handledialogClose}
+        maxWidth="sm"
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            borderRadius: "16px",
+            height: "100vh", // 👈 fixed height
+            maxHeight: "100vh", // 👈 prevent overflow beyond screen
+          },
+        }}
+      >
+        <DialogContent>
+          {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+          <CardContent>
+            <Typography
+              sx={{
+                textAlign: "left",
+              }}
+              variant="h6"
+              gutterBottom
+            >
+              Tell us what you need
+            </Typography>
+            <Typography
+              //  variant="h6"
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                color: "#111",
+              }}
+            >
+              Company Name *
+            </Typography>
+            <TextField
+              placeholder="Ex: John"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Contact Person *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Phone *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+
+                color: "#111",
+                marginTop: 2,
+              }}
+            >
+              Email *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Enquiry for *
+            </Typography>
+            <FormControl fullWidth>
+              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+              <Select
+
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+
+              >
+                <MenuItem
+                  value={10}
+                >
+                  1-5
+                </MenuItem>
+                <MenuItem
+                  value={20}
+                >
+                  6-10
+                </MenuItem>
+                <MenuItem
+                  value={30}
+                >
+                  10-20
+                </MenuItem>
+                <MenuItem
+                  //  sx={{
+                  //   color: theme.palette.primary.contrastText
+                  // }}
+                  value={30}
+                >
+                  20+
+                </MenuItem>
+              </Select>
+            </FormControl>
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                // marginTop: 5,
+              }}
+            >
+              Message
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              multiline
+              minRows={3}
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                // marginTop: 5,
+              }}
+            >
+              Photos/Videos
+            </Typography>
+            <UploadBox />
+
+          </CardContent>
+          {/* Buttons */}
+          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+            <Button
+              variant="text"
+              startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+              sx={{
+                color: "black", // text color
+                textTransform: "none", // keep normal text
+                fontWeight: 500,
+                fontSize: "14px",
+                "&:hover": {
+                  backgroundColor: "transparent", // no hover background
+                },
+              }}
+            >
+              Send on WhatsApp
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Submit Message
+            </Button>
+          </Box>
+
+          <Box mt={2}>
+            <Button fullWidth variant="outlined">
+              Continue to details
+            </Button>
+          </Box>
+          {/* </Card> */}
+        </DialogContent>
+      </Dialog>
 
       {/* <Dialog
         open={BrowseDialogopen}
         onClose={handledialogClose}
-        maxWidth="sm"
+        maxWidth="sm" 
         fullWidth
         sx={{
           "& .MuiDialog-paper": {

@@ -304,6 +304,7 @@ const HomePage = () => {
 
     <Box
       sx={{
+        
         // width: "1440px",
 
       }}
@@ -976,6 +977,7 @@ const HomePage = () => {
             </Box>
           </Grid>
         </Box>
+        
         {/* Modal */}
         <Modal open={open} onClose={handleClose}>
           <Box

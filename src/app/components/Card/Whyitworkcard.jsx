@@ -42,8 +42,9 @@ export default function Whyitworkcard() {
           display: "flex",
           overflowX: "auto",
           gap: 3,
-          pb: 2,
-          mt: 4,
+         
+          width:'1344px',
+          height:"300px"
         }}
       >
         {services.map((service) => {
