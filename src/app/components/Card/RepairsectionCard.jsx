@@ -96,7 +96,7 @@ export default function RepairsectionCard() {
                     sx={{
                       width: 412,
                       height: 559,
-                      borderRadius: 2,
+                      borderRadius: 4,
                       borderWidth: 1,
                       borderStyle: "solid",
                       borderColor: "grey.400",
@@ -131,13 +131,13 @@ export default function RepairsectionCard() {
                       sx={{
                         width: 380,
                         height: 260,
-                        borderRadius: "5px",
+                        borderRadius: "7px",
                         objectFit: "cover",
                         transition: "all 0.3s ease",
-                        "&:hover": {
+                        // "&:hover": {
 
-                          transform: "scale(1.05)",
-                        },
+                        //   transform: "scale(1.05)",
+                        // },
                       }}
                     />
 

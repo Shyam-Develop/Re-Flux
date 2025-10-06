@@ -11,7 +11,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import rentserviceimg from "../../../assets/RentService.png";
 import { Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
@@ -108,22 +108,24 @@ export default function SellRentServicesCard({ services }) {
                   }}
                 >
                   <Chip
-                    label="Available for Rent"
+                    label="🔧 Available for Rent"
                     size="small"
                     sx={{
+                      ...typography.bodyBasemedium,
                       fontSize: "14px",
-                      bgcolor: "#2e7d32",
+                      bgcolor: "#1B7B4E",
                       color: "white",
                       fontWeight: 400,
                       borderRadius: 0
                     }}
                   />
                   <Chip
-                    label="Safety Tested"
+                    label="🛡️ Safety Tested"
                     size="small"
                     sx={{
+                      ...typography.bodyBasemedium,
                       fontSize: "14px",
-                      bgcolor: "#1565c0",
+                      bgcolor: "#2F6FBA",
                       color: "white",
                       fontWeight: 400,
                       borderRadius: 0
@@ -255,6 +257,26 @@ export default function SellRentServicesCard({ services }) {
         ))}
       </Box>
 
+        <Typography
+          sx={{
+            ...typography.h3R,
+            color: "#1a4dab",
+            fontWeight: 600,
+            textDecoration:'underline',
+            ml: 120,
+          }}
+        >
+          View All Magnets for rent
+          <ArrowRightAltIcon
+            sx={{
+              color: "#1a4dab",
+              fontWeight: "bold",
+              verticalAlign: "middle",
+              ml: 1,
+              fontSize: "3rem",
+            }}
+          />
+        </Typography>
 
     </Box>
   );

@@ -14,6 +14,9 @@ import AboutUsRepairServicesPageCard from "app/components/Card/AboutUS/Section3"
 import { typography } from "app/utils/constant";
 import IndustriesSwiper from "app/components/Card/AboutUS/Section4";
 import Footer from 'app/components/Card/Footer';
+import about from '../../../assets/homeAbout.png';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
 
 
 
@@ -30,34 +33,72 @@ const AboutUS = () => {
     const mapRef = useRef(null);
     const googleMapsUrl =
         "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
-  useEffect(() => {
-    // Load Google Maps script
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
-    script.async = true;
-    document.body.appendChild(script);
 
-    // Attach map init function to window
-    window.initMap = () => {
-      fetch(
-        "https://maps.googleapis.com/maps/api/js/examples/styles/minimal_hosting.json"
-      )
-        .then((res) => res.json())
-        .then((mapStyle) => {
-          const map = new window.google.maps.Map(mapRef.current, {
-            center: { lat: 38.0293, lng: -78.4767 }, // Charlottesville, VA
-            zoom: 14,
-            styles: mapStyle,
-          });
+    useEffect(() => {
+        // Load Google Maps script
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
+        script.async = true;
+        document.body.appendChild(script);
 
-          new window.google.maps.Marker({
-            position: { lat: 38.0293, lng: -78.4767 },
-            map,
-            title: "Head Office",
-          });
-        });
-    };
-  }, []);
+        // Attach map init function to window
+        window.initMap = () => {
+            fetch(
+                "https://maps.googleapis.com/maps/api/js/examples/styles/minimal_hosting.json"
+            )
+                .then((res) => res.json())
+                .then((mapStyle) => {
+                    const map = new window.google.maps.Map(mapRef.current, {
+                        center: { lat: 38.0293, lng: -78.4767 }, // Charlottesville, VA
+                        zoom: 14,
+                        styles: mapStyle,
+                    });
+
+                    new window.google.maps.Marker({
+                        position: { lat: 38.0293, lng: -78.4767 },
+                        map,
+                        title: "Head Office",
+                    });
+                });
+        };
+    }, []);
+
+
+    const leftHeading = "Why Choose Reflux?";
+    const leftSubtext = "We handle service and upkeep — you focus on getting the job done.";
+
+    // Content cards (updated from image)
+    const leftCards = [
+        {
+            title: "Planned TAT, zero guesswork",
+            desc: "Urgent 24–48h, Standard 72h, Overhaul 5–7 days—clear SLAs so you can schedule crews and cranes.",
+        },
+        {
+            title: "Certified safe, every time",
+            desc: "ASME B30.20–aligned process with documented inspection and a load-test certificate (kN) on job closeout.",
+        },
+        {
+            title: "Repair vs Replace ROI Instantly",
+            desc: "Our ROI Calculator shows payback and TCO (repair vs rental vs replace) in seconds—make data-backed decisions.",
+        },
+    ];
+
+    const rightCards = [
+        {
+            title: "Pan-India, field-ready support",
+            desc: "On-site diagnosis, pickup/dispatch, reinstall & commissioning—single WhatsApp line for rapid photo/video troubleshooting.",
+        },
+        {
+            title: "Full lifecycle coverage",
+            desc: "Repair, Rental (circular magnets), and Refurbished resale with warranty—keep operations running while assets are serviced.",
+        },
+        {
+            title: "Transparent tracking & proofs",
+            desc: "Track My Job portal + proactive updates; download certificates, before/after photos, and service reports anytime.",
+        },
+    ];
+
+
     return (
         <Box
             display="grid"
@@ -75,172 +116,192 @@ const AboutUS = () => {
             // direction={"column"}
             >
                 <AboutUsCard />
-                
+
                 <ServicesSection />
+
+
+                {/* //About */}
                 <Box
                     sx={{
                         width: "100%",
-                        py: 10,
+                        height: "942px",
+                        maxWidth: "1440px",
+                        mx: "auto",
+                        py: { xs: 6, md: 10 },
                         px: { xs: 2, md: 6 },
                         backgroundColor: "#fff",
                     }}
                 >
-                    <Grid container spacing={6} alignItems="flex-start">
-                        {/* Column 1 - Left Text */}
-                        <Grid item xs={12} md={4}>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    mt: 10,
-                                    ml: 5,
-                                    flexDirection: "column",
-                                    alignItems: { xs: "center", md: "flex-start" },
-                                    textAlign: { xs: "center", md: "left" },
-                                }}
-                            >
-                                <Typography variant="h4" fontWeight={700} gutterBottom>
-                                    Why Choose <br /> Reflux?
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    mb={3}
-                                    sx={{ maxWidth: "320px" }}
-                                >
-                                    We handle service and upkeep — you focus on getting the job done.
-                                </Typography>
-                                <Button
-                                    variant="contained"
+                    <Box
+                        sx={{
+                            width: "904px",
+                            height: "809px",
+                            position: "relative",
+                            top: "67px",
+                            left: "268px",
+                            gap: "128px",
+                            transform: "rotate(0deg)",
+                            opacity: 1,
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        <Grid container spacing={2} alignItems="flex-start">
+                            {/* Left Column */}
+                            <Grid item xs={12} md={4}>
+                                <Box
                                     sx={{
-                                        borderRadius: "25px",
-                                        px: 3,
-                                        backgroundColor: "#00A99D",
-                                        "&:hover": { backgroundColor: "#00897B" },
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: { xs: "center", md: "flex-start" },
+                                        textAlign: { xs: "center", md: "left" },
+                                        position: "relative",
+                                        mt: { xs: 7, md: 20, },
+                                        
                                     }}
                                 >
-                                    About Us
-                                </Button>
-                            </Box>
-                        </Grid>
-
-                        {/* Column 2 - Middle Content */}
-                        <Grid item xs={12} md={4}>
-                            {[...Array(3)].map((_, i) => (
-                                <Box
-
-                                    key={i} sx={{
-                                        mb: 6,
-                                        transition: "transform 0.3s ease",
-                                        "&:hover": {
-                                            transform: "scale(1.05)", // 🔹 Zoom out full section
-                                        },
-                                    }}>
                                     <Typography
-                                        variant="h6" fontWeight={600} gutterBottom>
-                                        Repair vs Replace ROI Instantly
-                                    </Typography>
-                                    <Link
-                                        component="button"
-                                        variant="body2"
-                                        color="text.secondary"
-                                        underline="hover"
-                                        onClick={handleOpen}
                                         sx={{
-                                            cursor: "pointer",
+                                            fontFamily: "SpaceGrotesk-Regular",
+                                            fontSize: { xs: "28px", md: "32px" },
+                                            fontWeight: 600,
+                                            lineHeight: 1.2,
+                                            mb: 2,
                                         }}
                                     >
-                                        Our ROI Calculator shows payback and TCO (repair vs rental vs
-                                        replace) in seconds — make data-backed decisions.
-                                    </Link>
-                                    <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "400px" }} />
-                                </Box>
-                            ))}
-                        </Grid>
+                                        {leftHeading}
+                                    </Typography>
 
-                        {/* Column 3 - Right Content with marginTop */}
-                        <Grid item xs={12} md={4}>
-                            <Box sx={{
-                                mt: { xs: 0, md: 8 },
-                                transition: "transform 0.3s ease",
-                                "&:hover": {
-                                    transform: "scale(1.05)", // 🔹 Zoom out full section
-                                },
-                            }}>
-                                {[...Array(3)].map((_, i) => (
-                                    <Box key={i} sx={{ mb: 6 }}>
-                                        <Typography variant="h6" fontWeight={600} gutterBottom>
-                                            Repair vs Replace ROI Instantly
-                                        </Typography>
-                                        <Link
-                                            component="button"
-                                            variant="body2"
-                                            color="text.secondary"
-                                            underline="hover"
-                                            onClick={handleOpen}
-                                            sx={{
-                                                cursor: "pointer",
-                                            }}
-                                        >
-                                            Our ROI Calculator shows payback and TCO (repair vs rental vs
-                                            replace) in seconds — make data-backed decisions.
-                                        </Link>
-                                        <Divider
-                                            sx={{ mt: 1, borderColor: "#00A99D", width: "400px" }}
+                                    <Typography
+                                        color="text.secondary"
+                                        mb={3}
+                                        sx={{
+                                            fontSize: "16px",
+                                            fontWeight: 400,
+                                            maxWidth: "320px",
+                                        }}
+                                    >
+                                        {leftSubtext}
+                                    </Typography>
+
+                                    {/* Arrow */}
+                                    <Box
+                                        sx={{
+                                            position: "absolute",
+                                            bottom: -90,
+                                            right: { xs: "5%", md: "20%" },
+                                            textAlign: "right",
+                                        }}
+                                    >
+                                        <Box
+                                            component="img"
+                                            src={about}
+                                            alt="Arrow"
+                                            sx={{ width: 140 }}
                                         />
                                     </Box>
-                                ))}
+                                </Box>
+                            </Grid>
+
+                            {/* Middle Column */}
+                            <Box sx={{ height: "739px", width: "300px" }}>
+                                <Grid item xs={12} md={4}>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            mt: 5,
+                                            gap: 2,
+                                        }}
+                                    >
+                                        {leftCards.map((item, i) => (
+                                            <Box
+                                                key={i}
+                                                sx={{
+                                                    height: "213px",
+                                                    width: "243px",
+                                                    transition: "transform 0.3s ease",
+                                                    "&:hover": { transform: "scale(1.05)" },
+                                                }}
+                                            >
+                                                <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
+                                                    {item.title}
+                                                </Typography>
+                                                <Link
+                                                    color="text.secondary"
+                                                    underline="hover"
+                                                    onClick={handleOpen}
+                                                    sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
+                                                >
+                                                    {item.desc}
+                                                </Link>
+                                                <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                </Grid>
+                            </Box>
+
+                            {/* Right Column */}
+                            <Box sx={{ height: "739px", width: "242px" }}>
+                                <Grid item xs={12} md={4}>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: 2,
+                                        }}
+                                    >
+                                        {rightCards.map((item, i) => (
+                                            <Box
+                                                key={i}
+                                                sx={{
+                                                    height: "213px",
+                                                    width: "243px",
+                                                    transition: "transform 0.3s ease",
+                                                    "&:hover": { transform: "scale(1.05)" },
+                                                }}
+                                            >
+                                                <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
+                                                    {item.title}
+                                                </Typography>
+                                                <Link
+                                                    color="text.secondary"
+                                                    underline="hover"
+                                                    onClick={handleOpen}
+                                                    sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
+                                                >
+                                                    {item.desc}
+                                                </Link>
+                                                <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                </Grid>
                             </Box>
                         </Grid>
-                    </Grid>
-
-                    {/* Modal */}
-                    <Modal open={open} onClose={handleClose}>
-                        <Box
-                            sx={{
-                                position: "absolute",
-                                top: "50%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                width: 400,
-                                bgcolor: "background.paper",
-                                boxShadow: 24,
-                                borderRadius: 2,
-                                p: 4,
-                            }}
-                        >
-                            <Typography variant="h6" fontWeight={600} gutterBottom>
-                                ROI Calculator Info
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                This modal opens when you click the subtitle link. You can replace
-                                this with more details, links, or actions.
-                            </Typography>
-                            <Button
-                                onClick={handleClose}
-                                sx={{ mt: 2, backgroundColor: "#00A99D", color: "white" }}
-                            >
-                                Close
-                            </Button>
-                        </Box>
-                    </Modal>
+                    </Box>
                 </Box>
 
-                
+
                 <HowWeWork />
                 {/* OUR CAPABILITIES SECTiON */}
-                 
-        <AboutUsRepairServicesPageCard/>
-         {/* Industry SECTiON */}
-                 
-            {/* //Industries we serve */}
-            <IndustriesSwiper/>
+
+                <AboutUsRepairServicesPageCard />
+                {/* Industry SECTiON */}
+
+                {/* //Industries we serve */}
+                <IndustriesSwiper />
 
 
                 {/* Our Brands Section */}
                 <Typography
                     sx={{
                         ...typography.displayL,
-                        color:"#1C2D4B",
+                        color: "#1C2D4B",
                         ml: 8,
                         mt: 5
                     }}
@@ -249,8 +310,8 @@ const AboutUS = () => {
                 </Typography>
                 <Typography
                     variant="h5" sx={{
-                         ...typography.h5,
-                        color:"#99A0AE",
+                        ...typography.h5,
+                        color: "#99A0AE",
                         mb: 4,
                         ml: 8
                     }}>
@@ -292,10 +353,11 @@ const AboutUS = () => {
 
                                 {/* Description */}
                                 <Typography
-                                    sx={{ 
+                                    sx={{
                                         ...typography.bodyBase,
-                                        color:"#000000",
-                                        mb: 2 }}
+                                        color: "#000000",
+                                        mb: 2
+                                    }}
                                 >
                                     {partner.text}
                                 </Typography>
@@ -308,11 +370,11 @@ const AboutUS = () => {
                                 >
                                     <Link href="#" underline="none" sx={{
                                         ...typography.bodyStrong,
-                                        color:"#2F6FBA"
+                                        color: "#2F6FBA"
                                     }}>
                                         Learn more
                                     </Link>
-                                    <ArrowRightAltIcon sx={{ ml: 0.5,color:"#2F6FBA" }} />
+                                    <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
                                 </Box>
                             </Grid>
                         ))}
@@ -324,83 +386,83 @@ const AboutUS = () => {
                     <Typography
                         sx={{
                             ...typography.displayM,
-                            color:"#0C0F13",
+                            color: "#0C0F13",
                             ml: 8,
                             mt: 5
                         }}
                         variant="h3" fontWeight="bold" gutterBottom>
                         Contact Us
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={4} sx={{ ml: { xs: 0, md: 7 } }}>
                         {/* Left Section - Contact Info */}
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={5}>
                             <Paper elevation={0} sx={{ p: 3, borderRadius: 2, backgroundColor: "#eaf0f8" }}>
                                 <Typography sx={{
-                                      ...typography.h1,
-                            color:"#0E1109",
+                                    ...typography.h1,
+                                    color: "#0E1109",
                                 }} gutterBottom>
                                     Contact Information
                                 </Typography>
                                 <Typography sx={{
-                                      ...typography.bodyBase,
-                            color:"#0E1109",
+                                    ...typography.bodyBase,
+                                    color: "#0E1109",
                                 }} gutterBottom>
                                     Get in touch with our approachable team using your preferred method—be it a quick message, a phone call, or a form submission.
                                 </Typography>
 
                                 <Box mt={2}>
                                     <Typography sx={{
-                                      ...typography.bodyBasemedium,
-                            color:"#0E1109",
-                                }}>Email Address</Typography>
+                                        ...typography.bodyBasemedium,
+                                        color: "#0E1109",
+                                    }}>Email Address</Typography>
                                     <Typography sx={{
-                                      ...typography.bodySmall,
-                            color:"#0E1109",
-                                }}>contact@magnetsindia.com</Typography>
+                                        ...typography.bodySmall,
+                                        color: "#0E1109",
+                                    }}>contact@magnetsindia.com</Typography>
                                 </Box>
 
                                 <Box mt={2}>
-                                    <Typography  sx={{
-                                      ...typography.bodyBasemedium,
-                            color:"#0E1109",
-                                }}>Phone Number</Typography>
                                     <Typography sx={{
-                                      ...typography.bodySmall,
-                            color:"#0E1109",
-                                }}>+91 98765-43210</Typography>
+                                        ...typography.bodyBasemedium,
+                                        color: "#0E1109",
+                                    }}>Phone Number</Typography>
+                                    <Typography sx={{
+                                        ...typography.bodySmall,
+                                        color: "#0E1109",
+                                    }}>+91 98765-43210</Typography>
                                 </Box>
 
                                 <Box mt={2}>
-                                    <Typography  sx={{
-                                      ...typography.bodyBasemedium,
-                            color:"#0E1109",
-                                }}>Office Location</Typography>
                                     <Typography sx={{
-                                      ...typography.bodySmall,
-                            color:"#0E1109",
-                                }}>
+                                        ...typography.bodyBasemedium,
+                                        color: "#0E1109",
+                                    }}>Office Location</Typography>
+                                    <Typography sx={{
+                                        ...typography.bodySmall,
+                                        color: "#0E1109",
+                                    }}>
                                         Magnets India, 123 Magnet Lane, Chennai, India
                                     </Typography>
                                 </Box>
 
                                 <Box mt={2}>
-                                    <Typography  
-                                    sx={{
-                                      ...typography.bodyBasemedium,
-                            color:"#0E1109",
-                                }}
-                                >Business Hours</Typography>
+                                    <Typography
+                                        sx={{
+                                            ...typography.bodyBasemedium,
+                                            color: "#0E1109",
+                                        }}
+                                    >Business Hours</Typography>
                                     <Typography sx={{
-                                      ...typography.bodySmall,
-                            color:"#0E1109",
-                                }}>Monday – Saturday | 09:00 AM – 07:00 PM</Typography>
+                                        ...typography.bodySmall,
+                                        color: "#0E1109",
+                                    }}>Monday – Saturday | 09:00 AM – 07:00 PM</Typography>
                                 </Box>
                             </Paper>
                         </Grid>
 
                         {/* Right Section - Form */}
-                        <Grid item xs={12} md={8}>
-                            <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
+                        <Grid item xs={12} md={5}>
+                            <Paper elevation={2} sx={{ p: 3,   borderRadius: 2 }}>
                                 <Typography variant="h6" fontWeight={600}   >
                                     Tell us what you need
                                 </Typography>
@@ -442,30 +504,24 @@ const AboutUS = () => {
                                     >
                                         Drag and drop files, or <Button variant="text">Browse</Button>
                                         <Typography variant="caption" display="block">
-                                            Max 10 files, up to 50 MB each.
+                                            Nameplate, terminals, underside / pole face, controller, site hook. Max 10 files, up to 50 MB each.
                                         </Typography>
                                     </Box>
 
                                     {/* Buttons */}
-                                    <Box mt={3} display="flex" gap={2}>
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ backgroundColor: "#25D366", "&:hover": { backgroundColor: "#1EBE57" } }}
-                                        >
+                                    <Box mt={2} > 
+                                        <Button fullWidth sx={{color:'#111B2D'}} startIcon={<WhatsAppIcon />} >
                                             Send on WhatsApp
                                         </Button>
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                        >
+                                    </Box>
+                                    <Box mt={2} sx={{backgroundColor:'#2E8E7E', borderRadius:20}} gap={2}>
+                                        <Button fullWidth sx={{color:'#F7F9FC',}}>
                                             Submit Message
                                         </Button>
                                     </Box>
 
-                                    <Box mt={2}>
-                                        <Button fullWidth variant="outlined">
+                                    <Box mt={2} >
+                                        <Button fullWidth variant="outlined" sx={{borderRadius:20, color:'#111B2D'}}>
                                             Continue to details
                                         </Button>
                                     </Box>
@@ -474,73 +530,77 @@ const AboutUS = () => {
                         </Grid>
                     </Grid>
                 </Box>
+
+
                 {/*Location Section*/}
-              <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#fff" }}>
-      <Typography variant="h6" fontWeight={600} gutterBottom>
-        Our Location
-      </Typography>
+                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#fff" }}>
+                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                        Our Location
+                    </Typography>
 
-       <Grid container spacing={4} alignItems="center">
-                          {/* Map Section */}
-                          <Grid item xs={12} md={6}>
-                              <Paper
-                                  elevation={3}
-                                  sx={{ borderRadius: 2, overflow: "hidden", height: "300px" }}
-                              >
-                                  <Box
-                                      component="a"
-                                      href={googleMapsUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      sx={{ display: "block", width: "100%", height: "100%" }}
-                                  >
-                                      <iframe
-                                          title="location-map"
-                                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus"
-                                          width="100%"
-                                          height="100%"
-                                          style={{ border: 0 }}
-                                          allowFullScreen=""
-                                          loading="lazy"
-                                      ></iframe>
-                                  </Box>
-                              </Paper>
-                          </Grid>
-      
-                          {/* Address Section */}
-                          <Grid item xs={12} md={6}>
-                              <Box
-                                  sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center", // 👈 keeps block centered
-                                      height: "100%",
-                                  }}
-                              >
-                                  <Box sx={{ textAlign: "left" }}> {/* 👈 ensures text lines align equally */}
-                                      <Typography  sx={{ ...typography.h2,
-                                      color:"#0A142F", mb: 1 }}>
-                                          Head Office
-                                      </Typography>
-                                      <Typography sx={{
-                                          ...typography.h5,
-                                          color:"#0A142F"
-                                      }}>
-                                          Xilliams Corner Wine © 2017. <br />
-                                          1112 A Market St # Ste B22, <br />
-                                          Charlottesville, CA 45565
-                                      </Typography>
-                                  </Box>
-                              </Box>
-      
-                          </Grid>
-                      </Grid>
-    </Box>
+                    <Grid container spacing={4} alignItems="center">
+                        {/* Map Section */}
+                        <Grid item xs={12} md={5}>
+                            <Paper
+                                elevation={3}
+                                sx={{ borderRadius: 2, overflow: "hidden", height: "300px" }}
+                            >
+                                <Box
+                                    component="a"
+                                    href={googleMapsUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    sx={{ display: "block", width: "100%", height: "100%" }}
+                                >
+                                    <iframe
+                                        title="location-map"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus"
+                                        width="100%"
+                                        height="100%"
+                                        style={{ border: 0 }}
+                                        allowFullScreen=""
+                                        loading="lazy"
+                                    ></iframe>
+                                </Box>
+                            </Paper>
+                        </Grid>
 
-           {/* Footer Section */}
-              <Box >
-                    <Footer/>
-                  </Box>
+                        {/* Address Section */}
+                        <Grid item xs={12} md={5}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center", // 👈 keeps block centered
+                                    height: "100%",
+                                }}
+                            >
+                                <Box sx={{ textAlign: "left" }}> {/* 👈 ensures text lines align equally */}
+                                    <Typography sx={{
+                                        ...typography.h2,
+                                        color: "#0A142F", mb: 1
+                                    }}>
+                                        Head Office
+                                    </Typography>
+                                    <Typography sx={{
+                                        ...typography.h5,
+                                        color: "#0A142F"
+                                    }}>
+                                        Xilliams Corner Wine © 2017. <br />
+                                        1112 A Market St # Ste B22, <br />
+                                        Charlottesville, CA 45565
+                                    </Typography>
+                                </Box>
+                            </Box>
+
+                        </Grid>
+                    </Grid>
+                </Box>
+
+                {/* Footer Section */}
+                <Box >
+                    <Footer />
+                </Box>
 
 
             </Box>

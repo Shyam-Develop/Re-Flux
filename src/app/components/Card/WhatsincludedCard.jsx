@@ -1,7 +1,9 @@
-import { Box, Typography, Button, Card, CardContent, Grid} from "@mui/material";
+import { Box, Typography, Button, Card, CardContent, Grid } from "@mui/material";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+
+import { typography } from "app/utils/constant";
 const services = [
   {
     id: 1,
@@ -32,14 +34,14 @@ const includedItems = [
   {
     icon: HandshakeIcon,
     title: 'Controller',
-    desc: '{{controller_model}}',
+    desc: 'controller_model',
     hasButton: true,
-     image: handshake1,
+    image: handshake1,
   },
   {
     icon: HandshakeIcon,
     title: 'Cables & connectors',
-    desc: '{{cable_length_m}} m, quick-connects, shackles',
+    desc: 'cable_length_m m, quick-connects, shackles',
     hasButton: false,
   },
   {
@@ -52,81 +54,113 @@ const includedItems = [
 
 export default function WhatsincludedCard() {
   return (
-  
 
-        <Grid container spacing={3}>
-          {includedItems.map((item, index) => (
-            <Grid item key={index}>
-              <Card
+
+    <Grid container spacing={3}>
+      {includedItems.map((item, index) => (
+        <Grid item key={index}>
+          <Card
+            sx={{
+              position: "relative",
+              width: "350px",
+              height: "224px",
+              borderRadius: 3,
+              overflow: "hidden",
+              backgroundColor: "#fff",
+              color: "#1C2D4B",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              transition: "all 0.35s ease",
+              "&:hover": {
+                height: "284px", // allow room for button
+                backgroundColor: "#0b2d55",
+                color: "#fff",
+              },
+              "&:hover .view-more-btn": {
+                opacity: 1,
+                transform: "translateY(0)",
+              },
+              "&:hover .MuiTypography-root": {
+                color: "#fff !important",
+              },
+            }}
+          >
+            {/* Icon */}
+            <Box sx={{ p: 2 }}>
+              <item.icon sx={{ fontSize: 36 }} />
+            </Box>
+
+            {/* Title & Description */}
+            <CardContent sx={{ pt: 0 }}>
+              <Typography variant="subtitle1" sx={{ ...typography.h3 }} fontWeight="bold">
+                {item.title}
+              </Typography>
+              <Typography sx={{ ...typography.bodyBase }} variant="body2" color="inherit">
+                {item.desc}
+              </Typography>
+            </CardContent>
+
+            {/* Button inside layout (not absolute) */}
+            <Box
+              className="view-more-btn"
+              sx={{
+                px: 3,
+                pb: 2,
+                opacity: 0,
+                transform: "translateY(10px)",
+                transition: "all 0.35s ease",
+                paddingLeft: '50px',
+
+              }}
+            >
+              <Button
+                variant="contained"
+                fullWidth
                 sx={{
-                  width: "350px",
-                  height: "224px",
-                  borderRadius: "16px",
-                  border: "1px solid #e5e7eb",
-                  backgroundColor: "#fff",
-                  color: "#1c2434",
-                  position: "relative",
-                  transition: "all 0.3s ease",
+                  borderRadius: "24px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  bgcolor: "#C97833",
+                  width: '90%',
+                  padding: '10px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 1,
+                  transition: "background-color 0.3s ease",
                   "&:hover": {
-                    backgroundColor: "#1C2D4B",
-                    color: "#fff",
-                    "& .view-more-btn": {
+                    bgcolor: "#b2652a",
+                    "& .arrow-icon": {
                       opacity: 1,
-                      transform: "translateY(0)",
+                      transform: "translateX(4px)",
                     },
                   },
                 }}
               >
-                <CardContent
+                View More
+
+                {/* Arrow icon (initially hidden) */}
+                <ArrowRightAltIcon
+                  className="arrow-icon"
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    height: "100%",
+                    fontSize: 22,
+                    opacity: 0,
+                    transform: "translateX(0)",
+                    transition: "all 0.3s ease",
                   }}
-                >
-                  {/* Handshake Icon */}
-                   <item.icon /> 
+                />
+              </Button>
 
-                  {/* Title */}
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    {item.title}
-                  </Typography>
-
-                  {/* Description */}
-                  <Typography variant="body2" color="inherit">
-                    {item.desc}
-                  </Typography>
-
-                  {/* View More Button (hidden until hover) */}
-                  <Button
-                    className="view-more-btn"
-                    sx={{
-                      mt: 2,
-                      backgroundColor: "#C97833",
-                      borderRadius: "24px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 3,
-                      py: 1,
-                      opacity: 0,                       // hidden by default
-                      transform: "translateY(10px)",    // slightly below
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        backgroundColor: "#b2652a",
-                      },
-                    }}
-                  >
-                    View More →
-                  </Button>
-                </CardContent>
-              </Card>
+            </Box>
+          </Card>
 
 
-
-
-            </Grid>
-          ))}
         </Grid>
+      ))}
+    </Grid>
+
+
   );
 }

@@ -68,6 +68,7 @@ import Checkavailimage from "../../../assets/aftercstudy.png";
 import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
+import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 
 
 
@@ -350,6 +351,7 @@ const CheckAvailabilty = () => {
             borderBottom: "1px solid #ccc",
             maxWidth: "300px",
             width: "100%",
+            marginRight: '60px'
           }}
         >
           <InputBase
@@ -375,8 +377,8 @@ const CheckAvailabilty = () => {
           >
             <SearchIcon
               sx={{
-                width: "28px",
-                height: "28px",
+                width: "40px",
+                height: "40px",
               }}
             />
           </IconButton>
@@ -404,8 +406,9 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
+                ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "14px",
+                fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
               }}
@@ -415,8 +418,9 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
+                 ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "14px",
+                fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
               }}
@@ -426,8 +430,9 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
+                 ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "14px",
+                fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
               }}
@@ -437,8 +442,9 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
+                 ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "14px",
+                fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
               }}
@@ -448,8 +454,9 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
+                 ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
-                fontSize: "14px",
+                fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
               }}
@@ -824,81 +831,8 @@ const CheckAvailabilty = () => {
         >
           What's included
         </Typography>
-
-        <Grid container spacing={3}>
-          {includedItems.map((item, index) => (
-            <Grid item key={index}>
-              <Card
-                sx={{
-                  width: "350px",
-                  height: "224px",
-                  borderRadius: "16px",
-                  border: "1px solid #e5e7eb",
-                  backgroundColor: "#fff",
-                  color: "#1c2434",
-                  position: "relative",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    backgroundColor: "#1C2D4B",
-                    color: "#fff",
-                    "& .view-more-btn": {
-                      opacity: 1,
-                      transform: "translateY(0)",
-                    },
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    height: "100%",
-                  }}
-                >
-                  {/* Handshake Icon */}
-                  <Box>{item.icon}</Box>
-
-                  {/* Title */}
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    {item.title}
-                  </Typography>
-
-                  {/* Description */}
-                  <Typography variant="body2" color="inherit">
-                    {item.desc}
-                  </Typography>
-
-                  {/* View More Button (hidden until hover) */}
-                  <Button
-                    className="view-more-btn"
-                    sx={{
-                      mt: 2,
-                      backgroundColor: "#C97833",
-                      borderRadius: "24px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 3,
-                      py: 1,
-                      opacity: 0,                       // hidden by default
-                      transform: "translateY(10px)",    // slightly below
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        backgroundColor: "#b2652a",
-                      },
-                    }}
-                  >
-                    View More →
-                  </Button>
-                </CardContent>
-              </Card>
-
-
-
-
-            </Grid>
-          ))}
-        </Grid>
+            <WhatsincludedCard />
+       
       </Box>
 
 

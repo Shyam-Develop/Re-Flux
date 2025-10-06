@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box, Grid, Typography, Button, Chip, Paper, Card,
-  CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary,TextField,
+  CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary, TextField,
   InputAdornment, AccordionDetails
 } from '@mui/material';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -23,7 +23,7 @@ import { typography, RefluxSvg } from 'app/utils/constant';
 import Footer from 'app/components/Card/Footer';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
- const navigate=useNavigate()
+  const navigate = useNavigate()
   return (
     <Paper
       elevation={0}
@@ -32,7 +32,7 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
         borderRadius: '10px',
         p: 4,
         // mb: 6,
-        width:'1197px'
+        width: '1197px'
       }}
     >
       <Grid
@@ -45,53 +45,99 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
         <Grid item xs={12} md={5}>
           <Box
             sx={{
-              overflow: 'hidden',
-              borderRadius: '1px',
-              borderTopLeftRadius: '10px'
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "1px",
+              borderTopLeftRadius: "10px",
+              width: "447px",
+              height: "450.5px",
             }}
           >
+            {/* Background Image */}
             <Box
               component="img"
               src={image}
               alt={title}
               sx={{
-                width: '447px',
-                height: '450.5px',
-                objectFit: 'cover',
-                transition: 'transform 0.3s ease',
-                display: 'block',
-                '&:hover': {
-                  transform: 'scale(1.05)',
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "transform 0.3s ease",
+                display: "block",
+                "&:hover": {
+                  transform: "scale(1.05)",
                 },
               }}
             />
+
+            {/* Diagonal Overlay */}
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                height: "40%",
+                background: "rgba(40,40,50,0.85)",
+                clipPath: "polygon(0 20%, 170% 100%, 0 100%)", // diagonal shape
+                color: "white",
+                p: 3,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                electromagnet-repair
+              </Typography>
+              <Typography variant="body2">
+                Coil rewinds, housing repairs, terminals
+              </Typography>
+
+              {/* Small folded corner symbol */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: 20,
+                  bottom: 30,
+                  width: 0,
+                  height: 0,
+                  borderLeft: "20px solid transparent",
+                  borderTop: "20px solid white",
+                  transform: "rotate(45deg)",
+                }}
+              />
+            </Box>
           </Box>
         </Grid>
 
 
+
+
+
         {/* Content */}
-        <Grid item xs={12} md={7} sx={{ width:'686px', height:'508px' }}>
+        <Grid item xs={12} md={7} sx={{ width: '686px', height: '508px' }}>
           {/* Title */}
-          <Typography sx={{ ...typography.h2, color:'#1A2438', mb:3 }}>
+          <Typography sx={{ ...typography.h2, color: '#1A2438', mb: 3 }}>
             {title}
           </Typography>
 
           {/* Subheading */}
-          <Typography sx={{ ...typography.h4, color:'#49576F', mb:3 }}>
+          <Typography sx={{ ...typography.h4, color: '#49576F', mb: 3 }}>
             Common faults
           </Typography>
 
-          <Box sx={{ display: 'flex',  flexWrap: 'wrap', gap: 2, mb: 3 }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3 }}>
             {faults.map((fault, index) => (
               <Chip
                 key={index}
                 label={fault}
                 variant="outlined"
                 sx={{
-                  width:'202px',
+                  width: '202px',
                   height: 44,
                   ...typography.h5,
-                    
+
                   borderRadius: '999px',
                   border: '1px solid #ccc',
                   display: 'flex',
@@ -106,25 +152,29 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
             ))}
           </Box>
 
-          <Typography sx={{ ...typography.h5, color:'#0E1626',marginTop:'3%' }}>
+          <Typography sx={{ ...typography.h5, color: '#0E1626', marginTop: '3%' }}>
             <strong>Turnaround Time</strong><br /> {turnaround}
           </Typography>
 
           <Button
-          onClick={()=>navigate("/home/RepairServicesPage")}
+            onClick={() => navigate("/home/RepairServicesPage")}
             variant="contained"
             sx={{
               backgroundColor: '#1C2D4B',
-              borderRadius: '10px',
+              borderRadius: '12px',
               marginTop: '17%',
               textTransform: 'none',
               px: 5,
               py: 2,
               fontSize: '18px',
               width: '622px',
-              height:'50px',
-              padding: '9px'
-              
+              height: '50px',
+              padding: '9px',
+              '&:hover': {
+                    backgroundColor: '#1C2D4B',
+                    color: 'white'
+                  },
+
             }}
           >
             View Details
@@ -140,7 +190,7 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
 
 const RepairServices = () => {
 
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   //ROI Calculator
   const roiData = [
@@ -216,32 +266,32 @@ const RepairServices = () => {
 
   //Blog data
   const blogData = [
-      {
-        title: "7 Essential Tips For Efficient Electromagnet Servicing",
-        author: "Hannah Cole",
-        date: "March 5, 2035",
-        image: Blogs1,
-        featured: true,
-      },
-      {
-        title: "The Advantages of Using Electromagnets in Repairs",
-        author: "Lucas Wei",
-        date: "March 18, 2035",
-        image: Blogs2,
-      },
-      {
-        title: "Electromagnet Maintenance Checklist for Technicians",
-        author: "Mia Langston",
-        date: "April 1, 2035",
-        image: Blogs3,
-      },
-      {
-        title: "How Frequently Should You Service Electromagnets?",
-        author: "Julian Snow",
-        date: "April 25, 2035",
-        image: Blogs4,
-      },
-    ];
+    {
+      title: "7 Essential Tips For Efficient Electromagnet Servicing",
+      author: "Hannah Cole",
+      date: "March 5, 2035",
+      image: Blogs1,
+      featured: true,
+    },
+    {
+      title: "The Advantages of Using Electromagnets in Repairs",
+      author: "Lucas Wei",
+      date: "March 18, 2035",
+      image: Blogs2,
+    },
+    {
+      title: "Electromagnet Maintenance Checklist for Technicians",
+      author: "Mia Langston",
+      date: "April 1, 2035",
+      image: Blogs3,
+    },
+    {
+      title: "How Frequently Should You Service Electromagnets?",
+      author: "Julian Snow",
+      date: "April 25, 2035",
+      image: Blogs4,
+    },
+  ];
 
   const [expanded, setExpanded] = useState(null);
 
@@ -257,20 +307,20 @@ const RepairServices = () => {
         <img src={repairmainimg} alt="Top Banner" style={imageStyle} />
 
         <Box sx={overlayBoxStyle} >
-            <Typography sx={{...typography.h3, color:'#000000'}}>Services</Typography>
+          <Typography sx={{ ...typography.h3, color: '#000000' }}>Services</Typography>
         </Box>
       </Box>
 
       {/* Top Text Section */}
-      <Box sx={{ padding: '60px 120px'}}>
+      <Box sx={{ padding: '60px 120px' }}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography sx={{ ...typography.h1, color:'#1A2438' }}>
+            <Typography sx={{ ...typography.h1, color: '#1A2438' }}>
               Rent Industrial Magnets with Ease
             </Typography>
           </Grid>
           <Grid item xs={12} md={6} >
-            <Typography sx={{ ...typography.bodyBase, color:'#99A0AE'  }}>
+            <Typography sx={{ ...typography.bodyBase, color: '#99A0AE' }}>
               Get powerful lifting magnets when you need them — without the upfront cost.
               Flexible rental plans, quick installation, and reliable performance for every project.
             </Typography>
@@ -311,13 +361,13 @@ const RepairServices = () => {
       </Box>
 
 
-{/* //ROI Calculator */}
+      {/* //ROI Calculator */}
       <Box>
         <Typography
           sx={{
             ml: 8,
             ...typography.displayL,
-            color:'#1C2D4B'
+            color: '#1C2D4B'
           }}
           variant="h3" fontWeight="bold" gutterBottom>
           ROI Calculator
@@ -326,7 +376,7 @@ const RepairServices = () => {
           variant="h5" sx={{
             mb: 4,
             ...typography.h4,
-            color:'#99A0AE',
+            color: '#99A0AE',
             ml: 8
           }}>
           Get powerful lifting magnets when you need them — without the upfront
@@ -335,16 +385,19 @@ const RepairServices = () => {
         </Typography>
         <Typography
           sx={{
+            ...typography.h3,
             fontSize: "1.5rem", // or "h4" variant below
-            color: "#1a4dab",
+            color: "#2F6FBA",
             fontWeight: "bold",
-            ml: 120
+            ml: 130,
+            textDecoration: "underline",
+            textUnderlineOffset: "4px",
           }}
         >
           View All ROI Calculators
           <ArrowRightAltIcon
             sx={{
-              color: "#1a4dab",
+              color: "#2F6FBA",
               fontWeight: "bold",
               verticalAlign: "middle",
               ml: 1,
@@ -410,7 +463,7 @@ const RepairServices = () => {
                   >
                     <Box display="flex"
                       justifyContent="space-between" alignItems="center">
-                      <Typography sx={{ ...typography.h4, color:'#0B121E'}} >
+                      <Typography sx={{ ...typography.h4, color: '#0B121E' }} >
                         {item.title}
                       </Typography>
                       <IconButton
@@ -424,7 +477,7 @@ const RepairServices = () => {
                         <ArrowForwardIosIcon fontSize="small" />
                       </IconButton>
                     </Box>
-                    <Typography sx={{...typography.bodyBase, color:'#99A0AE'}}>
+                    <Typography sx={{ ...typography.bodyBase, color: '#99A0AE' }}>
                       {item.description}
                     </Typography>
                   </Box>
@@ -440,18 +493,34 @@ const RepairServices = () => {
       <Box sx={{ px: '5%', pb: 10 }}>
         {/* Heading */}
         <Box sx={{ mb: 4 }}>
-          <Chip
-            label="Resale Services"
-            color="primary"
+          <Button
+            disableElevation
+            disableRipple
             sx={{
-              mb: 1, fontWeight: 'bold', fontSize: '12px', borderRadius: '999px', px: 2, color: '#2a425a',
-              backgroundColor: '#b6c1cd'
+              marginBottom: 2,
+              color: '#2F6FBA',
+              backgroundColor: "#EAF3FC",
+              borderRadius: "20px",
+              width: '130px',
+              height: '33px',
+              px: 2,
+              py: 0.5,
+              boxShadow: "none",
+              "&:hover": {
+                backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+                boxShadow: "none",
+              },
             }}
-          />
-          <Typography sx={{ ...typography.displayL, color:'#1A2438' }}>
+          >
+            <Typography sx={{
+              ...typography.bodySmall, fontSize: '14px', fontWeight: 400,
+              lineHeight: '150%', letterSpacing: '0.14%'
+            }}> Resale Services </Typography>
+          </Button>
+          <Typography sx={{ ...typography.displayL, color: '#1A2438' }}>
             Check out our Refurbished section
           </Typography>
-          <Typography sx={{ ...typography.h4, color:'#99A0AE' }}>
+          <Typography sx={{ ...typography.h4, color: '#99A0AE' }}>
             Check out these rentals
           </Typography>
         </Box>
@@ -459,11 +528,11 @@ const RepairServices = () => {
         {/* Product Cards */}
         <Grid container spacing={4} >
           {refurbishedProducts.map((product, idx) => (
-            <Grid item xs={12} md={4} key={idx} sx={{width:'1440px', height:'584px'}}>
+            <Grid item xs={12} md={4} key={idx} sx={{ width: '1440px', height: '584px' }}>
               <Box
                 sx={{
                   borderRadius: 3,
-                  border:'1px solid #dbdbdb',
+                  border: '1px solid #dbdbdb',
                   //boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                   p: 2,
                   //bgcolor: 'background.paper',
@@ -474,13 +543,13 @@ const RepairServices = () => {
                 }}
               >
                 {/* Title & size */}
-                <Typography sx={{ ...typography.h4, color:'#0B121E', width: '406px', height: '31px' }}>
+                <Typography sx={{ ...typography.h4, color: '#0B121E', width: '406px', height: '31px' }}>
                   {product.title}
                 </Typography>
-                <Typography sx={{ ...typography.h5, color:'#00000099', mb: 1 }}>
+                <Typography sx={{ ...typography.h5, color: '#00000099', mb: 1 }}>
                   {product.size}
                 </Typography>
-                <Typography sx={{ ...typography.bodySmall, color:'#00000099', mb: 1 }}>
+                <Typography sx={{ ...typography.bodySmall, color: '#00000099', mb: 1 }}>
                   Certified: {product.certified}
                 </Typography>
 
@@ -495,7 +564,7 @@ const RepairServices = () => {
 
                   {/* Badges */}
                   <Chip
-                    label="Available for Rent"
+                    label="🔧 Available for Rent"
                     size="small"
                     sx={{
                       position: 'absolute',
@@ -503,21 +572,22 @@ const RepairServices = () => {
                       left: 8,
                       bgcolor: '#1b5e20',
                       color: 'white',
-                      fontWeight: 'bold',
-                      fontSize: 10,
+                      fontSize: '15px',
+                      borderRadius: '3px',
+                      ...typography.bodyBasemedium
                     }}
                   />
                   <Chip
-                    label="Safety Tested"
+                    label="🛡️ Safety Tested"
                     size="small"
                     color="info"
                     sx={{
                       position: 'absolute',
                       bottom: '20px',
                       left: '8px',
-                      fontWeight: '700',
                       fontSize: '15px',
-                      borderRadius: '3px'
+                      borderRadius: '3px',
+                      ...typography.bodyBasemedium
                     }}
                   />
                 </Box>
@@ -525,14 +595,14 @@ const RepairServices = () => {
                 {/* Specs */}
                 <Grid container spacing={2} sx={{ mb: 2, width: '406px', height: '47px' }}>
                   <Grid item xs={6}>
-                    <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Lift Capacity</Typography>
-                    <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
+                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Lift Capacity</Typography>
+                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
                       {product.liftCapacity}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Power Supply</Typography>
-                    <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
+                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Power Supply</Typography>
+                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
                       {product.powerSupply}
                     </Typography>
                   </Grid>
@@ -540,8 +610,8 @@ const RepairServices = () => {
 
                 {/* Included */}
                 <Box sx={{ mb: 3, marginBottom: '30px', marginTop: '30px' }}>
-                  <Typography sx={{ ...typography.h6, color:'#0E1626' }}>Included</Typography>
-                  <Typography sx={{ ...typography.bodySmall, color:'#677489' }}>
+                  <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Included</Typography>
+                  <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
                     {product.included}
                   </Typography>
                 </Box>
@@ -560,19 +630,21 @@ const RepairServices = () => {
         </Grid>
 
         {/* View All link */}
-        <Box sx={{ mt: 4, textAlign: 'right' }}>
+        <Box sx={{ mt: 8, textAlign: 'right' }}>
           <Typography
             component="a"
             href="#"
             sx={{
               ...typography.h3,
-              color: '#1976d2',
-              
+              color: '#2F6FBA',
+              fontWeight: 600,
+              textDecoration: "underline",
+              textUnderlineOffset: "4px",
               '&:hover': {
                 textDecoration: 'underline',
               },
             }}
-          >
+            onClick={() => navigate("/home/SellMagnet")}>
             View All Magnets for sale &rarr;
           </Typography>
         </Box>
@@ -584,47 +656,45 @@ const RepairServices = () => {
         disableElevation
         disableRipple
         sx={{
-          marginBottom: 2,
+          color: '#2F6FBA',
+          backgroundColor: "#EAF3FC",
+          borderRadius: "20px",
+          width: '63px',
+          height: '33px',
           ml: 8,
-          textTransform: "none",           // keep text as-is
-          fontSize: "0.8rem",              // smaller font
-          fontWeight: 500,                 // medium weight
-          color: "#1a4dab",                // dark blue text
-          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-          borderRadius: "20px",            // pill shape
-          px: 2,                           // horizontal padding
-          py: 0.5,                         // vertical padding
-          boxShadow: "none",               // remove shadow
+          boxShadow: "none",
           "&:hover": {
             backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
             boxShadow: "none",
           },
         }}
       >
-        FAQs
+        <Typography sx={{
+          ...typography.bodySmall, fontSize: '14px', fontWeight: 400,
+          lineHeight: '150%', letterSpacing: '0.14%'
+        }}> FAQs </Typography>
       </Button>
       <Typography
         sx={{
           ml: 8,
           // mt: 5
           ...typography.displayL,
-          color:'#1C2D4B'
+          color: '#1C2D4B'
         }}
         variant="h3" fontWeight="bold" gutterBottom>
         FAQs
       </Typography>
       <Typography
         variant="h5" sx={{
-          mb: 4,
-         color: '#1C2D4B',
-         ...typography.h4,
+          color: '#1C2D4B',
+          ...typography.h4,
           ml: 8
         }}>
         Get powerful lifting magnets when you need them — without the upfront
         cost. Flexible rental plans, quick installation, and reliable
         performance for every project!
       </Typography>
-      <Box sx={{ px: 8, py: 6 }}>
+      <Box sx={{ px: 8, py: 3 }}>
         {faqData.map((item, index) => (
           <Accordion
             key={index}
@@ -650,12 +720,12 @@ const RepairServices = () => {
                 </IconButton>
               }
             >
-              <Typography sx={{...typography.h4, color:'#0E1109'}}>
+              <Typography sx={{ ...typography.h4, color: '#0E1109' }}>
                 {item.question}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography sx={{...typography.bodyBase, color:'#0E1109'}}>
+              <Typography sx={{ ...typography.bodyBase, color: '#0E1109' }}>
                 {item.answer}
               </Typography>
             </AccordionDetails>
@@ -664,35 +734,35 @@ const RepairServices = () => {
       </Box>
 
 
-    {/* Blogs Section */}
+      {/* Blogs Section */}
       <Button
         disableElevation
         disableRipple
         sx={{
           marginBottom: 2,
+          color: '#2F6FBA',
+          backgroundColor: "#EAF3FC",
+          borderRadius: "20px",
+          width: '67px',
+          height: '33px',
           ml: 8,
-          textTransform: "none",           // keep text as-is
-          fontSize: "0.8rem",              // smaller font
-          fontWeight: 500,                 // medium weight
-          color: "#1a4dab",                // dark blue text
-          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-          borderRadius: "20px",            // pill shape
-          px: 2,                           // horizontal padding
-          py: 0.5,                         // vertical padding
-          boxShadow: "none",               // remove shadow
+          boxShadow: "none",
           "&:hover": {
             backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
             boxShadow: "none",
           },
         }}
       >
-        Blogs
+        <Typography sx={{
+          ...typography.bodySmall, fontSize: '14px', fontWeight: 400,
+          lineHeight: '150%', letterSpacing: '0.14%'
+        }}> Blogs </Typography>
       </Button>
       <Typography
         sx={{
           ml: 8,
           ...typography.displayL,
-          color:'#1C2D4B'
+          color: '#1C2D4B'
         }}
         variant="h3" fontWeight="bold" gutterBottom>
         Blogs
@@ -700,8 +770,8 @@ const RepairServices = () => {
       <Typography
         variant="h5" sx={{
           mb: 4,
-           color: '#1C2D4B',
-         ...typography.h4,
+          color: '#1C2D4B',
+          ...typography.h4,
           ml: 8
         }}>
         Get powerful lifting magnets when you need them — without the upfront
@@ -711,19 +781,21 @@ const RepairServices = () => {
       <Box sx={{ px: 8, py: 6 }}>
         <Grid container spacing={3}>
           {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6} sx={{ width: '668px',
-                height: '462px',}}>
+          <Grid item xs={12} md={6} sx={{
+            width: '668px',
+            height: '462px',
+          }}>
             <Card
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                
+
                 borderRadius: 3,
                 boxShadow: 0,
                 bgcolor: "#fafafa",
-                cursor:'pointer'
+                cursor: 'pointer'
               }}
-             onClick={() => navigate("/home/BlogDetails")}>
+              onClick={() => navigate("/home/BlogDetails")}>
               <CardMedia
                 component="img"
                 image={blogData[0].image}
@@ -736,10 +808,10 @@ const RepairServices = () => {
                 }}
               />
               <CardContent>
-                <Typography sx={{...typography.h5, color:'#0E1109'}} gutterBottom>
+                <Typography sx={{ ...typography.h5, color: '#0E1109' }} gutterBottom>
                   {blogData[0].title}
                 </Typography>
-                <Typography sx={{...typography.bodyBase, color:'#677489'}}>
+                <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
                   {blogData[0].author} • {blogData[0].date}
                 </Typography>
                 <Link
@@ -773,9 +845,9 @@ const RepairServices = () => {
                       py: 1,
                       bgcolor: "#fdfdfd",
                       boxShadow: 0,
-                      cursor:'pointer'
+                      cursor: 'pointer'
                     }}
-                  onClick={() => navigate("/home/Blogpost")}>
+                    onClick={() => navigate("/home/Blogpost")}>
                     <CardMedia
                       component="img"
                       image={item.image}
@@ -789,10 +861,10 @@ const RepairServices = () => {
                       }}
                     />
                     <Box>
-                      <Typography sx={{...typography.h4, color:'#0E1109', width:'474px', height:'62px'}}>
+                      <Typography sx={{ ...typography.h4, color: '#0E1109', width: '474px', height: '62px' }}>
                         {item.title}
                       </Typography>
-                      <Typography sx={{...typography.bodyBase, color:'#677489'}}>
+                      <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
                         {item.author} • {item.date}
                       </Typography>
                       <Link
@@ -812,9 +884,9 @@ const RepairServices = () => {
       </Box>
 
 
-       {/* Footer Section */}
+      {/* Footer Section */}
       <Box >
-        <Footer/>
+        <Footer />
       </Box>
 
     </>
@@ -825,7 +897,7 @@ const topImageStyle = {
   width: '100%',
   height: '329px',
   overflow: 'hidden',
-  position: 'relative', 
+  position: 'relative',
 };
 
 const imageStyle = {
@@ -836,11 +908,11 @@ const imageStyle = {
 
 const overlayBoxStyle = {
   position: 'absolute',
-  bottom: '5px',    
-  left: '50px',      
+  bottom: '5px',
+  left: '50px',
   backgroundColor: '#F1F2F4',
-  width:'283px',
-  height:'66px',
+  width: '283px',
+  height: '66px',
   padding: '14px 60px;',
   textAlign: 'center',
 };

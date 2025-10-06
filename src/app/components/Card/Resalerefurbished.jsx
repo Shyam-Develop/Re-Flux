@@ -14,35 +14,35 @@ import { typography } from "app/utils/constant";
 import ResaleService from '../../../assets/Resalerefurbished.jpg';
 
 
- const refurbishedProducts = [
-    {
-      title: "Circular Lifting Magnet",
-      size: "Ø1200 mm",
-      certified: "Load-test 12 Mar 2025",
-      imgSrc: ResaleService,
-      liftCapacity: "Up To 2.5 Tons",
-      powerSupply: "220 VDC / 28 A",
-      included: "Controller (EF-RC220)  25 m cable",
-    },
-    {
-      title: "Electromagnetic Lifting Beam",
-      size: "Ø1500 mm",
-      certified: "Load-test 15 Apr 2025",
-      imgSrc: ResaleService,
-      liftCapacity: "Up To 5 Tons",
-      powerSupply: "380 VAC / 15 A",
-      included: "Remote Controller (EF-RC380)  30 m cable",
-    },
-    {
-      title: "Heavy-Duty Lifting Sling",
-      size: "Ø2000 mm",
-      certified: "Load-test 20 Jun 2025",
-      imgSrc: ResaleService,
-      liftCapacity: "Up To 10 Tons",
-      powerSupply: "440 VAC / 20 A",
-      included: "Manual Hoist  50 m cable",
-    },
-  ];
+const refurbishedProducts = [
+  {
+    title: "Circular Lifting Magnet",
+    size: "Ø1200 mm",
+    certified: "Load-test 12 Mar 2025",
+    imgSrc: ResaleService,
+    liftCapacity: "Up To 2.5 Tons",
+    powerSupply: "220 VDC / 28 A",
+    included: "Controller (EF-RC220)  25 m cable",
+  },
+  {
+    title: "Electromagnetic Lifting Beam",
+    size: "Ø1500 mm",
+    certified: "Load-test 15 Apr 2025",
+    imgSrc: ResaleService,
+    liftCapacity: "Up To 5 Tons",
+    powerSupply: "380 VAC / 15 A",
+    included: "Remote Controller (EF-RC380)  30 m cable",
+  },
+  {
+    title: "Heavy-Duty Lifting Sling",
+    size: "Ø2000 mm",
+    certified: "Load-test 20 Jun 2025",
+    imgSrc: ResaleService,
+    liftCapacity: "Up To 10 Tons",
+    powerSupply: "440 VAC / 20 A",
+    included: "Manual Hoist  50 m cable",
+  },
+];
 
 
 export default function ResalerefurbishedCard() {
@@ -51,27 +51,27 @@ export default function ResalerefurbishedCard() {
       {/* Heading */}
       <Box sx={{ mb: 4 }}>
         <Button
-                 disableElevation
-                 disableRipple
-                 sx={{
-                   ...typography.bodySmall,
-                   marginBottom: 2,
-                   textTransform: "none",
-                   fontWeight: 400, 
-                   color: "#1a4dab", 
-                   backgroundColor: "rgba(36,121,233,0.08)", 
-                   borderRadius: "20px", 
-                   px: 2, 
-                   py: 0.5,
-                   boxShadow: "none", 
-                   "&:hover": {
-                     backgroundColor: "rgba(36,121,233,0.15)", 
-                     boxShadow: "none",
-                   },
-                 }}
-               >
-                 Resale Services
-               </Button>
+          disableElevation
+          disableRipple
+          sx={{
+            ...typography.bodySmall,
+            marginBottom: 2,
+            textTransform: "none",
+            fontWeight: 400,
+            color: "#1a4dab",
+            backgroundColor: "rgba(36,121,233,0.08)",
+            borderRadius: "20px",
+            px: 2,
+            py: 0.5,
+            boxShadow: "none",
+            "&:hover": {
+              backgroundColor: "rgba(36,121,233,0.15)",
+              boxShadow: "none",
+            },
+          }}
+        >
+          Resale Services
+        </Button>
         <Typography sx={{ ...typography.displayL, color: '#1A2438' }}>
           Check out our Refurbished section
         </Typography>
@@ -119,29 +119,32 @@ export default function ResalerefurbishedCard() {
 
                 {/* Badges */}
                 <Chip
-                  label="Available for Rent"
+                  label="🔧 Available for Rent"
                   size="small"
                   sx={{
                     position: 'absolute',
+                    ...typography.bodyBasemedium,
                     top: 8,
                     left: 8,
                     bgcolor: '#1b5e20',
                     color: 'white',
-                    fontWeight: 'bold',
-                    fontSize: 10,
+                    fontWeight: '400',
+                    fontSize: '14px',
+                    borderRadius:'2px'
                   }}
                 />
                 <Chip
-                  label="Safety Tested"
+                  label="🛡️ Safety Tested"
                   size="small"
                   color="info"
                   sx={{
+                    ...typography.bodyBasemedium,
                     position: 'absolute',
                     bottom: '20px',
                     left: '8px',
-                    fontWeight: '700',
-                    fontSize: '15px',
-                    borderRadius: '3px'
+                    fontWeight: '400',
+                    fontSize: '14px',
+                    borderRadius: '2px'
                   }}
                 />
               </Box>

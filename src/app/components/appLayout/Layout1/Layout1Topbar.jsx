@@ -136,16 +136,20 @@ export default function TopbarWithMegaMenu() {
             }}
           onClick={() => navigate("/home")}>
             {/* Bigger Logo */}
-            <RefluxSvg width={52} height={52} color="#111B2D" />
+            <RefluxSvg width={60} height={60} color="#00374C" />
 
             {/* Text block */}
-            <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1, }}>
               <Typography
                 sx={{
                   fontFamily: "Fira Sans",
+                  width:'89.5px',
+                  height:'19.45px',
                   fontWeight: 700,
                   fontSize: "35px",
                   color: "#111B2D",
+                  paddingBottom:'40px'
+                  
                 }}
               >
                 ReFlux
@@ -1069,6 +1073,7 @@ const MorePopoverContent = () => {
 
   );
 };
+
 const BrowseRentals = () => {
   const navigate = useNavigate();
 
@@ -1164,6 +1169,7 @@ const ServiceCard = ({ imgserv }) => {
     </Card>
   );
 }
+
 //  <Popover
 //   open={open}
 //   anchorEl={anchorEl}

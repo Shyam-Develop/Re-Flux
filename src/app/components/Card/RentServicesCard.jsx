@@ -93,7 +93,7 @@ export default function RentServicesCard({ services }) {
                 alignItems: "center",
                 transition: "all 0.4s ease",
                 "&:hover": {
-                  transform: "scale(1.03)",
+                   transform: "scale(1.004)",
                   backgroundColor: "#1C2D4B",
                   color: "#fff",
                    borderRadius: '20px',
