@@ -26,6 +26,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  useTheme,
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -63,6 +64,8 @@ import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HomeVideoCard from "app/components/Card/HomeVideoCard";
 import Footer from 'app/components/Card/Footer';
+import TopbarWithMegaMenu from "app/components/appLayout/Layout1/Layout1Topbar";
+import { DisplayL, displayL, H4 } from "app/components/Typography";
 
 const UploadBox = ({ label }) => {
   return (
@@ -102,6 +105,7 @@ const UploadBox = ({ label }) => {
 };
 const HomePage = () => {
   const navigate = useNavigate();
+  const theme=useTheme();
   //=================VIDEO-Loading===============================//
   const [selected, setSelected] = useState(null);
   const [loadingId, setLoadingId] = useState(null);
@@ -309,6 +313,7 @@ const HomePage = () => {
 
       }}
     >
+      {/* <TopbarWithMegaMenu/> */}
       {/* 🔹 Background Video */}
       {/* <Box
         component="video"
@@ -382,18 +387,16 @@ const HomePage = () => {
           }}
         >
           {/* Heading */}
-          <Typography sx={{ ...typography.displayL }} gutterBottom>
+          <Typography sx={{...theme.typography.displayL,color:"#1C2D4B"}}>
             Our Repair Services
           </Typography>
-          <Typography sx={{
-            mb: 4, ...typography.h4, color: "#6B768A",
+          <Typography sx={{ ...theme.typography.h4,
+            mb: 4, color: "#6B768A",
             width: "1280px",
             height: "62px",
 
           }}>
-            Get powerful lifting magnets when you need them — without the upfront
-            cost. Flexible rental plans, quick installation, and reliable
-            performance for every project!
+           Get powerful lifting magnets when you need them — without the upfront cost. Flexible rental plans, quick installation, and reliable performance for every project
           </Typography>
         </Box>
         <RepairsectionCard />

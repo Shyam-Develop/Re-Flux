@@ -151,7 +151,7 @@ export default function RepairsectionCard() {
                           mb: 1,
                         }}
                       >
-                        <Typography sx={{ ...typography.h3, color: "#1B2F43" }}>
+                        <Typography sx={{ ...theme.typography.h3, color: "#1B2F43" }}>
                           {service.title}
                         </Typography>
                         <IconButton
@@ -170,14 +170,14 @@ export default function RepairsectionCard() {
 
                       <Divider />
 
-                      <Typography sx={{ ...typography.bodyBase, color: "#666", mb: 1 }}>
+                      <Typography sx={{ ...theme.typography.bodyBase, color: "#666", mb: 1 }}>
                         {service.desc}
                       </Typography>
 
-                      <Typography sx={{ ...typography.h5, color: "#0E1626" }}>
+                      <Typography sx={{ ...theme.typography.h5, color: "#0E1626" }}>
                         Turnaround Time
                       </Typography>
-                      <Typography sx={{ ...typography.bodyBase, color: "#677489" }}>
+                      <Typography sx={{ ...theme.typography.bodyBase, color: "#677489" }}>
                         {service.turnaround.join(" / ")}
                       </Typography>
                     </Box>

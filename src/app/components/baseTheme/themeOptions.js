@@ -1,11 +1,11 @@
 import { red } from "@mui/material/colors";
 import { components } from "./components"; 
+import { typography } from "app/utils/constant";
 
 
 const themeOptions = {
     typography: {
-        fontSize: 14,
-        body1: { fontSize: '14px' }
+       ...typography
     },
 
     status: { danger: red[500] },
