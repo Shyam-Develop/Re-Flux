@@ -21,41 +21,42 @@ import { typography } from "app/utils/constant";
 import { themeShadows } from "app/components/baseTheme/themeColors";
 
 const MenuButton = styled(Button)(({ theme }) => ({
-  flex: 1, // equal width for all buttons
-  position: "relative",
-  textTransform: "none",
-  fontFamily: "'Space Grotesk', sans-serif",
-  fontWeight: 500,
-  fontStyle: "normal",
-  fontSize: "20px", // as per your design
-  lineHeight: "130%",
-  letterSpacing: "0%",
-  color: "#131313",
-  background: "transparent",
-  borderRadius: 0, // keep clean menu look
-  padding: "12px 0", // balanced vertical spacing
 
+  background: "transparent",
+  borderRadius: 0,
+  padding: "12px 0",
   "&.active": {
-    color: theme.palette.warning.main,
+    color: "#00334E",
+    fontWeight: 600,
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: "25px", // this makes it align perfectly with the diamond
+      left: 0,
+      // width: "100%",
+      // height: "4px",
+      backgroundColor: "#112B49", // dark blue line
+    },
     "&::after": {
       content: '""',
       position: "absolute",
-      bottom: -6, // adjust triangle position
+      top: "54px", // adjust for your exact header height
       left: "50%",
       transform: "translateX(-50%)",
       width: 0,
       height: 0,
-      borderLeft: "6px solid transparent",
-      borderRight: "6px solid transparent",
-      borderTop: `6px solid #131313`, // orange triangle
+      borderLeft: "8px solid transparent",
+      borderRight: "8px solid transparent",
+      borderTop: "8px solid #112B49", // triangle color
     },
-  },
 
+  },
   "&:hover": {
     background: "transparent",
     color: theme.palette.warning.main,
   },
 }));
+
 
 
 const TopbarRoot = styled("div")(({ theme }) => ({
@@ -73,7 +74,7 @@ const TopbarContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "space-between",
   background: theme.palette.card,
-  borderBottom: `1px solid ${theme.palette.border}`,
+  borderBottom: `3px solid ${theme.palette.border}`,
 }));
 
 
@@ -133,10 +134,10 @@ export default function TopbarWithMegaMenu() {
               display: "flex",
               alignItems: "center",
               gap: 1.5, // space between logo and text
-              paddingLeft:'40px',
-              cursor:'pointer'
+              paddingLeft: '40px',
+              cursor: 'pointer'
             }}
-          onClick={() => navigate("/home")}>
+            onClick={() => navigate("/home")}>
             {/* Bigger Logo */}
             <RefluxSvg width={60} height={60} color="#00374C" />
 
@@ -145,13 +146,13 @@ export default function TopbarWithMegaMenu() {
               <Typography
                 sx={{
                   fontFamily: "Fira Sans",
-                  width:'89.5px',
-                  height:'19.45px',
+                  width: '89.5px',
+                  height: '19.45px',
                   fontWeight: 700,
                   fontSize: "35px",
                   color: "#111B2D",
-                  paddingBottom:'40px'
-                  
+                  paddingBottom: '40px'
+
                 }}
               >
                 ReFlux
@@ -200,15 +201,15 @@ export default function TopbarWithMegaMenu() {
                     "&.active": {
                       color: "#00334E",
                       fontWeight: 600,
-                      borderBottom: "3px solid #112B49", // blue underline
+                      // borderBottom: "3px solid #112B49", // blue underline
                       "&::after": {
                         content: '""',
                         position: "absolute",
-                        bottom: "-7px", // just below underline
+                        top: "51px", // just below underline
                         left: "50%",
                         transform: "translateX(-50%) rotate(45deg)", // diamond shape
-                        width: "10px",
-                        height: "10px",
+                        width: "17px",
+                        height: "14px",
                         backgroundColor: "#112B49", // same as line
                         borderRadius: "1px",
                       },
@@ -273,7 +274,7 @@ export default function TopbarWithMegaMenu() {
 
 const ServicesPopoverContent = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -432,9 +433,9 @@ const ServicesPopoverContent = () => {
                 fontSize: "24px",
                 lineHeight: "130%",
                 mb: 2,
-                cursor:'pointer'
+                cursor: 'pointer'
               }}
-            onClick={() => navigate("./repair-replace/roi-cal")}>
+              onClick={() => navigate("./repair-replace/roi-cal")}>
               ROI Calculators
             </Typography>
 
@@ -572,7 +573,7 @@ const RentalPopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-          onClick={() => navigate("./repair-replace/roi-cal")}>
+            onClick={() => navigate("./repair-replace/roi-cal")}>
             ROI Calculators
           </Typography>
 
@@ -629,8 +630,8 @@ const ResalePopoverContent = () => {
               alignItems: "flex-start",
             }}
           >
-            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor:'pointer' }}
-            onClick={() => navigate("/home/RefurbishedElectromagnet")}>
+            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: 'pointer' }}
+              onClick={() => navigate("/home/RefurbishedElectromagnet")}>
               Browse Refurbished
               <br /> Inventory
             </Typography>
@@ -764,7 +765,7 @@ const ResalePopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-          onClick={() => navigate("./repair-replace/roi-cal")}>
+            onClick={() => navigate("./repair-replace/roi-cal")}>
             ROI Calculators
           </Typography>
 
@@ -786,7 +787,7 @@ const ResalePopoverContent = () => {
 
 
 const ContactPopoverContent = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Grid container spacing={1} sx={{ px: 1, py: 2 }}>
@@ -891,7 +892,7 @@ const ContactPopoverContent = () => {
                 lineHeight: "120%",
                 mb: 0.5,
               }}
-            onClick={() => navigate("./repair-replace/roi-cal")}>
+              onClick={() => navigate("./repair-replace/roi-cal")}>
               ROI Calculators
             </Typography>
 
@@ -919,7 +920,7 @@ const ContactPopoverContent = () => {
 };
 
 const MorePopoverContent = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <Grid container spacing={0}>
       {/* Column 1 */}
@@ -991,12 +992,12 @@ const MorePopoverContent = () => {
             <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
               FAQ
             </Typography>
-            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor:'pointer' }}
-            onClick={() => navigate("/about-us")}>
+            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: 'pointer' }}
+              onClick={() => navigate("/about-us")}>
               About Us
             </Typography>
-            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor:'pointer' }}
-            onClick={() => navigate("/legal")}> Legal
+            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: 'pointer' }}
+              onClick={() => navigate("/legal")}> Legal
             </Typography>
           </Box>
         </Box>
@@ -1030,7 +1031,7 @@ const MorePopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-          onClick={() => navigate("./repair-replace/roi-cal")}>
+            onClick={() => navigate("./repair-replace/roi-cal")}>
             ROI Calculators
           </Typography>
 

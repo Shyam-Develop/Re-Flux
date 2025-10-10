@@ -124,7 +124,6 @@ const AboutUS = () => {
                 <Box
                     sx={{
                         width: "100%",
-                        height: "942px",
                         maxWidth: "1440px",
                         mx: "auto",
                         py: { xs: 6, md: 10 },
@@ -134,22 +133,20 @@ const AboutUS = () => {
                 >
                     <Box
                         sx={{
-                            width: "904px",
-                            height: "809px",
-                            position: "relative",
-                            top: "67px",
-                            left: "268px",
-                            gap: "128px",
-                            transform: "rotate(0deg)",
-                            opacity: 1,
+                            width: { xs: "100%", md: "904px" },
+                            height: { xs: "auto", md: "809px" },
+                            position: { xs: "static", md: "relative" },
+                            top: { md: "67px" },
+                            left: { md: "268px" },
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: { xs: "column", md: "row" },
                             alignItems: "center",
                             justifyContent: "center",
+                            gap: { xs: 6, md: "128px" },
                             boxSizing: "border-box",
                         }}
                     >
-                        <Grid container spacing={2} alignItems="flex-start">
+                        <Grid container spacing={4} alignItems="flex-start">
                             {/* Left Column */}
                             <Grid item xs={12} md={4}>
                                 <Box
@@ -158,9 +155,8 @@ const AboutUS = () => {
                                         flexDirection: "column",
                                         alignItems: { xs: "center", md: "flex-start" },
                                         textAlign: { xs: "center", md: "left" },
+                                        mt: { xs: 3, md: 20 },
                                         position: "relative",
-                                        mt: { xs: 7, md: 20, },
-                                        
                                     }}
                                 >
                                     <Typography
@@ -193,7 +189,7 @@ const AboutUS = () => {
                                             position: "absolute",
                                             bottom: -90,
                                             right: { xs: "5%", md: "20%" },
-                                            textAlign: "right",
+                                            display: { xs: "none", md: "block" }, // Hide arrow on mobile
                                         }}
                                     >
                                         <Box
@@ -207,84 +203,83 @@ const AboutUS = () => {
                             </Grid>
 
                             {/* Middle Column */}
-                            <Box sx={{ height: "739px", width: "300px" }}>
-                                <Grid item xs={12} md={4}>
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            mt: 5,
-                                            gap: 2,
-                                        }}
-                                    >
-                                        {leftCards.map((item, i) => (
-                                            <Box
-                                                key={i}
-                                                sx={{
-                                                    height: "213px",
-                                                    width: "243px",
-                                                    transition: "transform 0.3s ease",
-                                                    "&:hover": { transform: "scale(1.05)" },
-                                                }}
+                            <Grid item xs={12} md={4}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        mt: { xs: 0, md: 5 },
+                                        gap: 2,
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    {leftCards.map((item, i) => (
+                                        <Box
+                                            key={i}
+                                            sx={{
+                                                height: "auto",
+                                                width: { xs: "100%", sm: "90%", md: "243px" },
+                                                transition: "transform 0.3s ease",
+                                                "&:hover": { transform: "scale(1.05)" },
+                                            }}
+                                        >
+                                            <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
+                                                {item.title}
+                                            </Typography>
+                                            <Link
+                                                color="text.secondary"
+                                                underline="hover"
+                                                onClick={handleOpen}
+                                                sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
                                             >
-                                                <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
-                                                    {item.title}
-                                                </Typography>
-                                                <Link
-                                                    color="text.secondary"
-                                                    underline="hover"
-                                                    onClick={handleOpen}
-                                                    sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
-                                                >
-                                                    {item.desc}
-                                                </Link>
-                                                <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
-                                            </Box>
-                                        ))}
-                                    </Box>
-                                </Grid>
-                            </Box>
+                                                {item.desc}
+                                            </Link>
+                                            <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
+                                        </Box>
+                                    ))}
+                                </Box>
+                            </Grid>
 
                             {/* Right Column */}
-                            <Box sx={{ height: "739px", width: "242px" }}>
-                                <Grid item xs={12} md={4}>
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: 2,
-                                        }}
-                                    >
-                                        {rightCards.map((item, i) => (
-                                            <Box
-                                                key={i}
-                                                sx={{
-                                                    height: "213px",
-                                                    width: "243px",
-                                                    transition: "transform 0.3s ease",
-                                                    "&:hover": { transform: "scale(1.05)" },
-                                                }}
+                            <Grid item xs={12} md={4}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: 2,
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    {rightCards.map((item, i) => (
+                                        <Box
+                                            key={i}
+                                            sx={{
+                                                height: "auto",
+                                                width: { xs: "100%", sm: "90%", md: "243px" },
+                                                transition: "transform 0.3s ease",
+                                                "&:hover": { transform: "scale(1.05)" },
+                                            }}
+                                        >
+                                            <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
+                                                {item.title}
+                                            </Typography>
+                                            <Link
+                                                color="text.secondary"
+                                                underline="hover"
+                                                onClick={handleOpen}
+                                                sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
                                             >
-                                                <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
-                                                    {item.title}
-                                                </Typography>
-                                                <Link
-                                                    color="text.secondary"
-                                                    underline="hover"
-                                                    onClick={handleOpen}
-                                                    sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
-                                                >
-                                                    {item.desc}
-                                                </Link>
-                                                <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
-                                            </Box>
-                                        ))}
-                                    </Box>
-                                </Grid>
-                            </Box>
+                                                {item.desc}
+                                            </Link>
+                                            <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
+                                        </Box>
+                                    ))}
+                                </Box>
+                            </Grid>
                         </Grid>
                     </Box>
                 </Box>
+
 
 
                 <HowWeWork />
@@ -462,7 +457,7 @@ const AboutUS = () => {
 
                         {/* Right Section - Form */}
                         <Grid item xs={12} md={5}>
-                            <Paper elevation={2} sx={{ p: 3,   borderRadius: 2 }}>
+                            <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
                                 <Typography variant="h6" fontWeight={600}   >
                                     Tell us what you need
                                 </Typography>
@@ -509,19 +504,19 @@ const AboutUS = () => {
                                     </Box>
 
                                     {/* Buttons */}
-                                    <Box mt={2} > 
-                                        <Button fullWidth sx={{color:'#111B2D'}} startIcon={<WhatsAppIcon />} >
+                                    <Box mt={2} >
+                                        <Button fullWidth sx={{ color: '#111B2D' }} startIcon={<WhatsAppIcon />} >
                                             Send on WhatsApp
                                         </Button>
                                     </Box>
-                                    <Box mt={2} sx={{backgroundColor:'#2E8E7E', borderRadius:20}} gap={2}>
-                                        <Button fullWidth sx={{color:'#F7F9FC',}}>
+                                    <Box mt={2} sx={{ backgroundColor: '#2E8E7E', borderRadius: 20 }} gap={2}>
+                                        <Button fullWidth sx={{ color: '#F7F9FC', }}>
                                             Submit Message
                                         </Button>
                                     </Box>
 
                                     <Box mt={2} >
-                                        <Button fullWidth variant="outlined" sx={{borderRadius:20, color:'#111B2D'}}>
+                                        <Button fullWidth variant="outlined" sx={{ borderRadius: 20, color: '#111B2D' }}>
                                             Continue to details
                                         </Button>
                                     </Box>

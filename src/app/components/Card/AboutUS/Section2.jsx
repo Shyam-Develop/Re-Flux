@@ -20,121 +20,142 @@ const steps = [
 export default function HowWeWorkSwiper() {
   const navigate = useNavigate()
   return (
-    <Box sx={{ width: '1440px', height: '734px', px: 2, py: 6 }}>
-      {/* Section Heading */}
+   <Box
+  sx={{
+    width: { xs: '100%', md: '1440px' },
+    height: { xs: 'auto', md: '734px' },
+    px: 2,
+    py: 6,
+    mx: 'auto',
+  }}
+>
+  {/* Section Heading */}
+  <Typography
+    sx={{
+      ...typography.displayL,
+      color: "#1C2D4B",
+      mt: { xs: 3, md: 5 },
+      fontSize: { xs: '28px', md: typography.displayL.fontSize },
+      textAlign: { xs: 'center', md: 'left' },
+    }}
+    gutterBottom
+  >
+    How we work
+  </Typography>
 
-      <Typography
-        sx={{
-          ...typography.displayL,
-          color: "#1C2D4B",
-          mt: 5
-        }}
-        gutterBottom>
-        How we work
-      </Typography>
-      <Typography
-        variant="h5" sx={{
-          ...typography.h5,
-          color: "#99A0AE",
-          mb: 4,
+  <Typography
+    variant="h5"
+    sx={{
+      ...typography.h5,
+      color: "#99A0AE",
+      mb: 4,
+      fontSize: { xs: '16px', md: typography.h5.fontSize },
+      textAlign: { xs: 'center', md: 'left' },
+    }}
+  >
+    Electrical and mechanical restoration with documented testing.
+  </Typography>
 
-        }}>
-        Electrical and mechanical restoration with documented testing.
-      </Typography>
-
-      {/* Swiper */}
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={0}
-        slidesPerView={5} // show 3 at a time
-        pagination={{
-          clickable: true,
-        }}
-        style={{
-          paddingBottom: "40px", // space for pagination line
-        }}
-        // breakpoints={{
-        //   0: { slidesPerView: 1 },
-        //   600: { slidesPerView: 2 },
-        //   960: { slidesPerView: 3 },
-        //   960: { slidesPerView: 4 },
-        // }}
-      >
-        {steps.map((item, index) => (
-          <SwiperSlide key={index}>
-            <Card
-              sx={{
-                borderRadius: 0,
-                border: "1px solid #e5e7eb",
-                boxShadow: "none",
-                overflow: "hidden",
-                width: '250px',
-                height: "418px",
-              }}
-            >
-              <Box
-                component="img"
-                src={item.image}
-                alt={item.title}
-                sx={{ width: "250px", height: '250px', objectFit: "cover" }}
-              />
-              <CardContent sx={{ width: '250px', height: '148px' }}>
-                <Chip
-                  label={item.step}
-                  size="small"
-                  sx={{
-                    backgroundColor: "#e0f2fe",
-                    color: "#0369a1",
-                    fontWeight: 500,
-                    mb: 1,
-                  }}
-                />
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                  {item.title}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "#4b5563", lineHeight: 1.5 }}>
-                  {item.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      {/* CTA */}
-      <Box sx={{ textAlign: "center", mt: 6 }}>
-        <Button
-          variant="text"
-          endIcon={<span style={{ fontSize: "18px" }}>→</span>}
+  {/* Swiper */}
+  <Swiper
+    modules={[Pagination]}
+    spaceBetween={16}
+    slidesPerView={1}  // Default view is one card per slide for mobile
+    pagination={{ clickable: true }}
+    style={{ paddingBottom: "40px" }}
+    breakpoints={{
+      0: { slidesPerView: 1 },    // For very small screens, 1 card per slide
+      600: { slidesPerView: 2.2 }, // For small screens, 2 cards per slide
+      960: { slidesPerView: 4 },   // For medium screens, 4 cards per slide
+      1200: { slidesPerView: 5 },  // For large screens, 5 cards per slide
+    }}
+  >
+    {steps.map((item, index) => (
+      <SwiperSlide key={index}>
+        <Card
           sx={{
-            textTransform: "none",
-            fontWeight: 600,
-            fontSize: "1rem",
-            color: "#2563eb",
+            borderRadius: 0,
+            border: "1px solid #e5e7eb",
+            boxShadow: "none",
+            overflow: "hidden",
+            width: { xs: '100%', sm: '250px' },
+            height: "418px",
+            mx: 'auto',
           }}
-          onClick={() => navigate("/home/ViewCaseStudy")}>
-          View Case Study
-        </Button>
-      </Box>
+        >
+          <Box
+            component="img"
+            src={item.image}
+            alt={item.title}
+            sx={{
+              width: "100%",
+              height: '250px',
+              objectFit: "cover",
+            }}
+          />
+          <CardContent
+            sx={{
+              height: '148px',
+            }}
+          >
+            <Chip
+              label={item.step}
+              size="small"
+              sx={{
+                backgroundColor: "#e0f2fe",
+                color: "#0369a1",
+                fontWeight: 500,
+                mb: 1,
+              }}
+            />
+            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+              {item.title}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "#4b5563", lineHeight: 1.5 }}>
+              {item.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </SwiperSlide>
+    ))}
+  </Swiper>
 
-      {/* Custom Swiper styles */}
-      <style>
-        {`
-          .swiper-pagination {
-            bottom: 0 !important;
-          }
-          .swiper-pagination-bullet {
-            width: 30px;
-            height: 3px;
-            border-radius: 2px;
-            background: #d1d5db; /* gray */
-            opacity: 1;
-          }
-          .swiper-pagination-bullet-active {
-            background: #2563eb !important; /* blue active */
-          }
-        `}
-      </style>
-    </Box>
+  {/* CTA */}
+  <Box sx={{ textAlign: { xs: "center", md: "center" }, mt: 6 }}>
+    <Button
+      variant="text"
+      endIcon={<span style={{ fontSize: "18px" }}>→</span>}
+      sx={{
+        textTransform: "none",
+        fontWeight: 600,
+        fontSize: "1rem",
+        color: "#2563eb",
+      }}
+      onClick={() => navigate("/home/ViewCaseStudy")}
+    >
+      View Case Study
+    </Button>
+  </Box>
+
+  {/* Custom Swiper styles */}
+  <style>
+    {`
+      .swiper-pagination {
+        bottom: 0 !important;
+      }
+      .swiper-pagination-bullet {
+        width: 30px;
+        height: 3px;
+        border-radius: 2px;
+        background: #d1d5db;
+        opacity: 1;
+      }
+      .swiper-pagination-bullet-active {
+        background: #2563eb !important;
+      }
+    `}
+  </style>
+</Box>
+
   );
 }

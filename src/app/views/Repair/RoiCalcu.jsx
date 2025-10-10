@@ -13,6 +13,85 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Brand1 from '../../../assets/Brand1.png';
 import Repair from "../../../assets/RRimage.jpg"
 import Footer from 'app/components/Card/Footer';
+import Rentinstead from "../../../assets/Rentinstaed.jpg";
+import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
+import HandshakeIcon from "@mui/icons-material/Handshake";
+
+
+const services = [
+  {
+    id: 1,
+    title: "Sell Us",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 2,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 3,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 4,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 5,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 6,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+];
 
 const RoiCalculator = () => {
 
@@ -41,12 +120,12 @@ const RoiCalculator = () => {
         >
           {/* Title & Description */}
           <Box sx={{ textAlign: "left" }}>
-            <Typography variant="h3" fontWeight="bold" gutterBottom>
+            <Typography variant="h3" fontWeight="bold" sx={{ ...typography.displayL }} gutterBottom>
               ROI Calculator
             </Typography>
             <Typography
               variant="h5"
-              sx={{ mb: 4, color: "text.secondary" }}
+              sx={{ ...typography.h4, mb: 3, color: "text.secondary" }}
             >
               Get powerful lifting magnets when you need them — without the upfront
               cost. Flexible rental plans, quick installation, and reliable
@@ -66,7 +145,7 @@ const RoiCalculator = () => {
                       overflow: "hidden",
                       boxShadow: 3,
                       height: 400,
-                      width: 550,
+                      width: 558,
                     }}
                   >
                     {/* Background Image */}
@@ -137,53 +216,8 @@ const RoiCalculator = () => {
 
 
         {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-
-        <Typography
-          sx={{
-            ...typography.displayL,
-            color: "#1A2438",
-            textAlign: "left",
-          }}
-        >
-          Rent instead?
-        </Typography>
-        <Typography
-          sx={{
-            ...typography.h4,
-            color: "#99A0AE",
-            textAlign: "left",
-          }}
-        >
-          Check out this Rentals
-        </Typography>
-        <EquipmentSwiper data={cardData} />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end", // push button to right
-            width: "100%", // make sure it spans full row
-            mt: 2, // optional margin-top
-          }}
-        >
-          <Button
-            sx={{
-              ...typography.h3,
-              color: "#2F6FBA",
-              textTransform: "none", // keep text case as-is
-              textDecoration: "underline",
-            }}
-            endIcon={
-              <ArrowRightAltIcon
-                sx={{
-                  width: 60,
-                  opacity: 1,
-                  borderWidth: "3.3px",
-                }}
-              />
-            }
-          >
-            View all magnets for rent
-          </Button>
+        <Box>
+          <SellRentServicesCard services={services} />
         </Box>
 
 

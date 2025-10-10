@@ -262,21 +262,21 @@ const Rentals = () => {
                     sx={{ position: 'absolute', top: 8, right: 8, borderRadius: '1px' }}
                   />
                   <Box
-    className="hover-icon"
-    sx={{
-      position: 'absolute',
-      top: 8,
-      right: 8,
-      width: 24,
-      height: 24,
-      border: '2px solid white',
-      backgroundColor: '#1C2D4B',
-      transform: 'rotate(45deg)',
-      opacity: 0,
-      transition: 'opacity 0.3s ease-in-out',
-      zIndex: 2,
-    }}
-  />
+                    className="hover-icon"
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      width: 24,
+                      height: 24,
+                      border: '2px solid white',
+                      backgroundColor: '#1C2D4B',
+                      transform: 'rotate(45deg)',
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease-in-out',
+                      zIndex: 2,
+                    }}
+                  />
                 </Box>
                 <CardContent>
                   <Typography sx={{ ...typography.h4, color: '#1C2D4B' }}>{product.title}</Typography>
@@ -522,159 +522,194 @@ const Rentals = () => {
 
 
 
-        {/* Blogs Section */}
 
         {/* Blogs Section */}
-        <Button
-          disableElevation
-          disableRipple
-          sx={{
-            marginBottom: 2,
-            ml: 8,
-            textTransform: "none",           // keep text as-is
-            fontSize: "0.8rem",              // smaller font
-            fontWeight: 500,                 // medium weight
-            color: "#1a4dab",                // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px",            // pill shape
-            px: 2,                           // horizontal padding
-            py: 0.5,                         // vertical padding
-            boxShadow: "none",               // remove shadow
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-              boxShadow: "none",
-            },
-          }}
-        >
-          Blogs
-        </Button>
-        <Typography
-          sx={{
-            ml: 8,
-            ...typography.displayL,
-            color: '#1C2D4B'
-          }}
-          variant="h3" fontWeight="bold" gutterBottom>
-          Blogs
-        </Typography>
-        <Typography
-          variant="h5" sx={{
-            mb: 4,
-            color: '#1C2D4B',
-            ...typography.h4,
-            ml: 8
-          }}>
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
-        </Typography>
-        <Box sx={{ px: 8, py: 6 }}>
-          <Grid container spacing={3}>
-            {/* Left Column (Featured Post) */}
-            <Grid item xs={12} md={6} sx={{
-              width: '668px',
-              height: '462px',
-            }}>
-              <Card
+         {/* Blogs Section */}
+            <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
+              {/* Section Header */}
+              <Button
+                disableElevation
+                disableRipple
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-
-                  borderRadius: 3,
-                  boxShadow: 0,
-                  bgcolor: "#fafafa",
-                  cursor: 'pointer'
+                  marginBottom: 2,
+                  // ml: 8,
+                  textTransform: "none",           // keep text as-is
+                  fontSize: "0.8rem",              // smaller font
+                  fontWeight: 500,                 // medium weight
+                  color: "#1a4dab",                // dark blue text
+                  backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+                  borderRadius: "20px",            // pill shape
+                  px: 2,                           // horizontal padding
+                  py: 0.5,                         // vertical padding
+                  boxShadow: "none",               // remove shadow
+                  "&:hover": {
+                    backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+                    boxShadow: "none",
+                  },
                 }}
-                onClick={() => navigate("/home/BlogDetails")}>
-                <CardMedia
-                  component="img"
-                  image={blogData[0].image}
-                  alt={blogData[0].title}
-                  sx={{
-                    borderRadius: 3,
-                    width: '628px',
-                    height: '300px',
-                    objectFit: "cover",
-                  }}
-                />
-                <CardContent>
-                  <Typography sx={{ ...typography.h5, color: '#0E1109' }} gutterBottom>
-                    {blogData[0].title}
-                  </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
-                    {blogData[0].author} • {blogData[0].date}
-                  </Typography>
-                  <Link
-                    href="#"
-                    underline="none"
+              >
+                Blogs
+              </Button>
+              <Typography
+                sx={{
+                  
+                  ...typography.displayL,
+                  color: '#1C2D4B'
+                }}
+                variant="h3" fontWeight="bold" gutterBottom>
+                Blogs
+              </Typography>
+              <Typography
+                variant="h5" sx={{
+                  mb: 4,
+                  color: '#1C2D4B',
+                  ...typography.h4,
+                  
+                }}>
+                Get powerful lifting magnets when you need them — without the upfront
+                cost. Flexible rental plans, quick installation, and reliable
+                performance for every project!
+              </Typography>
+      
+      
+              {/* Blog Section */}
+              <Grid container spacing={3}>
+                {/* Featured Post */}
+                <Grid item xs={12} md={6}>
+                  <Card
                     sx={{
-                      color: "#1F77D6",
-                      ...typography.bodyBasemedium,
-                      mt: 1,
-                      display: "inline-flex",
-                      alignItems: "center"
+                      display: "flex",
+                      flexDirection: "column",
+                      borderRadius: 3,
+                      boxShadow: 0,
+                      bgcolor: "#fafafa",
+                      cursor: "pointer",
                     }}
+                    onClick={() => navigate("/home/BlogDetails")}
                   >
-                    Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
-                  </Link>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Right Column (Other Posts) */}
-            <Grid item xs={12} md={6}>
-              <Grid container spacing={2} direction="column">
-                {blogData.slice(1).map((item, idx) => (
-                  <Grid item key={idx}>
-                    <Card
+                    <CardMedia
+                      component="img"
+                      image={blogData[0].image}
+                      alt={blogData[0].title}
                       sx={{
-                        display: "flex",
-                        alignItems: "center",
                         borderRadius: 3,
-                        px: 2,
-                        py: 1,
-                        bgcolor: "#fdfdfd",
-                        boxShadow: 0,
-                        cursor: 'pointer'
+                        width: "100%",
+                        height: { xs: 240, sm: 280, md: 300 },
+                        objectFit: "cover",
                       }}
-                      onClick={() => navigate("/home/Blogpost")}>
-                      <CardMedia
-                        component="img"
-                        image={item.image}
-                        alt={item.title}
+                    />
+                    <CardContent>
+                      <Typography
                         sx={{
-                          width: '130px',
-                          height: '141px',
-                          borderRadius: 2,
-                          objectFit: "cover",
-                          mr: 2,
+                          ...typography?.h5,
+                          color: "#0E1109",
+                          fontSize: { xs: "1.2rem", md: "1.5rem" },
                         }}
-                      />
-                      <Box>
-                        <Typography sx={{ ...typography.h4, color: '#0E1109', width: '474px', height: '62px' }}>
-                          {item.title}
-                        </Typography>
-                        <Typography sx={{ ...typography.bodyBase, color: '#677489' }}>
-                          {item.author} • {item.date}
-                        </Typography>
-                        <Link
-                          href="#"
-                          underline="none"
-                          sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                        gutterBottom
+                      >
+                        {blogData[0].title}
+                      </Typography>
+                      <Typography sx={{ ...typography?.bodyBase, color: "#677489" }}>
+                        {blogData[0].author} • {blogData[0].date}
+                      </Typography>
+                      <Link
+                        href="#"
+                        underline="none"
+                        sx={{
+                          color: "#1F77D6",
+                          ...typography?.bodyBasemedium,
+                          mt: 1,
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        Discover More{" "}
+                        <ArrowForwardIosIcon
+                          sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
+                        />
+                      </Link>
+                    </CardContent>
+                  </Card>
+                </Grid>
+      
+                {/* Other Posts */}
+                <Grid item xs={12} md={6}>
+                  <Grid container spacing={2} direction="column">
+                    {blogData.slice(1).map((item, idx) => (
+                      <Grid item key={idx}>
+                        <Card
+                          sx={{
+                            display: "flex",
+                            flexDirection: { xs: "row", sm: "row" },
+                            alignItems: "center",
+                            borderRadius: 3,
+                            px: { xs: 1, md: 2 },
+                            py: { xs: 1, md: 1.5 },
+                            bgcolor: "#fdfdfd",
+                            boxShadow: 0,
+                            cursor: "pointer",
+                          }}
+                          onClick={() => navigate("/home/Blogpost")}
                         >
-                          Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
-                        </Link>
-                      </Box>
-                    </Card>
+                          <CardMedia
+                            component="img"
+                            image={item.image}
+                            alt={item.title}
+                            sx={{
+                              width: { xs: 100, sm: 120, md: 130 },
+                              height: { xs: 100, sm: 120, md: 141 },
+                              borderRadius: 2,
+                              objectFit: "cover",
+                              mr: 2,
+                            }}
+                          />
+                          <Box sx={{ flex: 1 }}>
+                            <Typography
+                              sx={{
+                                ...typography?.h4,
+                                color: "#0E1109",
+                                fontSize: { xs: "0.95rem", sm: "1.1rem" },
+                                mb: 0.5,
+                              }}
+                            >
+                              {item.title}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                ...typography?.bodyBase,
+                                color: "#677489",
+                                fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                              }}
+                            >
+                              {item.author} • {item.date}
+                            </Typography>
+                            <Link
+                              href="#"
+                              underline="none"
+                              sx={{
+                                color: "#1F77D6",
+                                ...typography?.bodyBasemedium,
+                                mt: 0.5,
+                                fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                                display: "inline-flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              Discover More{" "}
+                              <ArrowForwardIosIcon
+                                sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }}
+                              />
+                            </Link>
+                          </Box>
+                        </Card>
+                      </Grid>
+                    ))}
                   </Grid>
-                ))}
+                </Grid>
               </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-
+            </Box>
+ 
       </Box>
-
 
 
       {/* Footer */}

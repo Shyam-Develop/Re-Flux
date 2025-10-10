@@ -50,7 +50,7 @@ const handleScrollTop = () => {
 
 
   return (
-    <Box sx={{ paddingLeft: "10px", paddingRight:'10px', mb:1 }}>
+    <Box sx={{ paddingLeft: "5px", paddingRight:'5px', }}>
       <Box component="footer" sx={{ ...styles.footer }}>
         <Grid container spacing={6}>
           {/* Left Section (Logo) */}

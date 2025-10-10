@@ -7,9 +7,9 @@ const themeOptions = {
     typography: {
        ...typography
     },
-
+ 
     status: { danger: red[500] },
     components: {...components}
 }
-
+ 
 export default themeOptions;
