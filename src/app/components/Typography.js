@@ -101,19 +101,19 @@ export const Tiny = ({ children, className, ellipsis, ...props }) => (
 
 // ---------------- Display ----------------
 export const DisplayXL = ({ children, className, ellipsis, ...props }) => (
-  <StyledBox fontStyle={typography.displayXL} ellipsis={ellipsis} className={clsx(className)} component="h1" {...props}>
+  <StyledBox fontStyle={typography.displayXL} ellipsis={ellipsis} className={clsx(className)} component="dispalyXl" {...props}>
     {children}
   </StyledBox>
 );
 
 export const DisplayL = ({ children, className, ellipsis, ...props }) => (
-  <StyledBox fontStyle={typography.displayL} ellipsis={ellipsis} className={clsx(className)} component="h1" {...props}>
+  <StyledBox fontStyle={typography.displayL} ellipsis={ellipsis} className={clsx(className)} component="dispalyL" {...props}>
     {children}
   </StyledBox>
 );
 
 export const DisplayM = ({ children, className, ellipsis, ...props }) => (
-  <StyledBox fontStyle={typography.displayM} ellipsis={ellipsis} className={clsx(className)} component="h1" {...props}>
+  <StyledBox fontStyle={typography.displayM} ellipsis={ellipsis} className={clsx(className)} component="dispalyM" {...props}>
     {children}
   </StyledBox>
 );

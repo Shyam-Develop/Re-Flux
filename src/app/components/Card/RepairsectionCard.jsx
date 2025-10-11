@@ -6,11 +6,11 @@ import {
   Divider,
   IconButton,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
-import { useTheme } from "@emotion/react";
 import serviceimg from "../../../assets/Repairservice.png";
 
 const services = [
@@ -114,7 +114,8 @@ const RepairsectionCard = () => {
                 }}
               >
                 <Typography
-                  sx={{ ...theme.typography.h3, fontFamily: "'Space Grotesk', sans-serif", fontWeight:600, color: "#1B2F43", fontSize: "28px" }}
+                variant="h3"
+                  sx={{color: "#1B2F43", fontSize: "28px" }}
                 >
                   {service.title}
                 </Typography>
@@ -134,14 +135,14 @@ const RepairsectionCard = () => {
 
               <Divider sx={{ mb: 2 }} />
 
-              <Typography sx={{ ...theme.typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight:400, fontSize:'18px', color: "#666", mb: 1 }}>
+              <Typography variant="p" sx={{  color: "#666", mb: 1 }}>
                 {service.desc}
               </Typography>
 
-              <Typography sx={{ ...theme.typography.h5, color: "#0E1626", mb: 0.5 }}>
+              <Typography variant="h5" sx={{ color: "#0E1626", mb: 0.5 }}>
                 Turnaround Time
               </Typography>
-              <Typography sx={{ ...theme.typography.bodyBase, color: "#677489" }}>
+              <Typography variant="p" sx={{ color: "#677489" }}>
                 {service.turnaround.join(" / ")}
               </Typography>
             </Box>
