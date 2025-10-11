@@ -132,7 +132,7 @@ export default function RentServicesCard({ services }) {
                   }}
                 >
                   <Chip
-                    label="Available for Rent"
+                    label="🔧 Available for Rent"
                     size="small"
                     sx={{
                       ...typography.bodyBase,
@@ -143,7 +143,7 @@ export default function RentServicesCard({ services }) {
                     }}
                   />
                   <Chip
-                    label="Safety Tested"
+                    label="🛡️ Safety Tested"
                     size="small"
                     sx={{ ...typography.bodyBase, fontSize:'14px', bgcolor: "#2F6FBA", borderRadius:'0px', color: "#F1F2F4" }}
                   />

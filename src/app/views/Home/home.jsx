@@ -26,6 +26,8 @@ import {
   FormControl,
   Select,
   MenuItem,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -100,8 +102,14 @@ const UploadBox = ({ label }) => {
     </Box>
   );
 };
+
 const HomePage = () => {
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const navigate = useNavigate();
+
   //=================VIDEO-Loading===============================//
   const [selected, setSelected] = useState(null);
   const [loadingId, setLoadingId] = useState(null);
@@ -290,6 +298,13 @@ const HomePage = () => {
     },
   ];
 
+  const cards = [
+    {
+      title: "Repair vs Replace ROI Instantly",
+      desc: "Our ROI Calculator shows payback and TCO (repair vs rental vs replace) in seconds — make data-backed decisions.",
+    },
+  ];
+
   const [expanded, setExpanded] = useState(null);
 
   const handleChange = (index) => {
@@ -304,7 +319,6 @@ const HomePage = () => {
 
     <Box
       sx={{
-        
         // width: "1440px",
 
       }}
@@ -334,74 +348,65 @@ const HomePage = () => {
         WhatsApp={WhatsApp}
       />
 
-      <Box
-        width="1440px"
-        height="1564px"
-        sx={{
-          pt: 5,
-          pb: 5,
-          gap: 4,
-          transform: "rotate(0deg)",
-          opacity: 1,
-          mx: "auto"
-        }}
-      >
-        <Box sx={{ paddingLeft: '6%' }}>
-          <Button
-            disableElevation
-            disableRipple
-            sx={{
-              marginBottom: 2,
-              textTransform: "none",
-              fontSize: "0.8rem",
-              fontWeight: 400,
-              color: "#2F6FBA",
-              backgroundColor: "#EAF3FC",
-              borderRadius: "20px",
-              // px: 2,                           
-              // py: 0.5,                    
-              ...typography.bodySmall,
-              "&:hover": {
-                backgroundColor: "rgba(36,121,233,0.15)",
-                boxShadow: "none",
-              },
-            }}
-          >
-            Repair Services
-          </Button>
-        </Box>
-        <Box
+      <Box sx={{ paddingLeft: { xs: 2, sm: "6%" }, paddingRight: 2, mt: 4 }}>
+        <Button
+          disableElevation
+          disableRipple
           sx={{
-            width: "1280px",
-            height: "132px",
-            gap: "8px",
-            transform: "rotate(0deg)",
-            opacity: 1,
-            margin: "0 auto",
-
+            mb: 2,
+            textTransform: "none",
+            fontSize: "0.8rem",
+            fontWeight: 500,
+            color: "#1a4dab",
+            backgroundColor: "rgba(36,121,233,0.08)",
+            borderRadius: "20px",
+            px: 2,
+            py: 0.5,
+            boxShadow: "none",
+            "&:hover": {
+              backgroundColor: "rgba(36,121,233,0.15)",
+              boxShadow: "none",
+            },
+            ...typography.bodySmall,
           }}
         >
-          {/* Heading */}
-          <Typography sx={{ ...typography.displayL }} gutterBottom>
-            Our Repair Services
-          </Typography>
-          <Typography sx={{
-            mb: 4, ...typography.h4, color: "#6B768A",
-            width: "1280px",
-            height: "62px",
+          Repair Services
+        </Button>
 
-          }}>
-            Get powerful lifting magnets when you need them — without the upfront
-            cost. Flexible rental plans, quick installation, and reliable
-            performance for every project!
-          </Typography>
-        </Box>
+        <Typography
+          sx={{
+            ...typography.displayL,
+            fontFamily: "'Space Grotesk', sans-serif", 
+            fontWeight:700,
+            fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3rem" },
+            textAlign: "left",
+          }}
+          gutterBottom
+        >
+          Our Repair Services
+        </Typography>
+
+        <Typography
+          sx={{
+            mb: 4,
+            ...typography.h4,
+            color: "#6B768A",
+            fontSize: '24px',
+            textAlign: "left",
+            fontFamily: "'Space Grotesk', sans-serif", 
+            fontWeight:400
+          }}
+        >
+          Get powerful lifting magnets when you need them — without the upfront
+          cost. Flexible rental plans, quick installation, and reliable
+          performance for every project!
+        </Typography>
+
         <RepairsectionCard />
-
-
       </Box>
 
-      <Box sx={{ textAlign: "center", }}>
+
+      <Box sx={{ textAlign: "center", mt: 10 }}>
         {/* Top Button */}
         <Button
           onClick={handleClickOpen}
@@ -487,142 +492,126 @@ const HomePage = () => {
 
       {/* Before and After Case Studies */}
 
-      <Box
-        sx={{
-          // position: "relative",
-          // zIndex: 1,
-          // display: "flex",
-          flexDirection: "column",
-          // justifyContent: "center",
-          height: "100%",
-          color: "white",
-          textAlign: "left",
-          pl: 8,
-        }}
-      >
+      <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 4, md: 8 }, backgroundColor: "#fff" }}>
+        {/* Title Section */}
         <Typography
           variant="h4"
           sx={{
-            mt: 6,
-            color: "#1c2434",
-            textAlign: "left",
             ...typography.displayM,
-
+            fontWeight: 600,
+            fontSize: { xs: "1.5rem", md: "2rem" },
+            color: "#1c2434",
+            mb: 1,
           }}
         >
           Before and after case studies
         </Typography>
-        {/* Sub-heading */}
+
         <Typography
-          variant="h5"
+          variant="h6"
           sx={{
-            mt: 2,
-            color: "#1c2434",
-            paddingLeft: '8%',
-            fontFamily: "SpaceGrotesk-Regular",
-            lineHeight: "1.2",
             ...typography.h2,
-            ml: 8,
+            fontWeight: 600,
+            fontSize: { xs: "1.2rem", md: "1.5rem" },
+            color: "#1c2434",
+            mb: 1,
           }}
         >
           Circular Lifting Magnet
         </Typography>
-        {/* Description */}
+
         <Typography
-          variant="body1"
-          sx={{
-            mt: 1,
-            ml: 8,
-            color: "#99A0AE",
-            paddingLeft: '8%',
-            // mx: "auto",                 
-            ...typography.bodyBase
-          }}
+          variant="body2"
+          sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
         >
-          Understanding growing demand and exceeding expectations from our
-          customers in repairing
+          Understanding growing demand and exceeding expectations from our customers in repairing
         </Typography>
-        {/* Image Section */}{" "}
+
+        {/* Images and Arrows */}
         <Box
           sx={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
             justifyContent: "center",
-            width: "1092px",
-            height: "447px",
-            margin: 'auto'
+            gap: 3,
+            position: "relative",
           }}
         >
-          {" "}
-          {/* Left Arrow */}{" "}
+          {/* Left Arrow */}
           <IconButton
             sx={{
-              left: 10,
+              position: "absolute",
+              left: isMobile ? "calc(50% - 20px)" : "115px",
+              top: isMobile ? "35px" : "50%",
+              transform: isMobile ? "none" : "translateY(-50%)",
               bgcolor: "#1c2434",
-              color: "white",
+              color: "#fff",
+              zIndex: 2,
               "&:hover": { bgcolor: "#344050" },
             }}
           >
-            {" "}
-            <ArrowBackIcon />{" "}
-          </IconButton>{" "}
-          {/* Before Image */}{" "}
+            <ArrowBackIcon />
+          </IconButton>
+
+          {/* Before Image */}
           <Box
             component="img"
             src={before}
             alt="Before"
             sx={{
-              width: '516px',
-              height: '305.5px',
+              width: isMobile ? "100%" : "500px",
+              height: "auto",
+              mt: 7,
               objectFit: "cover",
-              mt: 8,
             }}
-          />{"Before"}
-          {/* After Image */}{" "}
+          />
+
+          {/* After Image */}
           <Box
             component="img"
             src={after}
             alt="After"
             sx={{
-              width: '516px',
-              height: '305.5px',
-              objectFit: "cover"
+              width: isMobile ? "100%" : "500px",
+              height: "auto",
+              objectFit: "cover",
             }}
-          />{"After "}
-          {/* Right Arrow */}{" "}
+          />
+
+          {/* Right Arrow */}
           <IconButton
             sx={{
-              //       height: 48,
-              // width: 48,
-              right: 40,
+              position: "absolute",
+              right: isMobile ? "calc(50% - 20px)" : "115px",
+              top: isMobile ? "95%" : '55%',
+
+              transform: isMobile ? "none" : "translateY(-50%)",
               bgcolor: "#1c2434",
-              color: "white",
+              color: "#fff",
+              zIndex: 2,
               "&:hover": { bgcolor: "#344050" },
             }}
           >
-            {" "}
-            <ArrowForwardIcon />{" "}
-          </IconButton>{" "}
+            <ArrowForwardIcon />
+          </IconButton>
         </Box>
 
-        <Box sx={{ textAlign: "center", py: 6 }}>
-          {/* Top Button */}
+        {/* Button */}
+        <Box sx={{ textAlign: "center", mt: 4 }}>
           <Button
             onClick={() => navigate("/home/ViewCaseStudy")}
             variant="contained"
             sx={{
-              fontFamily: "Inter-Medium",
+              backgroundColor: "#b3570d",
+              borderRadius: "24px",
+              textTransform: "none",
               fontWeight: 500,
-              lineHeight: "1.5",
-              bgcolor: "#b3570d", // orange/brown shade
-              borderRadius: "25px",
               px: 3,
               py: 1,
-              mb: 5,
-              // fontWeight: "bold",
               fontSize: "14px",
               "&:hover": {
-                bgcolor: "#944708",
+                backgroundColor: "#944708",
               },
             }}
           >
@@ -632,156 +621,169 @@ const HomePage = () => {
       </Box>
 
 
-
-
       {/*ElectroMagnet Repair Section */}
-      <Typography
-        sx={{
-          ...typography.displayM,
-          lineHeight: "1.2",
-          color: "#1c2434",
-          mb: 2,
-          ml: 5,
-          // mt: 10,
-          fontFamily: "Space Grotesk, Regular",
-        }}
-      >
-        ElectroMagnet Repair
-      </Typography>
+      <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
+        {/* Heading */}
+        <Typography
+          sx={{
+            ...typography.displayM,
+            lineHeight: "1.2",
+            color: "#1c2434",
+            mb: 2,
+            ml: isMobile ? 0 : 5,
+            fontFamily: "Space Grotesk, Regular",
+            textAlign: isMobile ? "center" : "left",
+          }}
+        >
+          ElectroMagnet Repair
+        </Typography>
 
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: 500,
-          color: "#1c2434",
-          mb: 4,
-          ml: 5,
-          fontFamily: "Inter, sans-serif",
-        }}
-      >
-        Coil rewinds, terminal rebuilds, housing & controllers — restored to
-        spec with certified load testing
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          px: 4,
-          py: 4,
-          gap: 6,
-          width: '1312px',
-          height: '708px',
-          bgcolor: "white",
-        }}
-      >
-        {/* Left - Features with vertical timeline */}
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {/* Continuous Vertical Line */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "10px", // adjust to align with icons
-              width: "2px",
-              bgcolor: "#ccc",
-              borderRadius: 1,
-            }}
-          />
+        {/* Subheading */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 500,
+            color: "#1c2434",
+            mb: 4,
+            ml: isMobile ? 0 : 5,
+            fontFamily: "Inter, sans-serif",
+            textAlign: isMobile ? "center" : "left",
+            px: isMobile ? 2 : 0,
+          }}
+        >
+          Coil rewinds, terminal rebuilds, housing & controllers — restored to
+          spec with certified load testing
+        </Typography>
 
-          {features.map((item, index) => {
-            const isActive = hoveredIndex === index;
-
-            return (
+        {/* Main Container */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: 3,
+            px: isMobile ? 2 : 4,
+            py: isMobile ? 3 : 4,
+            gap: 6,
+            width: "100%",
+            bgcolor: "white",
+          }}
+        >
+          {/* Left - Timeline */}
+          <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+            {/* Vertical Line */}
+            {!isMobile && (
               <Box
-                key={index}
                 sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  mb: 4,
-                  cursor: "pointer",
-                  position: "relative",
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  left: "10px",
+                  width: "2px",
+                  bgcolor: "#ccc",
+                  borderRadius: 1,
                 }}
-                onMouseEnter={() => setHoveredIndex(index)}
-              >
-                {/* Highlighted section of the vertical line */}
-                {isActive && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: "10px",
-                      width: "2px",
-                      bgcolor: "#1976d2",
-                      height: "100%",
-                      borderRadius: 1,
-                    }}
-                  />
-                )}
+              />
+            )}
 
-                {/* Icon + Text */}
-                <Box sx={{ ml: 4 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <CalendarMonthIcon
+            {features.map((item, index) => {
+              const isActive = hoveredIndex === index;
+
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    mb: 4,
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                  onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
+                  onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
+                >
+                  {/* Active Line */}
+                  {!isMobile && isActive && (
+                    <Box
                       sx={{
-                        fontSize: 20,
-                        color: isActive ? "#1976d2" : "#666",
-                        mr: 1,
-                        transition: "0.3s",
+                        position: "absolute",
+                        left: "10px",
+                        width: "2px",
+                        bgcolor: "#1976d2",
+                        height: "100%",
+                        borderRadius: 1,
                       }}
                     />
+                  )}
+
+                  {/* Icon + Text */}
+                  <Box sx={{ ml: 4 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                      <CalendarMonthIcon
+                        sx={{
+                          fontSize: 20,
+                          color: isActive ? "#1976d2" : "#666",
+                          mr: 1,
+                          transition: "0.3s",
+                        }}
+                      />
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          ...typography.h3B1,
+                          fontWeight: 400,
+                          color: isActive ? "#1976d2" : "#1c2434",
+                          transition: "0.3s",
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                    </Box>
+
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{
-                        ...typography.h3B1,
+                        ...typography.bodyBasemedium,
                         fontWeight: 400,
-                        color: isActive ? "#1976d2" : "#1c2434",
                         transition: "0.3s",
+                        ml: 4,
                       }}
                     >
-                      {item.title}
+                      {item.desc}
                     </Typography>
                   </Box>
-
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      // color: isActive ? "#1976d2" : "text.secondary",
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                      transition: "0.3s",
-                      ml: 4
-                    }}
-                  >
-                    {item.desc}
-                  </Typography>
                 </Box>
-              </Box>
-            );
-          })}
-        </Box>
+              );
+            })}
+          </Box>
 
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {/* Right - Image */}
           <Box
-            component="img"
-            src={features[hoveredIndex].image}
-            alt="ElectroMagnet Repair"
             sx={{
+              flex: 1,
               width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
+              display: "flex",
+              justifyContent: "center",
+              mt: isMobile ? 2 : 0,
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={features[hoveredIndex].image}
+              alt="ElectroMagnet Repair"
+              sx={{
+                width: "100%",
+                maxWidth: isMobile ? "100%" : 600,
+                objectFit: "cover",
+                borderRadius: 3,
+                transition: "0.5s",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
-
-
 
 
       {/* Why Choose Reflux Section */}
@@ -789,195 +791,211 @@ const HomePage = () => {
       <Box
         sx={{
           width: "100%",
-          height: "942px",
           maxWidth: "1440px",
           mx: "auto",
           py: { xs: 6, md: 10 },
           px: { xs: 2, md: 6 },
-          backgroundColor: "#fff",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Box
-          sx={{
-            width: "904px",
-            height: "809px",
-            position: "relative",
-            top: "67px",
-            left: "268px",
-            gap: "128px",
-            transform: "rotate(0deg)",
-            opacity: 1,
-            display: "flex",           // enables gap
-            flexDirection: "row",   // adjust if you want row layout
-            alignItems: "center",
-            justifyContent: "center",
-            boxSizing: "border-box",
-          }}
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="flex-start"
         >
-          <Grid container spacing={2} alignItems="flex-start">
-            {/* Left Column */}
-            <Grid item xs={12} md={4}>
+          {/* Left Section */}
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "flex-start" },
+                textAlign: { xs: "center", md: "left" },
+                mt: { xs: 0, md: 18 },
+                ml: 23
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "SpaceGrotesk-Regular",
+                  ...typography.h2,
+                  lineHeight: 1.2,
+                  mb: 2,
+                }}
+              >
+                Why Choose <br /> Reflux?
+              </Typography>
+
+              <Typography
+                sx={{
+                  color: "text.secondary",
+                  mb: 3,
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  maxWidth: "320px",
+                  ...typography.bodySmall
+                }}
+              >
+                We handle service and upkeep — you focus on getting the job done.
+              </Typography>
+
+              <Button
+                variant="contained"
+                sx={{
+                  fontFamily: "SpaceGrotesk-Regular",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  borderRadius: "10px",
+                  px: 3,
+                  backgroundColor: "#00A99D",
+                  "&:hover": { backgroundColor: "#00897B" },
+                }}
+              >
+                About Us
+              </Button>
+
+              {/* Arrow */}
+              <Box
+                sx={{
+                  // position: "absolute",
+                  // bottom: -90,
+                  ml: 30,
+                  right: { xs: "5%", md: "20%" },
+                  textAlign: "right",
+                }}
+              >
+                <Box
+                  component="img"
+                  src={about}
+                  alt="Arrow"
+                  sx={{ width: 140 }}
+                />
+              </Box>
+            </Box>
+          </Grid>
+
+          {/* Right Section */}
+          <Grid item xs={12} md={8}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: { xs: 0, md: 6 },
+                flexDirection: { xs: "column", md: "row" },
+                mt: { xs: 6, md: 0 },
+              }}
+            >
+              {/* Left Column of Cards */}
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: { xs: "center", md: "flex-start" },
-                  textAlign: { xs: "center", md: "left" },
-                  position: "relative",
-                  mt: { xs: 4, md: 10 },
+                  gap: 4,
+                  mt: 0, // first column slightly higher
                 }}
               >
-                <Typography
-                  sx={{
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontSize: { xs: "28px", md: "32px" },
-                    fontWeight: 600,
-                    lineHeight: 1.2,
-                    mb: 2,
-                  }}
-                >
-                  Why Choose <br /> Reflux?
-                </Typography>
-
-                <Typography
-                  color="text.secondary"
-                  mb={3}
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 400,
-                    maxWidth: "320px",
-                  }}
-                >
-                  We handle service and upkeep — you focus on getting the job done.
-                </Typography>
-
-                <Button
-                  variant="contained"
-                  onClick={() => navigate("/about-us")}
-                  sx={{
-                    fontFamily: "SpaceGrotesk-Regular",
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    borderRadius: "10px",
-                    px: 3,
-                    backgroundColor: "#00A99D",
-                    "&:hover": { backgroundColor: "#00897B" },
-                  }}
-                >
-                  About Us
-                </Button>
-
-                {/* Arrow */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: -90,
-                    right: { xs: "5%", md: "20%" },
-                    textAlign: "right",
-                  }}
-                >
+                {cards.concat(cards, cards).map((card, i) => (
                   <Box
-                    component="img"
-                    src={about}
-                    alt="Arrow"
-                    sx={{ width: 140 }}
-                  />
-                </Box>
+                    key={i}
+                    sx={{
+                      width: { xs: "100%", md: "240px" },
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.05)" },
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "20px",
+                        fontWeight: 500,
+                        mb: 1,
+                        color: "#1A1A1A",
+                        ...typography.h5,
+                      }}
+                    >
+                      {card.title}
+                    </Typography>
+                    <Link
+                      underline="hover"
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 400,
+                        color: "#555",
+                        cursor: "pointer",
+                        lineHeight: 1.5,
+                        ...typography.bodyBase
+                      }}
+                    >
+                      {card.desc}
+                    </Link>
+                    <Divider
+                      sx={{
+                        mt: 1,
+                        borderColor: "#00A99D",
+                        width: "100%",
+                      }}
+                    />
+                  </Box>
+                ))}
               </Box>
-            </Grid>
 
-            {/* Middle Column */}
-            <Box sx={{
-              height: "739px",
-              width: "242px",
-            }}>
-              <Grid item xs={12} md={4}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    mt: 5,
-                    gap: 2, // 16px between each card
-                  }}
-                >
-                  {[...Array(3)].map((_, i) => (
-                    <Box
-                      key={i}
+              {/* Right Column of Cards (lowered) */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 4,
+                  mt: { xs: 0, md: 10 }, // shifted down for staggered look
+                }}
+              >
+                {cards.concat(cards, cards).map((card, i) => (
+                  <Box
+                    key={i}
+                    sx={{
+                      width: { xs: "100%", md: "240px" },
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.05)" },
+                    }}
+                  >
+                    <Typography
                       sx={{
-                        height: "213px",
-                        width: "243px",
-                        transition: "transform 0.3s ease",
-                        "&:hover": { transform: "scale(1.05)" },
+                        fontSize: "20px",
+                        fontWeight: 500,
+                        mb: 1,
+                        color: "#1A1A1A",
                       }}
                     >
-                      <Typography
-                        sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}
-                      >
-                        Repair vs Replace ROI Instantly
-                      </Typography>
-                      <Link
-                        color="text.secondary"
-                        underline="hover"
-                        onClick={handleOpen}
-                        sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
-                      >
-                        Our ROI Calculator shows payback and TCO (repair vs rental vs
-                        replace) in seconds — make data-backed decisions.
-                      </Link>
-                      <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-
-            </Box>
-            {/* Right Column */}
-            <Box sx={{
-              height: "739px",
-              width: "242px",
-            }}>
-              <Grid item xs={12} md={4}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 2, // 16px between each card
-                  }}
-                >
-                  {[...Array(3)].map((_, i) => (
-                    <Box
-                      key={i}
+                      {card.title}
+                    </Typography>
+                    <Link
+                      underline="hover"
                       sx={{
-                        height: "213px",
-                        width: "243px",
-                        transition: "transform 0.3s ease",
-                        "&:hover": { transform: "scale(1.05)" },
+                        fontSize: "16px",
+                        fontWeight: 400,
+                        color: "#555",
+                        cursor: "pointer",
+                        lineHeight: 1.5,
                       }}
                     >
-                      <Typography
-                        sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}
-                      >
-                        Repair vs Replace ROI Instantly
-                      </Typography>
-                      <Link
-                        color="text.secondary"
-                        underline="hover"
-                        onClick={handleOpen}
-                        sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
-                      >
-                        Our ROI Calculator shows payback and TCO (repair vs rental vs
-                        replace) in seconds — make data-backed decisions.
-                      </Link>
-                      <Divider sx={{ mt: 1, borderColor: "#00A99D", width: "100%" }} />
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-
+                      {card.desc}
+                    </Link>
+                    <Divider
+                      sx={{
+                        mt: 1,
+                        borderColor: "#00A99D",
+                        width: "100%",
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Box>
             </Box>
           </Grid>
-        </Box>
-        
+        </Grid>
+
+
         {/* Modal */}
         <Modal open={open} onClose={handleClose}>
           <Box
@@ -1160,50 +1178,71 @@ const HomePage = () => {
 
 
       {/* ROI Calculator */}
-      <Box>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "1440px",
+          mx: "auto",
+          px: { xs: 2, sm: 4, md: 8 },
+          py: { xs: 6, md: 10 },
+        }}
+      >
+        {/* Title */}
         <Typography
           sx={{
-            ml: 8,
             ...typography.h3RB,
             fontWeight: 700,
+            fontSize: { xs: "28px", md: "36px" },
+            textAlign: { xs: "center", md: "left" },
+            mb: 2,
           }}
         >
           ROI Calculator
         </Typography>
+
+        {/* Subtitle */}
         <Typography
           sx={{
             ...typography.h3B1,
             fontWeight: 400,
             mb: 4,
             color: "text.secondary",
-            ml: 8
-          }}>
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
+            textAlign: { xs: "center", md: "left" },
+            fontSize: { xs: "16px", md: "18px" },
+            maxWidth: { xs: "100%", md: "70%" },
+            mx: { xs: "auto", md: 0 },
+          }}
+        >
+          Get powerful lifting magnets when you need them — without the upfront cost.
+          Flexible rental plans, quick installation, and reliable performance for every project!
         </Typography>
+
+        {/* View All Link */}
         <Typography
           sx={{
             ...typography.h3R,
             textDecoration: "underline",
             color: "#1a4dab",
             fontWeight: 600,
-            ml: 130,
-            cursor:'pointer'
+            cursor: "pointer",
+            textAlign: { xs: "center", md: "right" },
+            mb: { xs: 3, md: 6 },
           }}
-        onClick={() => navigate("/repair-replace/roi-cal")}>
+          onClick={() => navigate("/repair-replace/roi-cal")}
+        >
           View All ROI Calculators
           <ArrowRightAltIcon
             sx={{
               color: "#1a4dab",
-              fontWeight: "bold",
               verticalAlign: "middle",
               ml: 1,
-              fontSize: "3rem",
+              fontSize: { xs: "1.8rem", md: "2.4rem" },
             }}
           />
         </Typography>
-        <Box sx={{ width:'1440px', height:'400px', mx: "auto", px: 2 }}>
+
+        {/* Cards Section */}
+        <Box sx={{ width: "100%", mx: "auto" }}>
           <Grid container spacing={4} justifyContent="center">
             {roiData.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
@@ -1214,7 +1253,10 @@ const HomePage = () => {
                     borderRadius: 3,
                     overflow: "hidden",
                     boxShadow: 3,
-                    height: 320,
+                    height: { xs: 280, sm: 300, md: 320 },
+                    cursor: "pointer",
+                    transition: "transform 0.3s ease",
+                    "&:hover": { transform: "scale(1.03)" },
                   }}
                 >
                   {/* Background Image */}
@@ -1255,22 +1297,22 @@ const HomePage = () => {
                           borderColor: "rgba(255,255,255,0.3)",
                         },
                         "& .MuiIconButton-root": {
-                          backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
-                          color: "white", // icon turns white
+                          backgroundColor: "#6aa9ff",
+                          color: "white",
                         },
                       },
                     }}
                   >
                     <Box
                       display="flex"
-
                       justifyContent="space-between"
                       alignItems="center"
                     >
                       <Typography
                         sx={{
                           ...typography.h3B1,
-                          fontWeight: 700
+                          fontWeight: 700,
+                          fontSize: { xs: "16px", md: "18px" },
                         }}
                       >
                         {item.title}
@@ -1284,11 +1326,13 @@ const HomePage = () => {
                         <ArrowForwardIosIcon fontSize="small" />
                       </IconButton>
                     </Box>
+
                     <Typography
                       sx={{
                         ...typography.bodyBase,
                         fontWeight: 400,
                         color: "text.secondary",
+                        fontSize: { xs: "14px", md: "16px" },
                       }}
                     >
                       {item.description}
@@ -1300,6 +1344,9 @@ const HomePage = () => {
           </Grid>
         </Box>
       </Box>
+
+
+
 
       {/* Our Brands Section */}
       <Typography
@@ -1407,7 +1454,7 @@ const HomePage = () => {
         disableRipple
         sx={{
           marginBottom: 2,
-          ml: 8,
+          ml: 9,
           textTransform: "none",           // keep text as-is
           fontSize: "0.8rem",              // smaller font
           fontWeight: 500,                 // medium weight
@@ -1488,81 +1535,91 @@ const HomePage = () => {
 
 
       {/* Blogs Section */}
-      <Button
-        disableElevation
-        disableRipple
-        sx={{
-          marginBottom: 2,
-          ml: 8,
-          textTransform: "none",           // keep text as-is
-          fontSize: "0.8rem",              // smaller font
-          fontWeight: 500,                 // medium weight
-          color: "#1a4dab",                // dark blue text
-          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-          borderRadius: "20px",            // pill shape
-          px: 2,                           // horizontal padding
-          py: 0.5,                         // vertical padding
-          boxShadow: "none",               // remove shadow
-          "&:hover": {
-            backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-            boxShadow: "none",
-          },
-        }}
-      >
-        Blogs
-      </Button>
-      <Typography
-        sx={{
-          ml: 8,
-          ...typography.displayL,
-          color:'#1C2D4B'
-        }}
-        variant="h3" fontWeight="bold" gutterBottom>
-        Blogs
-      </Typography>
-      <Typography
-        variant="h5" sx={{
-          mb: 4,
-           color: '#1C2D4B',
-         ...typography.h4,
-          ml: 8
-        }}>
-        Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
-      </Typography>
-      <Box sx={{ px: 8, py: 6 }}>
+      <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
+        {/* Section Header */}
+        <Button
+          disableElevation
+          disableRipple
+          sx={{
+            marginBottom: 2,
+            // ml: 8,
+            textTransform: "none",           // keep text as-is
+            fontSize: "0.8rem",              // smaller font
+            fontWeight: 500,                 // medium weight
+            color: "#1a4dab",                // dark blue text
+            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+            borderRadius: "20px",            // pill shape
+            px: 2,                           // horizontal padding
+            py: 0.5,                         // vertical padding
+            boxShadow: "none",               // remove shadow
+            "&:hover": {
+              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+              boxShadow: "none",
+            },
+          }}
+        >
+          Blogs
+        </Button>
+        <Typography
+          sx={{
+            
+            ...typography.displayL,
+            color: '#1C2D4B'
+          }}
+          variant="h3" fontWeight="bold" gutterBottom>
+          Blogs
+        </Typography>
+        <Typography
+          variant="h5" sx={{
+            mb: 4,
+            color: '#1C2D4B',
+            ...typography.h4,
+            
+          }}>
+          Get powerful lifting magnets when you need them — without the upfront
+          cost. Flexible rental plans, quick installation, and reliable
+          performance for every project!
+        </Typography>
+
+
+        {/* Blog Section */}
         <Grid container spacing={3}>
-          {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6} sx={{ width: '668px',
-                height: '462px',}}>
+          {/* Featured Post */}
+          <Grid item xs={12} md={6}>
             <Card
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                
                 borderRadius: 3,
                 boxShadow: 0,
                 bgcolor: "#fafafa",
-                cursor:'pointer'
+                cursor: "pointer",
               }}
-             onClick={() => navigate("/home/BlogDetails")}>
+              onClick={() => navigate("/home/BlogDetails")}
+            >
               <CardMedia
                 component="img"
                 image={blogData[0].image}
                 alt={blogData[0].title}
                 sx={{
                   borderRadius: 3,
-                  width: '628px',
-                  height: '300px',
+                  width: "100%",
+                  height: { xs: 240, sm: 280, md: 300 },
                   objectFit: "cover",
                 }}
               />
               <CardContent>
-                <Typography sx={{...typography.h5, color:'#0E1109'}} gutterBottom>
+                <Typography
+                  sx={{
+                    ...typography?.h5,
+                    color: "#0E1109",
+                    fontSize: { xs: "1.2rem", md: "1.5rem" },
+                  }}
+                  gutterBottom
+                >
                   {blogData[0].title}
                 </Typography>
-                <Typography sx={{...typography.bodyBase, color:'#677489'}}>
+                <Typography sx={{ ...typography?.bodyBase, color: "#677489" }}>
                   {blogData[0].author} • {blogData[0].date}
                 </Typography>
                 <Link
@@ -1570,19 +1627,22 @@ const HomePage = () => {
                   underline="none"
                   sx={{
                     color: "#1F77D6",
-                    ...typography.bodyBasemedium,
+                    ...typography?.bodyBasemedium,
                     mt: 1,
                     display: "inline-flex",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                 >
-                  Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
+                  Discover More{" "}
+                  <ArrowForwardIosIcon
+                    sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
+                  />
                 </Link>
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Right Column (Other Posts) */}
+          {/* Other Posts */}
           <Grid item xs={12} md={6}>
             <Grid container spacing={2} direction="column">
               {blogData.slice(1).map((item, idx) => (
@@ -1590,40 +1650,65 @@ const HomePage = () => {
                   <Card
                     sx={{
                       display: "flex",
+                      flexDirection: { xs: "row", sm: "row" },
                       alignItems: "center",
                       borderRadius: 3,
-                      px: 2,
-                      py: 1,
+                      px: { xs: 1, md: 2 },
+                      py: { xs: 1, md: 1.5 },
                       bgcolor: "#fdfdfd",
                       boxShadow: 0,
-                      cursor:'pointer'
+                      cursor: "pointer",
                     }}
-                  onClick={() => navigate("/home/Blogpost")}>
+                    onClick={() => navigate("/home/Blogpost")}
+                  >
                     <CardMedia
                       component="img"
                       image={item.image}
                       alt={item.title}
                       sx={{
-                        width: '130px',
-                        height: '141px',
+                        width: { xs: 100, sm: 120, md: 130 },
+                        height: { xs: 100, sm: 120, md: 141 },
                         borderRadius: 2,
                         objectFit: "cover",
                         mr: 2,
                       }}
                     />
-                    <Box>
-                      <Typography sx={{...typography.h4, color:'#0E1109', width:'474px', height:'62px'}}>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography
+                        sx={{
+                          ...typography?.h4,
+                          color: "#0E1109",
+                          fontSize: { xs: "0.95rem", sm: "1.1rem" },
+                          mb: 0.5,
+                        }}
+                      >
                         {item.title}
                       </Typography>
-                      <Typography sx={{...typography.bodyBase, color:'#677489'}}>
+                      <Typography
+                        sx={{
+                          ...typography?.bodyBase,
+                          color: "#677489",
+                          fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                        }}
+                      >
                         {item.author} • {item.date}
                       </Typography>
                       <Link
                         href="#"
                         underline="none"
-                        sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                        sx={{
+                          color: "#1F77D6",
+                          ...typography?.bodyBasemedium,
+                          mt: 0.5,
+                          fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
                       >
-                        Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
+                        Discover More{" "}
+                        <ArrowForwardIosIcon
+                          sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }}
+                        />
                       </Link>
                     </Box>
                   </Card>
@@ -1635,10 +1720,10 @@ const HomePage = () => {
       </Box>
 
       {/* Footer Section */}
-     <Box >
-        <Footer/>
+      <Box >
+        <Footer />
       </Box>
-      
+
       {/* Dialog */}
       <Dialog
         open={BrowseDialogopen}

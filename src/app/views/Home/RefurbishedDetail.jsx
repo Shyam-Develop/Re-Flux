@@ -455,260 +455,327 @@ const RefurbishedDetail = () => {
         flexDirection: "column",
         // alignItems: "center",
         bgcolor: "white",
+        backgroundColor: "#f9fafb",
         // textAlign: "center",
         p: 4,
       }}
     >
       {/* image and forms */}
-      <Box sx={{ padding: "40px 60px", width: '1441px', height: '796px' }}>
-        {/* Image + Form Section */}
-        <Box
+      <Box
+  sx={{
+    padding: '40px 60px',
+    width: '1441px',
+    height: '796px',
+    '@media (max-width: 600px)': {
+      padding: '20px',
+      width: '100%',
+      height: 'auto',
+    },
+  }}
+>
+  {/* Image + Form Section */}
+  <Box
+    sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 4,
+      justifyContent: 'space-between',
+      '@media (max-width: 600px)': {
+        flexDirection: 'column',
+      },
+    }}
+  >
+    {/* Left Side: Thumbnails + Main Image */}
+    <Box
+      sx={{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        '@media (max-width: 600px)': {
+          width: '100%',
+        },
+      }}
+    >
+      {/* Main Image */}
+      <Box
+        component="img"
+        src={Refurbisheddetailimg}
+        alt="Main Lifting Magnet"
+        sx={{
+          width: '664px',
+          height: '432px',
+          borderRadius: '10px',
+          objectFit: 'cover',
+          '@media (max-width: 600px)': {
+            width: '100%',
+            height: 'auto',
+          },
+        }}
+      />
+
+      {/* Thumbnails */}
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          flexWrap: 'wrap',
+          '@media (max-width: 600px)': {
+            justifyContent: 'center',
+          },
+        }}
+      >
+        {thumbnailImages.map((img, index) => (
+          <Box
+            key={index}
+            component="img"
+            src={img}
+            alt={`Thumbnail ${index + 1}`}
+            onClick={() => setMainImage(img)}
+            sx={{
+              width: '148px',
+              height: '124px',
+              borderRadius: '6px',
+              objectFit: 'cover',
+              cursor: 'pointer',
+              transition: 'border 0.2s ease',
+              '@media (max-width: 600px)': {
+                width: '30%',
+                height: 'auto',
+              },
+            }}
+          />
+        ))}
+      </Box>
+    </Box>
+
+    {/* Right Form */}
+    <Box
+      sx={{
+        width: '600px',
+        height: '394px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        '@media (max-width: 600px)': {
+          width: '100%',
+          height: 'auto',
+        },
+      }}
+    >
+      {/* Title */}
+      <Box
+        sx={{
+          width: '619px',
+          height: '164px',
+          '@media (max-width: 600px)': {
+            width: '100%',
+            height: 'auto',
+          },
+        }}
+      >
+        <Typography
+          variant="h4"
           sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 4,
-            justifyContent: "space-between",
+            width: '619px',
+            height: '62px',
+            ...typography.displayL,
+            color: '#18294C',
+            '@media (max-width: 600px)': {
+              fontSize: '24px',
+              width: '100%',
+            },
           }}
         >
-          {/* Left Side: Thumbnails + Main Image */}
-          <Box
+          Circular Lifting Magnet
+        </Typography>
+
+        <Typography
+          sx={{
+            width: '619px',
+            height: '78px',
+            ...typography.h5,
+            color: '#6B7280',
+            maxWidth: '100%',
+            marginTop: '20px',
+            '@media (max-width: 600px)': {
+              fontSize: '14px',
+              width: '100%',
+            },
+          }}
+        >
+          NISMO has become the embodiment of Nissan’s outstanding performance,
+          inspired by the most unforgiving proving ground, the ”race track”.
+        </Typography>
+      </Box>
+
+      {/* Spec Grid */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          '@media (max-width: 600px)': {
+            flexDirection: 'column',
+            gap: 2,
+          },
+        }}
+      >
+        {/* Column 1 */}
+        <Box>
+          <Typography
             sx={{
-              width: { xs: "100%", md: "50%" },
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
+              color: '#9CA3AF',
+              fontWeight: 500,
+              ...typography.h5,
             }}
           >
-            {/* Main Image */}
-            <Box
-              component="img"
-              src={Refurbisheddetailimg}
-              alt="Main Lifting Magnet"
-              sx={{
-                width: "664px",
-                borderRadius: "10px",
-                objectFit: "cover",
-                height: '432px',
-              }}
-            />
-            {/* Thumbnails Row */}
-            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-              {thumbnailImages.map((img, index) => (
-                <Box
-                  key={index}
-                  component="img"
-                  src={img}
-                  alt={`Thumbnail ${index + 1}`}
-                  onClick={() => setMainImage(img)}
-                  sx={{
-                    width: '148px',
-                    height: '124px',
-                    borderRadius: "6px",
-                    objectFit: "cover",
-                    cursor: "pointer",
-                    transition: "border 0.2s ease",
-                  }}
-                />
-              ))}
-            </Box>
-          </Box>
-          {/* Right Form */}
-
-
-          {/* Right Form */}
-          <Box
+            Diameter
+          </Typography>
+          <Typography
             sx={{
-              width: '600px',
-              height: '394px',
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
+              color: '#9CA3AF',
+              fontWeight: 500,
+              ...typography.h5,
+              mt: 1,
             }}
           >
-            {/* Title */}
-            <Box sx={{ width: '619px', height: '164px' }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  width: '619px',
-                  height: '62px',
-                  ...typography.displayL,
+            Resistance
+          </Typography>
+        </Box>
 
-                  color: "#18294C",
-                }}
-              >
-                Circular Lifting Magnet
-              </Typography>
+        <Box>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              ...typography.h4,
+              color: '#596780',
+            }}
+          >
+            1500
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              ...typography.h4,
+              color: '#596780',
+            }}
+          >
+            1500
+          </Typography>
+        </Box>
 
-              {/* Description */}
-              <Typography
-                sx={{
-                  width: '619px',
-                  height: '78px',
-                  ...typography.h5,
-                  color: "#6B7280",
-                  maxWidth: "100%",
-                  marginTop: '20px'
-                }}
-              >
-                NISMO has become the embodiment of Nissan’s outstanding
-                performance, inspired by the most unforgiving proving ground, the
-                ”race track”.
-              </Typography>
-            </Box>
+        {/* Column 2 */}
+        <Box>
+          <Typography
+            sx={{
+              color: '#9CA3AF',
+              fontWeight: 500,
+              ...typography.h3medium,
+            }}
+          >
+            Diameter
+          </Typography>
+          <Typography
+            sx={{
+              color: '#9CA3AF',
+              fontWeight: 500,
+              ...typography.h3medium,
+              mt: 1,
+            }}
+          >
+            Resistance
+          </Typography>
+        </Box>
 
-            {/* Spec Grid in Single Row */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-
-              }}
-            >
-              {/* Column 1 */}
-              <Box>
-                <Typography
-                  sx={{
-                    color: "#9CA3AF",
-                    fontWeight: 500,
-                    ...typography.h5,
-                  }}
-                >
-                  Diameter
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#9CA3AF",
-                    fontWeight: 500,
-                    ...typography.h5,
-                    mt: 1,
-                  }}
-                >
-                  Resistance
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h4,
-                    color: "#596780",
-                  }}
-                >
-                  1500
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h4,
-                    color: "#596780",
-                  }}
-                >
-                  1500
-                </Typography>
-              </Box>
-
-              {/* Column 2 */}
-              <Box>
-                <Typography
-                  sx={{
-                    color: "#9CA3AF",
-                    fontWeight: 500,
-                    ...typography.h3medium,
-                  }}
-                >
-                  Diameter
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#9CA3AF",
-                    fontWeight: 500,
-                    ...typography.h3medium,
-                    mt: 1,
-                  }}
-                >
-                  Resistance
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h3B1,
-                    color: "#1F2937",
-                  }}
-                >
-                  1500
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h3B1,
-                    color: "#1F2937",
-                  }}
-                >
-                  1500
-                </Typography>
-              </Box>
-            </Box>
-
-            {/* Final Row: Price + Button aligned */}
-            <Box
-              sx={{
-                display: "flex",
-                //   justifyContent: "space-between",
-                alignItems: "center",
-                mt: 2,
-              }}
-            >
-              <Box>
-                <Typography
-                  sx={{
-                    color: "#60A5FA",
-                    fontWeight: 500,
-                    fontWeight: 500,
-                    ...typography.h3medium,
-                  }}
-                >
-                  Starting at
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h3B1,
-                    color: "#1F2937",
-                  }}
-                >
-                  5000/-
-                </Typography>
-              </Box>
-
-              <Button
-                variant="contained"
-                sx={{
-                  fontFamily: "Plus Jakarta Sans-Bold",
-                  backgroundColor: "#3373f3ff",
-                  color: "#ffffff",
-                  px: 15,
-                  ml: 15,
-                  py: 1.5,
-                  fontWeight: 700,
-                  textTransform: "none",
-                  fontSize: "16px",
-                  boxShadow: "0 4px 14px rgba(51, 115, 243, 0.3)",
-                  "&:hover": {
-                    backgroundColor: "#2563eb",
-                  },
-                }}
-              >
-                Buy now
-              </Button>
-            </Box>
-          </Box>
+        <Box>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              ...typography.h3B1,
+              color: '#1F2937',
+            }}
+          >
+            1500
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              ...typography.h3B1,
+              color: '#1F2937',
+            }}
+          >
+            1500
+          </Typography>
         </Box>
       </Box>
+
+      {/* Price + Button */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          mt: 2,
+          '@media (max-width: 600px)': {
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 2,
+          },
+        }}
+      >
+        <Box>
+          <Typography
+            sx={{
+              color: '#60A5FA',
+              fontWeight: 500,
+              ...typography.h3medium,
+            }}
+          >
+            Starting at
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              ...typography.h3B1,
+              color: '#1F2937',
+            }}
+          >
+            5000/-
+          </Typography>
+        </Box>
+
+        <Button
+          variant="contained"
+          sx={{
+            fontFamily: 'Plus Jakarta Sans-Bold',
+            backgroundColor: '#3373f3ff',
+            color: '#ffffff',
+            px: 15,
+            ml: 15,
+            py: 1.5,
+            fontWeight: 700,
+            textTransform: 'none',
+            fontSize: '16px',
+            boxShadow: '0 4px 14px rgba(51, 115, 243, 0.3)',
+            '&:hover': {
+              backgroundColor: '#2563eb',
+            },
+            '@media (max-width: 600px)': {
+              width: '100%',
+              ml: 0,
+              px: 0,
+              justifyContent: 'center',
+            },
+          }}
+        >
+          Buy now
+        </Button>
+      </Box>
+    </Box>
+  </Box>
+</Box>
+
+
+
 
       {/* Specs section */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
@@ -793,9 +860,7 @@ const RefurbishedDetail = () => {
           What's included
         </Typography>
         <WhatsincludedCard />
-
       </Box>
-
 
 
       <Box

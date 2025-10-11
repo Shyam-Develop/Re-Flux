@@ -809,153 +809,138 @@ const SellMagnet = () => {
           />
         </Box>
       </Box>
-      {/* ROI Calculator */}
-      <Box
-        sx={{
-          mt: 5,
-        }}
-      >
-        <Typography
-          sx={{
-            ml: 10,
-            ...typography.h3RB,
-            fontWeight: 700,
-            color: "#092f7a",
-          }}
-        >
-          ROI Calculator
-        </Typography>
-        <Typography
-          variant="h5"
-          sx={{
-            mb: 4,
-            color: "text.secondary",
-            ...typography.h3B1,
-            fontWeight: 400,
-            ml: 10,
-          }}
-        >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
-        </Typography>
-        <Typography
-          sx={{
-            ...typography.h3R,
-            color: "#1a4dab",
-            fontWeight: 600,
-            ml: 106,
-          }}
-        >
-          View All ROI Calculators
-          <ArrowRightAltIcon
-            sx={{
-              color: "#1a4dab",
-              fontWeight: "bold",
-              verticalAlign: "middle",
-              ml: 1,
-              fontSize: "3rem",
-            }}
-          />
-        </Typography>
-        <Box sx={{ maxWidth: 1200, mx: "auto", px: 2 }}>
-          <Grid container spacing={4} justifyContent="center">
-            {roiData.map((item, index) => (
-              <Grid item xs={12} sm={6} md={6} key={index}>
-                <Card
-                  sx={{
-                    position: "relative",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 3,
-                    height: 320,
-                  }}
-                >
-                  {/* Background Image */}
-                  <CardMedia
-                    component="img"
-                    image={item.image}
-                    alt={item.title}
-                    sx={{
-                      height: "100%",
-                      width: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
 
-                  {/* Overlay White Card */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      backgroundColor: "white",
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      px: 2,
-                      py: 1.5,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 0.5,
-                      "&:hover": {
-                        textAlign: "left",
-                        bgcolor: "#0b2d55",
-                        color: "white",
-                        "& .MuiTypography-root": {
-                          color: "white",
-                          transform: "scale(1.05)",
-                        },
-                        "& .MuiDivider-root": {
-                          borderColor: "rgba(255,255,255,0.3)",
-                        },
-                        "& .MuiIconButton-root": {
-                          backgroundColor: "#6aa9ff", // 🔹 light blue only for icon button
-                          color: "white", // icon turns white
-                        },
-                      },
-                    }}
-                  >
-                    <Box
-                      display="flex"
-                      sx={{}}
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "24px",
-                          fontFamily: "SpaceGrotesk-Bold",
-                          fontWeight: 700,
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        sx={{
-                          backgroundColor: "#f0f0f0",
-                        }}
-                      >
-                        <ArrowForwardIosIcon fontSize="small" />
-                      </IconButton>
-                    </Box>
-                    <Typography
-                      sx={{
-                        ...typography.bodyBase,
-                        fontWeight: 400,
-                        color: "#bdbdbd",
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      </Box>
+      {/* ROI Calculator */}
+       <Box sx={{ p: 5 }}>
+             <Box sx={{ mt: 8 }}>
+               <Typography gutterBottom sx={{ ...typography.displayL, color: '#1C2D4B', ml: 2 }}>
+                 ROI Calculator
+               </Typography>
+     
+               <Typography
+                 variant="h5"
+                 sx={{
+                   mb: 3,
+                   color: "#99A0AE",
+                   ml: 2,
+                   // maxWidth: "900px",
+                   ...typography.h4
+                 }}
+               >
+                 Get powerful lifting magnets when you need them — without the upfront
+                 cost. Flexible rental plans, quick installation, and reliable
+                 performance for every project!
+               </Typography>
+     
+               <Box
+                 sx={{
+                   display: 'flex',
+                   justifyContent: 'flex-end',
+                   mr: 2,
+                   mb: 4,
+     
+                 }}
+               >
+                 <Typography
+                   sx={{
+                     fontSize: "1.5rem",
+                     fontWeight: "bold",
+                     display: "flex",
+                     alignItems: "center",
+                     cursor: "pointer",
+                     ...typography.h3,
+                     color: '#2F6FBA'
+                   }}
+                 >
+                   View All ROI Calculators
+                   <ArrowRightAltIcon sx={{ ml: 1, fontSize: "2.5rem" }} />
+                 </Typography>
+               </Box>
+     
+               <Grid container spacing={4}>
+                 {roiData.map((item, index) => (
+                   <Grid item xs={12} md={6} key={index}>
+                     <Card
+                       sx={{
+                         position: "relative",
+                         borderRadius: 3,
+                         overflow: "hidden",
+                         boxShadow: 3,
+                         height: '400px',
+                       }}
+                     >
+                       <CardMedia
+                         component="img"
+                         image={item.image}
+                         alt={item.title}
+                         sx={{
+                           height: "100%",
+                           width: "100%",
+                           objectFit: "cover",
+                         }}
+                       />
+     
+                       <Box
+                         sx={{
+                           position: "absolute",
+                           bottom: 16,
+                           left: 16,
+                           right: 16,
+                           backgroundColor: "white",
+                           borderRadius: 2,
+                           boxShadow: 1,
+                           px: 2,
+                           py: 1.5,
+                           display: "flex",
+                           flexDirection: "column",
+                           gap: 0.5,
+                           transition: "0.3s ease-in-out",
+                           "&:hover": {
+                             bgcolor: "#0b2d55",
+                             color: "white",
+                             "& .MuiTypography-root": { color: "white" },
+                             "& .MuiIconButton-root": {
+                               backgroundColor: "#4487ebff",
+                               color: "white",
+                             },
+                           },
+                         }}
+                       >
+                         <Box
+                           display="flex"
+                           justifyContent="space-between"
+                           alignItems="center"
+                         >
+                           <Typography
+                             sx={{ ...typography.h4, color: '#0B121E' }}
+                           >
+                             {item.title}
+                           </Typography>
+                           <IconButton
+                             size="small"
+                             sx={{
+                               backgroundColor: "#f0f0f0",
+                               width: "40px",
+                               height: "40px",
+                             }}
+                           >
+                             <ArrowForwardIosIcon fontSize="small" />
+                           </IconButton>
+                         </Box>
+                         <Typography
+                           sx={{ ...typography.bodyBase, color: '#99A0AE' }}
+                         >
+                           {item.description}
+                         </Typography>
+                       </Box>
+                     </Card>
+                   </Grid>
+                 ))}
+               </Grid>
+             </Box>
+           </Box>
+
+           
 
       {/* FAQs Section */}
       <Box
@@ -1067,154 +1052,189 @@ const SellMagnet = () => {
       </Box>
 
       {/* Blogs Section */}
-     <Box>
-     <Button
-          disableElevation
-          disableRipple
-          sx={{
-            ...typography.bodySmall,
-            marginBottom: 2,
-            ml: 8,
-            textTransform: "none", // keep text as-is
-            // fontSize: "0.8rem", // smaller font
-            fontWeight: 400, // medium weight
-            color: "#1a4dab", // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px", // pill shape
-            px: 2, // horizontal padding
-            py: 0.5, // vertical padding
-            boxShadow: "none", // remove shadow
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-              boxShadow: "none",
-            },
-          }}
-        >
-          Blogs
-        </Button>
-      <Typography
-        sx={{
-          ml: 8,
-          ...typography.displayL,
-          color:'#1C2D4B'
-        }}
-        variant="h3" fontWeight="bold" gutterBottom>
-        Blogs
-      </Typography>
-      <Typography
-        variant="h5" sx={{
-          mb: 4,
-           color: '#1C2D4B',
-         ...typography.h4,
-          ml: 8
-        }}>
-        Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
-      </Typography>
-      <Box sx={{ px: 8, py: 6 }}>
-        <Grid container spacing={3}>
-          {/* Left Column (Featured Post) */}
-          <Grid item xs={12} md={6}>
-            <Card
-              sx={{
-                //display: "flex",
-                flexDirection: "column",
-                // width:'668px',
-                // height:'462px', 
-                borderRadius: 3,
-                // boxShadow: 0,
-                bgcolor: "#fafafa",
-                cursor:'pointer'
-              }}
-             onClick={() => navigate("/home/BlogDetails")}>
-              <CardMedia
-                component="img"
-                image={blogData[0].image}
-                alt={blogData[0].title}
+     <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
+              {/* Section Header */}
+              <Button
+                disableElevation
+                disableRipple
                 sx={{
-                  borderRadius: 3,
-                  width: '628px',
-                  height: '300px',
-                  objectFit: "cover",
+                  marginBottom: 2,
+                  // ml: 8,
+                  textTransform: "none",           // keep text as-is
+                  fontSize: "0.8rem",              // smaller font
+                  fontWeight: 500,                 // medium weight
+                  color: "#1a4dab",                // dark blue text
+                  backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
+                  borderRadius: "20px",            // pill shape
+                  px: 2,                           // horizontal padding
+                  py: 0.5,                         // vertical padding
+                  boxShadow: "none",               // remove shadow
+                  "&:hover": {
+                    backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+                    boxShadow: "none",
+                  },
                 }}
-              />
-              <CardContent>
-                <Typography sx={{...typography.h5, color:'#0E1109'}} gutterBottom>
-                  {blogData[0].title}
-                </Typography>
-                <Typography sx={{...typography.bodyBase, color:'#677489'}}>
-                  {blogData[0].author} • {blogData[0].date}
-                </Typography>
-                <Link
-                  href="#"
-                  underline="none"
-                  sx={{
-                    color: "#1F77D6",
-                    ...typography.bodyBasemedium,
-                    mt: 1,
-                    display: "inline-flex",
-                    alignItems: "center"
-                  }}
-                >
-                  Discover More <ArrowForwardIosIcon sx={{ ml: 1.5, color: "#1F77D6", }} />
-                </Link>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Right Column (Other Posts) */}
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} direction="column">
-              {blogData.slice(1).map((item, idx) => (
-                <Grid item key={idx}>
+              >
+                Blogs
+              </Button>
+              <Typography
+                sx={{
+                  
+                  ...typography.displayL,
+                  color: '#1C2D4B'
+                }}
+                variant="h3" fontWeight="bold" gutterBottom>
+                Blogs
+              </Typography>
+              <Typography
+                variant="h5" sx={{
+                  mb: 4,
+                  color: '#1C2D4B',
+                  ...typography.h4,
+                  
+                }}>
+                Get powerful lifting magnets when you need them — without the upfront
+                cost. Flexible rental plans, quick installation, and reliable
+                performance for every project!
+              </Typography>
+      
+      
+              {/* Blog Section */}
+              <Grid container spacing={3}>
+                {/* Featured Post */}
+                <Grid item xs={12} md={6}>
                   <Card
                     sx={{
                       display: "flex",
-                      alignItems: "center",
+                      flexDirection: "column",
                       borderRadius: 3,
-                      px: 2,
-                      py: 1,
-                      bgcolor: "#fdfdfd",
                       boxShadow: 0,
-                      cursor:'pointer'
+                      bgcolor: "#fafafa",
+                      cursor: "pointer",
                     }}
-                   onClick={() => navigate("/home/Blogpost")}>
+                    onClick={() => navigate("/home/BlogDetails")}
+                  >
                     <CardMedia
                       component="img"
-                      image={item.image}
-                      alt={item.title}
+                      image={blogData[0].image}
+                      alt={blogData[0].title}
                       sx={{
-                        width: '130px',
-                        height: '141px',
-                        borderRadius: 2,
+                        borderRadius: 3,
+                        width: "100%",
+                        height: { xs: 240, sm: 280, md: 300 },
                         objectFit: "cover",
-                        mr: 2,
                       }}
                     />
-                    <Box>
-                      <Typography sx={{...typography.h4, color:'#0E1109', width:'474px', height:'62px'}}>
-                        {item.title}
+                    <CardContent>
+                      <Typography
+                        sx={{
+                          ...typography?.h5,
+                          color: "#0E1109",
+                          fontSize: { xs: "1.2rem", md: "1.5rem" },
+                        }}
+                        gutterBottom
+                      >
+                        {blogData[0].title}
                       </Typography>
-                      <Typography sx={{...typography.bodyBase, color:'#677489'}}>
-                        {item.author} • {item.date}
+                      <Typography sx={{ ...typography?.bodyBase, color: "#677489" }}>
+                        {blogData[0].author} • {blogData[0].date}
                       </Typography>
                       <Link
                         href="#"
                         underline="none"
-                        sx={{ color: "#1F77D6", ...typography.bodyBasemedium, mt: 0.5, display: "inline-flex", alignItems: "center" }}
+                        sx={{
+                          color: "#1F77D6",
+                          ...typography?.bodyBasemedium,
+                          mt: 1,
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
                       >
-                        Discover More <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", }} />
+                        Discover More{" "}
+                        <ArrowForwardIosIcon
+                          sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
+                        />
                       </Link>
-                    </Box>
+                    </CardContent>
                   </Card>
                 </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Box>
-     </Box>
+      
+                {/* Other Posts */}
+                <Grid item xs={12} md={6}>
+                  <Grid container spacing={2} direction="column">
+                    {blogData.slice(1).map((item, idx) => (
+                      <Grid item key={idx}>
+                        <Card
+                          sx={{
+                            display: "flex",
+                            flexDirection: { xs: "row", sm: "row" },
+                            alignItems: "center",
+                            borderRadius: 3,
+                            px: { xs: 1, md: 2 },
+                            py: { xs: 1, md: 1.5 },
+                            bgcolor: "#fdfdfd",
+                            boxShadow: 0,
+                            cursor: "pointer",
+                          }}
+                          onClick={() => navigate("/home/Blogpost")}
+                        >
+                          <CardMedia
+                            component="img"
+                            image={item.image}
+                            alt={item.title}
+                            sx={{
+                              width: { xs: 100, sm: 120, md: 130 },
+                              height: { xs: 100, sm: 120, md: 141 },
+                              borderRadius: 2,
+                              objectFit: "cover",
+                              mr: 2,
+                            }}
+                          />
+                          <Box sx={{ flex: 1 }}>
+                            <Typography
+                              sx={{
+                                ...typography?.h4,
+                                color: "#0E1109",
+                                fontSize: { xs: "0.95rem", sm: "1.1rem" },
+                                mb: 0.5,
+                              }}
+                            >
+                              {item.title}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                ...typography?.bodyBase,
+                                color: "#677489",
+                                fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                              }}
+                            >
+                              {item.author} • {item.date}
+                            </Typography>
+                            <Link
+                              href="#"
+                              underline="none"
+                              sx={{
+                                color: "#1F77D6",
+                                ...typography?.bodyBasemedium,
+                                mt: 0.5,
+                                fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                                display: "inline-flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              Discover More{" "}
+                              <ArrowForwardIosIcon
+                                sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }}
+                              />
+                            </Link>
+                          </Box>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
 
       {/* Rent Services instaed */}
       <Box>

@@ -31,8 +31,8 @@ const Legal = () => {
           gridColumn: isNonMobile ? undefined : "span 4",
         },
         padding: "10px",
-        width: '1440px',
-        height: '1770px'
+        // width: '1440px',
+        // height: '1770px'
       }}
     >
       <Box sx={{ gridColumn: "span 4", p: 2 }}>
@@ -47,7 +47,8 @@ const Legal = () => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ width: '1312px', height: '1586px' }}>
+          {/* width: '1312px', height: '1586px' */}
+          <Box sx={{  }}>
             {/* Heading */}
             <Typography
               sx={{ ...typography.displayL, color: "#1A2438", mb: 2 }}
@@ -127,7 +128,11 @@ const Legal = () => {
               <Typography sx={{ ...typography.h5, color: "#0B121E", mt: 3 }}>
                 1.3 Services shown on the Site
               </Typography>
+              <Typography sx={{...typography.bodySmall, fontSize:'14px'}}>
+                The Site describes:
+              </Typography>
               <Typography sx={{ ...typography.bodySmall, color: "#111B2D" }} component="div">
+            
                 <ul>
                   <li>
                     Repair of electro-lifting magnets (circular, rectangular,

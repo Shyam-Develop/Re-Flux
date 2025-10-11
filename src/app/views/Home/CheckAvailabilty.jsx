@@ -28,7 +28,9 @@ import {
   MenuItem,
   Stack,
   Chip,
-  Paper
+  Paper,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -155,6 +157,9 @@ const CheckAvailabilty = () => {
   const handledialogClose = () => {
     setBrowseDialogOpen(false);
   };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const specs = [
     { label: 'Diameter', value: 'Ø{{diameter_mm}} mm' },
@@ -418,7 +423,7 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
-                 ...typography.h4,
+                ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
@@ -430,7 +435,7 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
-                 ...typography.h4,
+                ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
@@ -442,7 +447,7 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
-                 ...typography.h4,
+                ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
@@ -454,7 +459,7 @@ const CheckAvailabilty = () => {
             <Typography
               sx={{
                 color: "#4B5C76",
-                 ...typography.h4,
+                ...typography.h4,
                 fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
@@ -470,11 +475,12 @@ const CheckAvailabilty = () => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             flexWrap: "wrap",
             gap: 4,
             justifyContent: "space-between",
-            width: '1441px',
-            height: '644px'
+            width: { xs: "100%", md: "1441px" },
+            height: { xs: "auto", md: "644px" },
           }}
         >
           {/* Left Side: Thumbnails + Main Image */}
@@ -486,22 +492,28 @@ const CheckAvailabilty = () => {
               gap: 2,
             }}
           >
-
-
             {/* Main Image */}
             <Box
               component="img"
-              src={Checkavailimage}
+              src={mainImage}
               alt="Main Lifting Magnet"
               sx={{
-                width: "887px",
-                height: "500px",
+                width: { xs: "100%", md: "887px" },
+                height: { xs: "auto", md: "500px" },
                 borderRadius: "10px",
                 objectFit: "cover",
               }}
             />
+
             {/* Thumbnails Row */}
-            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexWrap: { xs: "nowrap", md: "wrap" },
+                overflowX: { xs: "auto", md: "visible" },
+              }}
+            >
               {thumbnailImages.map((img, index) => (
                 <Box
                   key={index}
@@ -510,220 +522,137 @@ const CheckAvailabilty = () => {
                   alt={`Thumbnail ${index + 1}`}
                   onClick={() => setMainImage(img)}
                   sx={{
-                    width: '148px',
-                    height: '124px',
+                    width: { xs: "100px", md: "148px" },
+                    height: { xs: "80px", md: "124px" },
                     borderRadius: "6px",
                     objectFit: "cover",
-                    border: mainImage === img ? "2px solid #E17A00" : "2px solid transparent",
+                    border:
+                      mainImage === img
+                        ? "2px solid #E17A00"
+                        : "2px solid transparent",
                     cursor: "pointer",
                     transition: "border 0.2s ease",
+                    flex: "0 0 auto",
                   }}
                 />
               ))}
             </Box>
           </Box>
+
           {/* Right Form */}
           <Box
             sx={{
-              width: '452px',
-              height: "411px",
+              width: { xs: "100%", md: "452px" },
+              height: "60%",
               border: "1px solid #E17A00",
               borderRadius: "12px",
               padding: "24px",
-              marginRight: '90px',
-              marginTop: '40px',
-              lineHeight: '5',
-              // display: "flex",
+              marginTop: { xs: "20px", md: "40px" },
+              marginRight: { xs: 0, md: "90px" },
+              lineHeight: "2",
+              display: "flex",
               flexDirection: "column",
               gap: 2,
             }}
           >
             {/* Row 1: Dates */}
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", md: "row" } }}>
               <Box sx={{ flex: 1 }}>
-                <Typography
-                  sx={{
-                    ...typography.h3medium,
-                    fontWeight: 500,
-                    mb: "4px",
-
-                  }}
-                >
+                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
                   Start date
                 </Typography>
                 <Select
-
+                  fullWidth
+                  size="small"
+                  defaultValue=""
                   sx={{
                     ...typography.bodyBasemedium,
                     fontWeight: 400,
                     border: "1px solid #E17A00",
                   }}
-                  fullWidth size="small" defaultValue="">
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="All"
-                  >
-                    All
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="option1"
-                  >
-                    Option 1
-                  </MenuItem>
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="option1">Option 1</MenuItem>
                 </Select>
               </Box>
 
               <Box sx={{ flex: 1 }}>
-                <Typography
-                  sx={{
-                    ...typography.h3medium,
-                    fontWeight: 500,
-                    mb: "4px",
-                  }}
-                >
+                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
                   End date
                 </Typography>
                 <Select
+                  fullWidth
+                  size="small"
+                  defaultValue=""
                   sx={{
-                    border: "1px solid #E17A00",
                     ...typography.bodyBasemedium,
                     fontWeight: 400,
+                    border: "1px solid #E17A00",
                   }}
-                  fullWidth size="small" defaultValue="">
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="All"
-                  >
-                    All
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="option1"
-                  >
-                    Option 1
-                  </MenuItem>
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="option1">Option 1</MenuItem>
                 </Select>
               </Box>
             </Box>
 
             {/* Row 2: Capacity and Duty Cycle */}
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", md: "row" } }}>
               <Box sx={{ flex: 1 }}>
-                <Typography
-                  sx={{
-                    ...typography.h3medium,
-                    fontWeight: 500,
-                    mb: "4px",
-                  }}
-                >
+                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
                   Capacity
                 </Typography>
                 <Select
+                  fullWidth
+                  size="small"
+                  defaultValue=""
                   sx={{
-                    border: "1px solid #E17A00",
                     ...typography.bodyBasemedium,
                     fontWeight: 400,
+                    border: "1px solid #E17A00",
                   }}
-                  fullWidth size="small" defaultValue="">
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="All"
-                  >
-                    All
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="option1"
-                  >
-                    Option 1
-                  </MenuItem>
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="option1">Option 1</MenuItem>
                 </Select>
               </Box>
 
               <Box sx={{ flex: 1 }}>
-                <Typography
-                  sx={{
-                    ...typography.h3medium,
-                    fontWeight: 500,
-                    mb: "4px",
-                  }}
-                >
+                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
                   Duty cycle
                 </Typography>
                 <Select
+                  fullWidth
+                  size="small"
+                  defaultValue=""
                   sx={{
-                    border: "1px solid #E17A00",
                     ...typography.bodyBasemedium,
                     fontWeight: 400,
+                    border: "1px solid #E17A00",
                   }}
-                  fullWidth size="small" defaultValue="">
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="All"
-                  >
-                    All
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      ...typography.bodyBasemedium,
-                      fontWeight: 400,
-                    }}
-                    value="option1"
-                  >
-                    Option 1
-                  </MenuItem>
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="option1">Option 1</MenuItem>
                 </Select>
               </Box>
             </Box>
 
             {/* Row 3: Location Input */}
             <Box>
-              <Typography
-                sx={{
-                  ...typography.h3medium,
-                  fontWeight: 500,
-                  mb: "4px",
-                }}
-              >
+              <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
                 Location
               </Typography>
               <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  border: "1px solid #ccc",
+                  border: "1px solid #E17A00",
                   borderRadius: "4px",
                   px: 1,
                   py: 0.5,
-                  border: "1px solid #E17A00",
                 }}
               >
-                <InputBase
-                  placeholder="Chennai"
-                  sx={{ flex: 1, fontSize: "14px" }}
-                />
+                <InputBase placeholder="Chennai" sx={{ flex: 1, fontSize: "14px" }} />
                 <SearchIcon sx={{ color: "#777", fontSize: "24px" }} />
               </Box>
             </Box>
@@ -748,6 +677,9 @@ const CheckAvailabilty = () => {
             </Button>
           </Box>
         </Box>
+
+
+
       </Box>
 
 
@@ -831,72 +763,83 @@ const CheckAvailabilty = () => {
         >
           What's included
         </Typography>
-            <WhatsincludedCard />
-       
+        <WhatsincludedCard />
+
       </Box>
 
 
       {/* <Whyitworkcard /> */}
 
       {/*ElectroMagnet Repair Section */}
-     <Typography
-        variant="h4"
-        sx={{
-          color: "#1c2434",
-          ml: 5,
-          fontWeight: 600,
-          fontFamily: "Space Grotesk, Regular",
-          fontSize: "48px",
-        }}
-      >
-        Symptoms & Faults
-      </Typography>
+        <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
+        {/* Heading */}
+        <Typography
+          sx={{
+            ...typography.displayM,
+            lineHeight: "1.2",
+            color: "#1c2434",
+            mb: 2,
+            ml: isMobile ? 0 : 5,
+            fontFamily: "Space Grotesk, Regular",
+            textAlign: isMobile ? "center" : "left",
+          }}
+        >
+          ElectroMagnet Repair
+        </Typography>
 
+        {/* Subheading */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 500,
+            color: "#1c2434",
+            mb: 4,
+            ml: isMobile ? 0 : 5,
+            fontFamily: "Inter, sans-serif",
+            textAlign: isMobile ? "center" : "left",
+            px: isMobile ? 2 : 0,
+          }}
+        >
+          Coil rewinds, terminal rebuilds, housing & controllers — restored to
+          spec with certified load testing
+        </Typography>
 
-      <Box
-        sx={{
-          width: "1440px",
-          height: "857px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "white",
-        }}
-      >
-        {/* Inner container */}
+        {/* Main Container */}
         <Box
           sx={{
-            width: "1228px",
-            height: "708px",
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "flex-start",
             justifyContent: "space-between",
             border: "1px solid #ddd",
             borderRadius: 3,
-            p: 4,
+            px: isMobile ? 2 : 4,
+            py: isMobile ? 3 : 4,
+            gap: 6,
+            width: "100%",
             bgcolor: "white",
           }}
         >
-          {/* Left - Features */}
-          <Box
-            sx={{
-              width: "570px",
-              height: "660px",
-              position: "relative",
-            }}
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                bottom: '100px',
-                left: "10px",
-                width: "2px",
-                bgcolor: "#ccc",
-                borderRadius: 1,
-              }}
-            />
+          {/* Left - Timeline */}
+          <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+            {/* Vertical Line */}
+            {!isMobile && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  left: "10px",
+                  width: "2px",
+                  bgcolor: "#ccc",
+                  borderRadius: 1,
+                }}
+              />
+            )}
+
             {features.map((item, index) => {
               const isActive = hoveredIndex === index;
+
               return (
                 <Box
                   key={index}
@@ -907,9 +850,11 @@ const CheckAvailabilty = () => {
                     cursor: "pointer",
                     position: "relative",
                   }}
-                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
+                  onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
                 >
-                  {isActive && (
+                  {/* Active Line */}
+                  {!isMobile && isActive && (
                     <Box
                       sx={{
                         position: "absolute",
@@ -921,7 +866,9 @@ const CheckAvailabilty = () => {
                       }}
                     />
                   )}
-                  <Box sx={{ ml: 4, paddingTop: '5px' }}>
+
+                  {/* Icon + Text */}
+                  <Box sx={{ ml: 4 }}>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <CalendarMonthIcon
                         sx={{
@@ -943,6 +890,7 @@ const CheckAvailabilty = () => {
                         {item.title}
                       </Typography>
                     </Box>
+
                     <Typography
                       variant="body2"
                       sx={{
@@ -963,11 +911,11 @@ const CheckAvailabilty = () => {
           {/* Right - Image */}
           <Box
             sx={{
-              width: "570px",
-              height: "567px",
+              flex: 1,
+              width: "100%",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              mt: isMobile ? 2 : 0,
             }}
           >
             <Box
@@ -976,9 +924,9 @@ const CheckAvailabilty = () => {
               alt="ElectroMagnet Repair"
               sx={{
                 width: "100%",
-                height: "100%",
-                borderRadius: 3,
+                maxWidth: isMobile ? "100%" : 600,
                 objectFit: "cover",
+                borderRadius: 3,
                 transition: "0.5s",
               }}
             />
@@ -1100,8 +1048,8 @@ const CheckAvailabilty = () => {
 
       {/* Footer Section */}
       <Box >
-            <Footer/>
-          </Box>
+        <Footer />
+      </Box>
 
     </Box>
   );

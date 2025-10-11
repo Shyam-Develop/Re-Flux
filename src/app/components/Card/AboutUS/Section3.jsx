@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -6,6 +6,8 @@ import {
   CardContent,
   CardMedia,
   Button,
+  IconButton,
+  Dialog, DialogContent, TextField, FormControl, Select, MenuItem,
 } from "@mui/material";
 import Scope1 from "../../../../assets/Scope1.png";
 import Scope2 from "../../../../assets/Scope2.png";
@@ -13,9 +15,15 @@ import Scope3 from "../../../../assets/Scope3.png";
 import Scope4 from "../../../../assets/Scope4.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import "swiper/css";
 import "swiper/css/pagination";
 import { typography } from "app/utils/constant";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+
+
+
 const services = [
   {
     id: 1,
@@ -80,61 +88,121 @@ const services = [
 ];
 
 export default function AboutUsRepairServicesPageCard() {
+
+  const UploadBox = ({ label }) => {
+    return (
+      <Box sx={{ my: 3 }}>
+        <Typography variant="h6" gutterBottom>{label}</Typography>
+        <label htmlFor="upload-input">
+          <Box
+            sx={{
+              border: '2px dashed #ccc',
+              borderRadius: 2,
+              p: 4,
+              textAlign: 'center',
+              cursor: 'pointer',
+              transition: 'border-color 0.3s ease',
+              '&:hover': { borderColor: 'primary.main' },
+            }}
+          >
+            <IconButton component="span" size="large">
+              <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+            </IconButton>
+            <Typography>
+              <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Select image in jpeg, PNG
+            </Typography>
+          </Box>
+        </label>
+        <input
+          id="upload-input"
+          type="file"
+          accept="image/jpeg, image/png"
+          style={{ display: 'none' }}
+        />
+      </Box>
+    );
+  };
+
+
+  const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setBrowseDialogOpen(true);
+  };
+
+  const handledialogClose = () => {
+    setBrowseDialogOpen(false);
+  };
+
+
   return (
-<Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+    <Box sx={{ p: { xs: 2, md: 6, }, backgroundColor: "#f9fafb" }}>
       {/* Swiper Carousel */}
+
       <Typography
-                          sx={{
-                              ...typography.displayM,
-                              color:"#1C2D4B",
-                              textAlign:"left"
-                          }}>
-                          Our Capabilities
-                      </Typography>
-                      <Typography
-                          sx={{
-                              ...typography.h5,
-                              color:"#49576F",
-                              textAlign:"left"
-                          }}>
-                         Electrical and Mechanical restoration with documented testing.
-                      </Typography>
+        sx={{
+          ...typography.displayM,
+          color: "#1C2D4B",
+          textAlign: "left"
+        }}>
+        Our Capabilities
+      </Typography>
+      <Typography
+        sx={{
+          ...typography.h5,
+          color: "#49576F",
+          textAlign: "left",
+
+        }}>
+        Electrical and Mechanical restoration with documented testing.
+      </Typography>
+
       <Swiper
         modules={[Pagination]}
-        spaceBetween={20}
-        slidesPerView={3} // show 3 at a time
+        spaceBetween={40}
+        slidesPerView={3.5} // show 3 at a time
         pagination={{
           clickable: true,
         }}
         style={{
           paddingBottom: "40px", // space for pagination line
         }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
-        }}
+      // breakpoints={{
+      //   0: { slidesPerView: 1 },
+      //   600: { slidesPerView: 2 },
+      //   960: { slidesPerView: 3 },
+      // }}
       >
         {services.map((service) => (
           <SwiperSlide key={service.id}>
             <Card
               sx={{
+                position: "relative",            // anchor for the absolute button
                 borderRadius: 3,
+                width: "370px",
                 boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
                 display: "flex",
                 flexDirection: "column",
-                transition: "all 0.4s ease-in-out",
+                mt: 4,
+                transition:
+                  "transform 0.35s ease, padding-bottom 0.35s ease, background-color 0.35s ease",
+                overflow: "hidden",
                 "&:hover": {
-                  transform: "scale(1.03)",
+                  transform: "scale(1.003)",
                   backgroundColor: "#0b2d55",
                   color: "white",
+                  paddingBottom: "60px",
                 },
                 "&:hover .MuiTypography-root": {
                   color: "white !important",
                 },
                 "&:hover .view-more-btn": {
                   opacity: 1,
-                  transform: "translateY(0)",
+                  bottom: 30,
+                  transform: "translate(-50%, 0)",
                 },
               }}
             >
@@ -150,40 +218,45 @@ export default function AboutUsRepairServicesPageCard() {
                 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
-                <Typography sx={{
-                    ...typography.h4,
-                            color:"#1C2D4B",
-                }}>
+                <Typography sx={{ ...typography.h4, color: "#1C2D4B" }}>
                   {service.title}
                 </Typography>
-                <Typography
-                  sx={{
-                         ...typography.bodyBase,
-                         color:"#49576F",
-                       mb: 2 }}
-                >
+                <Typography sx={{ ...typography.bodyBase, color: "#49576F", mb: 2 }}>
                   {service.type}
                 </Typography>
               </CardContent>
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  className="view-more-btn"
-                  sx={{
-                    borderRadius: 2,
-                    textTransform: "none",
-                    bgcolor: "#b45309",
-                    transition: "all 0.3s ease-in-out",
-                    opacity: 0,
-                    transform: "translateY(10px)",
-                  }}
-                >
-                  View More
-                </Button>
-              </Box>
+
+              {/* absolutely positioned button — not part of layout until hover */}
+              <Button
+                fullWidth
+                variant="contained"
+                className="view-more-btn"
+                sx={{
+                  position: "absolute",
+                  left: "50%",
+                  bottom: 1,
+                  transform: "translate(-50%, 10px)",
+                  borderRadius: 20,
+                  padding: "10px 18px",
+                  textTransform: "none",
+                  bgcolor: "#b45309",
+                  transition: "all 0.35s ease-in-out",
+                  opacity: 0,
+                  width: "calc(100% - 70px)",
+                  boxSizing: "border-box",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 1,
+                  "&:hover": { bgcolor: "#92400e" },
+                }}
+              >
+                View More
+                <ArrowRightAltIcon sx={{ fontSize: 22 }} /> {/* ✅ arrow */}
+              </Button>
             </Card>
           </SwiperSlide>
+
         ))}
       </Swiper>
 
@@ -214,14 +287,246 @@ export default function AboutUsRepairServicesPageCard() {
           width: "100%",
           bgcolor: "#b45309",
           borderRadius: 10,
+          mt: 1,
           px: 6,
           py: 1.5,
           textTransform: "none",
           "&:hover": { bgcolor: "#92400e" },
         }}
-      >
+        onClick={() => handleClickOpen()} >
         Get a repair quote
       </Button>
+      {/* Swiper Carousel */}
+
+
+
+ <Dialog
+        open={BrowseDialogopen}
+        onClose={handledialogClose}
+        maxWidth="sm"
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            borderRadius: "16px",
+            height: "100vh", // 👈 fixed height
+            maxHeight: "100vh", // 👈 prevent overflow beyond screen
+          },
+        }}
+      >
+        <DialogContent>
+          {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+          <CardContent>
+            <Typography
+              sx={{
+                textAlign: "left",
+              }}
+              variant="h6"
+              gutterBottom
+            >
+              Tell us what you need
+            </Typography>
+            <Typography
+              //  variant="h6"
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                color: "#111",
+              }}
+            >
+              Company Name *
+            </Typography>
+            <TextField
+              placeholder="Ex: John"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Contact Person *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Phone *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+
+                color: "#111",
+                marginTop: 2,
+              }}
+            >
+              Email *
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                marginTop: 2,
+              }}
+            >
+              Enquiry for *
+            </Typography>
+            <FormControl fullWidth>
+              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+              <Select
+
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+
+              >
+                <MenuItem
+                  value={10}
+                >
+                  1-5
+                </MenuItem>
+                <MenuItem
+                  value={20}
+                >
+                  6-10
+                </MenuItem>
+                <MenuItem
+                  value={30}
+                >
+                  10-20
+                </MenuItem>
+                <MenuItem
+                  //  sx={{
+                  //   color: theme.palette.primary.contrastText
+                  // }}
+                  value={30}
+                >
+                  20+
+                </MenuItem>
+              </Select>
+            </FormControl>
+
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                // marginTop: 5,
+              }}
+            >
+              Message
+            </Typography>
+            <TextField
+              placeholder="example@gmail.com"
+              variant="outlined"
+              fullWidth
+              multiline
+              minRows={3}
+              name="name"
+              id="name"
+
+            />
+            <Typography
+              sx={{
+                textAlign: "left",
+                fontSize: "15px",
+                // ...typography.h6,
+                // fontWeight: 500,
+                color: "#111",
+                // color: theme.palette.primary.contrastText
+                // marginTop: 5,
+              }}
+            >
+              Photos/Videos
+            </Typography>
+            <UploadBox />
+
+          </CardContent>
+          {/* Buttons */}
+          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+            <Button
+              variant="text"
+              startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+              sx={{
+                color: "black", // text color
+                textTransform: "none", // keep normal text
+                fontWeight: 500,
+                fontSize: "14px",
+                "&:hover": {
+                  backgroundColor: "transparent", // no hover background
+                },
+              }}
+            >
+              Send on WhatsApp
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Submit Message
+            </Button>
+          </Box>
+
+          <Box mt={2}>
+            <Button fullWidth variant="outlined">
+              Continue to details
+            </Button>
+          </Box>
+          {/* </Card> */}
+        </DialogContent>
+      </Dialog>
+
     </Box>
   );
 }

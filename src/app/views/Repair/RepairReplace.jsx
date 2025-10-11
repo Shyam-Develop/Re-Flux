@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Brand1 from '../../../assets/Brand1.png';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import Rentinstead from "../../../assets/Rentinstaed.jpg";
 import { typography } from "app/utils/constant";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -16,6 +17,8 @@ import EquipmentSwiper from "app/components/Card/RepairReplaceCard";
 import Repair from "../../../assets/RRimage.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import Footer from 'app/components/Card/Footer';
+import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
+import HandshakeIcon from "@mui/icons-material/Handshake";
 
 const validationSchema = Yup.object().shape({
   project1: Yup.string().required("Required"),
@@ -28,6 +31,81 @@ const productionStatusOptions = [
   { value: "running", label: "Running" },
   { value: "stopped", label: "Stopped" },
   { value: "maintenance", label: "Maintenance" },
+];
+
+const services = [
+  {
+    id: 1,
+    title: "Sell Us",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 2,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 3,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 4,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 5,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
+  {
+    id: 6,
+    title: "Exchange",
+    type: "Coil",
+    subtitile: "Per day",
+    icon: HandshakeIcon,
+    img: Rentinstead,
+    price: 25,
+    liftCapacity: "2.5 tons",
+    powerSupply: "220V / 110V",
+    sizes: "700mm / 890mm /120mm",
+  },
 ];
 
 const RepairReplace = () => {
@@ -47,11 +125,8 @@ const RepairReplace = () => {
       }}
     >
 
-
       <Box sx={{ gridColumn: "span 4", p: 2 }}>
-
         <Box
-
           sx={{
             width: "1360px",
             height: "135px",
@@ -747,81 +822,14 @@ const RepairReplace = () => {
         </Box>
 
         {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "1440px",
-            height: "880px",
-            // pt: "40px",                 // padding-top
-            // pb: "40px",                 // padding-bottom
-            // display: "flex",            // required if using gap
-            gap: "32px",
-            transform: "rotate(0deg)",  // replaces angle: 0 deg
-            opacity: 1,
-            boxSizing: "border-box",
-            mb: 5
-          }}
-        >
-
-          <Typography
-            sx={{
-              ...typography.displayL,
-              color: "#1A2438",
-              textAlign: "left",
-            }}
-          >
-            Rent instead?
-          </Typography>
-          <Typography
-            sx={{
-              ...typography.h4,
-              color: "#99A0AE",
-              textAlign: "left",
-            }}
-          >
-            Check out this Rentals
-          </Typography>
-          <Box sx={{
-            display: "flex",
-            flexDirection: "row",
-          }}>
-            <EquipmentSwiper data={cardData} />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              ml: 110,
-              // justifyContent: "flex-end",
-              mt: 2, // optional margin top
-            }}
-          >
-            <Button
-              sx={{
-                ...typography.h3,
-                color: "#2F6FBA",
-                textTransform: "none",
-                textDecoration: "underline",
-              }}
-              endIcon={
-                <ArrowRightAltIcon
-                  sx={{
-                    // width: 60,
-                    opacity: 1,
-                    borderWidth: "3.3px",
-                  }}
-                />
-              }
-            >
-              View all magnets for rent
-            </Button>
-          </Box>
+        <Box>
+          <SellRentServicesCard services={services} />
         </Box>
 
         {/* Footer Section */}
-       <Box >
-               <Footer/>
-             </Box>
+        <Box >
+          <Footer />
+        </Box>
       </Box>
     </Box>
 

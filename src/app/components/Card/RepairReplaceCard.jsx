@@ -22,8 +22,8 @@ export default function EquipmentSwiper({ data }) {
     <>
       <Swiper
         modules={[Pagination]}
-        spaceBetween={0} // better spacing
-        slidesPerView={3} // minimum 3 always
+        spaceBetween={70} // better spacing
+        slidesPerView={3.5} // minimum 3 always
         pagination={{ clickable: true }}
         style={{ paddingBottom: "40px" }}
         breakpoints={{
