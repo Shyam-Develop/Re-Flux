@@ -1,0 +1,27 @@
+# Toggle this ON for maintenance
+SetEnv MAINTENANCE_MODE true
+
+<IfModule mod_rewrite.c>
+  RewriteEngine Off
+  RewriteBase /
+
+  # Maintenance Mode Redirect
+  RewriteCond %{ENV:MAINTENANCE_MODE} =true
+  RewriteCond %{REQUEST_URI} !^/maintenance.html$
+  RewriteRule ^.*$ /maintenance.html [R=302,L]
+
+  # Normal React SPA fallback
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "index.html">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
