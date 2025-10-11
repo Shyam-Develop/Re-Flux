@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Box, Grid, Typography, Button, Chip, Paper, Card,
   CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary, TextField,
-  InputAdornment, AccordionDetails
+  InputAdornment, AccordionDetails,useTheme,
 } from '@mui/material';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -24,7 +24,7 @@ import Footer from 'app/components/Card/Footer';
 
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
   const navigate = useNavigate();
-
+const theme = useTheme();
   return (
     <Paper
       elevation={0}
@@ -80,7 +80,6 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-
                 transition: "transform 0.3s ease",
                 display: "block",
                 "&:hover": { transform: "scale(1.05)" },
@@ -157,7 +156,7 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
           }}
         >
           {/* Title */}
-          <Typography sx={{ ...typography.h2, color: "#1A2438", mb: 3 }}>
+          <Typography sx={{ ...theme.typography.h2, color: "#1A2438", mb: 3 }}>
             {title}
           </Typography>
 
@@ -259,6 +258,8 @@ const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => 
 
 const RepairServices = () => {
 
+  const theme = useTheme();
+  
   const navigate = useNavigate()
 
   //ROI Calculator
@@ -384,12 +385,12 @@ const RepairServices = () => {
       <Box sx={{ padding: '60px 120px' }}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography sx={{ ...typography.h1, color: '#1A2438' }}>
+            <Typography sx={{ ...theme.typography.h1, color: '#1A2438' }}>
               Rent Industrial Magnets with Ease
             </Typography>
           </Grid>
           <Grid item xs={12} md={6} >
-            <Typography sx={{ ...typography.bodyBase, color: '#99A0AE' }}>
+            <Typography sx={{ ...theme.typography.bodyBase, color: '#99A0AE' }}>
               Get powerful lifting magnets when you need them — without the upfront cost.
               Flexible rental plans, quick installation, and reliable performance for every project.
             </Typography>

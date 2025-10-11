@@ -99,135 +99,167 @@ const RoiCalculator = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
     <Box
-      display="grid"
-      gap="20px"
-      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+  display="grid"
+  gap="20px"
+  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+  sx={{
+    "& > div": {
+      gridColumn: { xs: "span 4", md: undefined }, // mobile: full width
+    },
+    p: { xs: 2, md: 3 }, // add padding on mobile only
+  }}
+>
+  <Box sx={{ gridColumn: "span 4", p: { xs: 1, md: 2 } }}>
+    <Box
       sx={{
-        "& > div": {
-          gridColumn: isNonMobile ? undefined : "span 4",
-        },
-        padding: "10px",
+        width: "100%",
+        maxWidth: 1280,
+        mx: "auto",
+        py: { xs: 3, md: 5 }, // mobile smaller padding
       }}
     >
-      <Box sx={{ gridColumn: "span 4", p: 2 }}>
-        <Box
+      {/* Title & Description */}
+      <Box sx={{ textAlign: { xs: "center", md: "left" }, px: { xs: 1, md: 0 } }}>
+        <Typography
+          variant="h3"
+          fontWeight="bold"
           sx={{
-            width: "100%",
-            maxWidth: 1280,
-            mx: "auto",
-            py: 5, // padding top/bottom
+            ...typography.displayL,
+            fontSize: { xs: "1.8rem", md: "3rem" },
+            mb: 1,
+          }}
+          gutterBottom
+        >
+          ROI Calculator
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            ...typography.h4,
+            mb: 3,
+            color: "text.secondary",
+            fontSize: { xs: "1rem", md: "1.5rem" },
           }}
         >
-          {/* Title & Description */}
-          <Box sx={{ textAlign: "left" }}>
-            <Typography variant="h3" fontWeight="bold" sx={{ ...typography.displayL }} gutterBottom>
-              ROI Calculator
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{ ...typography.h4, mb: 3, color: "text.secondary" }}
-            >
-              Get powerful lifting magnets when you need them — without the upfront
-              cost. Flexible rental plans, quick installation, and reliable
-              performance for every project!
-            </Typography>
-          </Box>
-
-          {/* Cards */}
-          <Box sx={{ px: { xs: 2, md: 6 }, mb: "5%" }}>
-            <Grid container spacing={3} justifyContent="flex-start">
-              {roiData.map((item, index) => (
-                <Grid item key={index}>
-                  <Card
-                    sx={{
-                      position: "relative",
-                      borderRadius: 3,
-                      overflow: "hidden",
-                      boxShadow: 3,
-                      height: 400,
-                      width: 558,
-                    }}
-                  >
-                    {/* Background Image */}
-                    <CardMedia
-                      component="img"
-                      image={item.image}
-                      alt={item.title}
-                      sx={{
-                        height: "100%",
-                        width: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-
-                    {/* Overlay White Card */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 16,
-                        left: 16,
-                        right: 16,
-                        bgcolor: "white",
-                        borderRadius: 2,
-                        boxShadow: 1,
-                        px: 2,
-                        py: 1.5,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 0.5,
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          bgcolor: "#0b2d55",
-                          color: "white",
-                          "& .MuiTypography-root": { color: "white" },
-                          "& .MuiIconButton-root": {
-                            bgcolor: "#4487ebff",
-                            color: "white",
-                          },
-                        },
-                      }}
-                    >
-                      <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="subtitle1" fontWeight="bold" fontSize="24px">
-                          {item.title}
-                        </Typography>
-                        <IconButton
-                          size="small"
-                          sx={{
-                            backgroundColor: "#f0f0f0",
-                            width: 40,
-                            height: 40,
-                          }}
-                        >
-                          <ArrowForwardIosIcon fontSize="small" />
-                        </IconButton>
-                      </Box>
-                      <Typography variant="body2" color="text.secondary" fontSize="18px">
-                        {item.description}
-                      </Typography>
-                    </Box>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-
-        </Box>
-
-
-        {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-        <Box>
-          <SellRentServicesCard services={services} />
-        </Box>
-
-
-        {/* Footer Section */}
-        <Box >
-          <Footer />
-        </Box>
+          Get powerful lifting magnets when you need them — without the upfront cost.
+          Flexible rental plans, quick installation, and reliable performance for every project!
+        </Typography>
       </Box>
 
+      {/* Cards */}
+      <Box sx={{ px: { xs: 1, md: 6 }, mb: "5%" }}>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="flex-start"
+        >
+          {roiData.map((item, index) => (
+            <Grid
+              item
+              key={index}
+              xs={12} // full width on mobile
+              sm={6}
+              md="auto"
+            >
+              <Card
+                sx={{
+                  position: "relative",
+                  borderRadius: 3,
+                  overflow: "hidden",
+                  boxShadow: 3,
+                  height: { xs: 300, md: 400 },
+                  width: { xs: "100%", md: 558 }, // full width mobile
+                }}
+              >
+                {/* Background Image */}
+                <CardMedia
+                  component="img"
+                  image={item.image}
+                  alt={item.title}
+                  sx={{
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+
+                {/* Overlay White Card */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 16,
+                    left: 16,
+                    right: 16,
+                    bgcolor: "white",
+                    borderRadius: 2,
+                    boxShadow: 1,
+                    px: 2,
+                    py: 1.5,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 0.5,
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      bgcolor: "#0b2d55",
+                      color: "white",
+                      "& .MuiTypography-root": { color: "white" },
+                      "& .MuiIconButton-root": {
+                        bgcolor: "#4487ebff",
+                        color: "white",
+                      },
+                    },
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      sx={{ fontSize: { xs: "18px", md: "24px" } }}
+                    >
+                      {item.title}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      sx={{
+                        backgroundColor: "#f0f0f0",
+                        width: { xs: 32, md: 40 },
+                        height: { xs: 32, md: 40 },
+                      }}
+                    >
+                      <ArrowForwardIosIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: { xs: "14px", md: "18px" } }}
+                  >
+                    {item.description}
+                  </Typography>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* Rent Calculator Section */}
+      <Box>
+        <SellRentServicesCard services={services} />
+      </Box>
+
+      {/* Footer */}
+      <Box>
+        <Footer />
+      </Box>
     </Box>
+  </Box>
+</Box>
+
   );
 }
 export default RoiCalculator;

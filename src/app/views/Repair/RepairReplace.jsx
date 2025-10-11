@@ -1,7 +1,7 @@
 import {
   Box, Button, Divider, Grid, Modal, Typography, useMediaQuery, useTheme, Paper, TextField,
   MenuItem, Card,
-  CardMedia, IconButton
+  CardMedia, IconButton, 
 } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -36,7 +36,7 @@ const productionStatusOptions = [
 const services = [
   {
     id: 1,
-    title: "Sell Us",
+    title: "Circular Lifting Magnet",
     type: "Coil",
     subtitile: "Per day",
     icon: HandshakeIcon,
@@ -44,11 +44,12 @@ const services = [
     price: 25,
     liftCapacity: "2.5 tons",
     powerSupply: "220V / 110V",
-    sizes: "700mm / 890mm /120mm",
+    sizeOptions: '700mm / 890mm /120mm',
+    sizes: "220V / 110V",
   },
-  {
+ {
     id: 2,
-    title: "Exchange",
+    title: "Circular Lifting Magnet",
     type: "Coil",
     subtitile: "Per day",
     icon: HandshakeIcon,
@@ -56,11 +57,12 @@ const services = [
     price: 25,
     liftCapacity: "2.5 tons",
     powerSupply: "220V / 110V",
-    sizes: "700mm / 890mm /120mm",
+    sizeOptions: '700mm / 890mm /120mm',
+    sizes: "220V / 110V",
   },
   {
     id: 3,
-    title: "Exchange",
+    title: "Circular Lifting Magnet",
     type: "Coil",
     subtitile: "Per day",
     icon: HandshakeIcon,
@@ -68,11 +70,12 @@ const services = [
     price: 25,
     liftCapacity: "2.5 tons",
     powerSupply: "220V / 110V",
-    sizes: "700mm / 890mm /120mm",
+    sizeOptions: '700mm / 890mm /120mm',
+    sizes: "220V / 110V",
   },
   {
     id: 4,
-    title: "Exchange",
+    title: "Circular Lifting Magnet",
     type: "Coil",
     subtitile: "Per day",
     icon: HandshakeIcon,
@@ -80,11 +83,12 @@ const services = [
     price: 25,
     liftCapacity: "2.5 tons",
     powerSupply: "220V / 110V",
-    sizes: "700mm / 890mm /120mm",
+    sizeOptions: '700mm / 890mm /120mm',
+    sizes: "220V / 110V",
   },
   {
     id: 5,
-    title: "Exchange",
+    title: "Circular Lifting Magnet",
     type: "Coil",
     subtitile: "Per day",
     icon: HandshakeIcon,
@@ -92,11 +96,12 @@ const services = [
     price: 25,
     liftCapacity: "2.5 tons",
     powerSupply: "220V / 110V",
-    sizes: "700mm / 890mm /120mm",
+    sizeOptions: '700mm / 890mm /120mm',
+    sizes: "220V / 110V",
   },
   {
     id: 6,
-    title: "Exchange",
+    title: "Circular Lifting Magnet",
     type: "Coil",
     subtitile: "Per day",
     icon: HandshakeIcon,
@@ -104,7 +109,8 @@ const services = [
     price: 25,
     liftCapacity: "2.5 tons",
     powerSupply: "220V / 110V",
-    sizes: "700mm / 890mm /120mm",
+    sizeOptions: '700mm / 890mm /120mm',
+    sizes: "220V / 110V",
   },
 ];
 
@@ -672,33 +678,36 @@ const RepairReplace = () => {
           sx={{
             width: "100%",
             maxWidth: 1280,
-            maxHeight: 718,
             mx: "auto",
-            py: 5, // padding top/bottom
+            py: { xs: 3, sm: 5 }, // less padding on mobile
           }}
         >
           {/* Title & Description */}
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "1280px",
-            height: "206px",
-            px: "64px",                 // padding-left & padding-right
-            display: "flex",            // required if you want gap to work
-            gap: "32px",
-            transform: "rotate(0deg)",  // replaces angle: 0 deg
-            opacity: 1,
-            textAlign: "left",
-            boxSizing: "border-box",
-          }}>
-            <Typography sx={{
-              ...typography.displayL, color: "#1C2D4B"
-            }} gutterBottom>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              maxWidth: 1280,
+              px: { xs: 2, sm: 8 }, // responsive padding
+              gap: { xs: 2, sm: 4 },
+              textAlign: "left",
+              boxSizing: "border-box",
+            }}
+          >
+            <Typography
+              sx={{ ...typography.displayL, color: "#1C2D4B", fontSize: { xs: "2rem", sm: typography.displayL.fontSize } }}
+              gutterBottom
+            >
               ROI Calculator
             </Typography>
             <Typography
-
-              sx={{ ...typography.h4, mb: 4, color: "#99A0AE" }}
+              sx={{
+                ...typography.h4,
+                mb: { xs: 2, sm: 4 },
+                color: "#99A0AE",
+                fontSize: { xs: "0.875rem", sm: typography.h4.fontSize },
+              }}
             >
               Get powerful lifting magnets when you need them — without the upfront
               cost. Flexible rental plans, quick installation, and reliable
@@ -707,12 +716,7 @@ const RepairReplace = () => {
           </Box>
 
           {/* View All Link */}
-          <Box
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="center"
-            sx={{ mb: 3 }}
-          >
+          <Box display="flex" justifyContent="flex-end" alignItems="center" sx={{ mb: { xs: 2, sm: 3 } }}>
             <Typography
               component={Link}
               to="/repair-replace/roi-cal"
@@ -722,11 +726,12 @@ const RepairReplace = () => {
                 display: "flex",
                 alignItems: "center",
                 cursor: "pointer",
+                fontSize: { xs: "0.875rem", sm: typography.h3.fontSize },
                 "&:hover": { textDecoration: "underline" },
               }}
             >
               View All ROI Calculators
-              <ArrowRightAltIcon sx={{ fontSize: "2rem", ml: 1 }} />
+              <ArrowRightAltIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }, ml: 1 }} />
             </Typography>
           </Box>
 
@@ -736,11 +741,9 @@ const RepairReplace = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              gap: 3, // space between cards
-              flexWrap: "wrap", // responsive wrap
+              gap: { xs: 2, sm: 3 },
+              flexWrap: "wrap",
               width: "100%",
-              maxWidth: 1280,
-              mx: "auto",
             }}
           >
             {roiData.map((item, index) => (
@@ -751,9 +754,9 @@ const RepairReplace = () => {
                   borderRadius: 3,
                   overflow: "hidden",
                   boxShadow: 3,
-                  height: 400,
-                  width: 588,
-                  flex: "0 1 588px", // ensures equal card sizing
+                  width: { xs: "100%", sm: 588 },
+                  height: { xs: 300, sm: 400 },
+                  flex: "0 1 auto",
                 }}
               >
                 {/* Background Image */}
@@ -796,30 +799,29 @@ const RepairReplace = () => {
                   }}
                 >
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography sx={{ ...typography.h4, color: "#0B121E" }}>
+                    <Typography sx={{ ...typography.h4, color: "#0B121E", fontSize: { xs: "0.875rem", sm: typography.h4.fontSize } }}>
                       {item.title}
                     </Typography>
                     <IconButton
                       size="small"
                       sx={{
                         backgroundColor: "#f0f0f0",
-                        width: 40,
-                        height: 40,
+                        width: 36,
+                        height: 36,
                       }}
                     >
                       <ArrowForwardIosIcon fontSize="small" />
                     </IconButton>
                   </Box>
-                  <Typography sx={{ ...typography.bodyBase, color: "#99A0AE" }}>
+                  <Typography sx={{ ...typography.bodyBase, color: "#99A0AE", fontSize: { xs: "0.75rem", sm: typography.bodyBase.fontSize } }}>
                     {item.description}
                   </Typography>
                 </Box>
               </Card>
             ))}
           </Box>
-
-
         </Box>
+
 
         {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
         <Box>

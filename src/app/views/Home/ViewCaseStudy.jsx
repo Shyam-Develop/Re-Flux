@@ -17,6 +17,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  useMediaQuery, useTheme
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
@@ -69,6 +70,10 @@ import { typography } from "app/utils/constant";
 
 const ViewCaseStudy = () => {
 
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -92,10 +97,10 @@ const ViewCaseStudy = () => {
     },
     {
       title: "Execute",
-      desc: 
-        "Full coil rewind with insulation upgrade (Class H) \n"  +
+      desc:
+        "Full coil rewind with insulation upgrade (Class H) \n" +
         "Terminals & leads replaced; junction box rebuilt and re-sealed \n" +
-        "Resin potting and housing resurfacing; fasteners/gaskets renewed \n"+
+        "Resin potting and housing resurfacing; fasteners/gaskets renewed \n" +
         "Bench test → assembly → load-test (kN) with photo checklist",
     },
     {
@@ -349,20 +354,20 @@ const ViewCaseStudy = () => {
       {/* Industry/Asset/Service/Outcome/Docs */}
       <Box
         sx={{
-          alignItems: "left"
+          alignItems: "flex-start", // alignItems accepts 'flex-start', not 'left'
+          ml: 10,
         }}
       >
         <Typography
           sx={{
             fontFamily: "Space Grotesk, Regular",
-            fontSize: "20px",
+            fontSize: { xs: "16px", sm: "18px", md: "20px" }, // responsive font size
             fontWeight: 500,
             lineHeight: "130%",
             color: "#111827",
             textAlign: "left",
-            //   maxWidth: "1200px",
             mb: 4,
-            mr: 60
+            mr: { xs: 0, md: 60 }, // no right margin on mobile, restore on desktop
           }}
         >
           <strong>Industry:</strong> Scrap & recycling (Western India) <br />
@@ -372,6 +377,7 @@ const ViewCaseStudy = () => {
           <strong>Docs:</strong> Load-test certificate (kN), service report with photos, warranty card (6 months)
         </Typography>
       </Box>
+
 
 
       {/* Challenge Box */}
@@ -482,9 +488,9 @@ const ViewCaseStudy = () => {
       {/* Our Approach Section */}
       <Box
         sx={{
-          py: 6,
+          py: { xs: 4, md: 6 },
           width: "100%",
-          backgroundColor: "white"
+          backgroundColor: "white",
         }}
       >
         {/* Title */}
@@ -493,14 +499,15 @@ const ViewCaseStudy = () => {
             fontFamily: "Space Grotesk, Regular",
             ...typography.displayM,
             textAlign: "center",
-            mb: 5,
+            fontSize: { xs: "24px", sm: "28px", md: "36px" }, // Responsive font size
+            mb: { xs: 4, md: 5 },
           }}
         >
           Our approach
         </Typography>
 
         {/* Steps */}
-        <Grid container spacing={3} justifyContent="center">
+        <Grid container spacing={{ xs: 4, md: 3 }} justifyContent="center">
           {items.map((item, index) => (
             <Grid
               item
@@ -508,19 +515,23 @@ const ViewCaseStudy = () => {
               sm={6}
               md={3}
               key={index}
-              sx={{ textAlign: "center" }}
+              sx={{
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
               {/* Circle background with icon */}
               <Box
                 sx={{
-                  width: 200,
-                  height: 200,
-                  borderRadius: "50%", // <-- Makes it a perfect circle
+                  width: { xs: 120, sm: 160, md: 200 },
+                  height: { xs: 120, sm: 160, md: 200 },
+                  borderRadius: "50%",
                   backgroundColor: "#F5FAFF",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  mx: "auto",
                   mb: 2,
                 }}
               >
@@ -528,18 +539,20 @@ const ViewCaseStudy = () => {
                   component="img"
                   src={item.img}
                   alt={item.title}
-                  sx={{ width: 60, height: 60 }}
+                  sx={{
+                    width: { xs: 40, sm: 50, md: 60 },
+                    height: { xs: 40, sm: 50, md: 60 },
+                  }}
                 />
               </Box>
 
               {/* Title */}
               <Typography
                 sx={{
-                  textAlign: "center",
                   fontWeight: 600,
-                  fontFamily: "Space Grotesk Regular",
-                  fontSize: "32px",
-                  color: "#1c2434"
+                  fontFamily: "Space Grotesk, Regular",
+                  fontSize: { xs: "20px", sm: "24px", md: "32px" },
+                  color: "#1c2434",
                 }}
               >
                 {item.title}
@@ -549,10 +562,9 @@ const ViewCaseStudy = () => {
               {item.subtitle && (
                 <Typography
                   sx={{
-                    textAlign: "center",
                     fontWeight: 600,
-                    fontFamily: "Space Grotesk Regular",
-                    fontSize: "32px",
+                    fontFamily: "Space Grotesk, Regular",
+                    fontSize: { xs: "20px", sm: "24px", md: "32px" },
                     color: "#1c2434",
                     mt: 0.5,
                   }}
@@ -566,248 +578,348 @@ const ViewCaseStudy = () => {
       </Box>
 
 
+      <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
+        {/* Heading */}
+        <Typography
+          sx={{
+            fontSize: isMobile ? "32px" : "48px",
+            fontWeight: 700,
+            lineHeight: "1.2",
+            color: "#1c2434",
+            mb: 2,
+            ml: isMobile ? 0 : 5,
+            fontFamily: "Space Grotesk, Regular",
+            textAlign: isMobile ? "center" : "left",
+          }}
+        >
+          ElectroMagnet Repair
+        </Typography>
 
+        {/* Subheading */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 500,
+            color: "#1c2434",
+            mb: 4,
+            ml: isMobile ? 0 : 5,
+            fontFamily: "Inter, sans-serif",
+            textAlign: isMobile ? "center" : "left",
+            px: isMobile ? 2 : 0,
+          }}
+        >
+          Coil rewinds, terminal rebuilds, housing & controllers — restored to
+          spec with certified load testing
+        </Typography>
 
-
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "1px solid #ddd",
-          borderRadius: 3,
-          ml: 5,
-          px: 4,
-          py: 4,
-          gap: 6,
-          bgcolor: "white",
-        }}
-      >
-        {/* Left - Features with vertical timeline */}
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {/* Continuous Vertical Line */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "10px", // adjust to align with icons
-              width: "2px",
-              bgcolor: "#ccc",
-              borderRadius: 1,
-            }}
-          />
-
-          {features.map((item, index) => {
-            const isActive = hoveredIndex === index;
-
-            return (
+        {/* Main Container */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: 3,
+            px: isMobile ? 2 : 4,
+            py: isMobile ? 3 : 4,
+            gap: 6,
+            width: "100%",
+            bgcolor: "white",
+          }}
+        >
+          {/* Left - Timeline */}
+          <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+            {/* Vertical Line (Desktop only) */}
+            {!isMobile && (
               <Box
-                key={index}
                 sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  mb: 4,
-                  cursor: "pointer",
-                  position: "relative",
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  left: "10px",
+                  width: "2px",
+                  bgcolor: "#ccc",
+                  borderRadius: 1,
                 }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {/* Highlighted section of the vertical line */}
-                {isActive && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: "10px",
-                      width: "2px",
-                      bgcolor: "#1976d2",
-                      height: "100%",
-                      borderRadius: 1,
-                    }}
-                  />
-                )}
+              />
+            )}
 
-                {/* Icon + Text */}
-                <Box sx={{ ml: 4 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <CalendarMonthIcon
+            {features.map((item, index) => {
+              const isActive = hoveredIndex === index;
+
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    mb: 4,
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                  onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+                  onClick={() => isMobile && setHoveredIndex(index)}
+                  onMouseLeave={() => !isMobile && setHoveredIndex(null)}
+                >
+                  {/* Highlighted vertical line (Desktop only) */}
+                  {!isMobile && isActive && (
+                    <Box
                       sx={{
-                        fontSize: "28px",
-                        color: isActive ? "#1976d2" : "#1c2434",
-                        mr: 1,
-                        transition: "0.3s",
+                        position: "absolute",
+                        left: "10px",
+                        width: "2px",
+                        bgcolor: "#1976d2",
+                        height: "100%",
+                        borderRadius: 1,
                       }}
                     />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 600,
-                        color: isActive ? "#1976d2" : "#1c2434",
-                        fontFamily: "Space Grotesk, Regular",
-                        fontSize: "28px",
-                        transition: "0.3s",
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                  </Box>
-
-                  {/* Subtitle with fade-in */}
-                  {item.title === "Execute" ? (
-                    <Box
-                      component="ul"
-                      sx={{
-                        ml: 5,
-                        opacity: isActive ? 1 : 0,
-                        maxHeight: isActive ? 200 : 0,
-                        overflow: "hidden",
-                        transition: "opacity 0.5s ease, max-height 0.5s ease",
-                        color: "#111827",
-                        fontFamily: "Space Grotesk, Regular",
-                        fontSize: 20,
-                        fontWeight: 500,
-                        lineHeight: "130%",
-                        paddingLeft: "20px",
-                      }}
-                    >
-                      {item.desc.split("\n").map((line, i) => (
-                        <li key={i}>{line.trim()}</li>
-                      ))}
-                    </Box>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        textAlign: "left",
-                        fontFamily: "Space Grotesk, Regular",
-                        fontSize: "20px",
-                        fontWeight: 500,
-                        lineHeight: "130%",
-                        color: "#111827",
-                        transition: "opacity 0.5s ease, max-height 0.5s ease",
-                        opacity: isActive ? 1 : 0,
-                        maxHeight: isActive ? 200 : 0,
-                        overflow: "hidden",
-                        ml: 4,
-                        whiteSpace: "pre-line",
-                      }}
-                    >
-                      {item.desc}
-                    </Typography>
                   )}
+
+                  {/* Icon + Text */}
+                  <Box sx={{ ml: 4 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                      <CalendarMonthIcon
+                        sx={{
+                          fontSize: isMobile ? 20 : 28,
+                          color: isActive ? "#1976d2" : "#1c2434",
+                          mr: 1,
+                          transition: "0.3s",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontWeight: 600,
+                          color: isActive ? "#1976d2" : "#1c2434",
+                          fontFamily: "Space Grotesk, Regular",
+                          fontSize: isMobile ? "20px" : "28px",
+                          transition: "0.3s",
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                    </Box>
+
+                    {/* Description or Bullet List */}
+                    {item.title === "Execute" ? (
+                      <Box
+                        component="ul"
+                        sx={{
+                          ml: 5,
+                          opacity: isActive ? 1 : 0,
+                          maxHeight: isActive ? 200 : 0,
+                          overflow: "hidden",
+                          transition: "0.5s ease",
+                          color: "#111827",
+                          fontFamily: "Space Grotesk, Regular",
+                          fontSize: isMobile ? 16 : 20,
+                          fontWeight: 500,
+                          lineHeight: "130%",
+                          paddingLeft: "20px",
+                        }}
+                      >
+                        {item.desc.split("\n").map((line, i) => (
+                          <li key={i}>{line.trim()}</li>
+                        ))}
+                      </Box>
+                    ) : (
+                      <Typography
+                        sx={{
+                          fontFamily: "Space Grotesk, Regular",
+                          fontSize: isMobile ? 16 : 20,
+                          fontWeight: 500,
+                          lineHeight: "130%",
+                          color: "#111827",
+                          transition: "0.5s ease",
+                          opacity: isActive ? 1 : 0,
+                          maxHeight: isActive ? 200 : 0,
+                          overflow: "hidden",
+                          ml: 4,
+                          whiteSpace: "pre-line",
+                        }}
+                      >
+                        {item.desc}
+                      </Typography>
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-            );
-          })}
+              );
+            })}
+          </Box>
 
-
-        </Box>
-
-        {/* Right - Dynamic Image */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {/* Right - Static Image */}
           <Box
-            component="img"
-            src={Approach5}
-            alt="ElectroMagnet Repair"
             sx={{
+              flex: 1,
               width: "100%",
-              maxWidth: 600,
-              borderRadius: 3,
-              objectFit: "cover",
-              transition: "0.5s",
+              display: "flex",
+              justifyContent: "center",
+              mt: isMobile ? 2 : 0,
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={Approach5} // Static image, no change on hover
+              alt="ElectroMagnet Repair"
+              sx={{
+                width: "100%",
+                maxWidth: isMobile ? "100%" : 600,
+                objectFit: "cover",
+                borderRadius: 3,
+                transition: "0.5s",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
 
-      {/* Tabel Section */}
+
+      {/* Tab Section */}
       <Typography
         sx={{
           fontFamily: "Space Grotesk, Regular",
-          ...typography.displayM,
+          fontSize: isMobile ? "28px" : "40px",
+          fontWeight: 700,
           textAlign: "center",
-          mt: 5
+          mt: 5,
         }}
       >
         Before / After - test results
       </Typography>
-      <Box
-        sx={{
-          mt: 5,
-          marginLeft: '25%',
-          width: "50%",
-          borderCollapse: "collapse",
-          fontFamily: "Inter, sans-serif",
-          fontSize: 14,
-          border: "1px solid #ddd",
-        }}
-        component="table"
-      >
 
-        {/* Table header */}
-
+      {!isMobile ? (
+        // DESKTOP TABLE
         <Box
-          component="thead"
           sx={{
-            height: "130px",
-            backgroundColor: "#f9fafb",
-            borderBottom: "2px solid #ccc",
+            mt: 5,
+            marginLeft: '25%',
+            width: "50%",
+            borderCollapse: "collapse",
+            fontFamily: "Inter, sans-serif",
+            fontSize: 14,
+            border: "1px solid #ddd",
           }}
+          component="table"
         >
-
+          {/* Table header */}
           <Box
-            component="tr">
-            {["Test", "Before", "After", "Target"].map((heading) => (
-              <Box
-                component="th"
-                key={heading}
-                sx={{
+            component="thead"
+            sx={{
+              height: "130px",
+              backgroundColor: "#f9fafb",
+              borderBottom: "2px solid #ccc",
+            }}
+          >
+            <Box component="tr">
+              {["Test", "Before", "After", "Target"].map((heading) => (
+                <Box
+                  component="th"
+                  key={heading}
+                  sx={{
+                    textAlign: "left",
+                    padding: "12px 16px",
+                    fontWeight: 600,
+                    color: "#24315a",
+                    borderRight: "1px solid #ddd",
+                    "&:last-child": {
+                      borderRight: "none",
+                    },
+                  }}
+                >
+                  {heading}
+                </Box>
+              ))}
+            </Box>
+          </Box>
 
-                  textAlign: "left",
-                  padding: "12px 16px",
-                  fontWeight: 600,
-                  color: "#24315a",
-                  borderRight: "1px solid #ddd",
-                  "&:last-child": {
-                    borderRight: "none",
-                  },
+          {/* Table body */}
+          <Box component="tbody">
+            {data.map((row, index) => (
+              <Box
+                component="tr"
+                key={row.test}
+                sx={{
+                  height: "130px",
+                  backgroundColor: index % 2 === 0 ? "#f5f7fa" : "#fff",
+                  borderBottom: "1px solid #ddd",
                 }}
               >
-                {heading}
+                <Box
+                  component="td"
+                  sx={{ padding: "12px 16px", color: "#24315a", whiteSpace: "nowrap" }}
+                >
+                  {row.test}
+                </Box>
+                <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
+                  {row.before}
+                </Box>
+                <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
+                  {row.after}
+                </Box>
+                <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
+                  {row.target}
+                </Box>
               </Box>
             ))}
           </Box>
         </Box>
-
-        {/* Table body */}
-        <Box component="tbody">
+      ) : (
+        // MOBILE CARD VIEW
+        <Box
+          sx={{
+            mt: 4,
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            px: 2,
+          }}
+        >
           {data.map((row, index) => (
             <Box
-              component="tr"
-              key={row.test}
+              key={index}
               sx={{
-                height: "130px",
-                backgroundColor: index % 2 === 0 ? "#f5f7fa" : "#fff",
-                borderBottom: "1px solid #ddd",
+                border: "1px solid #ddd",
+                borderRadius: 2,
+                backgroundColor: "#fff",
+                p: 2,
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <Box component="td" sx={{ padding: "12px 16px", color: "#24315a", whiteSpace: "nowrap" }}>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  color: "#24315a",
+                  mb: 1,
+                }}
+              >
                 {row.test}
+              </Typography>
+
+              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+                <Typography sx={{ color: "#999", fontSize: "14px" }}>Before:</Typography>
+                <Typography sx={{ color: "#3c506d", fontWeight: 500 }}>
+                  {row.before}
+                </Typography>
               </Box>
-              <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
-                {row.before}
+
+              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+                <Typography sx={{ color: "#999", fontSize: "14px" }}>After:</Typography>
+                <Typography sx={{ color: "#3c506d", fontWeight: 500 }}>
+                  {row.after}
+                </Typography>
               </Box>
-              <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
-                {row.after}
-              </Box>
-              <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
-                {row.target}
+
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography sx={{ color: "#999", fontSize: "14px" }}>Target:</Typography>
+                <Typography sx={{ color: "#3c506d", fontWeight: 500 }}>
+                  {row.target}
+                </Typography>
               </Box>
             </Box>
           ))}
         </Box>
-      </Box>
+      )}
 
       {/* Timeline Section */}
 
@@ -1066,50 +1178,58 @@ const ViewCaseStudy = () => {
           Want your numbers? Use our Repair vs Replace ROI Calculator to compare with your downtime ₹/hr. →
         </Link>
       </Box>
+
+
+
       {/* Heading */}
       <Typography
-        // variant="h4"
         sx={{
           fontFamily: "Space Grotesk, Regular",
           fontWeight: 700,
-          fontSize: "56px",
-          lineHeight: 1.1, // equivalent to 110%
-          letterSpacing: "-0.31px", // Figma's -0.56% of 56px
-          textAlign: "left", // matches Figma's horizontal alignment
+          fontSize: isMobile ? "28px" : "56px",
+          lineHeight: 1.1,
+          letterSpacing: "-0.31px",
+          textAlign: isMobile ? "center" : "left",
           display: "flex",
-          alignItems: "center", // vertical alignment middle
-          justifyContent: "center",
+          alignItems: "center",
+          justifyContent: isMobile ? "center" : "flex-start",
           mt: 5,
-          mr: 40
+          mr: isMobile ? 0 : 40,
+          px: isMobile ? 2 : 0,
         }}
       >
         ROI Snapshot (realistic illustration)
       </Typography>
 
-      {/* Image */}
+      {/* Main Image */}
       <Box
         component="img"
         src={realisticillustration}
         alt="Circular Lifting Magnet"
         sx={{
-          width: "1361px",
-          height: "500px",
+          width: "100%",
+          height: isMobile ? "auto" : "500px",
+          maxHeight: "500px",
           objectFit: "cover",
           mt: 2,
-          //   transform: "rotate(-180deg)", // Figma spec
           borderRadius: 1,
           boxShadow: 3,
           mb: 2,
+          px: isMobile ? 2 : 0,
         }}
       />
 
-      <Box sx={{
-        display: "flex",
-        gap: 2,
-        justifyContent: "flex-start",
-        flexWrap: "wrap",
-        mr: 0
-      }}>
+      {/* Thumbnails */}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          justifyContent: isMobile ? "center" : "flex-start",
+          flexWrap: "wrap",
+          px: isMobile ? 2 : 0,
+          mb: 4,
+        }}
+      >
         {images.map((img, index) => (
           <Box
             key={index}
@@ -1118,14 +1238,15 @@ const ViewCaseStudy = () => {
             alt={`Thumbnail ${index + 1}`}
             onClick={() => setSelectedImage(img)}
             sx={{
-
-              width: '148px',
-              height: '124px',
+              width: isMobile ? "100px" : "148px",
+              height: isMobile ? "80px" : "124px",
               objectFit: "cover",
               borderRadius: 1,
               cursor: "pointer",
-
-              border: selectedImage === img ? "2px solid #1976d2" : "2px solid transparent",
+              border:
+                selectedImage === img
+                  ? "2px solid #1976d2"
+                  : "2px solid transparent",
               transition: "border 0.3s",
               "&:hover": {
                 border: "2px solid #1976d2",
@@ -1136,24 +1257,22 @@ const ViewCaseStudy = () => {
       </Box>
 
 
-
-
-
+{/* Why It worked */}
       <Box
         sx={{
-          p: 4,
-          ml: 2
-        }}>
+          p: isMobile ? 2 : 4,
+          ml: isMobile ? 0 : 2,
+        }}
+      >
         {/* Section Heading */}
         <Typography
           sx={{
-            textAlign: "left",
-            //  mb: 1,
+            textAlign: isMobile ? "center" : "left",
             color: "#1c2434",
             fontWeight: 600,
             fontFamily: "Space Grotesk, Regular",
-            fontSize: "48px",
-            // lineHeight: "110px"
+            fontSize: isMobile ? "32px" : "48px",
+            mb: isMobile ? 2 : 4,
           }}
         >
           Why it worked
@@ -1161,18 +1280,22 @@ const ViewCaseStudy = () => {
 
         <Whyitworkcard />
 
-        {/* Image + Rightside Text */}
-        <Box sx={{ width: '1089px', height: '450px', paddingLeft: '10%', mt: 5 }}>
-          <Grid container spacing={4} alignItems="center">
+        {/* Image + Right Text */}
+        <Box sx={{ mt: 5, px: isMobile ? 0 : '10%' }}>
+          <Grid
+            container
+            spacing={isMobile ? 2 : 4}
+            alignItems="center"
+            direction={isMobile ? "column" : "row"}
+          >
             {/* Left Image Block */}
             <Grid item xs={12} md={6}>
               <Box
                 sx={{
                   position: "relative",
-                  height: 400,
+                  height: isMobile ? 300 : 400,
                   borderRadius: 1,
                   overflow: "hidden",
-
                 }}
               >
                 {/* Image */}
@@ -1181,11 +1304,9 @@ const ViewCaseStudy = () => {
                   src={Whyitworkimg}
                   alt="Case Study"
                   sx={{
-                    width: "447px",
-                    height: "450px",
+                    width: "100%",
+                    height: isMobile ? "100%" : "450px",
                     objectFit: "cover",
-                    display: "block",
-
                   }}
                 />
 
@@ -1195,8 +1316,8 @@ const ViewCaseStudy = () => {
                     position: "absolute",
                     bottom: 0,
                     left: 0,
-                    width: "447px",
-                    height: "450px",
+                    width: "100%",
+                    height: "100%",
                     background: "linear-gradient(225deg, rgba(11,45,85,0.9) 10%, transparent 100%)",
                     display: "flex",
                     justifyContent: "space-between",
@@ -1205,11 +1326,13 @@ const ViewCaseStudy = () => {
                     color: "#fff",
                   }}
                 >
-                  <Typography sx={{
-                    fontFamily: "Space Grotesk, Regular",
-                    fontSize: "24px",
-                    fontWeight: 400
-                  }}>
+                  <Typography
+                    sx={{
+                      fontFamily: "Space Grotesk, Regular",
+                      fontSize: isMobile ? "16px" : "24px",
+                      fontWeight: 400,
+                    }}
+                  >
                     72-hour rewind restores Ø1200 mm circular magnet
                   </Typography>
 
@@ -1220,85 +1343,90 @@ const ViewCaseStudy = () => {
                       height: 24,
                       backgroundColor: "#fff",
                       clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
+                      ml: 2,
                     }}
                   />
                 </Box>
-
               </Box>
             </Grid>
 
             {/* Right Text Block */}
-            <Grid item xs={12} md={6} sx={{ width: '407px', height: '238px' }}>
-              <Typography
+            <Grid item xs={12} md={6}>
+              <Box
                 sx={{
-                  fontFamily: "Space Grotesk, Regular",
-                  ...typography.h5,
-                  //textAlign: "left",
-                  color: "#111827",
-                  width: 300,
-                  ml: 15
+                  ml: isMobile ? 0 : 4,
+                  mt: isMobile ? 3 : 0,
+                  textAlign: isMobile ? "center" : "left",
                 }}
               >
-                Pull back to spec (86 kN) with Class-H insulation and new terminals.
-                Zero downtime using a rental bridge.
-              </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "Space Grotesk, Regular",
+                    fontSize: isMobile ? "18px" : "24px",
+                    fontWeight: 500,
+                    color: "#111827",
+                    mb: 2,
+                  }}
+                >
+                  Pull back to spec (86 kN) with Class-H insulation and new terminals. Zero downtime using a rental bridge.
+                </Typography>
 
-              <Typography
-                sx={{
-                  color: "#047857", // Green
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  width: 500
+                <Typography
+                  sx={{
+                    color: "#047857",
+                    fontWeight: 500,
+                    fontSize: isMobile ? "16px" : "20px",
+                    mb: 2,
+                  }}
+                >
+                  Saved: ₹ 8.08 L vs replace.
+                </Typography>
 
-                }}
-              >
-                Saved: ₹ 8.08 L vs replace.
-              </Typography>
+                <Link
+                  href="#"
+                  underline="none"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    fontWeight: 600,
+                    color: "#1d4ed8",
+                    cursor: "pointer",
+                    fontFamily: "Fira Sans, Semibold",
+                    fontSize: isMobile ? "16px" : "18px",
+                    mb: 2,
+                    ml: isMobile ? 0 : 4,
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
+                  }}
+                >
+                  Read case <ArrowForwardIcon sx={{ fontSize: 18, ml: 0.5 }} />
+                </Link>
 
-              <Link
-                href="#"
-                underline="none"
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  fontWeight: 600,
-                  color: "#1d4ed8", // Blue
-                  mb: 2,
-                  ml: 15,
-                  cursor: "pointer",
-                  fontFamily: "Fira Sans, Semibold",
-                  paddingRight: '50%',
-                  fontSize: "18px",
-                  "&:hover": {
-                    textDecoration: "underline",
-                  },
-                }}
-              >
-                Read case <ArrowForwardIcon sx={{ fontSize: 18, ml: 0.5,  }} />
-              </Link>
-              <br />
-              <Button
-                variant="contained"
-                sx={{
-                  mt: 1,
-                  ml: 8,
-                  backgroundColor: "#8b4513", // Brownish orange
-                  borderRadius: "999px",
-                  px: 14,
-                  py: 1.3,
-                  fontWeight: 600,
-                  textTransform: "none",
-                  "&:hover": {
-                    backgroundColor: "#6b3b10",
-                  },
-                }}
-              >
-                View Specs
-              </Button>
+                <br />
+
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 2,
+                    ml: isMobile ? 0 : 4,
+                    backgroundColor: "#8b4513",
+                    borderRadius: "999px",
+                    px: isMobile ? 6 : 14,
+                    py: 1.3,
+                    fontWeight: 600,
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#6b3b10",
+                    },
+                  }}
+                >
+                  View Specs
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Box>
-
       </Box>
 
 

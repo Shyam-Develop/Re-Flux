@@ -139,7 +139,7 @@ export default function AboutUsRepairServicesPageCard() {
 
 
   return (
-    <Box sx={{ p: { xs: 2, md: 6, }, backgroundColor: "#f9fafb" }}>
+    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
       {/* Swiper Carousel */}
 
       <Typography
@@ -155,41 +155,37 @@ export default function AboutUsRepairServicesPageCard() {
           ...typography.h5,
           color: "#49576F",
           textAlign: "left",
-
         }}>
         Electrical and Mechanical restoration with documented testing.
       </Typography>
 
+      {/* Swiper Carousel */}
       <Swiper
         modules={[Pagination]}
-        spaceBetween={40}
-        slidesPerView={3.5} // show 3 at a time
-        pagination={{
-          clickable: true,
+        spaceBetween={16}
+        pagination={{ clickable: true }}
+        breakpoints={{
+          0: { slidesPerView: 1 },   // Mobile: 1 card
+          600: { slidesPerView: 2 }, // Tablet: 2 cards
+          960: { slidesPerView: 3 }, // Desktop: 3 cards
         }}
-        style={{
-          paddingBottom: "40px", // space for pagination line
-        }}
-      // breakpoints={{
-      //   0: { slidesPerView: 1 },
-      //   600: { slidesPerView: 2 },
-      //   960: { slidesPerView: 3 },
-      // }}
+        style={{ paddingBottom: "40px" }}
       >
-        {services.map((service) => (
+        {(services || []).map((service) => (
           <SwiperSlide key={service.id}>
             <Card
               sx={{
-                position: "relative",            // anchor for the absolute button
+                position: "relative",
                 borderRadius: 3,
-                width: "370px",
+                width: "100%",
+                maxWidth: 370,
                 boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
                 display: "flex",
+                ml:3,
+                mt:4,
                 flexDirection: "column",
-                mt: 4,
-                transition:
-                  "transform 0.35s ease, padding-bottom 0.35s ease, background-color 0.35s ease",
                 overflow: "hidden",
+                transition: "transform 0.35s ease, padding-bottom 0.35s ease, background-color 0.35s ease",
                 "&:hover": {
                   transform: "scale(1.003)",
                   backgroundColor: "#0b2d55",
@@ -226,7 +222,7 @@ export default function AboutUsRepairServicesPageCard() {
                 </Typography>
               </CardContent>
 
-              {/* absolutely positioned button — not part of layout until hover */}
+              {/* Hover only View More button */}
               <Button
                 fullWidth
                 variant="contained"
@@ -234,14 +230,14 @@ export default function AboutUsRepairServicesPageCard() {
                 sx={{
                   position: "absolute",
                   left: "50%",
-                  bottom: 1,
+                  bottom: 0,
                   transform: "translate(-50%, 10px)",
                   borderRadius: 20,
                   padding: "10px 18px",
                   textTransform: "none",
                   bgcolor: "#b45309",
                   transition: "all 0.35s ease-in-out",
-                  opacity: 0,
+                  opacity: 0, // hidden by default
                   width: "calc(100% - 70px)",
                   boxSizing: "border-box",
                   display: "flex",
@@ -252,31 +248,30 @@ export default function AboutUsRepairServicesPageCard() {
                 }}
               >
                 View More
-                <ArrowRightAltIcon sx={{ fontSize: 22 }} /> {/* ✅ arrow */}
+                <ArrowRightAltIcon sx={{ fontSize: 22 }} />
               </Button>
             </Card>
           </SwiperSlide>
-
         ))}
       </Swiper>
 
-      {/* Custom Pagination Style */}
+      {/* Custom Pagination */}
       <style>
         {`
-          .swiper-pagination {
-            bottom: 0 !important;
-          }
-          .swiper-pagination-bullet {
-            width: 30px;
-            height: 3px;
-            border-radius: 2px;
-            background: #d1d5db; /* gray */
-            opacity: 1;
-          }
-          .swiper-pagination-bullet-active {
-            background: #2563eb !important; /* blue active */
-          }
-        `}
+      .swiper-pagination {
+        bottom: 0 !important;
+      }
+      .swiper-pagination-bullet {
+        width: 30px;
+        height: 3px;
+        border-radius: 2px;
+        background: #d1d5db;
+        opacity: 1;
+      }
+      .swiper-pagination-bullet-active {
+        background: #2563eb !important;
+      }
+    `}
       </style>
 
       {/* Quote Button */}
@@ -293,10 +288,10 @@ export default function AboutUsRepairServicesPageCard() {
           textTransform: "none",
           "&:hover": { bgcolor: "#92400e" },
         }}
-        onClick={() => handleClickOpen()} >
+        onClick={() => handleClickOpen()}
+      >
         Get a repair quote
       </Button>
-      {/* Swiper Carousel */}
 
 
 
@@ -527,6 +522,12 @@ export default function AboutUsRepairServicesPageCard() {
         </DialogContent>
       </Dialog>
 
+
     </Box>
   );
 }
+
+
+
+
+
