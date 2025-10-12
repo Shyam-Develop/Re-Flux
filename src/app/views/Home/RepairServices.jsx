@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Box, Grid, Typography, Button, Chip, Paper, Card,
   CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary, TextField,
-  InputAdornment, AccordionDetails,useTheme,
+  InputAdornment, AccordionDetails, useTheme
 } from '@mui/material';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -22,9 +22,12 @@ import { useNavigate } from 'react-router-dom';
 import { typography, RefluxSvg } from 'app/utils/constant';
 import Footer from 'app/components/Card/Footer';
 
+
 const ServiceCard = ({ image, title, faults, turnaround, imageLeft = true }) => {
   const navigate = useNavigate();
+
 const theme = useTheme();
+
   return (
     <Paper
       elevation={0}
