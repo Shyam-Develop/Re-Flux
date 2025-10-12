@@ -377,88 +377,81 @@ const AboutUS = () => {
                 </Box>
 
                 {/*CONTACT SECTION */}
-                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb", width:'95%' }}>
                     <Typography
                         sx={{
                             ...typography.displayM,
                             color: "#0C0F13",
-                            ml: 8,
-                            mt: 5
+                            ml: { xs: 0, md: 8 },
+                            mt: { xs: 2, md: 5 },
+                            fontSize: { xs: "24px", md: typography.displayM.fontSize }
                         }}
-                        variant="h3" fontWeight="bold" gutterBottom>
+                        variant="h3"
+                        fontWeight="bold"
+                        gutterBottom
+                    >
                         Contact Us
                     </Typography>
+
                     <Grid container spacing={4} sx={{ ml: { xs: 0, md: 7 } }}>
                         {/* Left Section - Contact Info */}
                         <Grid item xs={12} md={5}>
-                            <Paper elevation={0} sx={{ p: 3, borderRadius: 2, backgroundColor: "#eaf0f8" }}>
-                                <Typography sx={{
-                                    ...typography.h1,
-                                    color: "#0E1109",
-                                }} gutterBottom>
+                            <Paper
+                                elevation={0}
+                                sx={{
+                                    p: { xs: 2, sm: 3 },
+                                    borderRadius: 2,
+                                    backgroundColor: "#eaf0f8"
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        ...typography.h1,
+                                        fontSize: { xs: "20px", md: typography.h1.fontSize },
+                                        color: "#0E1109"
+                                    }}
+                                    gutterBottom
+                                >
                                     Contact Information
                                 </Typography>
-                                <Typography sx={{
-                                    ...typography.bodyBase,
-                                    color: "#0E1109",
-                                }} gutterBottom>
+                                <Typography
+                                    sx={{
+                                        ...typography.bodyBase,
+                                        color: "#0E1109"
+                                    }}
+                                    gutterBottom
+                                >
                                     Get in touch with our approachable team using your preferred method—be it a quick message, a phone call, or a form submission.
                                 </Typography>
 
-                                <Box mt={2}>
-                                    <Typography sx={{
-                                        ...typography.bodyBasemedium,
-                                        color: "#0E1109",
-                                    }}>Email Address</Typography>
-                                    <Typography sx={{
-                                        ...typography.bodySmall,
-                                        color: "#0E1109",
-                                    }}>contact@magnetsindia.com</Typography>
-                                </Box>
-
-                                <Box mt={2}>
-                                    <Typography sx={{
-                                        ...typography.bodyBasemedium,
-                                        color: "#0E1109",
-                                    }}>Phone Number</Typography>
-                                    <Typography sx={{
-                                        ...typography.bodySmall,
-                                        color: "#0E1109",
-                                    }}>+91 98765-43210</Typography>
-                                </Box>
-
-                                <Box mt={2}>
-                                    <Typography sx={{
-                                        ...typography.bodyBasemedium,
-                                        color: "#0E1109",
-                                    }}>Office Location</Typography>
-                                    <Typography sx={{
-                                        ...typography.bodySmall,
-                                        color: "#0E1109",
-                                    }}>
-                                        Magnets India, 123 Magnet Lane, Chennai, India
-                                    </Typography>
-                                </Box>
-
-                                <Box mt={2}>
-                                    <Typography
-                                        sx={{
-                                            ...typography.bodyBasemedium,
-                                            color: "#0E1109",
-                                        }}
-                                    >Business Hours</Typography>
-                                    <Typography sx={{
-                                        ...typography.bodySmall,
-                                        color: "#0E1109",
-                                    }}>Monday – Saturday | 09:00 AM – 07:00 PM</Typography>
-                                </Box>
+                                {[
+                                    { label: "Email Address", value: "contact@magnetsindia.com" },
+                                    { label: "Phone Number", value: "+91 98765-43210" },
+                                    { label: "Office Location", value: "Magnets India, 123 Magnet Lane, Chennai, India" },
+                                    { label: "Business Hours", value: "Monday – Saturday | 09:00 AM – 07:00 PM" }
+                                ].map((info, i) => (
+                                    <Box key={i} mt={2}>
+                                        <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
+                                            {info.label}
+                                        </Typography>
+                                        <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
+                                            {info.value}
+                                        </Typography>
+                                    </Box>
+                                ))}
                             </Paper>
                         </Grid>
 
                         {/* Right Section - Form */}
                         <Grid item xs={12} md={5}>
-                            <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
-                                <Typography variant="h6" fontWeight={600}   >
+                            <Paper elevation={2} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
+                                <Typography
+                                    variant="h6"
+                                    fontWeight={600}
+                                    sx={{
+                                        fontSize: { xs: "18px", sm: "20px" }
+                                    }}
+                                >
                                     Tell us what you need
                                 </Typography>
 
@@ -468,27 +461,15 @@ const AboutUS = () => {
                                     <TextField fullWidth label="Phone *" margin="normal" />
                                     <TextField fullWidth label="Email" margin="normal" />
 
-                                    <TextField
-                                        select
-                                        fullWidth
-                                        label="Enquiry For"
-                                        margin="normal"
-                                        defaultValue=""
-                                    >
+                                    <TextField select fullWidth label="Enquiry For" margin="normal" defaultValue="">
                                         <MenuItem value="Product">Product</MenuItem>
                                         <MenuItem value="Service">Service</MenuItem>
                                         <MenuItem value="Other">Other</MenuItem>
                                     </TextField>
 
-                                    <TextField
-                                        fullWidth
-                                        multiline
-                                        rows={4}
-                                        label="Message"
-                                        margin="normal"
-                                    />
+                                    <TextField fullWidth multiline rows={4} label="Message" margin="normal" />
 
-                                    {/* File Upload (Placeholder style) */}
+                                    {/* File Upload Box */}
                                     <Box
                                         mt={2}
                                         p={3}
@@ -496,27 +477,64 @@ const AboutUS = () => {
                                         borderRadius={2}
                                         textAlign="center"
                                         color="text.secondary"
+                                        sx={{
+                                            fontSize: { xs: "12px", sm: "14px" }
+                                        }}
                                     >
-                                        Drag and drop files, or <Button variant="text">Browse</Button>
+                                        Drag and drop files, or{" "}
+                                        <Button variant="text" sx={{ fontSize: "inherit" }}>
+                                            Browse
+                                        </Button>
                                         <Typography variant="caption" display="block">
-                                            Nameplate, terminals, underside / pole face, controller, site hook. Max 10 files, up to 50 MB each.
+                                            Nameplate, terminals, underside / pole face, controller, site hook.
+                                            Max 10 files, up to 50 MB each.
                                         </Typography>
                                     </Box>
 
                                     {/* Buttons */}
-                                    <Box mt={2} >
-                                        <Button fullWidth sx={{ color: '#111B2D' }} startIcon={<WhatsAppIcon />} >
+                                    <Box mt={2}>
+                                        <Button
+                                            fullWidth
+                                            sx={{
+                                                color: '#111B2D',
+                                                justifyContent: 'flex-start'
+                                            }}
+                                            startIcon={<WhatsAppIcon />}
+                                        >
                                             Send on WhatsApp
                                         </Button>
                                     </Box>
-                                    <Box mt={2} sx={{ backgroundColor: '#2E8E7E', borderRadius: 20 }} gap={2}>
-                                        <Button fullWidth sx={{ color: '#F7F9FC', }}>
+
+                                    <Box
+                                        mt={2}
+                                        sx={{
+                                            backgroundColor: '#2E8E7E',
+                                            borderRadius: 20
+                                        }}
+                                    >
+                                        <Button
+                                            fullWidth
+                                            sx={{
+                                                color: '#F7F9FC',
+                                                textTransform: 'none',
+                                                fontWeight: 500
+                                            }}
+                                        >
                                             Submit Message
                                         </Button>
                                     </Box>
 
-                                    <Box mt={2} >
-                                        <Button fullWidth variant="outlined" sx={{ borderRadius: 20, color: '#111B2D' }}>
+                                    <Box mt={2}>
+                                        <Button
+                                            fullWidth
+                                            variant="outlined"
+                                            sx={{
+                                                borderRadius: 20,
+                                                color: '#111B2D',
+                                                textTransform: 'none',
+                                                fontWeight: 500
+                                            }}
+                                        >
                                             Continue to details
                                         </Button>
                                     </Box>
@@ -525,6 +543,7 @@ const AboutUS = () => {
                         </Grid>
                     </Grid>
                 </Box>
+
 
 
                 {/*Location Section*/}

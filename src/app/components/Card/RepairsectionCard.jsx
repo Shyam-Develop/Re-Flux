@@ -114,7 +114,7 @@ const RepairsectionCard = () => {
                 }}
               >
                 <Typography
-                  sx={{ ...typography.h3, fontFamily: "'Space Grotesk', sans-serif", fontWeight:600, color: "#1B2F43", fontSize: "28px" }}
+                  sx={{ ...theme.typography.h3, fontFamily: "'Space Grotesk', sans-serif", fontWeight:600, color: "#1B2F43", fontSize: "28px" }}
                 >
                   {service.title}
                 </Typography>
@@ -134,14 +134,14 @@ const RepairsectionCard = () => {
 
               <Divider sx={{ mb: 2 }} />
 
-              <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight:400, fontSize:'18px', color: "#666", mb: 1 }}>
+              <Typography sx={{ ...theme.typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight:400, fontSize:'18px', color: "#666", mb: 1 }}>
                 {service.desc}
               </Typography>
 
-              <Typography sx={{ ...typography.h5, color: "#0E1626", mb: 0.5 }}>
+              <Typography sx={{ ...theme.typography.h5, color: "#0E1626", mb: 0.5 }}>
                 Turnaround Time
               </Typography>
-              <Typography sx={{ ...typography.bodyBase, color: "#677489" }}>
+              <Typography sx={{ ...theme.typography.bodyBase, color: "#677489" }}>
                 {service.turnaround.join(" / ")}
               </Typography>
             </Box>

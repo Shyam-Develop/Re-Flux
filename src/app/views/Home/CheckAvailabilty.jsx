@@ -678,8 +678,6 @@ const CheckAvailabilty = () => {
           </Box>
         </Box>
 
-
-
       </Box>
 
 
@@ -771,7 +769,7 @@ const CheckAvailabilty = () => {
       {/* <Whyitworkcard /> */}
 
       {/*ElectroMagnet Repair Section */}
-        <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
+      <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
         {/* Heading */}
         <Typography
           sx={{
@@ -933,7 +931,6 @@ const CheckAvailabilty = () => {
           </Box>
         </Box>
       </Box>
-
 
 
 

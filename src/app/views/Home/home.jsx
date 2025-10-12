@@ -367,7 +367,7 @@ const HomePage = () => {
               backgroundColor: "rgba(36,121,233,0.15)",
               boxShadow: "none",
             },
-            ...typography.bodySmall,
+            ...theme.typography.bodySmall,
           }}
         >
           Repair Services
@@ -375,7 +375,7 @@ const HomePage = () => {
 
         <Typography
           sx={{
-            ...typography.displayL,
+            ...theme.typography.displayL,
             fontFamily: "'Space Grotesk', sans-serif", 
             fontWeight:700,
             fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3rem" },
@@ -389,7 +389,7 @@ const HomePage = () => {
         <Typography
           sx={{
             mb: 4,
-            ...typography.h4,
+            ...theme.typography.h4,
             color: "#6B768A",
             fontSize: '24px',
             textAlign: "left",
@@ -436,7 +436,7 @@ const HomePage = () => {
             display: "flex",
             justifyContent: "center",
             gap: 4,
-            ...typography.buttonLink,
+            ...theme.typography.buttonLink,
             textDecoration: "underline",
             fontWeight: 600,
             color: "#0e8bf1ff",
@@ -448,7 +448,7 @@ const HomePage = () => {
               color: "#0e8bf1ff",
               display: "flex",
               alignItems: "center",
-              ...typography.buttonLink,
+              ...theme.typography.buttonLink,
               textDecoration: "underline",
               fontWeight: 600,
               "&:hover": { textDecoration: "underline" },
@@ -497,7 +497,7 @@ const HomePage = () => {
         <Typography
           variant="h4"
           sx={{
-            ...typography.displayM,
+            ...theme.typography.displayM,
             fontWeight: 600,
             fontSize: { xs: "1.5rem", md: "2rem" },
             color: "#1c2434",
@@ -510,7 +510,7 @@ const HomePage = () => {
         <Typography
           variant="h6"
           sx={{
-            ...typography.h2,
+            ...theme.typography.h2,
             fontWeight: 600,
             fontSize: { xs: "1.2rem", md: "1.5rem" },
             color: "#1c2434",
@@ -522,7 +522,7 @@ const HomePage = () => {
 
         <Typography
           variant="body2"
-          sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
+          sx={{ color: "#99A0AE", mb: 4, ...theme.typography.bodyBase }}
         >
           Understanding growing demand and exceeding expectations from our customers in repairing
         </Typography>
@@ -626,7 +626,7 @@ const HomePage = () => {
         {/* Heading */}
         <Typography
           sx={{
-            ...typography.displayM,
+            ...theme.typography.displayM,
             lineHeight: "1.2",
             color: "#1c2434",
             mb: 2,
@@ -732,7 +732,7 @@ const HomePage = () => {
                       <Typography
                         variant="subtitle1"
                         sx={{
-                          ...typography.h3B1,
+                          ...theme.typography.h3B1,
                           fontWeight: 400,
                           color: isActive ? "#1976d2" : "#1c2434",
                           transition: "0.3s",
@@ -745,7 +745,7 @@ const HomePage = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        ...typography.bodyBasemedium,
+                        ...theme.typography.bodyBasemedium,
                         fontWeight: 400,
                         transition: "0.3s",
                         ml: 4,
@@ -821,7 +821,7 @@ const HomePage = () => {
               <Typography
                 sx={{
                   fontFamily: "SpaceGrotesk-Regular",
-                  ...typography.h2,
+                  ...theme.typography.h2,
                   lineHeight: 1.2,
                   mb: 2,
                 }}
@@ -836,7 +836,7 @@ const HomePage = () => {
                   fontSize: "16px",
                   fontWeight: 400,
                   maxWidth: "320px",
-                  ...typography.bodySmall
+                  ...theme.typography.bodySmall
                 }}
               >
                 We handle service and upkeep — you focus on getting the job done.
@@ -912,7 +912,7 @@ const HomePage = () => {
                         fontWeight: 500,
                         mb: 1,
                         color: "#1A1A1A",
-                        ...typography.h5,
+                        ...theme.typography.h5,
                       }}
                     >
                       {card.title}
@@ -925,7 +925,7 @@ const HomePage = () => {
                         color: "#555",
                         cursor: "pointer",
                         lineHeight: 1.5,
-                        ...typography.bodyBase
+                        ...theme.typography.bodyBase
                       }}
                     >
                       {card.desc}
@@ -1045,7 +1045,7 @@ const HomePage = () => {
           component={Link}
           to="/home/Rentals"
           sx={{
-            ...typography.h3R,
+            ...theme.typography.h3R,
             // fontSize: "1.5rem", 
             color: "#1a4dab",
             fontWeight: 600,
@@ -1079,7 +1079,7 @@ const HomePage = () => {
             <Grid item xs={12} md={6}>
               <Typography
                 sx={{
-                  ...typography.displayM,
+                  ...theme.typography.displayM,
                   fontWeight: 600,
                   color: "#092f7aff",
                 }}
@@ -1131,7 +1131,7 @@ const HomePage = () => {
                       secondary={
                         <Typography
                           sx={{
-                            ...typography.h3medium,
+                            ...theme.typography.h3medium,
                             fontWeight: 500
                           }}
                           color="textSecondary"
@@ -1190,7 +1190,7 @@ const HomePage = () => {
         {/* Title */}
         <Typography
           sx={{
-            ...typography.h3RB,
+            ...theme.typography.h3RB,
             fontWeight: 700,
             fontSize: { xs: "28px", md: "36px" },
             textAlign: { xs: "center", md: "left" },
@@ -1203,7 +1203,7 @@ const HomePage = () => {
         {/* Subtitle */}
         <Typography
           sx={{
-            ...typography.h3B1,
+            ...theme.typography.h3B1,
             fontWeight: 400,
             mb: 4,
             color: "text.secondary",
@@ -1220,7 +1220,7 @@ const HomePage = () => {
         {/* View All Link */}
         <Typography
           sx={{
-            ...typography.h3R,
+            ...theme.typography.h3R,
             textDecoration: "underline",
             color: "#1a4dab",
             fontWeight: 600,
@@ -1310,7 +1310,7 @@ const HomePage = () => {
                     >
                       <Typography
                         sx={{
-                          ...typography.h3B1,
+                          ...theme.typography.h3B1,
                           fontWeight: 700,
                           fontSize: { xs: "16px", md: "18px" },
                         }}
@@ -1329,7 +1329,7 @@ const HomePage = () => {
 
                     <Typography
                       sx={{
-                        ...typography.bodyBase,
+                        ...theme.typography.bodyBase,
                         fontWeight: 400,
                         color: "text.secondary",
                         fontSize: { xs: "14px", md: "16px" },
@@ -1351,7 +1351,7 @@ const HomePage = () => {
       {/* Our Brands Section */}
       <Typography
         sx={{
-          ...typography.h3RB,
+          ...theme.typography.h3RB,
           fontWeight: 700,
           ml: 8,
           mt: 5,
@@ -1365,7 +1365,7 @@ const HomePage = () => {
       <Typography
         variant="h5"
         sx={{
-          ...typography.h3B1,
+          ...theme.typography.h3B1,
           fontWeight: 400,
           mb: 4,
           color: "text.secondary",
@@ -1413,7 +1413,7 @@ const HomePage = () => {
                 variant="body2"
                 color="text.primary"
                 sx={{
-                  ...typography.bodyBase,
+                  ...theme.typography.bodyBase,
                   fontWeight: 400,
                   mb: 2,
                 }}
@@ -1431,14 +1431,14 @@ const HomePage = () => {
                   href="#"
                   underline="none"
                   sx={{
-                    ...typography.bodyStrongB,
+                    ...theme.typography.bodyStrongB,
                     fontWeight: 600,
                   }}
                 >
                   Learn more
                 </Link>
                 <ArrowRightAltIcon
-                  sx={{ ml: 0.5, ...typography.bodyStrongB, fontWeight: 600 }}
+                  sx={{ ml: 0.5, ...theme.typography.bodyStrongB, fontWeight: 600 }}
                 />
               </Box>
             </Grid>
@@ -1476,7 +1476,7 @@ const HomePage = () => {
         sx={{
           ml: 8,
           // mt: 5
-          ...typography.displayL,
+          ...theme.typography.displayL,
           color: '#1C2D4B'
         }}
         variant="h3" fontWeight="bold" gutterBottom>
@@ -1486,7 +1486,7 @@ const HomePage = () => {
         variant="h5" sx={{
           mb: 4,
           color: '#1C2D4B',
-          ...typography.h4,
+          ...theme.typography.h4,
           ml: 8
         }}>
         Get powerful lifting magnets when you need them — without the upfront
@@ -1519,12 +1519,12 @@ const HomePage = () => {
                 </IconButton>
               }
             >
-              <Typography sx={{ ...typography.h4, color: '#0E1109' }}>
+              <Typography sx={{ ...theme.typography.h4, color: '#0E1109' }}>
                 {item.question}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography sx={{ ...typography.bodyBase, color: '#0E1109' }}>
+              <Typography sx={{ ...theme.typography.bodyBase, color: '#0E1109' }}>
                 {item.answer}
               </Typography>
             </AccordionDetails>
@@ -1563,7 +1563,7 @@ const HomePage = () => {
         <Typography
           sx={{
             
-            ...typography.displayL,
+            ...theme.typography.displayL,
             color: '#1C2D4B'
           }}
           variant="h3" fontWeight="bold" gutterBottom>
@@ -1573,7 +1573,7 @@ const HomePage = () => {
           variant="h5" sx={{
             mb: 4,
             color: '#1C2D4B',
-            ...typography.h4,
+            ...theme.typography.h4,
             
           }}>
           Get powerful lifting magnets when you need them — without the upfront
@@ -1611,7 +1611,7 @@ const HomePage = () => {
               <CardContent>
                 <Typography
                   sx={{
-                    ...typography?.h5,
+                    ...theme.typography?.h5,
                     color: "#0E1109",
                     fontSize: { xs: "1.2rem", md: "1.5rem" },
                   }}
@@ -1619,7 +1619,7 @@ const HomePage = () => {
                 >
                   {blogData[0].title}
                 </Typography>
-                <Typography sx={{ ...typography?.bodyBase, color: "#677489" }}>
+                <Typography sx={{ ...theme.typography?.bodyBase, color: "#677489" }}>
                   {blogData[0].author} • {blogData[0].date}
                 </Typography>
                 <Link
@@ -1627,7 +1627,7 @@ const HomePage = () => {
                   underline="none"
                   sx={{
                     color: "#1F77D6",
-                    ...typography?.bodyBasemedium,
+                    ...theme.typography?.bodyBasemedium,
                     mt: 1,
                     display: "inline-flex",
                     alignItems: "center",
@@ -1676,7 +1676,7 @@ const HomePage = () => {
                     <Box sx={{ flex: 1 }}>
                       <Typography
                         sx={{
-                          ...typography?.h4,
+                          ...theme.typography?.h4,
                           color: "#0E1109",
                           fontSize: { xs: "0.95rem", sm: "1.1rem" },
                           mb: 0.5,
@@ -1686,7 +1686,7 @@ const HomePage = () => {
                       </Typography>
                       <Typography
                         sx={{
-                          ...typography?.bodyBase,
+                          ...theme.typography?.bodyBase,
                           color: "#677489",
                           fontSize: { xs: "0.75rem", sm: "0.85rem" },
                         }}
@@ -1698,7 +1698,7 @@ const HomePage = () => {
                         underline="none"
                         sx={{
                           color: "#1F77D6",
-                          ...typography?.bodyBasemedium,
+                          ...theme.typography?.bodyBasemedium,
                           mt: 0.5,
                           fontSize: { xs: "0.75rem", sm: "0.85rem" },
                           display: "inline-flex",
@@ -1773,7 +1773,7 @@ const HomePage = () => {
               sx={{
                 textAlign: "left",
                 fontSize: "15px",
-                // ...typography.h6,
+                // ...theme.typography.h6,
                 // fontWeight: 500,
                 color: "#111",
                 // color: theme.palette.primary.contrastText
@@ -1795,7 +1795,7 @@ const HomePage = () => {
               sx={{
                 textAlign: "left",
                 fontSize: "15px",
-                // ...typography.h6,
+                // ...theme.typography.h6,
                 // fontWeight: 500,
                 color: "#111",
                 // color: theme.palette.primary.contrastText
@@ -1835,7 +1835,7 @@ const HomePage = () => {
               sx={{
                 textAlign: "left",
                 fontSize: "15px",
-                // ...typography.h6,
+                // ...theme.typography.h6,
                 // fontWeight: 500,
                 color: "#111",
                 // color: theme.palette.primary.contrastText
@@ -1882,7 +1882,7 @@ const HomePage = () => {
               sx={{
                 textAlign: "left",
                 fontSize: "15px",
-                // ...typography.h6,
+                // ...theme.typography.h6,
                 // fontWeight: 500,
                 color: "#111",
                 // color: theme.palette.primary.contrastText
@@ -1905,7 +1905,7 @@ const HomePage = () => {
               sx={{
                 textAlign: "left",
                 fontSize: "15px",
-                // ...typography.h6,
+                // ...theme.typography.h6,
                 // fontWeight: 500,
                 color: "#111",
                 // color: theme.palette.primary.contrastText
