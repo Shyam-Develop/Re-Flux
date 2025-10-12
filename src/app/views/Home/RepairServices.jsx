@@ -388,7 +388,7 @@ const RepairServices = () => {
       <Box sx={{ padding: '60px 120px' }}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography sx={{ ...theme.typography.h1, color: '#1A2438' }}>
+            <Typography  variant="h1"sx={{  color: '#1A2438' }}>
               Rent Industrial Magnets with Ease
             </Typography>
           </Grid>

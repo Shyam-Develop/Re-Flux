@@ -25,11 +25,11 @@ export const convertHexToRGB = (hex) => {
   // typography.js
 export const Fonts = {
   // Space Grotesk
-  spaceRegular: "SpaceGrotesk-Regular",
-  spaceMedium: "SpaceGrotesk-Medium",
-  spaceSemiBold: "SpaceGrotesk-SemiBold",
-  spaceBold: "SpaceGrotesk-Bold",
-  spaceExtraBold: "SpaceGrotesk-ExtraBold",
+  spaceRegular: "'Space Grotesk', sans-serif",
+  spaceMedium: "'Space Grotesk', sans-serif",
+  spaceSemiBold: "'Space Grotesk', sans-serif",
+  spaceBold: "'Space Grotesk', sans-serif",
+  spaceExtraBold: "'Space Grotesk', sans-serif",
 
   // Fira Sans
   firaRegular: "FiraSans-Regular",
