@@ -399,7 +399,7 @@ const SellMagnet = () => {
 
   const images = [
     Roi1, // Default large image
-    Roi2,
+    Roi2,   
     Roi1,
     Roi2,
     Roi1,
@@ -442,14 +442,14 @@ const SellMagnet = () => {
         <Typography
           // variant="h4"
           sx={{
-            fontFamily: "Plus Jakarta Sans",
+             ...typography.displayXL,
             fontWeight: 700,
             fontSize: "64px",
-            lineHeight: 1.1, // equivalent to 110%
-            letterSpacing: "-0.31px", // Figma's -0.56% of 56px
-            textAlign: "left", // matches Figma's horizontal alignment
+            lineHeight: 1.1, 
+            letterSpacing: "-0.31px", 
+            textAlign: "left", 
             display: "flex",
-            alignItems: "left", // vertical alignment middle
+            alignItems: "left", 
             justifyContent: "left",
             // ml: 1
           }}

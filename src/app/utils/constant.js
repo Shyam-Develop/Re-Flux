@@ -32,11 +32,13 @@ export const Fonts = {
   spaceExtraBold: "'Space Grotesk', sans-serif",
 
   // Fira Sans
-  firaRegular: "FiraSans-Regular",
-  firaMedium: "FiraSans-Medium",
-  firaSemiBold: "FiraSans-SemiBold",
-  firaBold: "FiraSans-Bold",
-  Intersemibold: "Inter-SemiBold"
+  firaRegular: "'FiraSans-Regular', sans-serif",
+  firaMedium: "'FiraSans-Medium', sans-serif",
+  firaSemiBold: "'FiraSans-SemiBold', sans-serif",
+  firaBold: "'FiraSans-Bold', sans-serif",
+  Intersemibold: "'Inter-SemiBold', sans-serif",
+
+  PlusJakartaSans:"'Plus Jakarta Sans', sans-serif"
 };
 
 // ---------------- Typography ----------------
@@ -78,6 +80,8 @@ h4: { fontFamily: Fonts.spaceSemiBold, fontSize: "24px", lineHeight: "1.30", let
 buttonSBold: { fontFamily: Fonts.Intersemibold, fontSize: "16px", lineHeight: "1", letterSpacing: "0px" },
   // Special
   specNums: { fontFamily: Fonts.firaMedium, fontSize: "16px", lineHeight: "1.45", letterSpacing: "0px" },   // tabular-nums
+
+  
 };
 
 
@@ -96,3 +100,9 @@ export const RefluxSvg = () => (
     />
   </svg>
 );
+
+
+
+
+
+

@@ -43,12 +43,14 @@ const includedItems = [
     title: 'Cables & connectors',
     desc: 'cable_length_m m, quick-connects, shackles',
     hasButton: false,
+    image: handshake1,
   },
   {
     icon: HandshakeIcon,
     title: 'Pre-dispatch',
     desc: 'Load-test and functional checks',
     hasButton: false,
+    image: handshake1,
   },
 ];
 
@@ -74,7 +76,7 @@ export default function WhatsincludedCard() {
               justifyContent: "space-between",
               transition: "all 0.35s ease",
               "&:hover": {
-                height: "284px", // allow room for button
+                height: "254px", // allow room for button
                 backgroundColor: "#0b2d55",
                 color: "#fff",
               },
@@ -88,13 +90,38 @@ export default function WhatsincludedCard() {
             }}
           >
             {/* Icon */}
-            <Box sx={{ p: 2 }}>
-              <item.icon sx={{ fontSize: 36 }} />
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                backgroundColor: "#f3f4f6",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mb: 4,
+                marginLeft: '20px',
+                marginTop: '10px'
+              }}
+            >
+              <Box
+                component="img"
+                src={item.image}
+                alt="service icon"
+                sx={{
+                  width: '45px',
+                  height: '45px',
+                  border: '1px solid gray',
+                  padding: '5px',
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
+              />
             </Box>
 
             {/* Title & Description */}
             <CardContent sx={{ pt: 0 }}>
-              <Typography variant="subtitle1" sx={{ ...typography.h3 }} fontWeight="bold">
+              <Typography sx={{ ...typography.h3, fontWeight: 600, fontSize: '28px' }} >
                 {item.title}
               </Typography>
               <Typography sx={{ ...typography.bodyBase }} variant="body2" color="inherit">

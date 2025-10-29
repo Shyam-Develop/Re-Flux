@@ -20,6 +20,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 
 
+
 const AboutUS = () => {
 
     const theme = useTheme();
@@ -124,7 +125,7 @@ const AboutUS = () => {
                 <Box
                     sx={{
                         width: "100%",
-                        maxWidth: "1440px",
+                        // maxWidth: "1440px",
                         mx: "auto",
                         py: { xs: 6, md: 10 },
                         px: { xs: 2, md: 6 },
@@ -136,7 +137,7 @@ const AboutUS = () => {
                             width: { xs: "100%", md: "904px" },
                             height: { xs: "auto", md: "809px" },
                             position: { xs: "static", md: "relative" },
-                            top: { md: "67px" },
+                            // top: { md: "67px" },
                             left: { md: "268px" },
                             display: "flex",
                             flexDirection: { xs: "column", md: "row" },
@@ -161,7 +162,7 @@ const AboutUS = () => {
                                 >
                                     <Typography
                                         sx={{
-                                            fontFamily: "SpaceGrotesk-Regular",
+                                            fontFamily: "'Space Grotesk', sans-serif",
                                             fontSize: { xs: "28px", md: "32px" },
                                             fontWeight: 600,
                                             lineHeight: 1.2,
@@ -175,6 +176,7 @@ const AboutUS = () => {
                                         color="text.secondary"
                                         mb={3}
                                         sx={{
+                                            fontFamily: "'FiraSans-Regular', sans-serif",
                                             fontSize: "16px",
                                             fontWeight: 400,
                                             maxWidth: "320px",
@@ -223,14 +225,14 @@ const AboutUS = () => {
                                                 "&:hover": { transform: "scale(1.05)" },
                                             }}
                                         >
-                                            <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
+                                            <Typography sx={{ ...typography.h5, fontWeight: 500, fontSize: "20px", fontWeight: 500, mb: 1 }}>
                                                 {item.title}
                                             </Typography>
                                             <Link
                                                 color="text.secondary"
                                                 underline="hover"
                                                 onClick={handleOpen}
-                                                sx={{ fontSize: "16px", fontWeight: 400, cursor: "pointer" }}
+                                                sx={{ fontSize: "14px", fontWeight: 400, cursor: "pointer" }}
                                             >
                                                 {item.desc}
                                             </Link>
@@ -260,7 +262,7 @@ const AboutUS = () => {
                                                 "&:hover": { transform: "scale(1.05)" },
                                             }}
                                         >
-                                            <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 1 }}>
+                                            <Typography sx={{ ...typography.h5, fontSize: "20px", fontWeight: 500, mb: 1 }}>
                                                 {item.title}
                                             </Typography>
                                             <Link
@@ -293,91 +295,146 @@ const AboutUS = () => {
 
 
                 {/* Our Brands Section */}
-                <Typography
-                    sx={{
-                        ...typography.displayL,
-                        color: "#1C2D4B",
-                        ml: 8,
-                        mt: 5
-                    }}
-                    gutterBottom>
-                    Our Brands
-                </Typography>
-                <Typography
-                    variant="h5" sx={{
-                        ...typography.h5,
-                        color: "#99A0AE",
-                        mb: 4,
-                        ml: 8
-                    }}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut nisl turpis. Mauris vitae commodo elit,
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut nisl turpis. Mauris vitae commodo elit,!
-                </Typography>
+
                 <Box sx={{ px: 8, py: 6 }}>
-                    <Grid container spacing={0}>
-                        {partnerData.map((partner, index) => (
-                            <Grid
-                                item
-                                xs={12}
-                                sm={6}
-                                md={3}
-                                key={partner.id}
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    textAlign: "center",
-                                    px: 2,
-                                    borderRight:
-                                        index < partnerData.length - 1
-                                            ? "1px solid #ccc"
-                                            : "none",
-                                }}
-                            >
-                                {/* Logo */}
+                    {/* Heading */}
+                    <Typography
+                        sx={{
+                            ...typography.displayL,
+                            fontSize: "56px",
+                            fontWeight: 700,
+                            color: "#1C2D4B",
+                            mb: 1,
+                        }}
+                    >
+                        Our brands
+                    </Typography>
+
+                    {/* Subheading */}
+                    <Typography
+                        sx={{
+                            ...typography.h4,
+                            fontWeight:400,
+                            fontSize: "24px",
+                            color: "#99A0AE",
+                            mb: 6,
+                        }}
+                    >
+                        Together, we deliver complete magnetic solutions from design and manufacturing
+                        to repair and rental services.
+                    </Typography>
+
+                    {/* Two brand sections */}
+                    <Grid container spacing={4}>
+                        {/* Left Brand */}
+                        <Grid
+                            item
+                            xs={12}
+                            md={6}
+                            sx={{
+                                borderRight: { md: "1px solid #E0E0E0" },
+                                pr: { md: 4 },
+                            }}
+                        >
+                            <Box display="flex" flexDirection="column" alignItems="flex-start">
                                 <Box
                                     component="img"
-                                    src={partner.logo}
-                                    alt="Logo"
-                                    sx={{
-                                        height: 80,
-                                        mb: 2,
-                                        objectFit: "contain",
-                                    }}
+                                    src={Brand1}// update with your logo path
+                                    alt="Electro Flux Logo"
+                                    sx={{ marginLeft: '30%', width: '151px', height: '158px', mb: 2 }}
                                 />
-
-                                {/* Description */}
-                                <Typography
-                                    sx={{
-                                        ...typography.bodyBase,
-                                        color: "#000000",
-                                        mb: 2
-                                    }}
-                                >
-                                    {partner.text}
+                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
+                                    Electro Flux Equipments Pvt. Ltd. is the OEM manufacturer of electro-lifting
+                                    magnets, separators, and magnetic handling systems.
                                 </Typography>
-
-                                {/* Learn more link */}
-                                <Box
-                                    display="flex"
-                                    alignItems="center"
-                                    sx={{ mt: "auto", justifyContent: "flex-start" }}
-                                >
-                                    <Link href="#" underline="none" sx={{
-                                        ...typography.bodyStrong,
-                                        color: "#2F6FBA"
-                                    }}>
+                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
+                                    With decades of experience, the brand powers industries with engineered
+                                    lifting solutions built to global standards.
+                                </Typography>
+                                <Box display="flex" alignItems="center">
+                                    <Link
+                                        href="#"
+                                        underline="none"
+                                        sx={{ color: "#2F6FBA", fontWeight: 600 }}
+                                    >
                                         Learn more
                                     </Link>
                                     <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
                                 </Box>
-                            </Grid>
-                        ))}
+                            </Box>
+                        </Grid>
+
+                        {/* Right Brand */}
+                        <Grid item xs={12} md={6} sx={{ pl: { md: 4 } }}>
+                            <Box display="flex" flexDirection="column" alignItems="flex-start">
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 2,
+                                        justifyContent: "center",
+                                        py: 7,
+                                        marginLeft: '30%'
+                                    }}
+                                >
+                                    {/* SVG Icon */}
+                                    <RefluxSvg width={60} height={60} color="#00374C" />
+
+                                    {/* Text Part */}
+                                    <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                                        <Typography
+                                            sx={{
+                                                fontFamily: "Fira Sans, sans-serif",
+                                                fontWeight: 700,
+                                                fontSize: "30px",
+                                                color: "#00374C",
+                                                lineHeight: 1,
+                                            }}
+                                        >
+                                            ReFlux
+                                        </Typography>
+                                        <Typography
+                                            sx={{
+                                                fontFamily: "Fira Sans, sans-serif",
+                                                fontWeight: 400,
+                                                fontSize: "14px",
+                                                letterSpacing: "6px",
+                                                color: "#00374C",
+                                                mt: 0.5,
+                                            }}
+                                        >
+                                            MAGNETS
+                                        </Typography>
+                                    </Box>
+                                </Box>
+
+                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
+                                    Re-flux is the service and lifecycle brand of Electro Flux—dedicated to repair,
+                                    rental, and resale of industrial magnets across India.
+                                </Typography>
+                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
+                                    From certified repairs to refurbished magnets with warranty, Re-flux ensures
+                                    reliability, safety, and uptime in every operation.
+                                </Typography>
+                                <Box display="flex" alignItems="center">
+                                    <Link
+                                        href="#"
+                                        underline="none"
+                                        sx={{ color: "#2F6FBA", fontWeight: 600 }}
+                                    >
+                                        Learn more
+                                    </Link>
+                                    <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
+                                </Box>
+                            </Box>
+                        </Grid>
                     </Grid>
                 </Box>
 
+
                 {/*CONTACT SECTION */}
-                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb", width:'95%' }}>
+                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb", width: '95%' }}>
                     <Typography
                         sx={{
                             ...typography.displayM,
@@ -497,9 +554,9 @@ const AboutUS = () => {
                                             fullWidth
                                             sx={{
                                                 color: '#111B2D',
-                                                justifyContent: 'flex-start'
+                                                justifyContent: 'center'
                                             }}
-                                            startIcon={<WhatsAppIcon />}
+                                            startIcon={<WhatsAppIcon  sx={{ borderRadius:'10px', backgroundColor:'#25D366', color:'#fff'}}/>}
                                         >
                                             Send on WhatsApp
                                         </Button>
@@ -508,7 +565,7 @@ const AboutUS = () => {
                                     <Box
                                         mt={2}
                                         sx={{
-                                            backgroundColor: '#2E8E7E',
+                                            backgroundColor: '#2e8e7e3b',
                                             borderRadius: 20
                                         }}
                                     >
@@ -548,7 +605,7 @@ const AboutUS = () => {
 
                 {/*Location Section*/}
                 <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#fff" }}>
-                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                    <Typography sx={{...typography.h2, fontWeight:600, fontSize:'32px'}} gutterBottom>
                         Our Location
                     </Typography>
 
@@ -592,17 +649,24 @@ const AboutUS = () => {
                                 <Box sx={{ textAlign: "left" }}> {/* 👈 ensures text lines align equally */}
                                     <Typography sx={{
                                         ...typography.h2,
-                                        color: "#0A142F", mb: 1
+                                        fontWeight:600,
+                                        fontSize:'32px',
+                                        color: "#0A142F", mb: 1,
+                                        textAlign: 'center'
                                     }}>
                                         Head Office
                                     </Typography>
                                     <Typography sx={{
                                         ...typography.h5,
-                                        color: "#0A142F"
+                                        fontWeight:500,
+                                        fontSize:'20px',
+                                        color: "#0A142F",
+                                        marginLeft:'33%'
                                     }}>
-                                        Xilliams Corner Wine © 2017. <br />
-                                        1112 A Market St # Ste B22, <br />
-                                        Charlottesville, CA 45565
+                                        76A NP, 11th St, Periya Nagar, <br />
+                                        Pattara Vakkam, Sidco, <br />
+                                        Industrial Estate, Ambattur,
+                                        Chennai, Tamil Nadu 600058
                                     </Typography>
                                 </Box>
                             </Box>
@@ -627,6 +691,21 @@ const AboutUS = () => {
 
 };
 export default AboutUS;
+
+const RefluxSvg = ({ color = "#111B2D", width = 20, height = 20 }) => (
+    <svg
+        width={width}
+        height={height}
+        viewBox="0 0 114 114"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M57.1457 0.0644531C25.9403 0.0644531 0.634766 25.3821 0.634766 56.62C0.634766 87.8579 25.9403 113.181 57.1457 113.181C88.3511 113.181 113.657 87.8528 113.657 56.62C113.657 25.3871 88.3511 0.0644531 57.1457 0.0644531ZM49.4187 104.452L54.0115 93.0608H48.7172L58.2358 81.7356L55.8536 89.6461L61.6829 89.6764L49.4187 104.447V104.452ZM57.6958 81.7507C57.5191 81.7608 57.3273 81.7709 57.1457 81.7709C56.964 81.7709 56.7772 81.7608 56.5955 81.7507C49.9739 81.4123 44.715 75.9416 44.715 69.2333C44.715 62.5251 50.2717 56.7564 57.1457 56.7109C64.0196 56.7614 69.5763 62.3483 69.5763 69.2333C69.5763 76.1184 64.3174 81.4123 57.6958 81.7507ZM69.5763 83.5793C73.2354 80.1848 75.7134 74.6838 75.7134 69.3041C75.7134 59.0346 67.4011 50.7149 57.1507 50.7149C46.9003 50.7149 38.588 59.0396 38.588 69.3041C38.588 74.6838 41.066 80.1848 44.7251 83.5793C39.6529 79.6594 35.7566 73.3654 35.7566 66.4652C35.7566 54.6348 45.3408 45.0422 57.1557 45.0422C68.9707 45.0422 78.5549 54.6348 78.5549 66.4652C78.5549 73.3654 74.6536 79.6594 69.5864 83.5793H69.5763ZM85.1967 66.349C85.1967 50.8412 72.6398 38.2682 57.1457 38.2682C41.6515 38.2682 29.0997 50.8412 29.0997 66.349C29.0997 75.5021 33.8186 83.1348 40.5916 88.2519C32.1581 82.6751 26.0008 74.1231 26.0008 63.2474C26.0008 46.0322 39.9456 32.0752 57.1457 32.0752C74.3457 32.0752 88.2905 46.0272 88.2905 63.2474C88.2905 74.1231 82.1332 82.6751 73.6997 88.2519C80.4727 83.1348 85.1967 75.4971 85.1967 66.349ZM94.1904 63.207C94.1904 42.7286 77.601 26.1247 57.1457 26.1247C36.6903 26.1247 20.1009 42.7337 20.1009 63.207C20.1009 75.7648 26.9295 86.2263 36.4682 92.9396C25.0671 85.7868 16.7295 74.2949 16.7295 59.8276C16.7295 37.4853 34.8229 19.376 57.1457 19.376C79.4684 19.376 97.5618 37.4853 97.5618 59.8276C97.5618 74.2898 89.2191 85.7868 77.8231 92.9396C87.3618 86.2263 94.1904 75.7648 94.1904 63.207ZM81.9414 97.6172C94.8566 89.1914 104.34 76.6842 104.34 60.0954C104.34 34.0048 83.2031 12.8597 57.1457 12.8597C31.0882 12.8597 9.95147 34.0048 9.95147 60.0954C9.95147 76.6842 19.4398 89.1864 32.3549 97.6172C17.5825 88.8126 6.67599 75.2748 6.67599 56.8069C6.67599 28.9029 29.2763 6.29284 57.1457 6.29284C85.015 6.29284 107.615 28.908 107.615 56.8069C107.615 75.2748 96.7139 88.8126 81.9363 97.6172H81.9414Z"
+            fill={color}
+        />
+    </svg>
+);
 
 const partnerData = [
     {

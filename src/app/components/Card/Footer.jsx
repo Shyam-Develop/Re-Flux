@@ -165,8 +165,8 @@ const handleScrollTop = () => {
                   <Link href="#" sx={{ color: "#fff", ...typography.h5 }}>
                     Youtube
                   </Link>
-                  <Link
-                    href="#"
+                  <Typography
+                    
                     sx={{
                       ...styles.link,
                       ...typography.h4,
@@ -179,7 +179,8 @@ const handleScrollTop = () => {
                     <Box component="span" sx={{ color: "red", ml: 0.5 }}>
                       ❤️
                     </Box>
-                  </Link>
+                  </Typography>
+                  <Box sx={{borderBottom:'1px solid white', width:'20%'}}></Box>
                   <Box
                     sx={{ height: 1, backgroundColor: "#fff", width: 28, mt: 1 }}
                   />

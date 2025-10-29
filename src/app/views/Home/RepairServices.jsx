@@ -159,12 +159,12 @@ const theme = useTheme();
           }}
         >
           {/* Title */}
-          <Typography sx={{ ...theme.typography.h2, color: "#1A2438", mb: 3 }}>
+          <Typography sx={{ ...typography.h2, fontWeight:600, fontSize:'32px', color: "#1A2438", mb: 3 }}>
             {title}
           </Typography>
 
           {/* Subheading */}
-          <Typography sx={{ ...typography.h4, color: "#49576F", mb: 3 }}>
+          <Typography sx={{ ...typography.h4, fontWeight:700, fontSize:'24px', color: "#49576F", mb: 3 }}>
             Common faults
           </Typography>
 
@@ -189,6 +189,8 @@ const theme = useTheme();
                 sx={{
                   width: "202px",
                   height: 44,
+                  fontWeight:500,
+                  fontSize:'20px',
                   ...typography.h5,
                   borderRadius: "999px",
                   border: "1px solid #ccc",
@@ -388,7 +390,7 @@ const RepairServices = () => {
       <Box sx={{ padding: '60px 120px' }}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography  variant="h1"sx={{  color: '#1A2438' }}>
+            <Typography sx={{...typography.h1, fontWeight:600, fontSize:'40px',  color: '#1A2438' }}>
               Rent Industrial Magnets with Ease
             </Typography>
           </Grid>
@@ -437,7 +439,7 @@ const RepairServices = () => {
       {/* //ROI Calculator */}
        <Box sx={{ p: 5 }}>
           <Box sx={{ mt: 8 }}>
-            <Typography gutterBottom sx={{ ...typography.displayL, color: '#1C2D4B', ml: 2 }}>
+            <Typography gutterBottom sx={{ ...typography.displayL, fontWeight:700, fontSize:'56px', color: '#1C2D4B', ml: 2 }}>
               ROI Calculator
             </Typography>
 
@@ -473,7 +475,8 @@ const RepairServices = () => {
                   alignItems: "center",
                   cursor: "pointer",
                   ...typography.h3,
-                  color: '#2F6FBA'
+                  color: '#2F6FBA',
+                  textDecoration:'underline'
                 }}
               >
                 View All ROI Calculators
@@ -536,7 +539,7 @@ const RepairServices = () => {
                         alignItems="center"
                       >
                         <Typography
-                          sx={{ ...typography.h4, color: '#0B121E' }}
+                          sx={{ ...typography.h4, fontWeight:700, fontSize:'24px', color: '#0B121E' }}
                         >
                           {item.title}
                         </Typography>
@@ -562,98 +565,6 @@ const RepairServices = () => {
               ))}
             </Grid>
           </Box>
-
-
-          {/* FAQs Section */}
-          <Button
-            disableElevation
-            disableRipple
-            sx={{
-              marginBottom: 2,
-              marginTop: '30px',
-              // ml: 8,
-              textTransform: "none",           // keep text as-is
-              fontSize: "0.8rem",              // smaller font
-              fontWeight: 500,                 // medium weight
-              color: "#1a4dab",                // dark blue text
-              backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-              borderRadius: "20px",            // pill shape
-              // px: 2,                           // horizontal padding
-              py: 0.5,                         // vertical padding
-              boxShadow: "none",               // remove shadow
-              "&:hover": {
-                backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-                boxShadow: "none",
-              },
-            }}
-          >
-            FAQs
-          </Button>
-          <Typography
-            sx={{
-              // ml: 8,
-              // mt: 5
-              ...typography.displayL,
-              color: '#1C2D4B'
-            }}
-            variant="h3" fontWeight="bold" gutterBottom>
-            FAQs
-          </Typography>
-          <Typography
-            variant="h5" sx={{
-              // mb: 4,
-              ...typography.h4,
-              color: '#99A0AE',
-              // ml: 8
-            }}>
-            Get powerful lifting magnets when you need them — without the upfront
-            cost. Flexible rental plans, quick installation, and reliable
-            performance for every project!
-          </Typography>
-          {/* sx={{ px: 8, py: 6 }} */}
-          <Box >
-            {faqData.map((item, index) => (
-              <Accordion
-                key={index}
-                expanded={expanded === index}
-                onChange={() => handleChange(index)}
-                disableGutters
-                elevation={0}
-                sx={{
-                  backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-                  borderRadius: 2,
-                  mb: 1,
-                  px: 2,
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={
-                    <IconButton>
-                      {expanded === index ? (
-                        <RemoveIcon sx={{ color: "#1976d2" }} />
-                      ) : (
-                        <AddIcon sx={{ color: "#1976d2" }} />
-                      )}
-                    </IconButton>
-                  }
-                >
-                  <Typography sx={{ ...typography.h4, color: '#0E1109' }}>
-                    {item.question}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography sx={{ ...typography.bodyBase, color: '#0E1109' }}>
-                    {item.answer}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            ))}
-          </Box>
-
-
-
-
-
         </Box>
 
 
@@ -661,30 +572,29 @@ const RepairServices = () => {
         {/* Heading */}
         <Box sx={{ mb: 4 }}>
           <Button
-            disableElevation
-            disableRipple
-            sx={{
-              marginBottom: 2,
-              color: '#2F6FBA',
-              backgroundColor: "#EAF3FC",
-              borderRadius: "20px",
-              width: { xs: '100%', sm: '130px' }, // Full width on mobile, fixed width on larger screens
-              height: '33px',
-              px: 2,
-              py: 0.5,
-              boxShadow: "none",
-              "&:hover": {
-                backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-                boxShadow: "none",
-              },
-            }}
-          >
-            <Typography sx={{
-              ...typography.bodySmall, fontSize: '14px', fontWeight: 400,
-              lineHeight: '150%', letterSpacing: '0.14%'
-            }}> Resale Services </Typography>
-          </Button>
-          <Typography sx={{ ...typography.displayL, color: '#1A2438' }}>
+                disableElevation
+                disableRipple
+                sx={{
+                  ...typography.bodySmall,
+                  mb: 2,
+                  textTransform: "none",
+                  fontWeight: 400,
+                  color: "#1a4dab",
+                  backgroundColor: "rgba(36,121,233,0.08)",
+                  borderRadius: "20px",
+                  px: 2,
+                  py: 0.5,
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "rgba(36,121,233,0.15)",
+                    boxShadow: "none",
+                  },
+                  fontSize: { xs: "12px", md: "14px" },
+                }}
+              >
+                Resale Services
+              </Button>
+          <Typography sx={{ ...typography.displayL, fontWeight:700, color: '#1A2438' }}>
             Check out our Refurbished section
           </Typography>
           <Typography sx={{ ...typography.h4, color: '#99A0AE' }}>
@@ -710,18 +620,18 @@ const RepairServices = () => {
                 }}
               >
                 {/* Title & size */}
-                <Typography sx={{ ...typography.h4, color: '#0B121E' }}>
+                <Typography sx={{ ...typography.h4, fontWeight: 400, fontSize:'24px', color: '#0B121E' }}>
                   {product.title}
                 </Typography>
-                <Typography sx={{ ...typography.h5, color: '#00000099', mb: 1 }}>
+                <Typography sx={{ ...typography.h5, fontWeight: 500, color: '#00000099', mb: 1 }}>
                   {product.size}
                 </Typography>
-                <Typography sx={{ ...typography.bodySmall, color: '#00000099', mb: 1 }}>
+                <Typography sx={{ ...typography.bodySmall, fontWeight: 400, color: '#00000099', mb: 1 }}>
                   Certified: {product.certified}
                 </Typography>
 
                 {/* Image with badges */}
-                <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', mb: 2 }}>
+                <Box sx={{ position: 'relative', borderRadius: 0, overflow: 'hidden', mb: 2 }}>
                   <Box
                     component="img"
                     src={product.imgSrc}
@@ -764,16 +674,16 @@ const RepairServices = () => {
                 </Box>
 
                 {/* Specs */}
-                <Grid container spacing={2} sx={{ mb: 2 }}>
+                <Grid container spacing={2} sx={{ mb: 0 }}>
                   <Grid item xs={6}>
-                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Lift Capacity</Typography>
-                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
+                    <Typography sx={{ ...typography.h6, fontWeight:600, color: '#0E1626' }}>Lift Capacity</Typography>
+                    <Typography sx={{ ...typography.bodySmall, fontFamily:"Fira Sans, sans-serif", color: '#677489' }}>
                       {product.liftCapacity}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Power Supply</Typography>
-                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
+                    <Typography sx={{ ...typography.h6, fontWeight:600, color: '#0E1626' }}>Power Supply</Typography>
+                    <Typography sx={{ ...typography.bodySmall, fontFamily:"Fira Sans, sans-serif", color: '#677489' }}>
                       {product.powerSupply}
                     </Typography>
                   </Grid>
@@ -781,8 +691,8 @@ const RepairServices = () => {
 
                 {/* Included */}
                 <Box sx={{ mb: 3, marginBottom: '30px', marginTop: '30px' }}>
-                  <Typography sx={{ ...typography.h6, color: '#0E1626' }}>Included</Typography>
-                  <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
+                  <Typography sx={{ ...typography.h6, fontWeight:600, color: '#0E1626' }}>Included</Typography>
+                  <Typography sx={{ ...typography.bodySmall, fontFamily:"Fira Sans, sans-serif", color: '#677489' }}>
                     {product.included}
                   </Typography>
                 </Box>
@@ -813,6 +723,7 @@ const RepairServices = () => {
               ...typography.h3,
               color: '#2F6FBA',
               fontWeight: 600,
+              fontSize:'28px',
               textDecoration: "underline",
               textUnderlineOffset: "4px",
               '&:hover': {

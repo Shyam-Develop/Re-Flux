@@ -577,12 +577,13 @@ const RefurbishedDetail = () => {
         <Typography
           variant="h4"
           sx={{
-            width: '619px',
-            height: '62px',
+            // width: '619px',
+            // height: '62px',
             ...typography.displayL,
+            fontWeight:700,
             color: '#18294C',
             '@media (max-width: 600px)': {
-              fontSize: '24px',
+              fontSize: '56px',
               width: '100%',
             },
           }}

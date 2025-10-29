@@ -63,7 +63,7 @@ const ResaleServices = () => {
       </Button>
 
       {/* Title and Subtitle */}
-      <Typography sx={{ ...typography.displayL, color:'#1C2D4B' }} gutterBottom>
+      <Typography sx={{ ...typography.displayL, fontWeight:700, fontSize:'56px', color:'#1C2D4B' }} gutterBottom>
         Buy, Sell & Exchange Magnets
       </Typography>
       <Typography
@@ -114,7 +114,7 @@ const ResaleServices = () => {
                 <Typography
                   variant="h6"
                   fontWeight={600}
-                  sx={{ color: hoveredCard === service.id ? "#fff" : "#000" }}
+                  sx={{ color: hoveredCard === service.id ? "#fff" : "#000", ...typography.h4, fontWeight:400, fontSize:'24px'}}
                 >
                   {service.title}
                 </Typography>
@@ -123,6 +123,9 @@ const ResaleServices = () => {
                   sx={{
                     mt: 1,
                     mb: 2,
+                    ...typography.bodyBase,
+                    fontWeight:400,
+                    fontSize:'18px',
                     color:
                       hoveredCard === service.id ? "rgba(255,255,255,0.8)" : "text.secondary",
                   }}

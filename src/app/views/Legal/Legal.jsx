@@ -51,13 +51,13 @@ const Legal = () => {
           <Box sx={{  }}>
             {/* Heading */}
             <Typography
-              sx={{ ...typography.displayL, color: "#1A2438", mb: 2 }}
+              sx={{ ...typography.displayL, fontWeight:700, fontSize:'56px', color: "#1A2438", mb: 2 }}
             >
               Legal
             </Typography>
 
             {/* Subtitle */}
-            <Typography sx={{ ...typography.h4, mb: 4, color: "#1C2D4B" }}>
+            <Typography sx={{ ...typography.h4, fontWeight:400, fontSize:'24px', mb: 4, color: "#1C2D4B" }}>
               Reflux is a brand of Electro Flux Private Limited ("Electro Flux", "we",
               "us", "our"). We operate the Reflux service for repair, rental and
               resale of electro-lifting magnets.
@@ -103,7 +103,7 @@ const Legal = () => {
             </Paper>
 
             {/* Terms of Use */}
-            <Typography sx={{ ...typography.h3, color: "#0B121E", mb: 2 }}>
+            <Typography sx={{ ...typography.h3, fontWeight:600, fontSize:'28px', color: "#0B121E", mb: 2 }}>
               Website Terms of Use
             </Typography>
 

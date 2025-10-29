@@ -11,8 +11,8 @@ import {
   AccordionDetails,
   Divider, IconButton, Grid, Modal, List, ListItem, ListItemIcon, ListItemText, TextField,
   InputAdornment, Dialog, DialogContent, FormControl, Select, MenuItem, Stack, Chip,
-   useTheme,
-    useMediaQuery,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -344,7 +344,7 @@ const RepairServicesPage = () => {
                   ...typography.bodyStrong
                 }}
               >
-                <Link href="#" underline="none">
+                <Link href="#" sx={{ textDecoration: 'underline' }} underline="none">
                   Request a quote →
                 </Link>
               </Typography>
@@ -578,66 +578,58 @@ const RepairServicesPage = () => {
 
 
       {/*ElectroMagnet Repair Section */}
-      <Typography
-        variant="h4"
-        sx={{
-          color: "#1c2434",
-          ml: { xs: 2, md: 5 },
-          fontWeight: 600,
-          fontFamily: "Space Grotesk, Regular",
-          fontSize: { xs: "28px", md: "48px" },
-          mt: { xs: 3, md: 0 },
-        }}
-      >
-        Symptoms & Faults
-      </Typography>
 
-      <Box
-        sx={{
-          width: "100%",
-          minHeight: { xs: "auto", md: "857px" },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          paddingBottom: { xs: '50px', md: '100px' },
-          px: { xs: 2, md: 0 },
-        }}
-      >
-        {/* Inner container */}
-        <Box
+      <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
+        <Typography
+          variant="h4"
           sx={{
-            width: { xs: "100%", md: "1228px" },
-            display: { xs: "flex", md: "flex" },
-            flexDirection: { xs: "column", md: "row" },
-            justifyContent: "space-between",
-            border: { xs: "none", md: "1px solid #ddd" },
-            borderRadius: 3,
-            p: { xs: 2, md: 4 },
+            color: "#1c2434",
+            ml: { xs: 2, md: 5 },
+            fontWeight: 600,
+            fontFamily: "Space Grotesk, Regular",
+            fontSize: { xs: "28px", md: "48px" },
+            mt: { xs: 3, md: 0 },
           }}
         >
-          {/* Left - Features */}
-          <Box
-            sx={{
-              width: { xs: "100%", md: "570px" },
-              position: "relative",
-              mb: { xs: 4, md: 0 },
-            }}
-          >
-            <Box
-              sx={{
-                display: { xs: "none", md: "block" },
-                position: "absolute",
-                top: 0,
-                bottom: '100px',
-                left: "10px",
-                width: "2px",
-                bgcolor: "#ccc",
-                borderRadius: 1,
-              }}
-            />
+          Symptoms & Faults
+        </Typography>
+
+        {/* Main Container */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            border: "1px solid #ddd",
+            borderRadius: 3,
+            px: isMobile ? 2 : 4,
+            py: isMobile ? 3 : 4,
+            gap: 6,
+            width: "100%",
+            bgcolor: "white",
+          }}
+        >
+          {/* Left - Timeline */}
+          <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+            {/* Vertical Line */}
+            {!isMobile && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  left: "10px",
+                  width: "2px",
+                  bgcolor: "#ccc",
+                  borderRadius: 1,
+                }}
+              />
+            )}
+
             {features.map((item, index) => {
               const isActive = hoveredIndex === index;
+
               return (
                 <Box
                   key={index}
@@ -648,12 +640,13 @@ const RepairServicesPage = () => {
                     cursor: "pointer",
                     position: "relative",
                   }}
-                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
+                  onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
                 >
-                  {isActive && (
+                  {/* Active Line */}
+                  {!isMobile && isActive && (
                     <Box
                       sx={{
-                        display: { xs: "none", md: "block" },
                         position: "absolute",
                         left: "10px",
                         width: "2px",
@@ -663,7 +656,9 @@ const RepairServicesPage = () => {
                       }}
                     />
                   )}
-                  <Box sx={{ ml: { xs: 0, md: 4 }, pt: '5px' }}>
+
+                  {/* Icon + Text */}
+                  <Box sx={{ ml: 4 }}>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <CalendarMonthIcon
                         sx={{
@@ -680,20 +675,19 @@ const RepairServicesPage = () => {
                           fontWeight: 400,
                           color: isActive ? "#1976d2" : "#1c2434",
                           transition: "0.3s",
-                          fontSize: { xs: "16px", md: "inherit" },
                         }}
                       >
                         {item.title}
                       </Typography>
                     </Box>
+
                     <Typography
                       variant="body2"
                       sx={{
                         ...typography.bodyBasemedium,
                         fontWeight: 400,
                         transition: "0.3s",
-                        ml: { xs: 0, md: 4 },
-                        fontSize: { xs: "14px", md: "inherit" },
+                        ml: 4,
                       }}
                     >
                       {item.desc}
@@ -707,12 +701,11 @@ const RepairServicesPage = () => {
           {/* Right - Image */}
           <Box
             sx={{
-              width: { xs: "100%", md: "570px" },
-              height: { xs: "300px", md: "567px" },
+              flex: 1,
+              width: "100%",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
-              mt: { xs: 4, md: 0 },
+              mt: isMobile ? 2 : 0,
             }}
           >
             <Box
@@ -721,9 +714,9 @@ const RepairServicesPage = () => {
               alt="ElectroMagnet Repair"
               sx={{
                 width: "100%",
-                height: "100%",
-                borderRadius: 3,
+                maxWidth: isMobile ? "100%" : 600,
                 objectFit: "cover",
+                borderRadius: 3,
                 transition: "0.5s",
               }}
             />
@@ -732,9 +725,8 @@ const RepairServicesPage = () => {
       </Box>
 
 
-
       {/* Before and After Case Studies */}
-       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 4, md: 8 }, backgroundColor: "#fff" }}>
+      <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 4, md: 8 }, backgroundColor: "#fff" }}>
         {/* Title Section */}
         <Typography
           variant="h4"
@@ -749,95 +741,114 @@ const RepairServicesPage = () => {
           Before and after case studies
         </Typography>
 
-        <Typography
-          variant="h6"
-          sx={{
-            ...typography.h2,
-            fontWeight: 600,
-            fontSize: { xs: "1.2rem", md: "1.5rem" },
-            color: "#1c2434",
-            mb: 1,
-          }}
-        >
-          Circular Lifting Magnet
-        </Typography>
+        <Box sx={{ ml: 15, mt: 4 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              ...typography.h2,
+              fontWeight: 600,
+              fontSize: { xs: "1.2rem", md: "1.5rem" },
+              color: "#1c2434",
+              mb: 1,
+            }}
+          >
+            Circular Lifting Magnet
+          </Typography>
 
-        <Typography
-          variant="body2"
-          sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
-        >
-          Understanding growing demand and exceeding expectations from our customers in repairing
-        </Typography>
+          <Typography
+            variant="body2"
+            sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
+          >
+            Understanding growing demand and exceeding expectations from our customers in repairing
+          </Typography>
+        </Box>
 
         {/* Images and Arrows */}
         <Box
           sx={{
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "center",
             gap: 3,
-            position: "relative",
+            mt: 5,
+            flexWrap: "wrap",
           }}
         >
-          {/* Left Arrow */}
-          <IconButton
+          {/* BEFORE IMAGE (Lower) + LEFT ARROW (Outside border) */}
+          <Box
             sx={{
-              position: "absolute",
-              left: isMobile ? "calc(50% - 20px)" : "115px",
-              top: isMobile ? "35px" : "50%",
-              transform: isMobile ? "none" : "translateY(-50%)",
-              bgcolor: "#1c2434",
-              color: "#fff",
-              zIndex: 2,
-              "&:hover": { bgcolor: "#344050" },
+              position: "relative",
+              width: isMobile ? "100%" : "500px",
+              mt: isMobile ? 2 : 8,
+              overflow: "visible",
             }}
           >
-            <ArrowBackIcon />
-          </IconButton>
+            <IconButton
+              sx={{
+                position: "absolute",
+                left: isMobile ? '-15px' : "-25px", // Push arrow outside
+                top: "50%",
+                transform: "translateY(-50%)",
+                bgcolor: "#1c2434",
+                color: "#fff",
+                zIndex: 2,
+                "&:hover": { bgcolor: "#344050" },
+              }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+            <Box
+              component="img"
+              src={before}
+              alt="Before"
+              sx={{
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+          </Box>
 
-          {/* Before Image */}
+          {/* AFTER IMAGE (Higher) + RIGHT ARROW (Outside border) */}
           <Box
-            component="img"
-            src={before}
-            alt="Before"
             sx={{
+              position: "relative",
               width: isMobile ? "100%" : "500px",
-              height: "auto",
-              mt: 7,
-              objectFit: "cover",
-            }}
-          />
-
-          {/* After Image */}
-          <Box
-            component="img"
-            src={after}
-            alt="After"
-            sx={{
-              width: isMobile ? "100%" : "500px",
-              height: "auto",
-              objectFit: "cover",
-            }}
-          />
-
-          {/* Right Arrow */}
-          <IconButton
-            sx={{
-              position: "absolute",
-              right: isMobile ? "calc(50% - 20px)" : "115px",
-              top: isMobile ? "95%" : '55%',
-
-              transform: isMobile ? "none" : "translateY(-50%)",
-              bgcolor: "#1c2434",
-              color: "#fff",
-              zIndex: 2,
-              "&:hover": { bgcolor: "#344050" },
+              mt: isMobile ? 2 : 0,
+              overflow: "visible",
             }}
           >
-            <ArrowForwardIcon />
-          </IconButton>
+            <IconButton
+              sx={{
+                position: "absolute",
+                right: isMobile ? '-15px' : "-25px", // Push arrow outside
+                top: "50%",
+                transform: "translateY(-50%)",
+                bgcolor: "#1c2434",
+                color: "#fff",
+                zIndex: 2,
+                "&:hover": { bgcolor: "#344050" },
+              }}
+            >
+              <ArrowForwardIcon />
+            </IconButton>
+            <Box
+              component="img"
+              src={after}
+              alt="After"
+              sx={{
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+          </Box>
         </Box>
+
+
 
         {/* Button */}
         <Box sx={{ textAlign: "center", mt: 4 }}>
@@ -866,257 +877,162 @@ const RepairServicesPage = () => {
 
       {/* ROI Calculator */}
       <Box sx={{ p: 5 }}>
-          <Box sx={{ mt: 8 }}>
-            <Typography gutterBottom sx={{ ...typography.displayL, color: '#1C2D4B', ml: 2 }}>
-              ROI Calculator
-            </Typography>
+        <Box sx={{ mt: 8 }}>
+          <Typography gutterBottom sx={{ ...typography.displayL, color: '#1C2D4B', ml: 2 }}>
+            ROI Calculator
+          </Typography>
 
-            <Typography
-              variant="h5"
-              sx={{
-                mb: 3,
-                color: "#99A0AE",
-                ml: 2,
-                // maxWidth: "900px",
-                ...typography.h4
-              }}
-            >
-              Get powerful lifting magnets when you need them — without the upfront
-              cost. Flexible rental plans, quick installation, and reliable
-              performance for every project!
-            </Typography>
-
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                mr: 2,
-                mb: 4,
-
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: "1.5rem",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  ...typography.h3,
-                  color: '#2F6FBA'
-                }}
-              >
-                View All ROI Calculators
-                <ArrowRightAltIcon sx={{ ml: 1, fontSize: "2.5rem" }} />
-              </Typography>
-            </Box>
-
-            <Grid container spacing={4}>
-              {roiData.map((item, index) => (
-                <Grid item xs={12} md={6} key={index}>
-                  <Card
-                    sx={{
-                      position: "relative",
-                      borderRadius: 3,
-                      overflow: "hidden",
-                      boxShadow: 3,
-                      height: '400px',
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={item.image}
-                      alt={item.title}
-                      sx={{
-                        height: "100%",
-                        width: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 16,
-                        left: 16,
-                        right: 16,
-                        backgroundColor: "white",
-                        borderRadius: 2,
-                        boxShadow: 1,
-                        px: 2,
-                        py: 1.5,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 0.5,
-                        transition: "0.3s ease-in-out",
-                        "&:hover": {
-                          bgcolor: "#0b2d55",
-                          color: "white",
-                          "& .MuiTypography-root": { color: "white" },
-                          "& .MuiIconButton-root": {
-                            backgroundColor: "#4487ebff",
-                            color: "white",
-                          },
-                        },
-                      }}
-                    >
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Typography
-                          sx={{ ...typography.h4, color: '#0B121E' }}
-                        >
-                          {item.title}
-                        </Typography>
-                        <IconButton
-                          size="small"
-                          sx={{
-                            backgroundColor: "#f0f0f0",
-                            width: "40px",
-                            height: "40px",
-                          }}
-                        >
-                          <ArrowForwardIosIcon fontSize="small" />
-                        </IconButton>
-                      </Box>
-                      <Typography
-                        sx={{ ...typography.bodyBase, color: '#99A0AE' }}
-                      >
-                        {item.description}
-                      </Typography>
-                    </Box>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-
-
-          {/* FAQs Section */}
-          <Button
-            disableElevation
-            disableRipple
+          <Typography
+            variant="h5"
             sx={{
-              marginBottom: 2,
-              marginTop: '30px',
-              // ml: 8,
-              textTransform: "none",           // keep text as-is
-              fontSize: "0.8rem",              // smaller font
-              fontWeight: 500,                 // medium weight
-              color: "#1a4dab",                // dark blue text
-              backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-              borderRadius: "20px",            // pill shape
-              // px: 2,                           // horizontal padding
-              py: 0.5,                         // vertical padding
-              boxShadow: "none",               // remove shadow
-              "&:hover": {
-                backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
-                boxShadow: "none",
-              },
+              mb: 3,
+              color: "#99A0AE",
+              ml: 2,
+              // maxWidth: "900px",
+              ...typography.h4
             }}
           >
-            FAQs
-          </Button>
-          <Typography
-            sx={{
-              // ml: 8,
-              // mt: 5
-              ...typography.displayL,
-              color: '#1C2D4B'
-            }}
-            variant="h3" fontWeight="bold" gutterBottom>
-            FAQs
-          </Typography>
-          <Typography
-            variant="h5" sx={{
-              // mb: 4,
-              ...typography.h4,
-              color: '#99A0AE',
-              // ml: 8
-            }}>
             Get powerful lifting magnets when you need them — without the upfront
             cost. Flexible rental plans, quick installation, and reliable
             performance for every project!
           </Typography>
-          {/* sx={{ px: 8, py: 6 }} */}
-          <Box >
-            {faqData.map((item, index) => (
-              <Accordion
-                key={index}
-                expanded={expanded === index}
-                onChange={() => handleChange(index)}
-                disableGutters
-                elevation={0}
-                sx={{
-                  backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-                  borderRadius: 2,
-                  mb: 1,
-                  px: 2,
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={
-                    <IconButton>
-                      {expanded === index ? (
-                        <RemoveIcon sx={{ color: "#1976d2" }} />
-                      ) : (
-                        <AddIcon sx={{ color: "#1976d2" }} />
-                      )}
-                    </IconButton>
-                  }
-                >
-                  <Typography sx={{ ...typography.h4, color: '#0E1109' }}>
-                    {item.question}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography sx={{ ...typography.bodyBase, color: '#0E1109' }}>
-                    {item.answer}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            ))}
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              mr: 2,
+              mb: 4,
+
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                ...typography.h3,
+                color: '#2F6FBA',
+                textDecoration: 'underline'
+              }}
+            >
+              View All ROI Calculators
+              <ArrowRightAltIcon sx={{ ml: 1, fontSize: "2.5rem" }} />
+            </Typography>
           </Box>
 
-  
+          <Grid container spacing={4}>
+            {roiData.map((item, index) => (
+              <Grid item xs={12} md={6} key={index}>
+                <Card
+                  sx={{
+                    position: "relative",
+                    borderRadius: 3,
+                    overflow: "hidden",
+                    boxShadow: 3,
+                    height: '400px',
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={item.image}
+                    alt={item.title}
+                    sx={{
+                      height: "100%",
+                      width: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 16,
+                      left: 16,
+                      right: 16,
+                      backgroundColor: "white",
+                      borderRadius: 2,
+                      boxShadow: 1,
+                      px: 2,
+                      py: 1.5,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 0.5,
+                      transition: "0.3s ease-in-out",
+                      "&:hover": {
+                        bgcolor: "#0b2d55",
+                        color: "white",
+                        "& .MuiTypography-root": { color: "white" },
+                        "& .MuiIconButton-root": {
+                          backgroundColor: "#4487ebff",
+                          color: "white",
+                        },
+                      },
+                    }}
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Typography
+                        sx={{ ...typography.h4, fontWeight: 700, fontSize: '24px', color: '#0B121E' }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        sx={{
+                          backgroundColor: "#f0f0f0",
+                          width: "40px",
+                          height: "40px",
+                        }}
+                      >
+                        <ArrowForwardIosIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                    <Typography
+                      sx={{ ...typography.bodyBase, fontWeight: 400, fontSize: '18px', color: '#99A0AE' }}
+                    >
+                      {item.description}
+                    </Typography>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
+
+      </Box>
 
 
       {/* Resale Refurbished Section */}
 
-     <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
+      <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
         <ResalerefurbishedCard />
-
-        <Typography
-          sx={{
-            ...typography.h3R,
-            textDecoration: "underline",
-            color: "#1a4dab",
-            fontWeight: 600,
-            cursor: 'pointer',
-            textAlign: { xs: 'center', md: 'right' }, // center on mobile, right on desktop
-            ml: { xs: 0, md: 'auto' }, // auto margin for right alignment on desktop
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: { xs: 'center', md: 'flex-end' }, // aligns icon with text
-            fontSize: { xs: '16px', md: '20px' },
-          }}
-          onClick={() => navigate("/home/SellMagnet")}
-        >
-          View All Magnets for Sale
-          <ArrowRightAltIcon
+        <Box sx={{ mt: 2, textAlign: 'right' }}>
+          <Typography
+            component="a"
+            href="#"
             sx={{
-              color: "#1a4dab",
-              fontWeight: "bold",
-              verticalAlign: "middle",
-              ml: 1,
-              fontSize: { xs: '20px', md: '30px' }, // responsive arrow size
+              ...typography.h3,
+              color: '#2F6FBA',
+              fontWeight: 600,
+              fontSize: '28px',
+              textDecoration: "underline",
+              textUnderlineOffset: "4px",
+              '&:hover': {
+                textDecoration: 'underline',
+              },
             }}
-          />
-        </Typography>
-    </Box>
+            onClick={() => navigate("/home/SellMagnet")}
+          >
+            View All Magnets for sale &rarr;
+          </Typography>
+        </Box>
+      </Box>
 
 
 

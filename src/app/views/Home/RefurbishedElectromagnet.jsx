@@ -512,15 +512,16 @@ const RefurbishedElectromagnet = () => {
         <Typography
           // variant="h4"
           sx={{
-            fontFamily: "Plus Jakarta Sans",
+             ...typography.displayXL,
             fontWeight: 700,
             fontSize: "64px",
-            lineHeight: 1.1, // equivalent to 110%
-            letterSpacing: "-0.31px", // Figma's -0.56% of 56px
-            textAlign: "left", // matches Figma's horizontal alignment
+            lineHeight: 1.1, 
+            letterSpacing: "-0.31px", 
+            textAlign: "left", 
             display: "flex",
-            alignItems: "left", // vertical alignment middle
+            alignItems: "left",
             justifyContent: "left",
+           
             // ml: 1
           }}
         >
@@ -605,17 +606,19 @@ const RefurbishedElectromagnet = () => {
           <Box>
             <Typography
               sx={{
-                ...typography.h3medium,
+                ...typography.h5,
+                fontSize:'20px',
                 fontWeight: 500,
                 mb: "2px",
               }}
             >
-              Filter By Diameter
+              Filter by diameter
             </Typography>
             <Select
               sx={{
-                ...typography.bodyBasemedium,
+                fontFamily:"'Fira Sans', sans-serif",
                 fontWeight: 400,
+                fontSize:'18px',
                 border: "1px solid #E17A00",
                 width: { xs: "100%", sm: "250px", md: "200px" }, // 🔄 Full width on mobile
                 height: "53px",
@@ -632,7 +635,8 @@ const RefurbishedElectromagnet = () => {
           <Box>
             <Typography
               sx={{
-                ...typography.h3medium,
+                ...typography.h5,
+                fontSize:'18px',
                 fontWeight: 500,
                 mb: "2px",
               }}
@@ -641,7 +645,7 @@ const RefurbishedElectromagnet = () => {
             </Typography>
             <Select
               sx={{
-                ...typography.bodyBasemedium,
+                fontFamily:"'Fira Sans', sans-serif",
                 fontWeight: 400,
                 border: "1px solid #E17A00",
                 width: { xs: "100%", sm: "250px", md: "200px" },
@@ -659,7 +663,8 @@ const RefurbishedElectromagnet = () => {
           <Box>
             <Typography
               sx={{
-                ...typography.h3medium,
+                ...typography.h5,
+                fontSize:'18px',
                 fontWeight: 500,
                 mb: "2px",
               }}
@@ -668,7 +673,7 @@ const RefurbishedElectromagnet = () => {
             </Typography>
             <Select
               sx={{
-                ...typography.bodyBasemedium,
+                fontFamily:"'Fira Sans', sans-serif",
                 fontWeight: 400,
                 border: "1px solid #E17A00",
                 width: { xs: "100%", sm: "250px", md: "200px" },
@@ -686,7 +691,8 @@ const RefurbishedElectromagnet = () => {
           <Box>
             <Typography
               sx={{
-                ...typography.h3medium,
+                ...typography.h5,
+                fontSize:'18px',
                 fontWeight: 500,
                 mb: "2px",
               }}
@@ -695,7 +701,7 @@ const RefurbishedElectromagnet = () => {
             </Typography>
             <Select
               sx={{
-                ...typography.bodyBasemedium,
+                fontFamily:"'Fira Sans', sans-serif",
                 fontWeight: 400,
                 border: "1px solid #E17A00",
                 width: { xs: "100%", sm: "250px", md: "200px" },
@@ -737,15 +743,17 @@ const RefurbishedElectromagnet = () => {
                   }}
                 >
                   {/* Title & size */}
-                  <Typography sx={{ ...typography.h4, color: '#0B121E', mb: 0.5 }}>
+                  <Typography sx={{ ...typography.h4, fontWeight:700, fontSize:'24px', color: '#0B121E', mb: 0.5 }}>
                     {product.title}
                   </Typography>
-                  <Typography sx={{ ...typography.h5, color: '#00000099', mb: 1 }}>
-                    {product.size}
-                  </Typography>
-                  <Typography sx={{ ...typography.bodySmall, color: '#00000099', mb: 1 }}>
-                    Certified: {product.certified}
-                  </Typography>
+                  <Box sx={{display:'flex'}}>
+                    <Typography sx={{ ...typography.h5, fontWeight:500, fontSize:'20px', color: '#00000099', mb: 1 }}>
+                      {product.size}
+                    </Typography>
+                    <Typography sx={{ ...typography.bodySmall, fontWeight:400, fontSize:'14px', color: '#00000099', mb: 1, marginLeft: '24%', marginTop: '5px' }}>
+                      Certified: {product.certified}
+                    </Typography>
+                  </Box>
 
                   {/* Image with badges */}
                   <Box
@@ -825,9 +833,10 @@ const RefurbishedElectromagnet = () => {
                     variant="contained"
                     fullWidth
                     sx={{
-                      backgroundColor: '#1a73e8',
+                      backgroundColor: '#1C2D4B',
                       height: '44px',
                       textTransform: 'none',
+                      borderRadius:3,
                       ...typography.bodyStrong,
                     }}
                     onClick={() => navigate("/home/RefurbishedDetail")}
@@ -876,7 +885,8 @@ const RefurbishedElectromagnet = () => {
               <Typography
                 sx={{
                   fontWeight: 600,
-                  ...typography.h3R,
+                  ...typography.h3B,
+                  fontSize:'28px',
                   mt: 8,
                 }}
               >
@@ -1169,7 +1179,7 @@ const RefurbishedElectromagnet = () => {
       {/*  ROI Calculator  */}
       <Box sx={{ p: 5 }}>
         <Box sx={{ mt: 8 }}>
-          <Typography gutterBottom sx={{ ...typography.displayL, color: '#1C2D4B', ml: 2 }}>
+          <Typography gutterBottom sx={{ ...typography.displayL, fontWeight:700, fontSize:'56px', color: '#1C2D4B', ml: 2 }}>
             ROI Calculator
           </Typography>
 
@@ -1199,13 +1209,14 @@ const RefurbishedElectromagnet = () => {
           >
             <Typography
               sx={{
-                fontSize: "1.5rem",
+                fontSize: "28px",
                 fontWeight: "bold",
                 display: "flex",
                 alignItems: "center",
                 cursor: "pointer",
                 ...typography.h3,
-                color: '#2F6FBA'
+                color: '#2F6FBA',
+               textDecoration:'underline'
               }}
             >
               View All ROI Calculators
@@ -1268,7 +1279,7 @@ const RefurbishedElectromagnet = () => {
                       alignItems="center"
                     >
                       <Typography
-                        sx={{ ...typography.h4, color: '#0B121E' }}
+                        sx={{ ...typography.h4, fontWeight:700, fontSize:'24px', color: '#0B121E' }}
                       >
                         {item.title}
                       </Typography>
@@ -1340,7 +1351,7 @@ const RefurbishedElectromagnet = () => {
           }}>
           Get powerful lifting magnets when you need them — without the upfront
           cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
+          performance for every project
         </Typography>
         {/* sx={{ px: 8, py: 6 }} */}
         <Box >

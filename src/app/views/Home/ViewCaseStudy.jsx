@@ -110,32 +110,14 @@ const ViewCaseStudy = () => {
     },
   ];
 
-  const data = [
-    {
-      test: "Insulation (MΩ @ 500 V)",
-      before: 8,
-      after: 8,
-      target: 8,
-    },
-    {
-      test: "Resistance (Ω)",
-      before: 7.3,
-      after: 7.3,
-      target: 7.3,
-    },
-    {
-      test: "Pull Force (kN)",
-      before: 9.4,
-      after: 12.1,
-      target: 12,
-    },
-    {
-      test: "Overhaul Time (h)",
-      before: 24,
-      after: 5,
-      target: 5,
-    },
+  const rows = [
+    { test: "Insulation (MΩ @ 500 V)", before: "8", after: "8", target: "8" },
+    { test: "Resistance (Ω)", before: "7.3", after: "7.3", target: "7.3" },
+    { test: "Inductance (H)", before: "0.38", after: "0.38", target: "0.38" },
+    { test: "No-load current (A)", before: "33", after: "33", target: "33" },
+    { test: "Rated pull (kN)", before: "62", after: "62", target: "62" },
   ];
+
   const benefits = [
     {
       title: 'Lower Upfront Cost',
@@ -340,41 +322,52 @@ const ViewCaseStudy = () => {
         src={casestudy}
         alt="Circular Lifting Magnet"
         sx={{
-          width: "1200px",
-          height: "400px",
+          width: {
+            xs: "100%",
+            sm: "100%",
+            md: "90%",
+            lg: "1200px"
+          },
+          height: {
+            xs: "200px",
+            sm: "300px",
+            md: "400px"
+          },
           objectFit: "cover",
           mt: 2,
-          //   transform: "rotate(-180deg)", // Figma spec
           borderRadius: 1,
           boxShadow: 3,
           mb: 2,
+          mx: "auto",
+          display: "block"
         }}
       />
+
 
       {/* Industry/Asset/Service/Outcome/Docs */}
       <Box
         sx={{
-          alignItems: "flex-start", // alignItems accepts 'flex-start', not 'left'
+          alignItems: "flex-start",
           ml: 10,
         }}
       >
         <Typography
           sx={{
-            fontFamily: "Space Grotesk, Regular",
-            fontSize: { xs: "16px", sm: "18px", md: "20px" }, // responsive font size
+            fontSize: { xs: "16px", sm: "18px", md: "20px" },
             fontWeight: 500,
+            ...typography.h5,
             lineHeight: "130%",
             color: "#111827",
             textAlign: "left",
             mb: 4,
-            mr: { xs: 0, md: 60 }, // no right margin on mobile, restore on desktop
+            mr: { xs: 0, md: 30 },
           }}
         >
-          <strong>Industry:</strong> Scrap & recycling (Western India) <br />
-          <strong>Asset:</strong> Circular electro-lifting magnet — Ø1200 mm (scrap handling) <br />
-          <strong>Service:</strong> Urgent repair + rental bridge <br />
-          <strong>Outcome:</strong> Pull restored to spec, zero production loss during repair <br />
-          <strong>Docs:</strong> Load-test certificate (kN), service report with photos, warranty card (6 months)
+          Industry: Scrap & recycling (Western India) <br />
+          Asset: Circular electro-lifting magnet — Ø1200 mm (scrap handling) <br />
+          Service: Urgent repair + rental bridge <br />
+          Outcome: Pull restored to spec, zero production loss during repair <br />
+          Docs: Load-test certificate (kN), service report with photos, warranty card (6 months)
         </Typography>
       </Box>
 
@@ -388,7 +381,7 @@ const ViewCaseStudy = () => {
           border: "2px solid #50b3f5",
           p: 4,
           textAlign: "left",
-          maxWidth: "1000px",
+          maxWidth: "970px",
           mx: "auto",
           mt: 4,
 
@@ -455,7 +448,7 @@ const ViewCaseStudy = () => {
         {/* Body text */}
         <Typography
           sx={{
-            fontFamily: "Space Grotesk, Regular",
+            ...typography.h5,
             fontSize: "20px",
             fontWeight: 500,
             lineHeight: "130%",
@@ -496,10 +489,10 @@ const ViewCaseStudy = () => {
         {/* Title */}
         <Typography
           sx={{
-            fontFamily: "Space Grotesk, Regular",
             ...typography.displayM,
+            fontWeight: 600,
             textAlign: "center",
-            fontSize: { xs: "24px", sm: "28px", md: "36px" }, // Responsive font size
+            fontSize: { xs: "24px", sm: "28px", md: "48px" },
             mb: { xs: 4, md: 5 },
           }}
         >
@@ -579,40 +572,7 @@ const ViewCaseStudy = () => {
 
 
       <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
-        {/* Heading */}
-        <Typography
-          sx={{
-            fontSize: isMobile ? "32px" : "48px",
-            fontWeight: 700,
-            lineHeight: "1.2",
-            color: "#1c2434",
-            mb: 2,
-            ml: isMobile ? 0 : 5,
-            fontFamily: "Space Grotesk, Regular",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          ElectroMagnet Repair
-        </Typography>
 
-        {/* Subheading */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: 500,
-            color: "#1c2434",
-            mb: 4,
-            ml: isMobile ? 0 : 5,
-            fontFamily: "Inter, sans-serif",
-            textAlign: isMobile ? "center" : "left",
-            px: isMobile ? 2 : 0,
-          }}
-        >
-          Coil rewinds, terminal rebuilds, housing & controllers — restored to
-          spec with certified load testing
-        </Typography>
-
-        {/* Main Container */}
         <Box
           sx={{
             display: "flex",
@@ -775,234 +735,317 @@ const ViewCaseStudy = () => {
 
 
       {/* Tab Section */}
-      <Typography
+      <Box
         sx={{
-          fontFamily: "Space Grotesk, Regular",
-          fontSize: isMobile ? "28px" : "40px",
-          fontWeight: 700,
-          textAlign: "center",
-          mt: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mt: 8,
+          px: 2,
+
         }}
       >
-        Before / After - test results
-      </Typography>
-
-      {!isMobile ? (
-        // DESKTOP TABLE
-        <Box
+        {/* Title */}
+        <Typography
           sx={{
-            mt: 5,
-            marginLeft: '25%',
-            width: "50%",
-            borderCollapse: "collapse",
-            fontFamily: "Inter, sans-serif",
-            fontSize: 14,
-            border: "1px solid #ddd",
+            fontFamily: "Space Grotesk, sans-serif",
+            fontSize: isMobile ? "26px" : "32px",
+            fontWeight: 700,
+            textAlign: "center",
+            color: "#1C2D4B",
+            mb: 4,
           }}
-          component="table"
         >
-          {/* Table header */}
-          <Box
-            component="thead"
+          Before / After — test results
+        </Typography>
+
+        {/* TABLE */}
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{
+            border: "1px solid #D8DCE2",
+            borderRadius: "6px",
+            overflow: "hidden",
+            width: isMobile ? "100%" : "890px",
+          }}
+        >
+          <Table
             sx={{
-              height: "130px",
-              backgroundColor: "#f9fafb",
-              borderBottom: "2px solid #ccc",
+              width: "100%",
+              borderCollapse: "collapse",
             }}
           >
-            <Box component="tr">
-              {["Test", "Before", "After", "Target"].map((heading) => (
-                <Box
-                  component="th"
-                  key={heading}
+            {/* Header */}
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#FFFFFF" }}>
+                {["Test", "Before", "After", "Target"].map((heading) => (
+                  <TableCell
+                    key={heading}
+                    sx={{
+                      ...typography.bodySmall,
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: '22px',
+                      fontWeight: 600,
+                      height: '124px',
+                      fontSize: "15px",
+                      color: "#282D46",
+                      borderRight: "1px solid #D8DCE2",
+                      py: 2,
+                      px: 2.5,
+                      "&:last-child": {
+                        borderRight: "none",
+                      },
+                    }}
+                  >
+                    {heading}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+
+            {/* Body */}
+            <TableBody>
+              {rows.map((row, index) => (
+                <TableRow
+                  key={row.test}
                   sx={{
-                    textAlign: "left",
-                    padding: "12px 16px",
-                    fontWeight: 600,
-                    color: "#24315a",
-                    borderRight: "1px solid #ddd",
-                    "&:last-child": {
-                      borderRight: "none",
-                    },
+                    backgroundColor: index % 2 === 0 ? "#F3F5F7" : "#FFFFFF",
+                    borderBottom: "1px solid #D8DCE2",
+                    height: '124px'
                   }}
                 >
-                  {heading}
-                </Box>
+                  <TableCell
+                    sx={{
+                      ...typography.bodySmall,
+                      fontSize: "15px",
+                      color: "#282D46",
+                      fontWeight: 600,
+                      py: 2.5,
+                      px: 2.5,
+                      borderRight: "1px solid #D8DCE2",
+                      width: "50%",
+                    }}
+                  >
+                    {row.test}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      color: "#24315A",
+                      fontFamily: "Inter, sans-serif",
+                      fontWeight: 500,
+                      fontSize: "15px",
+                      width: "16.6%",
+                      borderRight: "1px solid #D8DCE2",
+                    }}
+                  >
+                    {row.before}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      color: "#24315A",
+                      fontFamily: "Inter, sans-serif",
+                      fontWeight: 500,
+                      fontSize: "15px",
+                      width: "16.6%",
+                      borderRight: "1px solid #D8DCE2",
+                    }}
+                  >
+                    {row.after}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      color: "#24315A",
+                      fontWeight: 500,
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "15px",
+                      width: "16.6%",
+                    }}
+                  >
+                    {row.target}
+                  </TableCell>
+                </TableRow>
               ))}
-            </Box>
-          </Box>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
 
-          {/* Table body */}
-          <Box component="tbody">
-            {data.map((row, index) => (
-              <Box
-                component="tr"
-                key={row.test}
-                sx={{
-                  height: "130px",
-                  backgroundColor: index % 2 === 0 ? "#f5f7fa" : "#fff",
-                  borderBottom: "1px solid #ddd",
-                }}
-              >
-                <Box
-                  component="td"
-                  sx={{ padding: "12px 16px", color: "#24315a", whiteSpace: "nowrap" }}
-                >
-                  {row.test}
-                </Box>
-                <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
-                  {row.before}
-                </Box>
-                <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
-                  {row.after}
-                </Box>
-                <Box component="td" sx={{ padding: "12px 16px", color: "#3c506d" }}>
-                  {row.target}
-                </Box>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      ) : (
-        // MOBILE CARD VIEW
-        <Box
-          sx={{
-            mt: 4,
-            display: "flex",
-            flexDirection: "column",
-            gap: 3,
-            px: 2,
-          }}
-        >
-          {data.map((row, index) => (
-            <Box
-              key={index}
-              sx={{
-                border: "1px solid #ddd",
-                borderRadius: 2,
-                backgroundColor: "#fff",
-                p: 2,
-                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  color: "#24315a",
-                  mb: 1,
-                }}
-              >
-                {row.test}
-              </Typography>
 
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-                <Typography sx={{ color: "#999", fontSize: "14px" }}>Before:</Typography>
-                <Typography sx={{ color: "#3c506d", fontWeight: 500 }}>
-                  {row.before}
-                </Typography>
-              </Box>
 
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-                <Typography sx={{ color: "#999", fontSize: "14px" }}>After:</Typography>
-                <Typography sx={{ color: "#3c506d", fontWeight: 500 }}>
-                  {row.after}
-                </Typography>
-              </Box>
-
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: "#999", fontSize: "14px" }}>Target:</Typography>
-                <Typography sx={{ color: "#3c506d", fontWeight: 500 }}>
-                  {row.target}
-                </Typography>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      )}
 
       {/* Timeline Section */}
 
-      <Box sx={{
-        // px: 4, py: 6 ,
-        textAlign: "left",
-        mt: 5
-      }}>
-        {/* Title */}
-        <Typography variant="h6" sx={{ fontWeight: 600, mb: 4 }}>
-          <Box component="span"
-
+      <Box sx={{ mt: 6, px: 8 }}>
+        {/* ---- Title ---- */}
+        <Typography
+          variant="h6"
+          sx={{
+            ...typography.displayM,
+            fontWeight: 600,
+            fontSize:'48px',
+            color: "#000",
+            mb: 6,
+            textAlign: "left",
+          }}
+        >
+          <Box
+            component="span"
             sx={{
-              borderBottom: "2px solid #0077c8",
-              pr: 0.5,
-              ...typography.displayM,
-              textAlign: "left"
-            }}>
+              borderBottom: "3px solid #0077c8",
+              pb: 0.3,
+              display: "inline-block",
+            }}
+          >
             Timeline (TAT band: Urgent)
-          </Box>{" "}
-
+          </Box>
         </Typography>
 
-        {/* Grid Layout */}
-        <Grid container spacing={2} sx={{ position: "relative" }}>
-          {timelineData.map((day, idx) => (
-            <Grid item xs={12} md={3} key={idx}>
-              {/* Dashed vertical line */}
-              <Box sx={{ position: "relative", height: 220 }}>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    left: "50%",
-                    top: 24,
-                    bottom: 0,
-                    borderLeft: "2px dashed #ccc",
-                    transform: "translateX(-50%)",
-                    zIndex: 0,
-                  }}
-                />
-                <Typography
-                  sx={{
-                    textAlign: "right",
-                    mb: 2,
-                    fontWeight: 600,
-                    color: "#1c1c1c",
-                    position: "relative",
-                    zIndex: 1,
-                  }}
-                >
-                  {day.day}
-                </Typography>
-
-                {/* Task blocks */}
-                {day.tasks.map((task, taskIdx) => (
-                  <Box
-                    key={taskIdx}
-                    sx={{
-                      backgroundColor: task.color,
-                      color: "#fff",
-                      px: 2,
-                      py: 1,
-                      borderRadius: 2,
-                      width: "fit-content",
-                      mx: "auto",
-                      mt: taskIdx === 0 ? 4 : 2,
-                      fontSize: 13,
-                      fontWeight: 500,
-                      zIndex: 1,
-                      position: "relative",
-                      textAlign: "center",
-                    }}
-                  >
-                    {task.label}
-                  </Box>
-                ))}
-              </Box>
-            </Grid>
+        {/* ---- Timeline Container ---- */}
+        <Box
+          sx={{
+            position: "relative",
+            height: 380,
+            width: "100%",
+            marginLeft:'10%'
+          }}
+        >
+          {/* === Four Vertical Dashed Lines === */}
+          {["12%", "32%", "54%", "75%"].map((left, index) => (
+            <Box
+              key={index}
+              sx={{
+                position: "absolute",
+                left,
+                top: 40,
+                bottom: 0,
+                borderLeft: "2px dashed #bfbfbf",
+                transform: "translateX(-50%)",
+              }}
+            />
           ))}
-        </Grid>
 
+          {/* === Day Labels === */}
+          {[
+            { label: "Day 1", left: "21%" },
+            { label: "Day 2", left: "43%" },
+            { label: "Day 3", left: "65%" },
+          ].map((day, index) => (
+            <Typography
+              key={index}
+              sx={{
+                position: "absolute",
+                left: day.left,
+                top: 0,
+                transform: "translateX(-50%)",
+                fontWeight: 700,
+                color: "#000",
+                fontSize: 20,
+              }}
+            >
+              {day.label}
+            </Typography>
+          ))}
 
+          {/* === Task Buttons === */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 100,
+              left: "22%",
+              transform: "translateX(-50%)",
+              backgroundColor: "#e3a617",
+              color: "#fff",
+              pl: '40px',
+              pr: '55px',
+              pt:'15px',
+              pb:'15px',
+              width:'20%',
+              borderRadius: "15px",
+              fontSize: 14,
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+              textAlign: "center",
+            }}
+          >
+            Intake, tests, approval
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              top: 180,
+              left: "43%",
+              transform: "translateX(-50%)",
+              backgroundColor: "#9f1719",
+              color: "#fff",
+              paddingLeft: '15px',
+              paddingRight: '15px',
+              paddingTop: '15px',
+              paddingBottom: '15px',
+              borderRadius: '15px',
+              fontSize: 13,
+              width:'20%',
+              fontWeight: 600,
+              textAlign: "center",
+              width: "max-content",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Rewind + mechanical + terminals/leads
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              top: 250,
+              left: "64%",
+              transform: "translateX(-50%)",
+              backgroundColor: "#0273d9",
+              color: "#fff",
+              pl: '40px',
+              pr:'45px',
+              pt:'15px',
+              pb:'15px',
+              borderRadius: "15px",
+              fontSize: 13,
+              fontWeight: 600,
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Load-test & documentation
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              top: 320,
+              left: "65%",
+              transform: "translateX(-50%)",
+              backgroundColor: "#c1147a",
+              color: "#fff",
+              pl: '45px',
+              pr:'30px',
+              pt:'15px',
+              pb:'15px',
+              borderRadius: "15px",
+              fontSize: 13,
+              fontWeight: 600,
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Dispatch, install, on-site checks
+          </Box>
+        </Box>
       </Box>
+
+
+
 
       <Box>
         <Paper
@@ -1011,7 +1054,8 @@ const ViewCaseStudy = () => {
             backgroundColor: "#f9fafb",
             borderRadius: 0,
             py: 6,
-            px: 4,
+            px: 8,
+            mt: 5
           }}
         >
           {/* Title */}
@@ -1121,7 +1165,7 @@ const ViewCaseStudy = () => {
         {/* Alternative header */}
         <Typography
           sx={{
-            fontFamily: "Space Grotesk, Regular",
+            ...typography.h2,
             textAlign: "left",
             fontWeight: 600,
             fontSize: "32px",
@@ -1134,6 +1178,7 @@ const ViewCaseStudy = () => {
           Alternative (replace + rental, 12 days lead):
         </Typography>
         <Typography sx={{
+          ...typography.h5,
           textAlign: "left",
           color: "#3c506d",
           fontSize: "20px",
@@ -1149,7 +1194,7 @@ const ViewCaseStudy = () => {
         {/* Estimated savings */}
         <Typography
           sx={{
-            fontFamily: "Space Grotesk, Regular",
+            ...typography.h2,
             textAlign: "left",
             fontWeight: 600,
             fontSize: "32px",
@@ -1257,7 +1302,7 @@ const ViewCaseStudy = () => {
       </Box>
 
 
-{/* Why It worked */}
+      {/* Why It worked */}
       <Box
         sx={{
           p: isMobile ? 2 : 4,
@@ -1394,7 +1439,7 @@ const ViewCaseStudy = () => {
                     fontFamily: "Fira Sans, Semibold",
                     fontSize: isMobile ? "16px" : "18px",
                     mb: 2,
-                    ml: isMobile ? 0 : 4,
+                    ml: isMobile ? 0 : 0,
                     "&:hover": {
                       textDecoration: "underline",
                     },
@@ -1409,11 +1454,11 @@ const ViewCaseStudy = () => {
                   variant="contained"
                   sx={{
                     mt: 2,
-                    ml: isMobile ? 0 : 4,
+                    ml: isMobile ? 0 : 0,
                     backgroundColor: "#8b4513",
                     borderRadius: "999px",
-                    px: isMobile ? 6 : 14,
-                    py: 1.3,
+                    px: isMobile ? 6 : 20,
+                    py: 1.1,
                     fontWeight: 600,
                     textTransform: "none",
                     "&:hover": {

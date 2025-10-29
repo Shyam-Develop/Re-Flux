@@ -61,7 +61,7 @@ export default function RentServicesCard({ services }) {
       >
         Get powerful lifting magnets when you need them — without the upfront
         cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
+        performance for every project
       </Typography>
 
       {/* Swiper */}
@@ -170,12 +170,13 @@ export default function RentServicesCard({ services }) {
                     mb: 1,
                   }}
                 >
-                  <Box>
+                  <Box sx={{width:'70%'}}>
                     <Typography
                       sx={{
                         ...typography.h4,
                         fontSize:'24px',
-                        lineHeight: '130%',
+                        
+                        // lineHeight: '130%',
                       }}
                     >
                       {service.title}

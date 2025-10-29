@@ -115,7 +115,7 @@ const RepairsectionCard = () => {
               >
                 <Typography
                 variant="h3"
-                  sx={{color: "#1B2F43", fontSize: "28px" }}
+                  sx={{color: "#1B2F43", fontSize: "28px", fontWeight:600}}
                 >
                   {service.title}
                 </Typography>
@@ -135,14 +135,14 @@ const RepairsectionCard = () => {
 
               <Divider sx={{ mb: 2 }} />
 
-              <Typography variant="p" sx={{  color: "#666", mb: 1 }}>
+              <Typography variant="p" sx={{ fontWeight:400, fontSize:'18px', color: "#666", mb: 1 }}>
                 {service.desc}
               </Typography>
 
-              <Typography variant="h5" sx={{ color: "#0E1626", mb: 0.5 }}>
+              <Typography variant="h5" sx={{ fontWeight:500, color: "#0E1626", mb: 0.5 }}>
                 Turnaround Time
               </Typography>
-              <Typography variant="p" sx={{ color: "#677489" }}>
+              <Typography variant="p" sx={{ fontWeight:400, fontSize:'18px', color: "#677489" }}>
                 {service.turnaround.join(" / ")}
               </Typography>
             </Box>
@@ -174,8 +174,7 @@ const RepairsectionCard = () => {
                 textDecoration: "underline",
               },
             }}
-           component="a"
-          href="/home/RepairServices">
+            onClick={() => navigate("/home/RepairServices")}>
             View All Services →
           </Typography>
         </Box>

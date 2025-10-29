@@ -32,29 +32,19 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
-import WhatsApp from "../../../assets/whatsappimg.jpg";
-import RepairsectionCard from "app/components/Card/RepairsectionCard";
+
 // import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import serviceimg from "../../../assets/Repairservice.png";
 import before from "../../../assets/beforecstudy.png";
 import after from "../../../assets/aftercstudy.png";
 import Electromagnetrepair from "../../../assets/EletromagnetRepair.png";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import RentServicesCard from "app/components/Card/RentServicesCard";
-import RentingMagnet from "../../../assets/RentingMagnet.png";
-import ResaleServices from "app/components/Card/ResaleServices";
 import ROIimage from "../../../assets/ROICalculator.jpg";
 import Brand1 from "../../../assets/Brand1.png";
 import Brand2crea from "../../../assets/Brand2crea.png";
@@ -71,6 +61,7 @@ import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
 import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
+import Approach5 from "../../../assets/Approach5.jpg";
 
 
 
@@ -173,7 +164,7 @@ const CheckAvailabilty = () => {
     {
       title: "TAT you can plan around",
       desc: "Urgent 24–48h, Standard 72h, Overhaul 5–7 days—clear timelines with proactive updates.",
-      image: Electromagnetrepair,
+      image: Approach5,
     },
     {
       title: "Certified safe, ASME-aligned",
@@ -412,7 +403,6 @@ const CheckAvailabilty = () => {
               sx={{
                 color: "#4B5C76",
                 ...typography.h4,
-                fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
@@ -424,7 +414,6 @@ const CheckAvailabilty = () => {
               sx={{
                 color: "#4B5C76",
                 ...typography.h4,
-                fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
@@ -436,7 +425,6 @@ const CheckAvailabilty = () => {
               sx={{
                 color: "#4B5C76",
                 ...typography.h4,
-                fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
@@ -448,7 +436,6 @@ const CheckAvailabilty = () => {
               sx={{
                 color: "#4B5C76",
                 ...typography.h4,
-                fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
@@ -460,7 +447,6 @@ const CheckAvailabilty = () => {
               sx={{
                 color: "#4B5C76",
                 ...typography.h4,
-                fontFamily: "SpaceGrotesk-Regular",
                 fontSize: "24px",
                 lineHeight: "1.30",
                 fontWeight: 400,
@@ -771,36 +757,19 @@ const CheckAvailabilty = () => {
       {/*ElectroMagnet Repair Section */}
       <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
         {/* Heading */}
-        <Typography
-          sx={{
-            ...typography.displayM,
-            lineHeight: "1.2",
-            color: "#1c2434",
-            mb: 2,
-            ml: isMobile ? 0 : 5,
-            fontFamily: "Space Grotesk, Regular",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          ElectroMagnet Repair
-        </Typography>
-
-        {/* Subheading */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: 500,
-            color: "#1c2434",
-            mb: 4,
-            ml: isMobile ? 0 : 5,
-            fontFamily: "Inter, sans-serif",
-            textAlign: isMobile ? "center" : "left",
-            px: isMobile ? 2 : 0,
-          }}
-        >
-          Coil rewinds, terminal rebuilds, housing & controllers — restored to
-          spec with certified load testing
-        </Typography>
+         <Typography
+                variant="h4"
+                sx={{
+                  color: "#1c2434",
+                  ml: { xs: 2, md: 5 },
+                  fontWeight: 600,
+                  fontFamily: "Space Grotesk, Regular",
+                  fontSize: { xs: "28px", md: "48px" },
+                  mt: { xs: 3, md: 0 },
+                }}
+              >
+                Symptoms & Faults
+              </Typography>
 
         {/* Main Container */}
         <Box
@@ -921,7 +890,8 @@ const CheckAvailabilty = () => {
               src={features[hoveredIndex].image}
               alt="ElectroMagnet Repair"
               sx={{
-                width: "100%",
+                width: "570px",
+                height:'530px',
                 maxWidth: isMobile ? "100%" : 600,
                 objectFit: "cover",
                 borderRadius: 3,
@@ -989,7 +959,7 @@ const CheckAvailabilty = () => {
         >
           Get powerful lifting magnets when you need them — without the upfront
           cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
+          performance for every project
         </Typography>
         <Box sx={{ px: 8, py: 6 }}>
           {faqData.map((item, index) => (
