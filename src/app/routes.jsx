@@ -4,12 +4,18 @@ import { Navigate } from "react-router-dom";
 import NotFound from "./views/sessions/NotFound";
 import mastersRoutes from "./views/masters/MasterRoutes";
 import HomeRoutes from "./views/Home/homeRoutes";
+import CmsEditor from "pages/CmsEditor";
+import LoginPage from "../pages/LoginPage"; 
 import HomePage from "./views/Home/home";
 import RepairRoutes from "./views/Repair/RepairRoutes";
 import LegalRoutes from "./views/Legal/LegalRoutes";
 import ContactRoutes from "./views/Contact/ContactRoues";
 import AuthGuard from "./auth/AuthGuard";
 const routes = [
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
   {
     element: (
       // <AuthGuard>
@@ -27,6 +33,7 @@ const routes = [
     ],
   },
         { path: "/", element: <Navigate to="/home" replace /> }, // ✅ redirect root to /home
+         { path: "/CmsEditor", element: <CmsEditor /> },
 // ✅ optional: handle unknown routes
   { path: "*", element: <NotFound /> },
 ];

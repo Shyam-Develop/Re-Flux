@@ -92,18 +92,20 @@ export default function TopbarWithMegaMenu() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const checkLogin = () => {
-      const username = localStorage.getItem("username");
-      setIsLoggedIn(username && username.trim().toLowerCase() === "admin");
-    };
-
-    checkLogin(); // Initial check
-    window.addEventListener("storage", checkLogin); // React to login/logout
-
-    return () => window.removeEventListener("storage", checkLogin);
+    useEffect(() => {
+    // Check if logged in from localStorage
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("role");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
+  const handleLogin = () => navigate("/login");
 
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -302,44 +304,34 @@ export default function TopbarWithMegaMenu() {
                     </Popover>
                   </React.Fragment>
                 ))}
-              </Box>
-            </Box>
-
-            <Box display="flex" alignItems="center" gap={2}>
+                {/* ✅ Login / Logout Toggle Button */}
+            {isLoggedIn ? (
               <Button
-                variant="outlined"
+                onClick={handleLogout}
                 sx={{
-                  color: "#00334E",
-                  borderColor: "#00334E",
-                  borderRadius: "25px",
+                  color: "#131313",
+                  fontWeight: 500,
+                  fontSize: "20px",
                   textTransform: "none",
-                  fontWeight: 600,
-                  fontSize: "18px",
-                  px: 2,
-                  py: 0.2,
-                  "&:hover": {
-                    backgroundColor: "#00334E",
-                    color: "#fff",
-                  },
-                }}
-                onClick={() => {
-                  if (isLoggedIn) {
-                    localStorage.removeItem("username");
-                    window.dispatchEvent(new Event("storage")); // 👈 notify logout
-                    navigate("/signin");
-                  } else {
-                    navigate("/signin");
-                  }
                 }}
               >
-                {isLoggedIn ? "Sign Out" : "Sign In"}
+                Logout
               </Button>
+            ) : (
+              <Button
+                onClick={handleLogin}
+                sx={{
+                  color: "#131313",
+                  fontWeight: 500,
+                  fontSize: "20px",
+                  textTransform: "none",
+                }}
+              >
+                Login
+              </Button>
+            )}
+              </Box>
             </Box>
-
-
-
-
-
           </Box>
         </TopbarContainer>
       </TopbarRoot>
