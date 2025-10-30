@@ -116,7 +116,6 @@ export default function TopbarWithMegaMenu() {
 
 
 
-
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClose = () => {
@@ -304,42 +303,7 @@ export default function TopbarWithMegaMenu() {
                 ))}
               </Box>
             </Box>
-
-            <Box display="flex" alignItems="center" gap={2}>
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#00334E",
-                  borderColor: "#00334E",
-                  borderRadius: "25px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  fontSize: "18px",
-                  px: 2,
-                  py: 0.2,
-                  "&:hover": {
-                    backgroundColor: "#00334E",
-                    color: "#fff",
-                  },
-                }}
-                onClick={() => {
-                  if (isLoggedIn) {
-                    localStorage.removeItem("username");
-                    window.dispatchEvent(new Event("storage")); // 👈 notify logout
-                    navigate("/signin");
-                  } else {
-                    navigate("/signin");
-                  }
-                }}
-              >
-                {isLoggedIn ? "Sign Out" : "Sign In"}
-              </Button>
-            </Box>
-
-
-
-
-
+           
           </Box>
         </TopbarContainer>
       </TopbarRoot>

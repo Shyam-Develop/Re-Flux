@@ -42,7 +42,7 @@ export default function Testimonials() {
       <Box sx={{ gridColumn: "span 4", }}>
         <Box
           sx={{
-            // width: "1440px",
+          // width: "1440px",
             // height: "1867px",
             paddingTop: "20px",
             paddingRight: "80px",
@@ -176,18 +176,16 @@ export default function Testimonials() {
               </Box>
             ))}
           </Box>
-
-
         </Box>
 
-        {/* Footer Section */}
-        <Box>
-          <Footer />
-        </Box>
+          {/* Footer Section */}
+          <Box>
+              <Footer />
+          </Box>
       </Box>
 
     </Box>
 
-
+    
   );
 }
