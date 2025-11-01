@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -6,22 +6,21 @@ import {
   TextField,
   Button,
   MenuItem,
-  Card,
-  useMediaQuery, Paper,
+  Paper,
+  useMediaQuery,
+  IconButton,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import ServicesSection from "app/components/Card/AboutUS/Section1";
-import Brand1 from '../../../assets/Brand1.png';
-import Brand2crea from "../../../assets/Brand2crea.png";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useDispatch } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
 import { typography } from "app/utils/constant";
 import Footer from "app/components/Card/Footer";
-import { Formik, Form, Field } from "formik";
+import ServicesSection from "app/components/Card/AboutUS/Section1";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { PostContactUS } from "app/redux/slice/postSlice";
+import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
-// ✅ Validation Schema
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -29,46 +28,43 @@ const validationSchema = Yup.object({
   message: Yup.string().required("Message is required"),
 });
 
-const ContactUs = () => {
+export default function ContactUs() {
   const theme = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  //=================MAP=====================//
-  // const googleMapsUrl =
-  //     "https://www.google.com/maps/place/1112+A+Market+St+%23+Ste+B22,+Charlottesville,+CA+45565";
-  const googleMapsLink = "https://www.google.com/maps/search/?api=1&query=13.104444,80.173889";
-  const googleMapsEmbed = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15571.234567!2d80.173889!3d13.104444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4vXXXXXXXXXX";
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  // useEffect(() => {
-  //     // Load Google Maps script
-  //     const script = document.createElement("script");
-  //     script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
-  //     script.async = true;
-  //     document.body.appendChild(script);
+  // ✅ Fetch content from API
+  useEffect(() => {
+    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C004")
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
 
-  //     // Attach map init function to window
-  //     window.initMap = () => {
-  //         fetch(
-  //             "https://maps.googleapis.com/maps/api/js/examples/styles/minimal_hosting.json"
-  //         )
-  //             .then((res) => res.json())
-  //             .then((mapStyle) => {
-  //                 const map = new window.google.maps.Map(mapRef.current, {
-  //                     center: { lat: 38.0293, lng: -78.4767 }, // Charlottesville, VA
-  //                     zoom: 14,
-  //                     styles: mapStyle,
-  //                 });
+  // ✅ Check admin
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
 
-  //                 new window.google.maps.Marker({
-  //                     position: { lat: 38.0293, lng: -78.4767 },
-  //                     map,
-  //                     title: "Head Office",
-  //                 });
-  //             });
-  //     };
-  // }, []);
-
+  // ✅ Edit button
+  const handleEdit = (id, type = "T") => {
+    navigate(`/CmsEditor?contentId=C004&contentTextID=${id}&contentType=${type}`);
+  };
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{ ml: 1, p: 0.3, "&:hover": { color: "#007bff" }, verticalAlign: "middle" }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
 
   const handleSubmit = async (values) => {
     try {
@@ -79,50 +75,37 @@ const ContactUs = () => {
         Message: values.message,
       };
 
-      console.log("🚀 ~ handleSubmit ~ idata:", idata);
-
       const response = await dispatch(PostContactUS({ idata }));
-      if (response.payload.Status === "Y") {
-        // ✅ success popup
-        alert(`${response.payload.Message}`)
-
-      } else {
-
-        alert(`${response.payload.Message}`)
-      }
-
+      alert(response.payload.Message);
     } catch (error) {
       console.error("❌ Error submitting form:", error);
-
-
     }
   };
+
+  if (!content) return null;
+
+  const googleMapsLink = "https://www.google.com/maps/search/?api=1&query=13.104444,80.173889";
+  const googleMapsEmbed =
+    "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15571.234567!2d80.173889!3d13.104444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4vXXXXXXXXXX";
+
   return (
     <Box
       display="grid"
       gap="20px"
       gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
-        "& > div": {
-          gridColumn: isNonMobile ? undefined : "span 4",
-        },
+        "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
         padding: "10px",
       }}
     >
       <Box sx={{ gridColumn: "span 4", p: 2 }}>
-
         {/* Heading */}
-        <Typography
-
-          sx={{
-            ...typography.displayM,
-            color: "#0C0F13",
-            textAlign: "center", mb: 6
-          }}
-        >
-          Contact Us
+        <Typography sx={{ ...typography.displayM, color: "#0C0F13", textAlign: "center", mb: 6 }}>
+          {content.CON400101}
+          <EditIconButton id="CON400101" />
         </Typography>
-        {/* Responsive Flex Layout */}
+
+        {/* Contact Info & Form */}
         <Box
           sx={{
             width: "100%",
@@ -147,7 +130,6 @@ const ContactUs = () => {
               minHeight: "590px",
               borderRadius: "16px",
               p: { xs: 4, md: 6 },
-              boxSizing: "border-box",
               display: "flex",
               flexDirection: "column",
               gap: 4,
@@ -155,29 +137,50 @@ const ContactUs = () => {
           >
             <Box>
               <Typography sx={{ ...typography.h1, fontWeight: 600, color: "#0E1109" }} gutterBottom>
-                Contact Information
+                {content.CON400102}
+                <EditIconButton id="CON400102" />
               </Typography>
               <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }}>
-                Get in touch with our approachable team using your preferred method—be it a quick message, a phone call, or a form submission.
+                {content.CON400103}
+                <EditIconButton id="CON400103" />
               </Typography>
             </Box>
 
+            {/* Info blocks */}
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <Box>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>Email Address</Typography>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>contact@magnetsindia.com</Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>
+                  {content.CON400104}
+                  <EditIconButton id="CON400104" />
+                </Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>{content.CON400105}
+                  <EditIconButton id="CON400105" />
+                </Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>Phone Number</Typography>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>+91 98765-43210</Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>{content.CON400106}
+                  <EditIconButton id="CON400106" />
+                </Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>{content.CON400107}
+                  <EditIconButton id="CON400107" />
+                </Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>Office Location</Typography>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>Magnets India, 123 Magnet Lane, Chennai, India</Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>{content.CON400108}
+                  <EditIconButton id="CON400108" />
+                </Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>{content.CON400109}
+                  <EditIconButton id="CON400109" />
+                </Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>Business Hours</Typography>
-                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>Monday – Saturday | 09:00 AM – 07:00 PM</Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 600, fontSize: '18px', color: "#0E1109" }}>{content.CON400110}
+                  <EditIconButton id="CON400110" />
+                </Typography>
+                <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 400, fontSize: '18px', color: "#0E1109" }}>{content.CON400111}
+                  <EditIconButton id="CON400111" />
+                </Typography>
+
               </Box>
             </Box>
           </Paper>
@@ -214,7 +217,9 @@ const ContactUs = () => {
                 <Form>
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                     {/* Name */}
-                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>Your Name</Typography>
+                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>{content.CON400112}
+                      <EditIconButton id="CON400112" />
+                    </Typography>
                     <TextField
                       fullWidth
                       label="Your Name"
@@ -225,9 +230,11 @@ const ContactUs = () => {
                       error={touched.name && Boolean(errors.name)}
                       helperText={touched.name && errors.name}
                     />
-
                     {/* Email */}
-                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>Your Email</Typography>
+                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>{content.CON400114}
+                      <EditIconButton id="CON400114" />
+                    </Typography>
+
                     <TextField
                       fullWidth
                       type="email"
@@ -239,9 +246,11 @@ const ContactUs = () => {
                       error={touched.email && Boolean(errors.email)}
                       helperText={touched.email && errors.email}
                     />
-
                     {/* Subject */}
-                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>Inquiry Subject</Typography>
+                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>{content.CON400116}
+                      <EditIconButton id="CON400116" />
+                    </Typography>
+
                     <TextField
                       fullWidth
                       select
@@ -252,14 +261,17 @@ const ContactUs = () => {
                       error={touched.subject && Boolean(errors.subject)}
                       helperText={touched.subject && errors.subject}
                     >
-                      <MenuItem value="">Choose Your Inquiry Subject</MenuItem>
-                      <MenuItem value="support">Support</MenuItem>
-                      <MenuItem value="sales">Sales</MenuItem>
-                      <MenuItem value="feedback">Feedback</MenuItem>
+                      <MenuItem value="">{content.CON400117}</MenuItem>
+                      <MenuItem value="support">{content.CON400118}</MenuItem>
+                      <MenuItem value="sales">{content.CON400119}</MenuItem>
+                      <MenuItem value="feedback">{content.CON400120}</MenuItem>
                     </TextField>
 
                     {/* Message */}
-                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>Your Message</Typography>
+                    <Typography sx={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 500, fontSize: '16px', }}>{content.CON400121}
+                      <EditIconButton id="CON400121" />
+                    </Typography>
+
                     <TextField
                       fullWidth
                       multiline
@@ -273,7 +285,6 @@ const ContactUs = () => {
                       helperText={touched.message && errors.message}
                     />
 
-                    {/* Submit Button */}
                     <Button
                       type="submit"
                       fullWidth
@@ -290,7 +301,8 @@ const ContactUs = () => {
                         "&:hover": { backgroundColor: "#fbbf24" },
                       }}
                     >
-                      Submit Message
+                      {content.CON400123}
+                      <EditIconButton id="CON400123" />
                     </Button>
                   </Box>
                 </Form>
@@ -299,38 +311,30 @@ const ContactUs = () => {
           </Box>
         </Box>
 
-
-        {/* Map Section */}
-
-        {/* Heading */}
-        <Box
-          sx={{
-            maxWidth: "1280px", // container max width
-            width: "100%",      // full width on smaller screens
-            gap: 4,
-            pl:5,
-            transform: "rotate(0deg)",
-            opacity: 1,
-            boxSizing: "border-box",
-            mt: 2,
-            mx: "auto", // center horizontally
-          }}
-        >
-          <Typography
-            sx={{
-              ...typography.h2,
-              fontWeight: 600,
-              fontSize: '32px',
-              color: "#0C0F13",
-              mb: 4,
-              textAlign: { xs: "center", md: "left" }, // center on small, left on md+
-            }}
-          >
-            Our Location
+        {/* --- Map Section --- */}
+        <Box sx={{
+          maxWidth: "1280px", // container max width
+          width: "100%",      // full width on smaller screens
+          gap: 4,
+          pl: 5,
+          transform: "rotate(0deg)",
+          opacity: 1,
+          boxSizing: "border-box",
+          mt: 2,
+          mx: "auto", // center horizontally
+        }}>
+          <Typography sx={{
+            ...typography.h2,
+            fontWeight: 600,
+            fontSize: '32px',
+            color: "#0C0F13",
+            mb: 4,
+            textAlign: { xs: "center", md: "left" }, // center on small, left on md+
+          }}>
+            {content.CON400124}
+            <EditIconButton id="CON400124" />
           </Typography>
 
-
-          {/* MAP ROWS */}
           {[1, 2, 3].map((item) => (
             <Box
               key={item}
@@ -340,11 +344,10 @@ const ContactUs = () => {
                 gap: 4,
                 alignItems: "center",
                 width: "100%",
-                mb: 4, 
-                justifyContent: "center", 
+                mb: 4,
+                justifyContent: "center",
               }}
             >
-              {/* Map Section */}
               <Paper
                 elevation={3}
                 sx={{
@@ -373,7 +376,6 @@ const ContactUs = () => {
                 </Box>
               </Paper>
 
-              {/* Address Section */}
               <Box
                 sx={{
                   flex: { xs: "1 1 100%", md: "1 1 50%" },
@@ -388,34 +390,26 @@ const ContactUs = () => {
                   pl: { xs: 0, md: 10 }, // padding-left on desktop only
                 }}
               >
-                <Typography sx={{ ...typography.h2, fontWeight:600, fontSize:'32px', color: "#0A142F", mb: 1 }}>
-                  Head Office
+                <Typography sx={{ ...typography.h2, fontWeight: 600, fontSize: '32px', color: "#0A142F", mb: 1 }}>
+                  {content.CON400125}
+                  <EditIconButton id="CON400125" />
                 </Typography>
-                <Typography sx={{ ...typography.h5, fontWeight:500, fontSize:'20px', color: "#0A142F" }}>
-
-                  Xilliams Corner Wine © 2017. <br></br> 1112 A Market St # Ste B22, <br></br> Charlottesville, CA 45565
-                  {/* Xilliams Corner Wine © 2017. <br />
-                                    1112 A Market St # Ste B22, <br />
-                                    Charlottesville, CA 45565 */}
+                <Typography sx={{ ...typography.h5, fontWeight: 500, fontSize: '20px', color: "#0A142F" }}>
+                  {content.CON400126}
+                  <EditIconButton id="CON400126" /><br />
+                  {content.CON400127}
+                   <EditIconButton id="CON400127" /><br />
+                  {content.CON400128}
+                   <EditIconButton id="CON400128" />
                 </Typography>
               </Box>
             </Box>
           ))}
         </Box>
 
-
-
-
         <ServicesSection />
-
-
-        {/* Footer Section */}
         <Footer />
       </Box>
     </Box>
   );
 }
-
-
-export default ContactUs;
-
