@@ -92,18 +92,20 @@ export default function TopbarWithMegaMenu() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const checkLogin = () => {
-      const username = localStorage.getItem("username");
-      setIsLoggedIn(username && username.trim().toLowerCase() === "admin");
-    };
-
-    checkLogin(); // Initial check
-    window.addEventListener("storage", checkLogin); // React to login/logout
-
-    return () => window.removeEventListener("storage", checkLogin);
+    useEffect(() => {
+    // Check if logged in from localStorage
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("role");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
+  const handleLogin = () => navigate("/login");
 
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -301,9 +303,34 @@ export default function TopbarWithMegaMenu() {
                     </Popover>
                   </React.Fragment>
                 ))}
+                {/* ✅ Login / Logout Toggle Button */}
+            {isLoggedIn ? (
+              <Button
+                onClick={handleLogout}
+                sx={{
+                  color: "#131313",
+                  fontWeight: 500,
+                  fontSize: "20px",
+                  textTransform: "none",
+                }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                onClick={handleLogin}
+                sx={{
+                  color: "#131313",
+                  fontWeight: 500,
+                  fontSize: "20px",
+                  textTransform: "none",
+                }}
+              >
+                Login
+              </Button>
+            )}
               </Box>
             </Box>
-           
           </Box>
         </TopbarContainer>
       </TopbarRoot>

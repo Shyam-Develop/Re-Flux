@@ -327,7 +327,7 @@ const BlogPost = () => {
                 <Footer />
             </Box>
         </Box>
-
+    
     );
 };
 
