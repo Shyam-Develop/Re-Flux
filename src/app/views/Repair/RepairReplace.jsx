@@ -184,9 +184,9 @@ const RepairReplace = () => {
       desc: { id: "RR4006", value: content.RR4006 },
     },
     {
-      image: { id: "RR4004", value: content.RR4004 },
-      name: { id: "RR4005", value: content.RR4005 },
-      desc: { id: "RR4006", value: content.RR4006 },
+      image: { id: "RR4007", value: content.RR4007 },
+      name: { id: "RR4008", value: content.RR4008 },
+      desc: { id: "RR4009", value: content.RR4009 },
     },
   ];
 
@@ -892,19 +892,32 @@ const RepairReplace = () => {
                 }}
               >
                 {/* Background Image */}
-                <CardMedia
-                  component="img"
-                  image={`https://skillglow.bexatm.com${item.image.value}`}
-                  alt={item.name.value}
-                  sx={{
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-                {/* Image edit button */}
-                
-<EditIconButton id={item.image.id} type="I" />
+                <Box sx={{ position: "relative", height: "100%" }}>
+                  <CardMedia
+                    component="img"
+                    image={`https://skillglow.bexatm.com${item.image.value}`}
+                    alt={item.name.value}
+                    sx={{
+                      height: "100%",
+                      width: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  {/* Edit Icon on Image */}
+                  {item.image.value && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        zIndex: 2,
+                      }}
+                    >
+                      <EditIconButton id={item.image.id} type="I" />
+                    </Box>
+                  )}
+                </Box>
 
                 {/* Overlay White Card */}
                 <Box
@@ -957,6 +970,7 @@ const RepairReplace = () => {
                 </Box>
               </Card>
             ))}
+
 
 
           </Box>

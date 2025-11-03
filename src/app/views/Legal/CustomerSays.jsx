@@ -11,14 +11,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
 import Footer from "app/components/Card/Footer";
- 
+
 export default function CustomerSays() {
   const theme = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
- 
+
   useEffect(() => {
     const apiUrl =
       "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C002";
@@ -30,18 +30,18 @@ export default function CustomerSays() {
       .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));
   }, []);
- 
+
   useEffect(() => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
- 
+
   const handleEdit = (contentTextID, type = "T") => {
     navigate(
       `/CmsEditor?contentId=C002&contentTextID=${contentTextID}&contentType=${type}`
     );
   };
- 
+
   const EditIconButton = ({ id, type = "T" }) =>
     isAdmin ? (
       <IconButton
@@ -49,17 +49,26 @@ export default function CustomerSays() {
         onClick={() => handleEdit(id, type)}
         sx={{
           ml: 1,
-          p: 0.3,
-          "&:hover": { color: "#007bff" },
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
           verticalAlign: "middle",
         }}
       >
         <EditIcon fontSize="small" />
       </IconButton>
     ) : null;
- 
+
   if (!content) return null;
- 
+
   const testimonials = [
     {
       name: content.CON200101,
@@ -78,7 +87,7 @@ export default function CustomerSays() {
       image: content.CON200110,
     },
   ];
- 
+
   return (
     <Box
       display="grid"
@@ -148,7 +157,7 @@ export default function CustomerSays() {
                 {content.CON200001}
                 <EditIconButton id="CON200001" />
               </Typography>
- 
+
               {/* Divider */}
               <Divider
                 sx={{
@@ -161,7 +170,7 @@ export default function CustomerSays() {
                   },
                 }}
               />
- 
+
               {/* Subtitle */}
               <Typography
                 align="left"
@@ -180,7 +189,7 @@ export default function CustomerSays() {
               </Typography>
             </Box>
           </Box>
- 
+
           {/* --- Testimonials Cards --- */}
           <Box
             sx={{
@@ -208,7 +217,7 @@ export default function CustomerSays() {
               const roleId = `CON20010${index + 2}`;
               const textId = `CON20010${index + 3}`;
               const imageId = `CON200110`; // last one (only for 3rd)
- 
+
               return (
                 <Box
                   key={index}
@@ -244,7 +253,7 @@ export default function CustomerSays() {
                     {item.name}
                     <EditIconButton id={nameId} />
                   </Typography>
- 
+
                   {/* Role */}
                   <Typography
                     sx={{
@@ -256,7 +265,7 @@ export default function CustomerSays() {
                     {item.role}
                     <EditIconButton id={roleId} />
                   </Typography>
- 
+
                   {/* Text */}
                   <Typography
                     sx={{
@@ -267,7 +276,7 @@ export default function CustomerSays() {
                     {item.text}
                     <EditIconButton id={textId} />
                   </Typography>
- 
+
                   {/* Image (if available) */}
                   {item.image && (
                     <Box
@@ -284,13 +293,21 @@ export default function CustomerSays() {
                       }}
                     />
                   )}
-                  {item.image && <EditIconButton id={imageId} type="I" />}
+                  <Box
+                    sx={{
+                      top: 8,
+                      right: 8,
+                      zIndex: 2,
+                    }}
+                  >
+                    {item.image && <EditIconButton id={imageId} type="I" />}
+                  </Box>
                 </Box>
               );
             })}
           </Box>
         </Box>
- 
+
         {/* --- Footer --- */}
         <Box>
           <Footer />
