@@ -304,7 +304,7 @@ export default function TopbarWithMegaMenu() {
                   </React.Fragment>
                 ))}
                 {/* ✅ Login / Logout Toggle Button */}
-            {isLoggedIn ? (
+            {/* {isLoggedIn ? (
               <Button
                 onClick={handleLogout}
                 sx={{
@@ -328,7 +328,7 @@ export default function TopbarWithMegaMenu() {
               >
                 Login
               </Button>
-            )}
+            )} */}
               </Box>
             </Box>
           </Box>

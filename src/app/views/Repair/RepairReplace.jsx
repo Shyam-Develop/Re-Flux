@@ -1,7 +1,7 @@
 import {
   Box, Button, Divider, Grid, Modal, Typography, useMediaQuery, useTheme, Paper, TextField,
   MenuItem, Card,
-  CardMedia, IconButton,
+  CardMedia, IconButton, 
 } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -19,7 +19,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from 'app/components/Card/Footer';
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
-import EditIcon from "@mui/icons-material/Edit";
 
 const validationSchema = Yup.object().shape({
   project1: Yup.string().required("Required"),
@@ -48,7 +47,7 @@ const services = [
     sizeOptions: '700mm / 890mm /120mm',
     sizes: "220V / 110V",
   },
-  {
+ {
     id: 2,
     title: "Circular Lifting Magnet",
     type: "Coil",
@@ -119,78 +118,6 @@ const RepairReplace = () => {
 
   const theme = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
-
-  const navigate = useNavigate();
-  const [content, setContent] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C007";
-    fetch(apiUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((data) => setContent(data))
-      .catch((err) => console.error("Error loading content:", err));
-  }, []);
-
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    setIsAdmin(role === "admin");
-  }, []);
-
-  const handleEdit = (contentTextID, type = "T") => {
-    navigate(
-      `/CmsEditor?contentId=C007&contentTextID=${contentTextID}&contentType=${type}`
-    );
-  };
-
-  const EditIconButton = ({ id, type = "T" }) =>
-    isAdmin ? (
-      <IconButton
-        size="small"
-        onClick={() => handleEdit(id, type)}
-        sx={{
-          ml: 1,
-          p: 0.5,
-          borderRadius: "50%",
-          backgroundColor: "#f0f0f0",
-          color: "#1C2D4B",
-          border: "1px solid #ccc",
-          transition: "all 0.2s ease",
-          "&:hover": {
-            backgroundColor: "#e0e0e0",
-            color: "#070808ff",
-            //borderColor: "#214870",
-          },
-          verticalAlign: "middle",
-        }}
-      >
-        <EditIcon fontSize="small" />
-      </IconButton>
-    ) : null;
-
-
-  if (!content) return null;
-
-
-  const roiData = [
-    {
-      image: { id: "RR4004", value: content.RR4004 },
-      name: { id: "RR4005", value: content.RR4005 },
-      desc: { id: "RR4006", value: content.RR4006 },
-    },
-    {
-      image: { id: "RR4007", value: content.RR4007 },
-      name: { id: "RR4008", value: content.RR4008 },
-      desc: { id: "RR4009", value: content.RR4009 },
-    },
-  ];
-
-
   return (
     <Box
       display="grid"
@@ -208,67 +135,39 @@ const RepairReplace = () => {
         <Box
           sx={{
             width: "1360px",
-            height: "auto",
-            gap: "21px",
+            height: "135px",
+            gap: "21px",          // only works if display: flex/grid
             transform: "rotate(0deg)",
             opacity: 1,
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "column", // ✅ stack in column
             justifyContent: "center",
-            alignItems: "flex-start",
-            boxSizing: "border-box",
-            "@media (max-width: 1200px)": {
-              width: "100%",
-              padding: "0 40px",
-            },
-            "@media (max-width: 900px)": {
-              alignItems: "center",
-              textAlign: "center",
-              padding: "0 20px",
-              height: "auto",
-              gap: "16px",
-            },
+            alignItems: "flex-start", // ✅ align text to left
           }}
         >
-          {/* --- Title --- */}
           <Typography
             sx={{
               ...typography.displayL,
-              fontWeight: 700,
-              fontSize: "56px",
               color: "#1C2D4B",
               textAlign: "left",
-              "@media (max-width: 900px)": {
-                fontSize: "32px",
-                lineHeight: "40px",
-                textAlign: "center",
-              },
             }}
           >
-            {content.RR1001}
-            <EditIconButton id="RR1001" />
+            Repair V/S Replace
           </Typography>
 
-          {/* --- Subtitle --- */}
           <Typography
             sx={{
               ...typography.h5,
               color: "#49576F",
               textAlign: "left",
               mb: 3,
-              "@media (max-width: 900px)": {
-                fontSize: "16px",
-                lineHeight: "24px",
-                textAlign: "center",
-                mb: 2,
-              },
             }}
           >
-            {content.RR1002}
-            <EditIconButton id="RR1002" />
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut nisl
+            turpis. Mauris vitae commodo elit, at mollis tellus. Donec placerat turpis
+            elementum diam sollicitudin, eu volutpat purus viverra. Nulla consectetur,
           </Typography>
         </Box>
-
         {/* //====================SECTION-2(FORM)=================================// */}
         <Paper
           elevation={3}
@@ -287,8 +186,7 @@ const RepairReplace = () => {
             ...typography.displayL,
             color: "#F1F2F4"
           }}>
-            {content.RR2001}
-            <EditIconButton id="RR2001" />
+            Repair V/S Replace
           </Typography>
 
           <Formik
@@ -326,8 +224,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
+                      Project title
                     </Typography>
                     <TextField
                       fullWidth
@@ -363,8 +260,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
+                      Project title
                     </Typography>
                     <TextField
                       fullWidth
@@ -401,8 +297,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
+                      Production status
                     </Typography>
                     <TextField
                       select
@@ -444,8 +339,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2003}
-                      <EditIconButton id="RR2003" />
+                      Production status
                     </Typography>
                     <TextField
                       select
@@ -488,8 +382,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2003}
-                      <EditIconButton id="RR2003" />
+                      Project title
                     </Typography>
                     <TextField
                       fullWidth
@@ -523,8 +416,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2003}
-                      <EditIconButton id="RR2003" />
+                      Project title
                     </Typography>
                     <TextField
                       fullWidth
@@ -557,8 +449,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
+                      Project title
                     </Typography>
                     <TextField
                       fullWidth
@@ -591,8 +482,7 @@ const RepairReplace = () => {
                       ...typography.h5,
                       color: "#F1F2F4"
                     }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
+                      Project title
                     </Typography>
                     <TextField
                       fullWidth
@@ -631,8 +521,7 @@ const RepairReplace = () => {
                         },
                       }}
                     >
-                      {content.RR2004}
-                      <EditIconButton id="RR2004" />
+                      Calculate ROI
                     </Button>
 
                   </Grid>
@@ -662,22 +551,19 @@ const RepairReplace = () => {
             ...typography.displayL,
             color: "#F1F2F4"
           }} gutterBottom>
-            {content.RR3001}
-            <EditIconButton id="RR3001" />
+            Results
           </Typography>
           <Typography sx={{
             ...typography.h4,
             color: "#F1F2F4"
           }} gutterBottom>
-            {content.RR3002}
-            <EditIconButton id="RR3002" />
+            Best option
           </Typography>
           <Typography sx={{
             ...typography.h3,
             color: "#F1F2F4"
           }} gutterBottom>
-            {content.RR3003}
-            <EditIconButton id="RR3003" />
+            Results
           </Typography>
 
           <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
@@ -687,15 +573,13 @@ const RepairReplace = () => {
             ...typography.h4,
             color: "#F1F2F4"
           }} gutterBottom>
-            {content.RR3004}
-            <EditIconButton id="RR3004" />
+            Estimated savings vs next best
           </Typography>
           <Typography sx={{
             ...typography.h3,
             color: "#F1F2F4"
           }} gutterBottom>
-            {content.RR3005}
-            <EditIconButton id="RR3005" />
+            Results
           </Typography>
           <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
           {/* Table-like layout */}
@@ -705,24 +589,20 @@ const RepairReplace = () => {
                 ...typography.h4,
                 color: "#F1F2F4"
               }}>
-                {content.RR3006}
-                <EditIconButton id="RR3006" />
+                Scenario
               </Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR3007}
-                <EditIconButton id="RR3007" /></Typography>
+              }}>Repair (with best bridge)</Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR3008}
-                <EditIconButton id="RR3008" /></Typography>
+              }}>Replace (with best bridge)</Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR3009}
-                <EditIconButton id="RR3009" /></Typography>
+              }}>Rent only</Typography>
             </Grid>
 
             <Grid item xs={4}>
@@ -730,24 +610,20 @@ const RepairReplace = () => {
                 ...typography.h4,
                 color: "#F1F2F4"
               }}>
-                {content.RR30010}
-                <EditIconButton id="RR30010" />
+                Total cost
               </Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR30011}
-                <EditIconButton id="RR30011" /></Typography>
+              }}>Approx. 1.02L</Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR30012}
-                <EditIconButton id="RR30012" /></Typography>
+              }}>Approx. 1.02L</Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR30013}
-                <EditIconButton id="RR30013" /></Typography>
+              }}>Approx. 1.02L</Typography>
             </Grid>
 
             <Grid item xs={4}>
@@ -755,24 +631,20 @@ const RepairReplace = () => {
                 ...typography.h4,
                 color: "#F1F2F4"
               }}>
-                {content.RR30014}
-                <EditIconButton id="RR30014" />
+                Bridge chosen
               </Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR30015}
-                <EditIconButton id="RR30015" /></Typography>
+              }}>Approx. 1.02L</Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR30016}
-                <EditIconButton id="RR30016" /></Typography>
+              }}>Approx. 1.02L</Typography>
               <Typography mt={2} sx={{
                 ...typography.h5,
                 color: "#F1F2F4"
-              }}>{content.RR30017}
-                <EditIconButton id="RR30017" /></Typography>
+              }}>N/A</Typography>
             </Grid>
           </Grid>
 
@@ -789,15 +661,13 @@ const RepairReplace = () => {
               ...typography.h4,
               color: "#F1F2F4"
             }}>
-              {content.RR30018}
-              <EditIconButton id="RR30018" />
+              View All Services →
             </Link>
             <Button variant="text" sx={{
               ...typography.h4,
               color: "#F1F2F4"
             }}>
-              {content.RR30019}
-              <EditIconButton id="RR30019" />
+              Download PDF
             </Button>
           </Box>
         </Paper>
@@ -829,8 +699,7 @@ const RepairReplace = () => {
               sx={{ ...typography.displayL, color: "#1C2D4B", fontSize: { xs: "2rem", sm: typography.displayL.fontSize } }}
               gutterBottom
             >
-              {content.RR4001}
-              <EditIconButton id="RR4001" />
+              ROI Calculator
             </Typography>
             <Typography
               sx={{
@@ -840,8 +709,9 @@ const RepairReplace = () => {
                 fontSize: { xs: "0.875rem", sm: typography.h4.fontSize },
               }}
             >
-              {content.RR4002}
-              <EditIconButton id="RR4002" />
+              Get powerful lifting magnets when you need them — without the upfront
+              cost. Flexible rental plans, quick installation, and reliable
+              performance for every project!
             </Typography>
           </Box>
 
@@ -860,10 +730,8 @@ const RepairReplace = () => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
-              {content.RR4003}
-
+              View All ROI Calculators
               <ArrowRightAltIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }, ml: 1 }} />
-              <EditIconButton id="RR4003" />
             </Typography>
           </Box>
 
@@ -892,32 +760,16 @@ const RepairReplace = () => {
                 }}
               >
                 {/* Background Image */}
-                <Box sx={{ position: "relative", height: "100%" }}>
-                  <CardMedia
-                    component="img"
-                    image={`https://skillglow.bexatm.com${item.image.value}`}
-                    alt={item.name.value}
-                    sx={{
-                      height: "100%",
-                      width: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  {/* Edit Icon on Image */}
-                  {item.image.value && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        zIndex: 2,
-                      }}
-                    >
-                      <EditIconButton id={item.image.id} type="I" />
-                    </Box>
-                  )}
-                </Box>
+                <CardMedia
+                  component="img"
+                  image={item.image}
+                  alt={item.title}
+                  sx={{
+                    height: "100%",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
 
                 {/* Overlay White Card */}
                 <Box
@@ -947,9 +799,8 @@ const RepairReplace = () => {
                   }}
                 >
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography sx={{ ...typography.h4, color: "#0B121E" }}>
-                      {item.name.value}
-                      <EditIconButton id={item.name.id} />
+                    <Typography sx={{ ...typography.h4, color: "#0B121E", fontSize: { xs: "0.875rem", sm: typography.h4.fontSize } }}>
+                      {item.title}
                     </Typography>
                     <IconButton
                       size="small"
@@ -962,17 +813,12 @@ const RepairReplace = () => {
                       <ArrowForwardIosIcon fontSize="small" />
                     </IconButton>
                   </Box>
-
-                  <Typography sx={{ ...typography.bodyBase, color: "#99A0AE" }}>
-                    {item.desc.value}
-                    <EditIconButton id={item.desc.id} />
+                  <Typography sx={{ ...typography.bodyBase, color: "#99A0AE", fontSize: { xs: "0.75rem", sm: typography.bodyBase.fontSize } }}>
+                    {item.description}
                   </Typography>
                 </Box>
               </Card>
             ))}
-
-
-
           </Box>
         </Box>
 
@@ -993,22 +839,19 @@ const RepairReplace = () => {
   );
 };
 export default RepairReplace;
-
-
-
-// const roiData = [
-//   {
-//     title: "Repair vs Replace",
-//     description:
-//       "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-//     image: ROIimage,
-//   },
-//   {
-//     title: "Repair vs Replace",
-//     description:
-//       "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-//     image: ROIimage,
-//   },];
+const roiData = [
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },
+  {
+    title: "Repair vs Replace",
+    description:
+      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
+    image: ROIimage,
+  },];
 
 const cardData = [
   {
