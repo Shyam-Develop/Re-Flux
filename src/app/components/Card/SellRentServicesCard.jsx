@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -7,8 +7,7 @@ import {
   Button,
   CardMedia,
   Chip,
-  IconButton,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -18,131 +17,12 @@ import rentserviceimg from "../../../assets/RentService.png";
 import { Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
-import EditIcon from "@mui/icons-material/Edit";
 
 export default function SellRentServicesCard({ services }) {
   const navigate = useNavigate();
-
-  const [content, setContent] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const theme = useTheme();
-
-  useEffect(() => {
-    const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C008";
-    fetch(apiUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((data) => setContent(data))
-      .catch((err) => console.error("Error loading content:", err));
-  }, []);
-
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    setIsAdmin(role === "admin");
-  }, []);
-
-  const handleEdit = (contentTextID, type = "T") => {
-    navigate(
-      `/CmsEditor?contentId=C008&contentTextID=${contentTextID}&contentType=${type}`
-    );
-  };
-
-  const EditIconButton = ({ id, type = "T" }) =>
-    isAdmin ? (
-      <IconButton
-        size="small"
-        onClick={() => handleEdit(id, type)}
-        sx={{
-          ml: 1,
-          p: 0.5,
-          borderRadius: "50%",
-          backgroundColor: "#f0f0f0",
-          color: "#1C2D4B",
-          border: "1px solid #ccc",
-          transition: "all 0.2s ease",
-          "&:hover": {
-            backgroundColor: "#e0e0e0",
-            color: "#070808ff",
-            //borderColor: "#214870",
-          },
-          verticalAlign: "middle",
-        }}
-      >
-        <EditIcon fontSize="small" />
-      </IconButton>
-    ) : null;
-
-  if (!content) return null;
-
-
-  const rentData = [
-    {
-      image: { id: "RR5003", value: content.RR5003 },
-      title: { id: "RR5004", value: content.RR5004 },
-      capacity: { id: "RR5005", value: content.RR5005 },
-      supply: { id: "RR5006", value: content.RR5006 },
-      size: { id: "RR5007", value: content.RR5007 },
-      sizeOptions: { id: "RR5008", value: content.RR5008 },
-      price: { id: "RR5009", value: content.RR5009 },
-      chip1: { id: "RR5010", value: content.RR5010 },
-      chip2: { id: "RR5011", value: content.RR5011 },
-    },
-    {
-      image: { id: "RR5012", value: content.RR5012 },
-      title: { id: "RR5013", value: content.RR5013 },
-      capacity: { id: "RR5014", value: content.RR5014 },
-      supply: { id: "RR5015", value: content.RR5015 },
-      size: { id: "RR5016", value: content.RR5016 },
-      sizeOptions: { id: "RR5017", value: content.RR5017 },
-      price: { id: "RR5018", value: content.RR5018 },
-      chip1: { id: "RR5019", value: content.RR5019 },
-      chip2: { id: "RR5020", value: content.RR5020 },
-    },
-    {
-      image: { id: "RR5021", value: content.RR5021 },
-      title: { id: "RR5022", value: content.RR5022 },
-      capacity: { id: "RR5023", value: content.RR5023 },
-      supply: { id: "RR5024", value: content.RR5024 },
-      size: { id: "RR5025", value: content.RR5025 },
-      sizeOptions: { id: "RR5026", value: content.RR5026 },
-      price: { id: "RR5027", value: content.RR5027 },
-      chip1: { id: "RR5028", value: content.RR5028 },
-      chip2: { id: "RR5029", value: content.RR5029 },
-    },
-
-    {
-      image: { id: "RR5030", value: content.RR5030 },
-      title: { id: "RR5031", value: content.RR5031 },
-      capacity: { id: "RR5032", value: content.RR5032 },
-      supply: { id: "RR5033", value: content.RR5033 },
-      size: { id: "RR5034", value: content.RR5034 },
-      sizeOptions: { id: "RR5035", value: content.RR5035 },
-      price: { id: "RR5036", value: content.RR5036 },
-      chip1: { id: "RR5037", value: content.RR5037 },
-      chip2: { id: "RR5038", value: content.RR5038 },
-    },
-    {
-      image: { id: "RR5039", value: content.RR5039 },
-      title: { id: "RR5040", value: content.RR5040 },
-      capacity: { id: "RR5041", value: content.RR5041 },
-      supply: { id: "RR5042", value: content.RR5042 },
-      size: { id: "RR5043", value: content.RR5043 },
-      sizeOptions: { id: "RR5044", value: content.RR5044 },
-      price: { id: "RR5045", value: content.RR5045 },
-      chip1: { id: "RR5046", value: content.RR5046 },
-      chip2: { id: "RR5047", value: content.RR5047 },
-    },
-
-  ];
-
-
-
 
   return (
 
@@ -170,8 +50,7 @@ export default function SellRentServicesCard({ services }) {
         variant="h3"
         gutterBottom
       >
-        {content.RR5001}
-        <EditIconButton id="RR5001" />
+        Rent Instead?
       </Typography>
 
       <Typography
@@ -185,22 +64,31 @@ export default function SellRentServicesCard({ services }) {
           textAlign: { xs: 'center', md: 'left' },
         }}
       >
-        {content.RR5002}
-        <EditIconButton id="RR5002" />
+        Check out these rentals
       </Typography>
 
       {/* Swiper */}
       <Swiper
         spaceBetween={16}
-        slidesPerView={1.1}
-        grabCursor
-        breakpoints={{ 768: { slidesPerView: 3, spaceBetween: 0 } }}
+        slidesPerView={1.1} // Mobile
+        centeredSlides={false}
+        style={{ padding: '0 10px' }}
+        grabCursor={true}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        breakpoints={{
+          768: {
+            slidesPerView: 3, // Desktop: unchanged
+            spaceBetween: 0,
+            style: { padding: '0 40px' },
+          },
+        }}
+        pagination={false}
       >
-        {rentData.map((item, index) => (
-          <SwiperSlide key={index}>
+        {services.map((service) => (
+          <SwiperSlide key={service.id}>
             <Card
               sx={{
-                width: { xs: '90%', md: '416px' },
+                width: { xs: '90%', md: '416px' }, // mobile smaller
                 height: { xs: 'auto', md: '573px' },
                 borderRadius: 2,
                 border: '1px solid #e0e0e0',
@@ -213,7 +101,7 @@ export default function SellRentServicesCard({ services }) {
                   transform: 'translateY(-4px)',
                 },
                 mx: 'auto',
-                mb: { xs: 3, md: 0 },
+                mb: { xs: 3, md: 0 }, // space between cards on mobile
               }}
             >
               {/* Image */}
@@ -222,37 +110,23 @@ export default function SellRentServicesCard({ services }) {
                   position: 'relative',
                   mx: 'auto',
                   mt: 2,
-                  width: { xs: '100%', md: '395px' },
+                  width: { xs: '100%', md: '384px' }, // full width on mobile
                   height: { xs: 'auto', md: '240px' },
-
                 }}
               >
                 {/* Image */}
                 <CardMedia
                   component="img"
-                  image={`https://skillglow.bexatm.com${item.image.value}`}
-                  alt={item.title.value}
+                  image={service.img}
+                  alt={service.title}
                   sx={{
-                    width: { xs: '100%', md: '395px' },
-                    height: { xs: '220px', md: '240px' },
+                    width: { xs: '100%', md: '384px' }, // image full width on mobile
+                    height: { xs: '220px', md: '240px' }, // slightly taller on mobile
                     objectFit: 'cover',
                     borderRadius: 1,
-                    padding: '0px 8px 2px 8px',
-                    borderRadius: 5
+                    padding: '0px 8px 2px 8px'
                   }}
                 />
-
-                {/* Edit icon — now at top-right */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 10,
-                    right: 10,
-                    zIndex: 2,
-                  }}
-                >
-                  <EditIconButton id={item.image.id} type="I" />
-                </Box>
 
                 {/* Chips */}
                 <Box
@@ -262,14 +136,13 @@ export default function SellRentServicesCard({ services }) {
                     left: 10,
                     right: 10,
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    flexWrap: 'nowrap',
+                    justifyContent: 'space-between', // left and right positioning
+                    flexWrap: 'nowrap', // keep in one row
                     gap: 1,
-                    zIndex: 1,
                   }}
                 >
                   <Chip
-                    label={item.chip1.value}
+                    label="🔧 Available for Rent"
                     size="small"
                     sx={{
                       fontSize: { xs: '12px', md: '14px' },
@@ -277,14 +150,12 @@ export default function SellRentServicesCard({ services }) {
                       color: 'white',
                       fontWeight: 400,
                       borderRadius: 0,
-                      width: '48%',
+                      width: '48%', // half of the image width
                       textAlign: 'center',
-                      margin: '5px',
-                      borderRadius: '3px'
                     }}
                   />
                   <Chip
-                    label={item.chip2.value}
+                    label="🛡️ Safety Tested"
                     size="small"
                     sx={{
                       fontSize: { xs: '12px', md: '14px' },
@@ -292,14 +163,13 @@ export default function SellRentServicesCard({ services }) {
                       color: 'white',
                       fontWeight: 400,
                       borderRadius: 0,
-                      width: '48%',
+                      width: '48%', // half of the image width
                       textAlign: 'center',
-                      margin: '5px',
-                      borderRadius: '3px'
                     }}
                   />
                 </Box>
               </Box>
+
 
 
               {/* Content */}
@@ -307,6 +177,7 @@ export default function SellRentServicesCard({ services }) {
                 sx={{
                   flexGrow: 1,
                   width: { xs: '90%', md: '384px' },
+                  height: 'auto',
                   mx: 'auto',
                   display: 'flex',
                   flexDirection: 'column',
@@ -315,7 +186,7 @@ export default function SellRentServicesCard({ services }) {
                   mt: 2,
                 }}
               >
-                {/* Title + Rent */}
+                {/* Title + Price */}
                 <Box
                   sx={{
                     display: 'flex',
@@ -331,39 +202,34 @@ export default function SellRentServicesCard({ services }) {
                       fontSize: { xs: '1rem', md: '1.25rem' },
                     }}
                   >
-                    {item.title.value}
-                    <EditIconButton id={item.title.id} />
+                    {service.title}
                   </Typography>
-
+                  
                   <Typography
                     sx={{
                       ...typography.h4,
                       color: '#5937E0',
                       fontSize: { xs: '1rem', md: '1.25rem' },
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 0.5,
                     }}
                   >
-                    {item.price.value}
-
-                    <EditIconButton id={item.price.id} />
+                    $ {service.price}
                   </Typography>
                 </Box>
+                <Box>
+                  <Typography
+                    sx={{
+                      ...typography.h6,
+                      color: '#00000099',
+                      fontSize: '16px',
+                      mb:3
+                    }}
+                  >
+                    Coil
+                  </Typography>
+                </Box>
+                
 
-                {/* Coil text */}
-                <Typography
-                  sx={{
-                    ...typography.h6,
-                    color: '#00000099',
-                    fontSize: '16px',
-                    mb: 3,
-                  }}
-                >
-                  Coil
-                </Typography>
-
-                {/* Specs */}
+                {/* Two-column details */}
                 <Box
                   sx={{
                     display: 'flex',
@@ -373,33 +239,28 @@ export default function SellRentServicesCard({ services }) {
                     gap: 1,
                   }}
                 >
-                  <Box sx={{ minWidth: '95px' }}>
-                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>
-                      Lift Capacity
-                    </Typography>
-                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
-                      {item.capacity.value}
-                      <EditIconButton id={item.capacity.id} />
-                    </Typography>
-                  </Box>
-                  <Box sx={{ minWidth: '95px' }}>
-                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>
-                      Power Supply
-                    </Typography>
-                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
-                      {item.supply.value}
-                      <EditIconButton id={item.supply.id} />
-                    </Typography>
-                  </Box>
-                  <Box sx={{ minWidth: '95px' }}>
-                    <Typography sx={{ ...typography.h6, color: '#0E1626' }}>
-                      Size
-                    </Typography>
-                    <Typography sx={{ ...typography.bodySmall, color: '#677489' }}>
-                      {item.size.value}
-                      <EditIconButton id={item.size.id} />
-                    </Typography>
-                  </Box>
+                  {['Lift Capacity', 'Power Supply', 'Power Supply'].map((label, idx) => (
+                    <Box sx={{ minWidth: '95px' }} key={idx}>
+                      <Typography
+                        sx={{
+                          ...typography.h6,
+                          color: '#0E1626',
+                          fontSize: { xs: '0.85rem', md: '1rem' },
+                        }}
+                      >
+                        {label}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          ...typography.bodySmall,
+                          color: '#677489',
+                          fontSize: { xs: '0.75rem', md: '0.875rem' },
+                        }}
+                      >
+                        {['2.5 Tons', '220V / 110V', '700mm / 900mm'][idx]}
+                      </Typography>
+                    </Box>
+                  ))}
                 </Box>
 
                 {/* Size Options */}
@@ -409,20 +270,24 @@ export default function SellRentServicesCard({ services }) {
                       fontWeight: 600,
                       fontSize: { xs: '13px', md: '14px' },
                       color: '#222',
-                      mt: 2,
+                      mt:2
                     }}
                   >
                     Size Options
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: '13px', md: '14px' }, color: '#555' }}>
-                    {item.sizeOptions.value}
-                    <EditIconButton id={item.sizeOptions.id} />
+                  <Typography
+                    sx={{
+                      fontSize: { xs: '13px', md: '14px' },
+                      color: '#555',
+                    }}
+                  >
+                    {service.sizeOptions}
                   </Typography>
                 </Box>
               </CardContent>
 
               {/* Button */}
-              <Box sx={{ p: 2, pt: { xs: 3, md: '15px' } }}>
+              <Box sx={{ p: 2, pt: { xs: 3, md: '30px' } }}>
                 <Button
                   onClick={() => navigate('/home/CheckAvailabilty')}
                   fullWidth
@@ -444,8 +309,6 @@ export default function SellRentServicesCard({ services }) {
           </SwiperSlide>
         ))}
       </Swiper>
-
-
 
       {/* Pagination Dots */}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, px: 2 }}>
@@ -481,8 +344,7 @@ export default function SellRentServicesCard({ services }) {
         }}
         onClick={() => navigate('/home/SellMagnet')}
       >
-        {content.RR5048}
-
+        View All Magnets for rent
         <ArrowRightAltIcon
           sx={{
             color: '#1a4dab',
@@ -492,10 +354,11 @@ export default function SellRentServicesCard({ services }) {
             fontSize: { xs: '2rem', md: '2.5rem' },
           }}
         />
-
       </Typography>
-
     </Box>
+
+
+
 
   );
 }

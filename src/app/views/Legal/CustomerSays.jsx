@@ -1,10 +1,15 @@
 import React from "react";
-import { Box, Grid, Typography, Card, CardContent, Avatar, useMediaQuery, useTheme, Divider } from "@mui/material";
-import cust from '../../../assets/custSay.jpg';
+import {
+  Box,
+  Typography,
+  Divider,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import cust from "../../../assets/custSay.jpg";
 import { typography } from "app/utils/constant";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import Brand1 from '../../../assets/Brand1.png';
 import Footer from "app/components/Card/Footer";
+
 const testimonials = [
   {
     name: "Aaron Aldrich",
@@ -26,171 +31,194 @@ const testimonials = [
 
 export default function Testimonials() {
   const theme = useTheme();
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <Box
-      display="grid"
-      gap="20px"
-      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
-        "& > div": {
-          gridColumn: isNonMobile ? undefined : "span 4",
-        },
-        // padding: "10px",
+        width: "100%",
+        overflow: "hidden",
       }}
     >
-      <Box sx={{ gridColumn: "span 4", }}>
+      <Box
+        sx={{
+          paddingTop: { xs: "20px", md: "20px" },
+          paddingRight: { xs: "16px", md: "80px" },
+          paddingBottom: { xs: "40px", md: "40px" },
+          paddingLeft: { xs: "16px", md: "80px" },
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Heading Section */}
         <Box
           sx={{
-          // width: "1440px",
-            // height: "1867px",
-            paddingTop: "20px",
-            paddingRight: "80px",
-            paddingBottom: "40px",
-            paddingLeft: "80px",
-            gap: "32px",
-            transform: "rotate(0deg)",
-            opacity: 1,
-            position: "relative",
-
-            boxSizing: "border-box",
+            width: "100%",
+            maxWidth: "1440px",
             margin: "0 auto",
             display: "flex",
             flexDirection: "column",
-            flexWrap: "wrap",
+            alignItems: isMobile ? "center" : "flex-start",
+            textAlign: isMobile ? "center" : "left",
+            gap: 2,
           }}
         >
-          {/* Content goes here */}
+          <Typography sx={{ ...typography.displayL, color: "#232323" }}>
+            What Our Happy Customer Says
+          </Typography>
 
-
-          {/* Heading */}
-          <Box
+          <Divider
             sx={{
-              width: "100%",
-              maxWidth: "1440px",
-              // minHeight: "252px",
-              // px: { xs: 2, sm: 4, md: 2 },
-              // py: { xs: 4, md: 5 },
-              gap: 4, // vertical spacing between items
-              boxSizing: "border-box",
-              margin: "0 auto",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start", // left align
+              borderBottomWidth: 2,
+              borderColor: "#178270",
+              width: isMobile ? "60%" : "100%",
+              mx: isMobile ? "auto" : 0,
             }}
-          >
-            {/* Column content */}
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column", // ✅ stack vertically
-                gap: 2, // spacing between title, divider, subtitle
-              }}
-            >
-              {/* Title */}
-              <Typography
-                align="center"
-                sx={{ ...typography.displayL, color: "#232323" }}
-              >
-                What Our Happy Customer Says
-              </Typography>
+          />
 
-              {/* Divider */}
-              <Divider sx={{ borderBottomWidth: 2, borderColor: "#178270", width: "100%" }} />
-
-              {/* Subtitle */}
-              <Typography
-                align="left"
-                sx={{ ...typography.h4, color: "#6B768A" }}
-              >
-                Community Development is often linked with community work or community planning, and may involve stakeholders and foundations.
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* Cards */}
-          <Box
-            sx={{
-              width: "1350px",
-              height: "975px",
-              gap: "24px",
-              transform: "rotate(0deg)",
-              opacity: 1,
-              boxSizing: "border-box",
-              margin: "0 auto",
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-            }}
-          >
-            {testimonials.map((item, index) => (
-              <Box
-                key={index}
-                sx={{
-                  width: 650,
-                  height: item.image ? 769 : 182, // dynamic height based on image presence
-                  pt: 3, // spacing/space-24
-                  pr: 5, // spacing/space-40
-                  pb: 3,
-                  pl: 5,
-                  gap: 2.5, // 20px
-                  border: "1px solid #f1f1f1ff", // radius-12
-                  transform: "rotate(0deg)",
-                  opacity: 1,
-                  boxSizing: "border-box",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                  bgcolor: "#F7F9FC",
-                  mb: 3, // spacing between rows
-                }}
-              >
-                <Typography sx={{ ...typography.h3B, color: "#232323" }}>
-                  {item.name}
-                </Typography>
-                <Typography sx={{ mb: 1, ...typography.h5, color: "#6B768A" }}>
-                  {item.role}
-                </Typography>
-                <Typography sx={{ ...typography.h6, color: "#5C5C5C" }}>
-                  {item.text}
-                </Typography>
-
-                {item.image && (
-                  <Box
-                    component="img"
-                    src={item.image}
-                    alt={item.name}
-                    sx={{
-                      width: "100%",
-                      height: 567, // fixed height for the image
-                      borderRadius: 2,
-                      objectFit: "cover",
-                      mt: 2,
-                    }}
-                  />
-                )}
-              </Box>
-            ))}
-          </Box>
-
-
-        
-
-
+          <Typography sx={{ ...typography.h4, color: "#6B768A" }}>
+            Community Development is often linked with community work or community
+            planning, and may involve stakeholders and foundations.
+          </Typography>
         </Box>
 
-          {/* Footer Section */}
-          <Box>
-              <Footer />
+        {/* Cards Section (exact desktop layout, responsive for mobile) */}
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "1350px",
+            margin: "0 auto",
+            boxSizing: "border-box",
+            mt: 4,
+            px: { xs: 2, md: 0 },
+          }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gap: "24px",
+              // two columns on md+: left fixed 650, right takes remaining space
+              gridTemplateColumns: { xs: "1fr", md: "650px 1fr" },
+              // explicitly lay out areas so top row has card1 & card2,
+              // second row has card3 on left and empty on right
+              gridTemplateAreas: {
+                xs: `"card1" "card2" "card3"`,
+                md: `"card1 card2" "card3 ."`
+              },
+              alignItems: "start",
+            }}
+          >
+            {/* small top-left card */}
+            <Box
+              sx={{
+                gridArea: "card1",
+                pt: 3,
+                pr: 5,
+                pb: 3,
+                pl: 5,
+                gap: 2.5,
+                border: "1px solid #f1f1f1ff",
+                bgcolor: "#F7F9FC",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+                boxSizing: "border-box",
+              }}
+            >
+              <Typography sx={{ ...typography.h3B, color: "#232323" }}>
+                {testimonials[0].name}
+              </Typography>
+              <Typography sx={{ mb: 1, ...typography.h5, color: "#6B768A" }}>
+                {testimonials[0].role}
+              </Typography>
+              <Typography sx={{ ...typography.h6, color: "#5C5C5C" }}>
+                {testimonials[0].text}
+              </Typography>
+            </Box>
+
+            {/* small top-right card */}
+            <Box
+              sx={{
+                gridArea: "card2",
+                pt: 3,
+                pr: 5,
+                pb: 3,
+                pl: 5,
+                gap: 2.5,
+                border: "1px solid #f1f1f1ff",
+                bgcolor: "#F7F9FC",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+                boxSizing: "border-box",
+              }}
+            >
+              <Typography sx={{ ...typography.h3B, color: "#232323" }}>
+                {testimonials[1].name}
+              </Typography>
+              <Typography sx={{ mb: 1, ...typography.h5, color: "#6B768A" }}>
+                {testimonials[1].role}
+              </Typography>
+              <Typography sx={{ ...typography.h6, color: "#5C5C5C" }}>
+                {testimonials[1].text}
+              </Typography>
+            </Box>
+
+            {/* large card under left column with image */}
+            <Box
+              sx={{
+                gridArea: "card3",
+                pt: 3,
+                pr: 5,
+                pb: 3,
+                pl: 5,
+                gap: 2.5,
+                border: "1px solid #f1f1f1ff",
+                bgcolor: "#F7F9FC",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+                boxSizing: "border-box",
+              }}
+            >
+              <Typography sx={{ ...typography.h3B, color: "#232323" }}>
+                {testimonials[2].name}
+              </Typography>
+              <Typography sx={{ mb: 1, ...typography.h5, color: "#6B768A" }}>
+                {testimonials[2].role}
+              </Typography>
+              <Typography sx={{ ...typography.h6, color: "#5C5C5C" }}>
+                {testimonials[2].text}
+              </Typography>
+
+              {/* image — keep same desktop height, scale to width on mobile */}
+              <Box
+                component="img"
+                src={testimonials[2].image}
+                alt={testimonials[2].name}
+                sx={{
+                  width: "100%",
+                  mt: 2,
+                  borderRadius: 2,
+                  objectFit: "cover",
+                  // exact desktop height preserved; on xs it becomes auto-height
+                  height: { xs: "auto", md: "567px" },
+                }}
+              />
+            </Box>
           </Box>
+        </Box>
+
       </Box>
 
+      {/* Footer */}
+      <Footer />
     </Box>
-
-    
   );
 }
