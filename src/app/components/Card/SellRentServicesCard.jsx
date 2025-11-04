@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -371,7 +370,7 @@ export default function SellRentServicesCard({ services }) {
                     justifyContent: 'space-between',
                     flexWrap: 'wrap',
                     mb: 2,
-                    gap: 1,
+                    gap: 0.9,
                   }}
                 >
                   <Box sx={{ minWidth: '95px' }}>
@@ -466,35 +465,45 @@ export default function SellRentServicesCard({ services }) {
       </Box>
 
       {/* Bottom Link */}
-      <Typography
+      <Box
         sx={{
-          ...typography.h3R,
-          color: '#1a4dab',
-          fontWeight: 600,
-          textDecoration: 'underline',
-          ml: { xs: 0, md: 120 },
-          mt: 3,
-          cursor: 'pointer',
-          fontSize: { xs: '1.2rem', md: '1.5rem' },
           display: 'flex',
           alignItems: 'center',
           justifyContent: { xs: 'center', md: 'flex-start' },
+          ml: { xs: 0, md: 120 },
+          mt: 3,
         }}
-        onClick={() => navigate('/home/SellMagnet')}
       >
-        {content.RR5048}
-
-        <ArrowRightAltIcon
+        <Typography
           sx={{
+            ...typography.h3R,
             color: '#1a4dab',
-            fontWeight: 'bold',
-            verticalAlign: 'middle',
-            ml: 1,
-            fontSize: { xs: '2rem', md: '2.5rem' },
+            fontWeight: 600,
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            fontSize: { xs: '1.2rem', md: '1.5rem' },
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
           }}
-        />
+          onClick={() => navigate('/home/SellMagnet')}
+        >
+          {content.RR5048}
+          <ArrowRightAltIcon
+            sx={{
+              color: '#1a4dab',
+              fontWeight: 'bold',
+              verticalAlign: 'middle',
+              ml: 1,
+              fontSize: { xs: '2rem', md: '2.5rem' },
+            }}
+          />
+        </Typography>
 
-      </Typography>
+        {/* Separate edit icon, outside the clickable link */}
+        <EditIconButton id="RR5048" />
+      </Box>
+
 
     </Box>
 
