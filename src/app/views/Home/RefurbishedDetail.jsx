@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -15,7 +15,7 @@ import {
   Divider,
   IconButton,
   Grid,
-
+  useMediaQuery,
   Stack,
   Chip,
 } from "@mui/material";
@@ -30,7 +30,7 @@ import ind1 from "../../../assets/industry1.png";
 import ind2 from "../../../assets/industry2.png";
 import ind3 from "../../../assets/industry3.png";
 import Footer from 'app/components/Card/Footer';
-
+import EditIcon from "@mui/icons-material/Edit";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
@@ -81,32 +81,7 @@ import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 import Refurbisheddetailimg from "../../../assets/Refurbishdetail.png";
 
 
-const industries = [
-  {
-    id: 1,
-    title: "Food Processing Industry",
-    description: "Maintain a clean and inviting environment by regularly dusting.",
-    img: ind1,
-  },
-  {
-    id: 2,
-    title: "Warehouse Operations",
-    description: "Maintain a fresh and organized space with consistent dusting, mopping, and surface care.",
-    img: ind2
-  },
-  {
-    id: 3,
-    title: "Metal Industries",
-    description: "Keep your facility clean and safe with professional upkeep.",
-    img: ind3,
-  },
-  {
-    id: 4,
-    title: "Healthcare Facilities",
-    description: "Ensure hygiene and cleanliness for patient safety.",
-    img: ind1,
-  },
-];
+
 
 const RefurbishedDetail = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -346,32 +321,6 @@ const RefurbishedDetail = () => {
   ];
 
 
-  const specData = [
-    {
-      label: "Mechanical",
-      properties: [
-        "Diameter",
-        "Overall height",
-        "Net weight",
-        "Face area",
-        "IP rating",
-        "Lifting eye/hanger",
-      ],
-    },
-    {
-      label: "Electrical",
-      properties: ["Voltage", "Current", "Power consumption", "Control voltage"],
-    },
-    {
-      label: "Performance",
-      properties: [
-        "Duty cycle",
-        "Max temp",
-        "Lifting force",
-        "Magnetic field strength",
-      ],
-    },
-  ];
 
 
   const faqData = [
@@ -446,6 +395,117 @@ const RefurbishedDetail = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  // ✅ Fetch content from API
+  useEffect(() => {
+    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C011")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check login role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  const handleEdit = (contentTextID, type = "T") => {
+    window.location.href = `/CmsEditor?contentId=C011&contentTextID=${contentTextID}&contentType=${type}`;
+  };
+
+  // ✅ Reusable Edit button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.3,
+          "&:hover": { bgcolor: "rgba(255,255,255,0.9)" },
+          bgcolor: "rgba(255,255,255,0.7)",
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" sx={{ color: "#007bff" }} />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  const chipIds = ["CON120003", "CON120004", "CON120005"];
+
+  // ✅ Dynamic industries data from JSON (C011)
+  const industries = [
+    {
+      id: 1,
+      title: content.CON110001,
+      description: content.CON110002,
+      img: `https://skillglow.bexatm.com${content.CON110003}`,
+    },
+    {
+      id: 2,
+      title: content.CON110004,
+      description: content.CON110005,
+      img: `https://skillglow.bexatm.com${content.CON110006}`,
+    },
+    {
+      id: 3,
+      title: content.CON110007,
+      description: content.CON110008,
+      img: `https://skillglow.bexatm.com${content.CON110009}`,
+    },
+    {
+      id: 4,
+      title: content.CON110010,
+      description: content.CON110011,
+      img: `https://skillglow.bexatm.com${content.CON110012}`,
+    },
+  ];
+
+  const specData = [
+    {
+      label: content.CON130001, // Mechanical
+      id: "CON130001",
+      properties: [
+        { id: "CON130002", text: content.CON130002 },
+        { id: "CON130003", text: content.CON130003 },
+        { id: "CON130004", text: content.CON130004 },
+        { id: "CON130005", text: content.CON130005 },
+        { id: "CON130006", text: content.CON130006 },
+        { id: "CON130007", text: content.CON130007 },
+      ],
+    },
+    {
+      label: content.CON130008, // Electrical
+      id: "CON130008",
+      properties: [
+        { id: "CON130009", text: content.CON130009 },
+        { id: "CON130010", text: content.CON130010 },
+        { id: "CON130011", text: content.CON130011 },
+        { id: "CON130012", text: content.CON130012 },
+      ],
+    },
+    {
+      label: content.CON130013, // Performance
+      id: "CON130013",
+      properties: [
+        { id: "CON130014", text: content.CON130014 },
+        { id: "CON130015", text: content.CON130015 },
+        { id: "CON130016", text: content.CON130016 },
+        { id: "CON130017", text: content.CON130017 },
+      ],
+    },
+  ];
   return (
     <Box
       sx={{
@@ -462,327 +522,416 @@ const RefurbishedDetail = () => {
     >
       {/* image and forms */}
       <Box
-  sx={{
-    padding: '40px 60px',
-    width: '1441px',
-    height: '796px',
-    '@media (max-width: 600px)': {
-      padding: '20px',
-      width: '100%',
-      height: 'auto',
-    },
-  }}
->
-  {/* Image + Form Section */}
-  <Box
-    sx={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: 4,
-      justifyContent: 'space-between',
-      '@media (max-width: 600px)': {
-        flexDirection: 'column',
-      },
-    }}
-  >
-    {/* Left Side: Thumbnails + Main Image */}
-    <Box
-      sx={{
-        width: '50%',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        '@media (max-width: 600px)': {
-          width: '100%',
-        },
-      }}
-    >
-      {/* Main Image */}
-      <Box
-        component="img"
-        src={Refurbisheddetailimg}
-        alt="Main Lifting Magnet"
         sx={{
-          width: '664px',
-          height: '432px',
-          borderRadius: '10px',
-          objectFit: 'cover',
+          padding: '40px 60px',
+          width: '1441px',
+          height: '796px',
           '@media (max-width: 600px)': {
+            padding: '20px',
             width: '100%',
             height: 'auto',
           },
         }}
-      />
-
-      {/* Thumbnails */}
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          flexWrap: 'wrap',
-          '@media (max-width: 600px)': {
-            justifyContent: 'center',
-          },
-        }}
       >
-        {thumbnailImages.map((img, index) => (
+        {/* Image + Form Section */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 4,
+            justifyContent: 'space-between',
+            '@media (max-width: 600px)': {
+              flexDirection: 'column',
+            },
+          }}
+        >
+          {/* Left Side: Thumbnails + Main Image */}
           <Box
-            key={index}
-            component="img"
-            src={img}
-            alt={`Thumbnail ${index + 1}`}
-            onClick={() => setMainImage(img)}
             sx={{
-              width: '148px',
-              height: '124px',
-              borderRadius: '6px',
-              objectFit: 'cover',
-              cursor: 'pointer',
-              transition: 'border 0.2s ease',
+              width: '50%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
               '@media (max-width: 600px)': {
-                width: '30%',
+                width: '100%',
+              },
+            }}
+          >
+            {/* Main Image */}
+            <Box
+              sx={{
+                position: "relative",
+                display: "inline-block",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }}
+            >
+              {/* 🖼️ Image */}
+              <Box
+                component="img"
+                src={`https://skillglow.bexatm.com${content.CON120019}`}
+                alt="Main Lifting Magnet"
+                sx={{
+                  width: "664px",
+                  height: "432px",
+                  borderRadius: "10px",
+                  objectFit: "cover",
+                  "@media (max-width: 600px)": {
+                    width: "100%",
+                    height: "auto",
+                  },
+                }}
+              />
+
+              {/* ✏️ Edit Button Overlay */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 8,
+                  right: 8,
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  borderRadius: "50%",
+                }}
+              >
+                <EditIconButton
+                  id="CON120019"
+                  type="I"
+                  isAdmin={isAdmin}
+                  onEdit={handleEdit}
+                />
+              </Box>
+            </Box>
+
+
+            {/* Thumbnails */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexWrap: "wrap",
+                "@media (max-width: 600px)": {
+                  justifyContent: "center",
+                },
+              }}
+            >
+              {[
+                { id: "CON120020", src: content.CON120020 },
+                { id: "CON120021", src: content.CON120021 },
+                { id: "CON120022", src: content.CON120022 },
+                { id: "CON120023", src: content.CON120023 },
+              ].map((thumb, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    position: "relative",
+                    display: "inline-block",
+                    borderRadius: "6px",
+                    overflow: "hidden",
+                  }}
+                >
+                  {/* 🖼️ Thumbnail Image */}
+                  <Box
+                    component="img"
+                    src={`https://skillglow.bexatm.com${thumb.src}`}
+                    alt={`Thumbnail ${index + 1}`}
+                    onClick={() =>
+                      setMainImage(`https://skillglow.bexatm.com${thumb.src}`)
+                    }
+                    sx={{
+                      width: "148px",
+                      height: "124px",
+                      borderRadius: "6px",
+                      objectFit: "cover",
+                      cursor: "pointer",
+                      transition: "border 0.2s ease",
+                      "@media (max-width: 600px)": {
+                        width: "30%",
+                        height: "auto",
+                      },
+                    }}
+                  />
+
+                  {/* ✏️ Edit Button for Admin */}
+                  {isAdmin && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 6,
+                        right: 6,
+                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                        borderRadius: "50%",                      
+                      }}
+                    >
+                      <EditIconButton id={thumb.id} isAdmin={isAdmin} onEdit={handleEdit} type="I"/>
+                    </Box>
+                  )}
+                </Box>
+              ))}
+            </Box>
+
+          </Box>
+
+          {/* Right Form */}
+          <Box
+            sx={{
+              width: '600px',
+              height: '394px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              '@media (max-width: 600px)': {
+                width: '100%',
                 height: 'auto',
               },
             }}
-          />
-        ))}
+          >
+            {/* Title */}
+            <Box
+              sx={{
+                width: "619px",
+                height: "164px",
+                "@media (max-width: 600px)": {
+                  width: "100%",
+                  height: "auto",
+                },
+              }}
+            >
+              {/* --- Title + Edit button in same line --- */}
+              <Typography
+                variant="h4"
+                sx={{
+                  ...typography.displayL,
+                  fontWeight: 700,
+                  color: "#18294C",
+                  "@media (max-width: 600px)": {
+                    fontSize: "56px",
+                    width: "100%",
+                  },
+                }}
+              >
+                {content.CON120006}
+              </Typography>
+              <EditIconButton id="CON120006" />
+
+              {/* --- Subtitle / Description --- */}
+              <Typography
+                sx={{
+                  width: "619px",
+                  height: "78px",
+                  ...typography.h5,
+                  color: "#6B7280",
+                  maxWidth: "100%",
+                  marginTop: "20px",
+                  "@media (max-width: 600px)": {
+                    fontSize: "14px",
+                    width: "100%",
+                  },
+                }}
+              >
+                {content.CON120007}
+                <EditIconButton id="CON120007" />
+              </Typography>
+            </Box>
+
+
+            {/* Spec Grid */}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                '@media (max-width: 600px)': {
+                  flexDirection: 'column',
+                  gap: 2,
+                },
+              }}
+            >
+              {/* Column 1 */}
+              <Box>
+                <Typography
+                  sx={{
+                    color: '#9CA3AF',
+                    fontWeight: 500,
+                    ...typography.h5,
+                  }}
+                >
+                  {content.CON120008}
+                  <EditIconButton id="CON120008" />
+
+                </Typography>
+                <Typography
+                  sx={{
+                    color: '#9CA3AF',
+                    fontWeight: 500,
+                    ...typography.h5,
+                    mt: 1,
+                  }}
+                >
+                  {content.CON120009}
+                  <EditIconButton id="CON120009" />
+
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    ...typography.h4,
+                    color: '#596780',
+                  }}
+                >
+                  {content.CON120010}
+                  <EditIconButton id="CON120010" />
+
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    ...typography.h4,
+                    color: '#596780',
+                  }}
+                >
+                  {content.CON120011}
+                  <EditIconButton id="CON120011" />
+
+                </Typography>
+              </Box>
+
+              {/* Column 2 */}
+              <Box>
+                <Typography
+                  sx={{
+                    color: '#9CA3AF',
+                    fontWeight: 500,
+                    ...typography.h3medium,
+                  }}
+                >
+                  {content.CON120012}
+                  <EditIconButton id="CON120012" />
+
+                </Typography>
+                <Typography
+                  sx={{
+                    color: '#9CA3AF',
+                    fontWeight: 500,
+                    ...typography.h3medium,
+                    mt: 1,
+                  }}
+                >
+                  {content.CON120013}
+                  <EditIconButton id="CON120013" />
+
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    ...typography.h3B1,
+                    color: '#1F2937',
+                  }}
+                >
+                  {content.CON120014}
+                  <EditIconButton id="CON120014" />
+
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    ...typography.h3B1,
+                    color: '#1F2937',
+                  }}
+                >
+                  {content.CON120015}
+                  <EditIconButton id="CON120015" />
+
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Price + Button */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                mt: 2,
+                '@media (max-width: 600px)': {
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: 2,
+                },
+              }}
+            >
+              <Box>
+                <Typography
+                  sx={{
+                    color: '#60A5FA',
+                    fontWeight: 500,
+                    ...typography.h3medium,
+                  }}
+                >
+                  {content.CON120016}
+                  <EditIconButton id="CON120016" />
+
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    ...typography.h3B1,
+                    color: '#1F2937',
+                  }}
+                >
+                  {content.CON120017}
+                  <EditIconButton id="CON120017" />
+
+                </Typography>
+              </Box>
+
+              <Button
+                variant="contained"
+                sx={{
+                  fontFamily: 'Plus Jakarta Sans-Bold',
+                  backgroundColor: '#3373f3ff',
+                  color: '#ffffff',
+                  px: 15,
+                  ml: 15,
+                  py: 1.5,
+                  fontWeight: 700,
+                  textTransform: 'none',
+                  fontSize: '16px',
+                  boxShadow: '0 4px 14px rgba(51, 115, 243, 0.3)',
+                  '&:hover': {
+                    backgroundColor: '#2563eb',
+                  },
+                  '@media (max-width: 600px)': {
+                    width: '100%',
+                    ml: 0,
+                    px: 0,
+                    justifyContent: 'center',
+                  },
+                }}
+              >
+                {content.CON120018}
+                <EditIconButton id="CON120018" />
+
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </Box>
-    </Box>
-
-    {/* Right Form */}
-    <Box
-      sx={{
-        width: '600px',
-        height: '394px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        '@media (max-width: 600px)': {
-          width: '100%',
-          height: 'auto',
-        },
-      }}
-    >
-      {/* Title */}
-      <Box
-        sx={{
-          width: '619px',
-          height: '164px',
-          '@media (max-width: 600px)': {
-            width: '100%',
-            height: 'auto',
-          },
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            // width: '619px',
-            // height: '62px',
-            ...typography.displayL,
-            fontWeight:700,
-            color: '#18294C',
-            '@media (max-width: 600px)': {
-              fontSize: '56px',
-              width: '100%',
-            },
-          }}
-        >
-          Circular Lifting Magnet
-        </Typography>
-
-        <Typography
-          sx={{
-            width: '619px',
-            height: '78px',
-            ...typography.h5,
-            color: '#6B7280',
-            maxWidth: '100%',
-            marginTop: '20px',
-            '@media (max-width: 600px)': {
-              fontSize: '14px',
-              width: '100%',
-            },
-          }}
-        >
-          NISMO has become the embodiment of Nissan’s outstanding performance,
-          inspired by the most unforgiving proving ground, the ”race track”.
-        </Typography>
-      </Box>
-
-      {/* Spec Grid */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          '@media (max-width: 600px)': {
-            flexDirection: 'column',
-            gap: 2,
-          },
-        }}
-      >
-        {/* Column 1 */}
-        <Box>
-          <Typography
-            sx={{
-              color: '#9CA3AF',
-              fontWeight: 500,
-              ...typography.h5,
-            }}
-          >
-            Diameter
-          </Typography>
-          <Typography
-            sx={{
-              color: '#9CA3AF',
-              fontWeight: 500,
-              ...typography.h5,
-              mt: 1,
-            }}
-          >
-            Resistance
-          </Typography>
-        </Box>
-
-        <Box>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              ...typography.h4,
-              color: '#596780',
-            }}
-          >
-            1500
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              ...typography.h4,
-              color: '#596780',
-            }}
-          >
-            1500
-          </Typography>
-        </Box>
-
-        {/* Column 2 */}
-        <Box>
-          <Typography
-            sx={{
-              color: '#9CA3AF',
-              fontWeight: 500,
-              ...typography.h3medium,
-            }}
-          >
-            Diameter
-          </Typography>
-          <Typography
-            sx={{
-              color: '#9CA3AF',
-              fontWeight: 500,
-              ...typography.h3medium,
-              mt: 1,
-            }}
-          >
-            Resistance
-          </Typography>
-        </Box>
-
-        <Box>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              ...typography.h3B1,
-              color: '#1F2937',
-            }}
-          >
-            1500
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              ...typography.h3B1,
-              color: '#1F2937',
-            }}
-          >
-            1500
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Price + Button */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          mt: 2,
-          '@media (max-width: 600px)': {
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            gap: 2,
-          },
-        }}
-      >
-        <Box>
-          <Typography
-            sx={{
-              color: '#60A5FA',
-              fontWeight: 500,
-              ...typography.h3medium,
-            }}
-          >
-            Starting at
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              ...typography.h3B1,
-              color: '#1F2937',
-            }}
-          >
-            5000/-
-          </Typography>
-        </Box>
-
-        <Button
-          variant="contained"
-          sx={{
-            fontFamily: 'Plus Jakarta Sans-Bold',
-            backgroundColor: '#3373f3ff',
-            color: '#ffffff',
-            px: 15,
-            ml: 15,
-            py: 1.5,
-            fontWeight: 700,
-            textTransform: 'none',
-            fontSize: '16px',
-            boxShadow: '0 4px 14px rgba(51, 115, 243, 0.3)',
-            '&:hover': {
-              backgroundColor: '#2563eb',
-            },
-            '@media (max-width: 600px)': {
-              width: '100%',
-              ml: 0,
-              px: 0,
-              justifyContent: 'center',
-            },
-          }}
-        >
-          Buy now
-        </Button>
-      </Box>
-    </Box>
-  </Box>
-</Box>
 
 
 
 
       {/* Specs section */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
-        <Typography variant="h6" fontSize={"48px"} fontWeight="bold" gutterBottom>
-          Specs
-        </Typography>
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography variant="h6" fontSize="48px" fontWeight="bold" gutterBottom>
+            {content.CON130000}
+          </Typography>
+          <EditIconButton id="CON130000" isAdmin={isAdmin} onEdit={handleEdit} />
+        </Box>
 
         {specData.map((section, index) => (
           <Accordion
@@ -799,9 +948,16 @@ const RefurbishedDetail = () => {
               expandIcon={<ExpandMoreIcon />}
               sx={{ backgroundColor: "#fff" }}
             >
-              <Typography fontWeight="bold" fontSize="20px">
-                {section.label}
-              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Typography fontWeight="bold" fontSize="20px">
+                  {section.label}
+                </Typography>
+                <EditIconButton
+                  id={section.id}
+                  isAdmin={isAdmin}
+                  onEdit={handleEdit}
+                />
+              </Box>
             </AccordionSummary>
 
             <AccordionDetails sx={{ p: 3, backgroundColor: "#fff" }}>
@@ -828,10 +984,20 @@ const RefurbishedDetail = () => {
                         },
                       }}
                     >
-                      <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
-                        {prop}
-                      </Typography>
-                      <Typography sx={{ fontSize: "14px", color: "inherit", mt: 1 }}>
+                      <Box display="flex" alignItems="center" gap={1}>
+                        <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                          {prop.text}
+                        </Typography>
+                        <EditIconButton
+                          id={prop.id}
+                          isAdmin={isAdmin}
+                          onEdit={handleEdit}
+                        />
+                      </Box>
+
+                      <Typography
+                        sx={{ fontSize: "14px", color: "inherit", mt: 1 }}
+                      >
                         ∅ diameter_mm mm
                       </Typography>
                     </Box>
@@ -842,7 +1008,6 @@ const RefurbishedDetail = () => {
           </Accordion>
         ))}
       </Box>
-
       {/* Section Heading */}
 
 
@@ -858,20 +1023,16 @@ const RefurbishedDetail = () => {
             fontSize: "48px",
           }}
         >
-          What's included
+          {content.CON110014}
+          <EditIconButton id="CON110014" />
+
         </Typography>
         <WhatsincludedCard />
       </Box>
 
 
-      <Box
-        sx={{
-          flexDirection: "column",
-          alignItems: "flex-start",
-          // alignItems: "left"
-        }}
-      >
-        {/* Subtext line */}
+      <Box sx={{ flexDirection: "column", alignItems: "flex-start" }}>
+        {/* --- Title --- */}
         <Typography
           sx={{
             mt: 2,
@@ -882,12 +1043,13 @@ const RefurbishedDetail = () => {
             lineHeight: "120%",
             color: "#111827",
             textAlign: "left",
-            // color: "gray",
           }}
         >
-          Refurbishment scope
+          {content.CON120001}
+          <EditIconButton id="CON120001" />
         </Typography>
-        {/* Lighter subtext */}
+
+        {/* --- Subtitle --- */}
         <Typography
           sx={{
             mt: 1,
@@ -899,50 +1061,46 @@ const RefurbishedDetail = () => {
             color: "#111827",
           }}
         >
-          What was Replaced / reworked
+          {content.CON120002}
+          <EditIconButton id="CON120002" />
         </Typography>
-        {/* Chips Section */}
+
+        {/* --- Chips Section --- */}
         <Stack
           direction="row"
           flexWrap="wrap"
           gap={2}
           sx={{ mb: 3, mt: 2, ml: 5 }}
         >
-          {[
-            "Coil rewind",
-            "terminals/leads",
-            "Repaint",
-            // "Pole-shoe wear",
-            // "Loose junctions",
-            // "Pole-shoe wear",
-          ].map((item, index) => (
-            <Chip
-              key={index}
-              label={item}
-              variant="outlined"
+          {chipIds.map((id) => (
+            <Box
+              key={id}
               sx={{
-                fontSize: 14,
-                borderRadius: "20px",
-                px: 1.5,
-                py: 0.5,
-                "&:hover": {
-                  bgcolor: "#1c2434",
-                  color: "white",
-                },
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
               }}
-            />
+            >
+              <Chip
+                label={content[id]}
+                variant="outlined"
+                sx={{
+                  fontSize: 14,
+                  borderRadius: "20px",
+                  px: 1.5,
+                  py: 0.5,
+                  "&:hover": {
+                    bgcolor: "#1c2434",
+                    color: "white",
+                  },
+                }}
+              />
+              <EditIconButton id={id} />
+            </Box>
           ))}
         </Stack>
 
-        <Divider
-          sx={{
-            borderColor: "#a4a5a5ff", // light grey border
-            // OR
-            bgcolor: "#a4a5a5ff", // background color if vertical
-          }}
-        />
-
-
+        <Divider sx={{ borderColor: "#a4a5a5ff", bgcolor: "#a4a5a5ff" }} />
       </Box>
 
 
@@ -957,7 +1115,8 @@ const RefurbishedDetail = () => {
             fontSize: "48px",
           }}
         >
-          Fit & Compatibility
+          {content.CON110013}
+          <EditIconButton id="CON110013" />
         </Typography>
 
         <WhatsincludedCard />
@@ -965,39 +1124,35 @@ const RefurbishedDetail = () => {
       </Box>
 
       {/* Use Cases  */}
-      <Box
-        sx={{
-          mt: 5,
-        }}
-      >
+      <Box sx={{ mt: 5 }}>
+        {/* --- Title --- */}
         <Typography
           sx={{
             color: "#1c2434",
             fontWeight: 600,
             fontFamily: "Space Grotesk, Regular",
             fontSize: "48px",
+            textAlign: isNonMobile ? "left" : "center",
           }}
         >
-          Use Cases
+          {content.CON110000}
+          <EditIconButton id="CON110000" />
         </Typography>
 
+        {/* --- Swiper --- */}
         <Swiper
           modules={[Pagination]}
           spaceBetween={20}
-          slidesPerView={3} // show 3 at a time
-          pagination={{
-            clickable: true,
-          }}
-          style={{
-            paddingBottom: "40px", // space for pagination line
-          }}
+          slidesPerView={3}
+          pagination={{ clickable: true }}
+          style={{ paddingBottom: "40px" }}
           breakpoints={{
             0: { slidesPerView: 1 },
             600: { slidesPerView: 2 },
             960: { slidesPerView: 3 },
           }}
         >
-          {industries.map((industry) => (
+          {industries.map((industry, index) => (
             <SwiperSlide key={industry.id}>
               <Card
                 sx={{
@@ -1009,45 +1164,70 @@ const RefurbishedDetail = () => {
                 }}
               >
                 {/* Background Image */}
-                <CardMedia
-                  component="img"
-                  image={industry.img}
-                  alt={industry.title}
-                  sx={{
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+                <Box sx={{ position: "relative", height: "100%" }}>
+                  <CardMedia
+                    component="img"
+                    image={industry.img}
+                    alt={industry.title}
+                    sx={{
+                      height: "100%",
+                      width: "100%",
+                      objectFit: "cover",
+                      borderRadius: 3,
+                    }}
+                  />
+
+                  {/* 🖊️ Edit Icon Inside Top-Right of Image */}
+                  {isAdmin && (
+                    <IconButton
+                      size="small"
+                      onClick={() => handleEdit(`CON11000${index * 3 + 3}`, "I")}
+                      sx={{
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        bgcolor: "rgba(255,255,255,0.7)",
+                        "&:hover": { bgcolor: "rgba(255,255,255,0.9)" },
+                      }}
+                    >
+                      <EditIcon fontSize="small" sx={{ color: "#007bff" }} />
+                    </IconButton>
+                  )}
+                </Box>
 
                 {/* Floating Overlay Box */}
                 <Box
                   sx={{
                     position: "absolute",
-                    bottom: 16,          // lift the box a bit above the bottom
+                    bottom: 16,
                     left: 16,
                     right: 16,
                     bgcolor: "white",
                     p: 2,
                     borderRadius: 2,
-                    boxShadow: "0px 4px 12px rgba(0,0,0,0.15)", // floating effect
+                    boxShadow: "0px 4px 12px rgba(0,0,0,0.15)",
                   }}
                 >
-                  <Typography sx={{
-                    ...typography.h4,
-                    color: "#0B121E",
-                    mt: 0.5
-                  }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#0B121E",
+                      mt: 0.5,
+                    }}
+                  >
                     {industry.title}
+                    <EditIconButton id={`CON11000${index * 3 + 1}`} />
                   </Typography>
+
                   <Typography
                     sx={{
                       ...typography.bodyBase,
                       color: "#99A0AE",
-                      mt: 0.5
+                      mt: 0.5,
                     }}
                   >
                     {industry.description}
+                    <EditIconButton id={`CON11000${index * 3 + 2}`} />
                   </Typography>
                 </Box>
               </Card>
@@ -1056,7 +1236,7 @@ const RefurbishedDetail = () => {
           ))}
         </Swiper>
 
-        {/* Custom Progressbar Style */}
+        {/* Custom Swiper Pagination Style */}
         <style>
           {`
           .swiper-pagination {
@@ -1066,11 +1246,11 @@ const RefurbishedDetail = () => {
             width: 30px;
             height: 3px;
             border-radius: 2px;
-            background: #d1d5db; /* gray */
+            background: #d1d5db;
             opacity: 1;
           }
           .swiper-pagination-bullet-active {
-            background: #2563eb !important; /* blue active */
+            background: #2563eb !important;
           }
         `}
         </style>
