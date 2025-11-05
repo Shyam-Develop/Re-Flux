@@ -41,8 +41,17 @@ export default function ServicesSection() {
         onClick={() => handleEdit(id, type)}
         sx={{
           ml: 1,
-          p: 0.3,
-          "&:hover": { color: "#007bff" },
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
           verticalAlign: "middle",
         }}
       >
@@ -116,8 +125,9 @@ export default function ServicesSection() {
                 }}
               >
                 {content.SRV500201}
+                 <EditIconButton id="SRV500201" />
               </Typography>
-              <EditIconButton id="SRV500201" />
+             
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -132,8 +142,9 @@ export default function ServicesSection() {
                 }}
               >
                 {content.SRV500202}
+                <EditIconButton id="SRV500202" />
               </Typography>
-              <EditIconButton id="SRV500202" />
+              
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -147,8 +158,9 @@ export default function ServicesSection() {
                 }}
               >
                 {content.SRV500203}
+                 <EditIconButton id="SRV500203" />
               </Typography>
-              <EditIconButton id="SRV500203" />
+             
             </Box>
           </>
         )}
@@ -166,8 +178,9 @@ export default function ServicesSection() {
               }}
             >
               {content.SRV500204}
+              <EditIconButton id="SRV500204" />
             </Typography>
-            <EditIconButton id="SRV500204" />
+            
           </Box>
         )}
 
@@ -234,7 +247,7 @@ export default function ServicesSection() {
                    sx={{ ...typography.h3, fontWeight: 600, fontSize: '28px', color: "#111827", mb: 1 }}
                   >
                     {service.title}
-                 <EditIconButton id={service.titleKey} />
+                   <EditIconButton id={service.titleKey} />
                   </Typography>
                 </Box>
 

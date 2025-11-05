@@ -16,7 +16,7 @@ import Footer from 'app/components/Card/Footer';
 import Rentinstead from "../../../assets/Rentinstaed.jpg";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
-
+import EditIcon from "@mui/icons-material/Edit";
 
 const services = [
   {
@@ -97,287 +97,282 @@ const RoiCalculator = () => {
 
   const theme = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+
+  // ✅ Fetch content from API
+  useEffect(() => {
+    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C014")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check login role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  const handleEdit = (contentTextID, type = "T") => {
+    window.location.href = `/CmsEditor?contentId=C014&contentTextID=${contentTextID}&contentType=${type}`;
+  };
+
+  // ✅ Reusable Edit button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  const roiData = [
+    {
+      id: "CON170002",
+      title: content.CON170003,
+      description: content.CON170004,
+      image: content.CON170002,
+    },
+    {
+      id: "CON170005",
+      title: content.CON170006,
+      description: content.CON170007,
+      image: content.CON170005,
+    },
+    {
+      id: "CON170008",
+      title: content.CON170009,
+      description: content.CON170010,
+      image: content.CON170008,
+    },
+    {
+      id: "CON170011",
+      title: content.CON170012,
+      description: content.CON170013,
+      image: content.CON170011,
+    },
+    {
+      id: "CON170014",
+      title: content.CON170015,
+      description: content.CON170016,
+      image: content.CON170014,
+    },
+    {
+      id: "CON170017",
+      title: content.CON170018,
+      description: content.CON170019,
+      image: content.CON170017,
+    },
+  ];
+
+
   return (
     <Box
-  display="grid"
-  gap="20px"
-  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-  sx={{
-    "& > div": {
-      gridColumn: { xs: "span 4", md: undefined }, // mobile: full width
-    },
-    p: { xs: 2, md: 3 }, // add padding on mobile only
-  }}
->
-  <Box sx={{ gridColumn: "span 4", p: { xs: 1, md: 2 } }}>
-    <Box
+      display="grid"
+      gap="20px"
+      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
       sx={{
-        width: "100%",
-        maxWidth: 1280,
-        mx: "auto",
-        py: { xs: 3, md: 5 }, // mobile smaller padding
+        "& > div": {
+          gridColumn: { xs: "span 4", md: undefined }, // mobile: full width
+        },
+        p: { xs: 2, md: 3 }, // add padding on mobile only
       }}
     >
-      {/* Title & Description */}
-      <Box sx={{ textAlign: { xs: "center", md: "left" }, px: { xs: 1, md: 0 } }}>
-        <Typography
-          variant="h3"
-          fontWeight="bold"
+      <Box sx={{ gridColumn: "span 4", p: { xs: 1, md: 2 } }}>
+        <Box
           sx={{
-            ...typography.displayL,
-            fontSize: { xs: "1.8rem", md: "3rem" },
-            mb: 1,
-          }}
-          gutterBottom
-        >
-          ROI Calculator
-        </Typography>
-        <Typography
-          variant="h5"
-          sx={{
-            ...typography.h4,
-            mb: 3,
-            color: "text.secondary",
-            fontSize: { xs: "1rem", md: "1.5rem" },
+            width: "100%",
+            maxWidth: 1280,
+            mx: "auto",
+            py: { xs: 3, md: 5 }, // mobile smaller padding
           }}
         >
-          Get powerful lifting magnets when you need them — without the upfront cost.
-          Flexible rental plans, quick installation, and reliable performance for every project!
-        </Typography>
-      </Box>
-
-      {/* Cards */}
-      <Box sx={{ px: { xs: 1, md: 6 }, mb: "5%" }}>
-        <Grid
-          container
-          spacing={3}
-          justifyContent="flex-start"
-        >
-          {roiData.map((item, index) => (
-            <Grid
-              item
-              key={index}
-              xs={12} // full width on mobile
-              sm={6}
-              md="auto"
+          {/* Title & Description */}
+          <Box sx={{ textAlign: { xs: "center", md: "left" }, px: { xs: 1, md: 0 } }}>
+            <Typography
+              variant="h3"
+              fontWeight="bold"
+              sx={{
+                ...typography.displayL,
+                fontSize: { xs: "1.8rem", md: "3rem" },
+                mb: 1,
+              }}
+              gutterBottom
             >
-              <Card
-                sx={{
-                  position: "relative",
-                  borderRadius: 3,
-                  overflow: "hidden",
-                  boxShadow: 3,
-                  height: { xs: 300, md: 400 },
-                  width: { xs: "100%", md: 558 }, // full width mobile
-                }}
-              >
-                {/* Background Image */}
-                <CardMedia
-                  component="img"
-                  image={item.image}
-                  alt={item.title}
-                  sx={{
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+              {content.CON170000}
+              {isAdmin && <EditIconButton id="CON170000" />}
+            </Typography>
 
-                {/* Overlay White Card */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: 16,
-                    left: 16,
-                    right: 16,
-                    bgcolor: "white",
-                    borderRadius: 2,
-                    boxShadow: 1,
-                    px: 2,
-                    py: 1.5,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 0.5,
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      bgcolor: "#0b2d55",
-                      color: "white",
-                      "& .MuiTypography-root": { color: "white" },
-                      "& .MuiIconButton-root": {
-                        bgcolor: "#4487ebff",
-                        color: "white",
-                      },
-                    },
-                  }}
+            <Typography
+              variant="h5"
+              sx={{
+                ...typography.h4,
+                mb: 3,
+                color: "text.secondary",
+                fontSize: { xs: "1rem", md: "1.5rem" },
+              }}
+            >
+              {content.CON170001}
+              {isAdmin && <EditIconButton id="CON170001" />}
+            </Typography>
+          </Box>
+
+          {/* Cards */}
+          <Box sx={{ px: { xs: 1, md: 6 }, mb: "5%" }}>
+            <Grid
+              container
+              spacing={3}
+              justifyContent="flex-start"
+            >
+              {roiData.map((item, index) => (
+                <Grid
+                  item
+                  key={index}
+                  xs={12} // full width on mobile
+                  sm={6}
+                  md="auto"
                 >
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
+                  <Card
+                    sx={{
+                      position: "relative",
+                      borderRadius: 3,
+                      overflow: "hidden",
+                      boxShadow: 3,
+                      height: { xs: 300, md: 400 },
+                      width: { xs: "100%", md: 558 }, // full width mobile
+                    }}
                   >
-                    <Typography
-                      variant="subtitle1"
-                      fontWeight="bold"
-                      sx={{ fontSize: { xs: "18px", md: "24px" } }}
-                    >
-                      {item.title}
-                    </Typography>
-                    <IconButton
-                      size="small"
+                    {/* Background Image */}
+                    <CardMedia
+                      component="img"
+                      image={`https://skillglow.bexatm.com${item.image}`}
+                      alt={item.title}
                       sx={{
-                        backgroundColor: "#f0f0f0",
-                        width: { xs: 32, md: 40 },
-                        height: { xs: 32, md: 40 },
+                        height: "100%",
+                        width: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                    {/* ✅ Edit Icon visible only for admin */}
+                    {isAdmin && (
+                      <IconButton
+                        onClick={() => handleEdit(item.id, "I")}
+                        sx={{
+                          position: "absolute",
+                          top: 12,
+                          right: 12,
+                          bgcolor: "white",
+                          color: "black",
+                          zIndex: 2, // ✅ ensures it appears above image
+                          "&:hover": { bgcolor: "primary.main", color: "white" },
+                        }}
+                      >
+                        <EditIcon  type="I"/>
+                      </IconButton >
+                    )}
+
+                    {/* Overlay White Card */}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 16,
+                        left: 16,
+                        right: 16,
+                        bgcolor: "white",
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        px: 2,
+                        py: 1.5,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 0.5,
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          bgcolor: "#0b2d55",
+                          color: "white",
+                          "& .MuiTypography-root": { color: "white" },
+                          "& .MuiIconButton-root": {
+                            bgcolor: "#4487ebff",
+                            color: "white",
+                          },
+                        },
                       }}
                     >
-                      <ArrowForwardIosIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontSize: { xs: "14px", md: "18px" } }}
-                  >
-                    {item.description}
-                  </Typography>
-                </Box>
-              </Card>
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography
+                          variant="subtitle1"
+                          fontWeight="bold"
+                          sx={{ fontSize: { xs: "18px", md: "24px" } }}
+                        >
+                          {item.title}
+                          {isAdmin && <EditIconButton id={Object.keys(content).find(key => content[key] === item.title)} />}
+                        </Typography>
+                        <IconButton
+                          size="small"
+                          sx={{
+                            backgroundColor: "#f0f0f0",
+                            width: { xs: 32, md: 40 },
+                            height: { xs: 32, md: 40 },
+                          }}
+                        >
+                          <ArrowForwardIosIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ fontSize: { xs: "14px", md: "18px" } }}
+                      >
+                        {item.description}
+                        {isAdmin && <EditIconButton id={Object.keys(content).find(key => content[key] === item.description)} />}
+                      </Typography>
+                    </Box>
+
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Box>
+          </Box>
 
-      {/* Rent Calculator Section */}
-      <Box>
-        <SellRentServicesCard services={services} />
-      </Box>
+          {/* Rent Calculator Section */}
+          <Box>
+            <SellRentServicesCard services={services} />
+          </Box>
 
-      {/* Footer */}
-      <Box>
-        <Footer />
+          {/* Footer */}
+          <Box>
+            <Footer />
+          </Box>
+        </Box>
       </Box>
     </Box>
-  </Box>
-</Box>
 
   );
 }
 export default RoiCalculator;
-const roiData = [
-  {
-    title: "Repair vs Replace",
-    description:
-      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-    image: ROIimage,
-  },
-  {
-    title: "Repair vs Replace",
-    description:
-      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-    image: ROIimage,
-  },
-  {
-    title: "Repair vs Replace",
-    description:
-      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-    image: ROIimage,
-  },
-  {
-    title: "Repair vs Replace",
-    description:
-      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-    image: ROIimage,
-  },
-  {
-    title: "Repair vs Replace",
-    description:
-      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-    image: ROIimage,
-  },
-  {
-    title: "Repair vs Replace",
-    description:
-      "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-    image: ROIimage,
-  },
-];
-
-const cardData = [
-  {
-    id: 1,
-    title: "Circular Lifting Magnet",
-    price: 25,
-    liftCapacity: "2.5 Tons",
-    powerSupply: ["220V / 110V"],
-    size: "700mm / 900mm / 1200mm",
-    img: Repair,
-    status: ["Available for Rent", "Safety Tested"],
-    sizes: "700mm/900mm/1200mm"
-  },
-  {
-    id: 2,
-    title: "Hydraulic Jack",
-    price: 40,
-    liftCapacity: "5 Tons",
-    powerSupply: ["220V"],
-    size: "Standard",
-    img: Repair,
-    status: ["Available for Rent", "Certified"],
-    sizes: "700mm/900mm/1200mm"
-  },
-  {
-    id: 3,
-    title: "Excavator Bucket",
-    price: 60,
-    liftCapacity: "10 Tons",
-    powerSupply: ["N/A"],
-    size: "Large",
-    img: Repair,
-    status: ["Available for Rent"],
-    sizes: "700mm/900mm/1200mm"
-  },
-  {
-    id: 4,
-    title: "Portable Generator",
-    price: 30,
-    liftCapacity: "3.5 KW",
-    powerSupply: ["220V / 110V"],
-    size: "Compact",
-    img: Repair,
-    status: ["Safety Tested"],
-    sizes: "700mm/900mm/1200mm"
-  },
-  {
-    id: 5,
-    title: "Tower Crane",
-    price: 150,
-    liftCapacity: "15 Tons",
-    powerSupply: ["380V"],
-    size: "Extra Large",
-    img: Repair,
-    status: ["Available for Rent"],
-    sizes: "700mm/900mm/1200mm"
-  },
-  {
-    id: 6,
-    title: "Concrete Mixer",
-    price: 45,
-    liftCapacity: "200 L",
-    powerSupply: ["220V"],
-    size: "Medium",
-    img: Repair,
-    status: ["Certified"],
-    sizes: "700mm/900mm/1200mm"
-  },
-  {
-    id: 7,
-    title: "Scissor Lift",
-    price: 90,
-    liftCapacity: "12m Height",
-    powerSupply: ["Electric / Diesel"],
-    size: "Compact",
-    img: Repair,
-    status: ["Available for Rent", "Safety Tested"],
-    sizes: "700mm/900mm/1200mm"
-  },
-];
