@@ -19,6 +19,7 @@ export default function CustomerSays() {
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // 🔹 Load content
   useEffect(() => {
     const apiUrl =
       "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C002";
@@ -31,17 +32,20 @@ export default function CustomerSays() {
       .catch((err) => console.error("Error loading content:", err));
   }, []);
 
+  // 🔹 Check admin role
   useEffect(() => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
 
+  // 🔹 Edit function
   const handleEdit = (contentTextID, type = "T") => {
     navigate(
       `/CmsEditor?contentId=C002&contentTextID=${contentTextID}&contentType=${type}`
     );
   };
 
+  // 🔹 Edit icon button
   const EditIconButton = ({ id, type = "T" }) =>
     isAdmin ? (
       <IconButton
@@ -58,7 +62,6 @@ export default function CustomerSays() {
           "&:hover": {
             backgroundColor: "#e0e0e0",
             color: "#070808ff",
-            //borderColor: "#214870",
           },
           verticalAlign: "middle",
         }}
@@ -69,6 +72,7 @@ export default function CustomerSays() {
 
   if (!content) return null;
 
+  // 🔹 Testimonials array
   const testimonials = [
     {
       name: content.CON200101,
@@ -107,8 +111,6 @@ export default function CustomerSays() {
             paddingBottom: "40px",
             paddingLeft: "80px",
             gap: "32px",
-            transform: "rotate(0deg)",
-            opacity: 1,
             position: "relative",
             boxSizing: "border-box",
             margin: "0 auto",
@@ -126,7 +128,6 @@ export default function CustomerSays() {
               width: "100%",
               maxWidth: "1440px",
               gap: 4,
-              boxSizing: "border-box",
               margin: "0 auto",
               display: "flex",
               flexDirection: "column",
@@ -137,19 +138,13 @@ export default function CustomerSays() {
               },
             }}
           >
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-              }}
-            >
+            <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
               {/* Title */}
               <Typography
                 align="center"
                 sx={{
                   ...typography.displayL,
+                  fontWeight:700,
                   color: "#232323",
                   "@media (max-width: 900px)": { fontSize: "1.8rem" },
                 }}
@@ -176,6 +171,7 @@ export default function CustomerSays() {
                 align="left"
                 sx={{
                   ...typography.h4,
+                  fontWeight:400,
                   color: "#6B768A",
                   "@media (max-width: 900px)": {
                     fontSize: "1rem",
@@ -195,8 +191,6 @@ export default function CustomerSays() {
             sx={{
               width: "1350px",
               gap: "24px",
-              opacity: 1,
-              boxSizing: "border-box",
               margin: "0 auto",
               display: "flex",
               flexDirection: "row",
@@ -206,17 +200,18 @@ export default function CustomerSays() {
               "@media (max-width: 900px)": {
                 width: "100%",
                 flexDirection: "column",
-                height: "auto",
                 alignItems: "center",
-                justifyContent: "center",
               },
             }}
           >
             {testimonials.map((item, index) => {
-              const nameId = `CON20010${index + 1}`;
-              const roleId = `CON20010${index + 2}`;
-              const textId = `CON20010${index + 3}`;
-              const imageId = `CON200110`; // last one (only for 3rd)
+              // ✅ Correct content ID mapping
+              const base = (101 + index * 3).toString().padStart(3, "0");
+              const nameId = `CON200${base}`;
+              const roleId = `CON200${(102 + index * 3).toString().padStart(3, "0")}`;
+              const textId = `CON200${(103 + index * 3).toString().padStart(3, "0")}`;
+
+              const imageId = `CON200110`; // only last one has image
 
               return (
                 <Box
@@ -224,13 +219,9 @@ export default function CustomerSays() {
                   sx={{
                     width: 650,
                     height: item.image ? 769 : 182,
-                    pt: 3,
-                    pr: 5,
-                    pb: 3,
-                    pl: 5,
+                    p: 5,
                     gap: 2.5,
                     border: "1px solid #f1f1f1ff",
-                    opacity: 1,
                     boxSizing: "border-box",
                     display: "flex",
                     flexDirection: "column",
@@ -238,6 +229,7 @@ export default function CustomerSays() {
                     justifyContent: "flex-start",
                     bgcolor: "#F7F9FC",
                     mb: 3,
+                    position: "relative",
                     "@media (max-width: 900px)": {
                       width: "100%",
                       maxWidth: "95%",
@@ -249,35 +241,24 @@ export default function CustomerSays() {
                   }}
                 >
                   {/* Name */}
-                  <Typography sx={{ ...typography.h3B, color: "#232323" }}>
+                  <Typography sx={{ ...typography.h3B, fontWeight:700, fontSize:"28px", color: "#232323" }}>
                     {item.name}
                     <EditIconButton id={nameId} />
                   </Typography>
 
                   {/* Role */}
-                  <Typography
-                    sx={{
-                      mb: 1,
-                      ...typography.h5,
-                      color: "#6B768A",
-                    }}
-                  >
+                  <Typography sx={{ mb: 1, ...typography.h5, fontWeight:500, fontSize:"16px", color: "#6B768A" }}>
                     {item.role}
                     <EditIconButton id={roleId} />
                   </Typography>
 
                   {/* Text */}
-                  <Typography
-                    sx={{
-                      ...typography.h6,
-                      color: "#5C5C5C",
-                    }}
-                  >
+                  <Typography sx={{ ...typography.h6, fontWeight:400, fontSize:"18px", color: "#5C5C5C" }}>
                     {item.text}
                     <EditIconButton id={textId} />
                   </Typography>
 
-                  {/* Image (if available) */}
+                  {/* Image (only 3rd) */}
                   {item.image && (
                     <Box
                       component="img"
@@ -293,15 +274,13 @@ export default function CustomerSays() {
                       }}
                     />
                   )}
-                  <Box
-                    sx={{
-                      top: 8,
-                      right: 8,
-                      zIndex: 2,
-                    }}
-                  >
-                    {item.image && <EditIconButton id={imageId} type="I" />}
-                  </Box>
+
+                  {/* Edit Icon for Image */}
+                  {item.image && (
+                    <Box sx={{ position: "absolute", top: 10, right: 10 }}>
+                      <EditIconButton id={imageId} type="I" />
+                    </Box>
+                  )}
                 </Box>
               );
             })}

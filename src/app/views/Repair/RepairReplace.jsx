@@ -863,8 +863,8 @@ const RepairReplace = () => {
               {content.RR4003}
 
               <ArrowRightAltIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }, ml: 1 }} />
-              <EditIconButton id="RR4003" />
             </Typography>
+            <EditIconButton id="RR4003" />
           </Box>
 
           {/* Cards */}

@@ -1,12 +1,26 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Snackbar, Alert, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Snackbar,
+  Alert,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  TextField,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const CmsEditor = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Extract query params from URL
+  // Extract query params
   const query = new URLSearchParams(location.search);
   const contentId = query.get("contentId");
   const contentTextID = query.get("contentTextID");
@@ -17,9 +31,13 @@ const CmsEditor = () => {
   const [image, setImage] = useState(null);
   const [pageData, setPageData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [alert, setAlert] = useState({ open: false, type: "success", message: "" });
+  const [alert, setAlert] = useState({
+    open: false,
+    type: "success",
+    message: "",
+  });
 
-  // --- Load content from PHP API ---
+  // --- Load content from API ---
   const loadContent = async () => {
     try {
       const res = await fetch(
@@ -37,7 +55,11 @@ const CmsEditor = () => {
       }
     } catch (err) {
       console.error("Error loading content:", err);
-      setAlert({ open: true, type: "error", message: "Error loading content." });
+      setAlert({
+        open: true,
+        type: "error",
+        message: "Error loading content.",
+      });
     } finally {
       setLoading(false);
     }
@@ -48,11 +70,9 @@ const CmsEditor = () => {
   }, [contentId]);
 
   // --- Handle text change ---
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
+  const handleChange = (e) => setText(e.target.value);
 
-  // --- Handle image upload preview ---
+  // --- Handle image preview ---
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -62,19 +82,21 @@ const CmsEditor = () => {
     }
   };
 
-  // --- Save changes (text or image) ---
+  // --- Save changes ---
   const saveContent = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Update JSON content
       const res = await fetch(
         `https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=${contentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ cmsTextID: contentTextID, cmsText: text }),
+          body: JSON.stringify({
+            cmsTextID: contentTextID,
+            cmsText: text,
+          }),
         }
       );
 
@@ -91,149 +113,205 @@ const CmsEditor = () => {
         });
       }
 
-      // ✅ Success message and auto-navigation
-      setAlert({ open: true, type: "success", message: "Content saved successfully!" });
+      setAlert({
+        open: true,
+        type: "success",
+        message: "Content saved successfully!",
+      });
       setTimeout(() => navigate(-1), 1000);
     } catch (err) {
       console.error("Error saving content:", err);
-      setAlert({ open: true, type: "error", message: "Failed to save content." });
+      setAlert({
+        open: true,
+        type: "error",
+        message: "Failed to save content.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section
-      style={{
-        padding: "0",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 1000,
+    <>
+      <Dialog
+        open
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            overflow: "hidden",
+            boxShadow: 4,
+          },
         }}
       >
-        <div
-          style={{
-            backgroundColor: "white",
-            width: "100%",
-            maxWidth: "700px",
-            height: "90vh",
-            overflowY: "auto",
-            padding: "24px",
-            borderRadius: "12px",
-            position: "relative",
+        {/* --- Header --- */}
+        <DialogTitle
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: "1px solid #eee",
+            py: 2,
+            px: 3,
           }}
         >
-          <h2
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              marginBottom: "16px",
+          <Typography variant="h6" fontWeight="bold" color="primary">
+            ✏️ Content Management System
+          </Typography>
+          <IconButton
+            onClick={() => navigate(-1)}
+            sx={{
+              color: "#777",
+              transition: "0.3s",
+              "&:hover": { color: "black", transform: "rotate(90deg)" },
             }}
           >
-            Content Manager
-          </h2>
+            <CloseIcon fontSize="medium" />
+          </IconButton>
+        </DialogTitle>
 
+        {/* --- Content --- */}
+        <DialogContent
+          dividers
+          sx={{
+            px: 3,
+            py: 4,
+            backgroundColor: "#fafafa",
+          }}
+        >
           {loading ? (
-            <div style={{ textAlign: "center", marginTop: "80px" }}>
+            <Box
+              sx={{
+                textAlign: "center",
+                py: 10,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <CircularProgress />
-            </div>
+            </Box>
           ) : (
-            <form onSubmit={saveContent}>
-              {/* Text Editor */}
+            <form id="cms-form" onSubmit={saveContent}>
+              {/* --- Text Editor --- */}
               {contentType === "T" && (
                 <Fragment>
-                  <label style={{ display: "block", marginBottom: "8px" }}>
+                  <Typography
+                    variant="subtitle1"
+                    mb={1}
+                    fontWeight="600"
+                    color="text.secondary"
+                  >
                     Caption / Text
-                  </label>
-                  <textarea
+                  </Typography>
+                  <TextField
+                    multiline
+                    rows={6}
                     value={text}
                     onChange={handleChange}
-                    rows={6}
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      border: "1px solid #ccc",
-                      borderRadius: "6px",
-                      marginBottom: "20px",
-                      fontSize: "14px",
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Enter your content..."
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: 2,
+                      mb: 3,
                     }}
                   />
                 </Fragment>
               )}
 
-              {/* Image Editor */}
+              {/* --- Image Editor --- */}
               {contentType === "I" && (
                 <Fragment>
-                  <label style={{ display: "block", marginBottom: "8px" }}>
+                  <Typography
+                    variant="subtitle1"
+                    mb={1}
+                    fontWeight="600"
+                    color="text.secondary"
+                  >
                     Upload Image
-                  </label>
+                  </Typography>
+
                   {preview && (
-                    <div style={{ marginBottom: "10px" }}>
-                      <img
-                        src={preview}
-                        alt="Preview"
-                        style={{
-                          width: "200px",
-                          height: "auto",
-                          borderRadius: "6px",
+                    <Box
+                      sx={{
+                        mb: 2,
+                        textAlign: "center",
+                        "& img": {
+                          width: "100%",
+                          maxWidth: "300px",
+                          borderRadius: 2,
                           border: "1px solid #ddd",
-                        }}
-                      />
-                    </div>
+                        },
+                      }}
+                    >
+                      <img src={preview} alt="Preview" />
+                    </Box>
                   )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{ marginBottom: "20px" }}
-                  />
+
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    fullWidth
+                    sx={{
+                      mb: 3,
+                      py: 1.5,
+                      borderRadius: 2,
+                      fontWeight: "600",
+                      borderColor: "#ccc",
+                    }}
+                  >
+                    Choose File
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={handleImageChange}
+                    />
+                  </Button>
                 </Fragment>
               )}
-
-              <button
-                type="submit"
-                style={{
-                  backgroundColor: "#007bff",
-                  color: "white",
-                  padding: "10px 16px",
-                  borderRadius: "6px",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                {loading ? "Saving..." : "Save"}
-              </button>
             </form>
           )}
+        </DialogContent>
 
-          <button
+        {/* --- Footer --- */}
+        <DialogActions
+          sx={{
+            px: 3,
+            py: 2,
+            borderTop: "1px solid #eee",
+            backgroundColor: "#fafafa",
+          }}
+        >
+          <Button
             onClick={() => navigate(-1)}
-            style={{
-              position: "absolute",
-              top: "16px",
-              right: "24px",
-              background: "none",
-              border: "none",
-              fontSize: "24px",
+            sx={{
               color: "#555",
-              cursor: "pointer",
+              textTransform: "none",
             }}
           >
-            ✕
-          </button>
-        </div>
-      </div>
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            form="cms-form"
+            variant="contained"
+            sx={{
+              px: 3,
+              py: 1,
+              textTransform: "none",
+              borderRadius: 2,
+            }}
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-      {/* ✅ Snackbar Alert */}
+      {/* --- Snackbar --- */}
       <Snackbar
         open={alert.open}
         autoHideDuration={2000}
@@ -242,12 +320,17 @@ const CmsEditor = () => {
       >
         <Alert
           severity={alert.type}
-          sx={{ width: "100%", fontSize: "16px", borderRadius: "8px" }}
+          sx={{
+            width: "100%",
+            fontSize: "16px",
+            borderRadius: "8px",
+            fontWeight: 500,
+          }}
         >
           {alert.message}
         </Alert>
       </Snackbar>
-    </section>
+    </>
   );
 };
 
