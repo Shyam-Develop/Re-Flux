@@ -1,193 +1,231 @@
-import { Box, Typography, Button, Card, CardContent, Grid } from "@mui/material";
-import HandshakeIcon from "@mui/icons-material/Handshake";
-import handshake1 from "../../../assets/handshake3.jpg";
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
-const services = [
-  {
-    id: 1,
-    title: "Controller",
-    type: "R{{controller_model}}",
-    icon: HandshakeIcon,
-    image: handshake1,
-  },
-  {
-    id: 2,
-    title: "Cabels & connectors",
-    type: "Class-H insulation, terminals/ leads to OEM spec",
-    icon: HandshakeIcon,
-    image: handshake1,
-  },
-  {
-    id: 3,
-    title: "Measured validation",
-    type: "Pull, current, and insulation per checklist",
-    icon: HandshakeIcon,
-    image: handshake1,
-  },
-
-];
-
-
-const includedItems = [
-  {
-    icon: HandshakeIcon,
-    title: 'Controller',
-    desc: 'controller_model',
-    hasButton: true,
-    image: handshake1,
-  },
-  {
-    icon: HandshakeIcon,
-    title: 'Cables & connectors',
-    desc: 'cable_length_m m, quick-connects, shackles',
-    hasButton: false,
-    image: handshake1,
-  },
-  {
-    icon: HandshakeIcon,
-    title: 'Pre-dispatch',
-    desc: 'Load-test and functional checks',
-    hasButton: false,
-    image: handshake1,
-  },
-];
 
 export default function WhatsincludedCard() {
+  const navigate = useNavigate();
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // ✅ Fetch JSON from your PHP API (C006)
+  useEffect(() => {
+    const apiUrl =
+      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C006";
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Detect admin login (for showing Edit icons)
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor when clicking Edit
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(
+      `/CmsEditor?contentId=C006&contentTextID=${contentTextID}&contentType=${type}`
+    );
+  };
+
+  // ✅ Small reusable Edit button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.3,
+          "&:hover": { bgcolor: "rgba(255,255,255,0.9)" },
+          bgcolor: "rgba(255,255,255,0.7)",
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" sx={{ color: "#007bff" }} />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  // ✅ Build card list from API JSON fields (example keys)
+  const includedItems = [
+    {
+      title: content.CON600001,
+      desc: content.CON600002,
+      button: content.CON600003,
+      image: content.CON600004,
+    },
+    {
+      title: content.CON600005,
+      desc: content.CON600006,
+      button: content.CON600007,
+      image: content.CON600008,
+    },
+    {
+      title: content.CON600009,
+      desc: content.CON600010,
+      button: content.CON600011,
+      image: content.CON600012,
+    },
+  ];
+
   return (
-
-
     <Grid container spacing={3}>
-      {includedItems.map((item, index) => (
-        <Grid item key={index}>
-          <Card
-            sx={{
-              position: "relative",
-              width: "350px",
-              height: "224px",
-              borderRadius: 3,
-              overflow: "hidden",
-              backgroundColor: "#fff",
-              color: "#1C2D4B",
-              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              transition: "all 0.35s ease",
-              "&:hover": {
-                height: "254px", // allow room for button
-                backgroundColor: "#0b2d55",
-                color: "#fff",
-              },
-              "&:hover .view-more-btn": {
-                opacity: 1,
-                transform: "translateY(0)",
-              },
-              "&:hover .MuiTypography-root": {
-                color: "#fff !important",
-              },
-            }}
-          >
-            {/* Icon */}
-            <Box
+      {includedItems.map((item, index) => {
+        const titleId = `CON60000${index * 4 + 1}`;
+        const descId = `CON60000${index * 4 + 2}`;
+        const buttonId = `CON60000${index * 4 + 3}`;
+        const imageId = `CON60000${index * 4 + 4}`;
+
+        return (
+          <Grid item key={index}>
+            <Card
               sx={{
-                width: 48,
-                height: 48,
-                borderRadius: "50%",
-                backgroundColor: "#f3f4f6",
+                position: "relative",
+                width: "350px",
+                height: "224px",
+                borderRadius: 3,
+                overflow: "hidden",
+                backgroundColor: "#fff",
+                color: "#1C2D4B",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                mb: 4,
-                marginLeft: '20px',
-                marginTop: '10px'
-              }}
-            >
-              <Box
-                component="img"
-                src={item.image}
-                alt="service icon"
-                sx={{
-                  width: '45px',
-                  height: '45px',
-                  border: '1px solid gray',
-                  padding: '5px',
-                  objectFit: "cover",
-                  borderRadius: "50%",
-                }}
-              />
-            </Box>
-
-            {/* Title & Description */}
-            <CardContent sx={{ pt: 0 }}>
-              <Typography sx={{ ...typography.h3, fontWeight: 600, fontSize: '28px' }} >
-                {item.title}
-              </Typography>
-              <Typography sx={{ ...typography.bodyBase }} variant="body2" color="inherit">
-                {item.desc}
-              </Typography>
-            </CardContent>
-
-            {/* Button inside layout (not absolute) */}
-            <Box
-              className="view-more-btn"
-              sx={{
-                px: 3,
-                pb: 2,
-                opacity: 0,
-                transform: "translateY(10px)",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 transition: "all 0.35s ease",
-                paddingLeft: '50px',
-
+                "&:hover": {
+                  height: "254px",
+                  backgroundColor: "#0b2d55",
+                  color: "#fff",
+                },
+                "&:hover .view-more-btn": {
+                  opacity: 1,
+                  transform: "translateY(0)",
+                },
+                "&:hover .MuiTypography-root": {
+                  color: "#fff !important",
+                },
               }}
             >
-              <Button
-                variant="contained"
-                fullWidth
+              {/* Image or placeholder */}
+              <Box
                 sx={{
-                  borderRadius: "24px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  bgcolor: "#C97833",
-                  width: '90%',
-                  padding: '10px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 1,
-                  transition: "background-color 0.3s ease",
-                  "&:hover": {
-                    bgcolor: "#b2652a",
-                    "& .arrow-icon": {
-                      opacity: 1,
-                      transform: "translateX(4px)",
-                    },
-                  },
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  backgroundColor: "#f3f4f6",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mb: 4,
+                  marginLeft: "20px",
+                  marginTop: "10px",
                 }}
               >
-                View More
+                {item.image ? (
+                  <Box
+                    component="img"
+                    src={`https://skillglow.bexatm.com${item.image}`}
+                    alt={item.title}
+                    sx={{
+                      width: "45px",
+                      height: "45px",
+                      border: "1px solid gray",
+                      padding: "5px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                    }}
+                  />
+                ) : (
+                  <Typography variant="body2">No Img</Typography>
+                )}
+                <EditIconButton id={imageId} type="I" />
+              </Box>
 
-                {/* Arrow icon (initially hidden) */}
-                <ArrowRightAltIcon
-                  className="arrow-icon"
+              {/* Title & Description */}
+              <CardContent sx={{ pt: 0 }}>
+                <Typography
+                  sx={{ ...typography.h3, fontWeight: 600, fontSize: "28px" }}
+                >
+                  {item.title}
+                  <EditIconButton id={titleId} />
+                </Typography>
+                <Typography sx={{ ...typography.bodyBase }} variant="body2">
+                  {item.desc}
+                  <EditIconButton id={descId} />
+                </Typography>
+              </CardContent>
+
+              {/* Button inside layout */}
+              <Box
+                className="view-more-btn"
+                sx={{
+                  px: 3,
+                  pb: 2,
+                  opacity: 0,
+                  transform: "translateY(10px)",
+                  transition: "all 0.35s ease",
+                  paddingLeft: "50px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  fullWidth
                   sx={{
-                    fontSize: 22,
-                    opacity: 0,
-                    transform: "translateX(0)",
-                    transition: "all 0.3s ease",
+                    borderRadius: "24px",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    bgcolor: "#C97833",
+                    width: "90%",
+                    padding: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 1,
+                    transition: "background-color 0.3s ease",
+                    "&:hover": {
+                      bgcolor: "#b2652a",
+                      "& .arrow-icon": {
+                        opacity: 1,
+                        transform: "translateX(4px)",
+                      },
+                    },
                   }}
-                />
-              </Button>
-
-            </Box>
-          </Card>
-
-
-        </Grid>
-      ))}
+                >
+                  {item.button || "View More"}
+                  <EditIconButton id={buttonId} />
+                  <ArrowRightAltIcon
+                    className="arrow-icon"
+                    sx={{
+                      fontSize: 22,
+                      opacity: 0,
+                      transform: "translateX(0)",
+                      transition: "all 0.3s ease",
+                    }}
+                  />
+                </Button>
+              </Box>
+            </Card>
+          </Grid>
+        );
+      })}
     </Grid>
-
-
   );
 }

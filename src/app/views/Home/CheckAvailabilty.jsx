@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -39,7 +39,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
-
+import EditIcon from "@mui/icons-material/Edit";
 // import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import serviceimg from "../../../assets/Repairservice.png";
 import before from "../../../assets/beforecstudy.png";
@@ -65,58 +65,11 @@ import Approach5 from "../../../assets/Approach5.jpg";
 
 
 
-//specs
-const specData = [
-  {
-    label: "Mechanical",
-    properties: [
-      "Diameter",
-      "Overall height",
-      "Net weight",
-      "Face area",
-      "IP rating",
-      "Lifting eye/hanger",
-    ],
-  },
-  {
-    label: "Electrical",
-    properties: ["Voltage", "Current", "Power consumption", "Control voltage"],
-  },
-  {
-    label: "Performance",
-    properties: [
-      "Duty cycle",
-      "Max temp",
-      "Lifting force",
-      "Magnetic field strength",
-    ],
-  },
-];
 
 
 
 
-//what's included
-const includedItems = [
-  {
-    icon: <HandshakeIcon fontSize="large" />,
-    title: 'Controller',
-    desc: '{{controller_model}}',
-    hasButton: true,
-  },
-  {
-    icon: <HandshakeIcon fontSize="large" />,
-    title: 'Cables & connectors',
-    desc: '{{cable_length_m}} m, quick-connects, shackles',
-    hasButton: false,
-  },
-  {
-    icon: <HandshakeIcon fontSize="large" />,
-    title: 'Pre-dispatch',
-    desc: 'Load-test and functional checks',
-    hasButton: false,
-  },
-];
+
 
 const renderSpecGrid = (properties) => (
   <Grid container spacing={2}>
@@ -138,7 +91,6 @@ const renderSpecGrid = (properties) => (
 const CheckAvailabilty = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const [mainImage, setMainImage] = useState(Checkavailimage);
-  const thumbnailImages = [Roi1, Roi2, Roi2, Roi2, Roi2];
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -160,28 +112,9 @@ const CheckAvailabilty = () => {
     { label: 'IP rating', value: 'Ø{{diameter_mm}} mm' },
     { label: 'Lifting eye/hanger', value: 'Ø{{diameter_mm}} mm' },
   ];
-  const features = [
-    {
-      title: "TAT you can plan around",
-      desc: "Urgent 24–48h, Standard 72h, Overhaul 5–7 days—clear timelines with proactive updates.",
-      image: Approach5,
-    },
-    {
-      title: "Certified safe, ASME-aligned",
-      desc: "Every job closes with a load-test certificate (kN), inspection checklist, and up to 12-month service warranty.",
-      image: serviceimg,
-    },
-    {
-      title: "All magnet types, all faults",
-      desc: "Circular, rectangular, suspension (oil/air); coils, leads, pole shoes, insulation class F/H plus controller/PSU repairs.",
-      image: before,
-    },
-    {
-      title: "Field-ready support, nationwide",
-      desc: "On-site diagnosis, pickup & drop, reinstall/commissioning Pan-India coverage with WhatsApp photo reports.",
-      image: after,
-    },
-  ];
+
+
+
 
   const benefits = [
     {
@@ -245,28 +178,7 @@ const CheckAvailabilty = () => {
     },
   ];
 
-  const faqData = [
-    {
-      question: "Do I need to be home during the cleaning?",
-      answer: "No, as long as we have access, you can carry on with your day.",
-    },
-    {
-      question: "Are your restoration services?",
-      answer: "Yes, we offer full restoration in select areas.",
-    },
-    {
-      question: "What happens if I’m not satisfied with the Magnet?",
-      answer: "We offer a satisfaction guarantee and support options.",
-    },
-    {
-      question: "Can I schedule recurring services?",
-      answer: "Yes, you can set weekly or monthly recurring schedules.",
-    },
-    {
-      question: "Is there a cancellation fee?",
-      answer: "Nope — cancel any time before 24 hours of service.",
-    },
-  ];
+
 
   const blogData = [
     {
@@ -306,6 +218,131 @@ const CheckAvailabilty = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  // ✅ Fetch content from API
+  useEffect(() => {
+    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C012")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check login role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  const handleEdit = (contentTextID, type = "T") => {
+    window.location.href = `/CmsEditor?contentId=C012&contentTextID=${contentTextID}&contentType=${type}`;
+  };
+
+  // ✅ Reusable Edit button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.3,
+          "&:hover": { bgcolor: "rgba(255,255,255,0.9)" },
+          bgcolor: "rgba(255,255,255,0.7)",
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" sx={{ color: "#007bff" }} />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  //specs
+  const specData = [
+    {
+      label: content.CON130001, // Mechanical
+      id: "CON130001",
+      properties: [
+        { id: "CON130002", text: content.CON130002 },
+        { id: "CON130003", text: content.CON130003 },
+        { id: "CON130004", text: content.CON130004 },
+        { id: "CON130005", text: content.CON130005 },
+        { id: "CON130006", text: content.CON130006 },
+        { id: "CON130007", text: content.CON130007 },
+      ],
+    },
+    {
+      label: content.CON130008, // Electrical
+      id: "CON130008",
+      properties: [
+        { id: "CON130009", text: content.CON130009 },
+        { id: "CON130010", text: content.CON130010 },
+        { id: "CON130011", text: content.CON130011 },
+        { id: "CON130012", text: content.CON130012 },
+      ],
+    },
+    {
+      label: content.CON130013, // Performance
+      id: "CON130013",
+      properties: [
+        { id: "CON130014", text: content.CON130014 },
+        { id: "CON130015", text: content.CON130015 },
+        { id: "CON130016", text: content.CON130016 },
+        { id: "CON130017", text: content.CON130017 },
+      ],
+    },
+  ];
+
+  const features = [
+    {
+      title: content.CON140001,
+      desc: content.CON140002,
+      image: content.CON140003,
+      ids: { title: "CON140001", desc: "CON140002", image: "CON140003" },
+    },
+    {
+      title: content.CON140004,
+      desc: content.CON140005,
+      image: content.CON140006,
+      ids: { title: "CON140004", desc: "CON140005", image: "CON140006" },
+    },
+    {
+      title: content.CON140007,
+      desc: content.CON140008,
+      image: content.CON140009,
+      ids: { title: "CON140007", desc: "CON140008", image: "CON140009" },
+    },
+    {
+      title: content.CON140010,
+      desc: content.CON140011,
+      image: content.CON140012,
+      ids: { title: "CON140010", desc: "CON140011", image: "CON140012" },
+    },
+  ];
+
+  const faqData = [
+    { question: content.CON150001, answer: content.CON150002 },
+    { question: content.CON150003, answer: content.CON150004 },
+    { question: content.CON150005, answer: content.CON150006 },
+    { question: content.CON150007, answer: content.CON150008 },
+    { question: content.CON150009, answer: content.CON150010 },
+  ];
+
+  const thumbnailImages = [
+    { id: "CON160001", src: content.CON160001 },
+    { id: "CON160002", src: content.CON160002 },
+    { id: "CON160003", src: content.CON160003 },
+    { id: "CON160004", src: content.CON160004 },
+    { id: "CON160005", src: content.CON160005 },
+  ];
+
   return (
     <Box
       sx={{
@@ -336,7 +373,9 @@ const CheckAvailabilty = () => {
             ...typography.h3RBold,
           }}
         >
-          Magnets For Rent
+          {content.CON110006}
+          <EditIconButton id="CON110006" />
+
         </Typography>
 
         {/* Right Search Box */}
@@ -393,7 +432,9 @@ const CheckAvailabilty = () => {
               color: "#18294C",
             }}
           >
-            Circular Lifting Magnet
+            {content.CON110000}
+            <EditIconButton id="CON110000" />
+
           </Typography>
 
           <Box
@@ -408,7 +449,9 @@ const CheckAvailabilty = () => {
                 fontWeight: 400,
               }}
             >
-              Up to 250 Tons
+              {content.CON110001}
+              <EditIconButton id="CON110001" />
+
             </Typography>
             <Typography
               sx={{
@@ -419,7 +462,9 @@ const CheckAvailabilty = () => {
                 fontWeight: 400,
               }}
             >
-              •
+              {content.CON110002}
+              <EditIconButton id="CON110002" />
+
             </Typography>
             <Typography
               sx={{
@@ -430,7 +475,9 @@ const CheckAvailabilty = () => {
                 fontWeight: 400,
               }}
             >
-              Duty Cycle
+              {content.CON110003}
+              <EditIconButton id="CON110003" />
+
             </Typography>
             <Typography
               sx={{
@@ -441,7 +488,9 @@ const CheckAvailabilty = () => {
                 fontWeight: 400,
               }}
             >
-              •
+              {content.CON110004}
+              <EditIconButton id="CON110004" />
+
             </Typography>
             <Typography
               sx={{
@@ -452,7 +501,9 @@ const CheckAvailabilty = () => {
                 fontWeight: 400,
               }}
             >
-              Duty Cycle
+              {content.CON110005}
+              <EditIconButton id="CON110005" />
+
             </Typography>
           </Box>
         </Box>
@@ -476,21 +527,39 @@ const CheckAvailabilty = () => {
               display: "flex",
               flexDirection: "column",
               gap: 2,
+              position: "relative",
             }}
           >
             {/* Main Image */}
-            <Box
-              component="img"
-              src={mainImage}
-              alt="Main Lifting Magnet"
-              sx={{
-                width: { xs: "100%", md: "887px" },
-                height: { xs: "auto", md: "500px" },
-                borderRadius: "10px",
-                objectFit: "cover",
-              }}
-            />
-
+            <Box sx={{ position: "relative" }}>
+              <Box
+                component="img"
+                src={`https://skillglow.bexatm.com${content.CON160000}`}
+                alt="Main Lifting Magnet"
+                sx={{
+                  width: { xs: "100%", md: "887px" },
+                  height: { xs: "auto", md: "500px" },
+                  borderRadius: "10px",
+                  objectFit: "cover",
+                }}
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 8,
+                  right: 8,
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  borderRadius: "50%",
+                }}
+              >
+                <EditIconButton
+                  id="CON160000"
+                  type="I"
+                  isAdmin={isAdmin}
+                  onEdit={handleEdit}
+                />
+              </Box>
+            </Box>
             {/* Thumbnails Row */}
             <Box
               sx={{
@@ -498,29 +567,44 @@ const CheckAvailabilty = () => {
                 gap: 2,
                 flexWrap: { xs: "nowrap", md: "wrap" },
                 overflowX: { xs: "auto", md: "visible" },
+                position: "relative",
               }}
             >
               {thumbnailImages.map((img, index) => (
-                <Box
-                  key={index}
-                  component="img"
-                  src={img}
-                  alt={`Thumbnail ${index + 1}`}
-                  onClick={() => setMainImage(img)}
-                  sx={{
-                    width: { xs: "100px", md: "148px" },
-                    height: { xs: "80px", md: "124px" },
-                    borderRadius: "6px",
-                    objectFit: "cover",
-                    border:
-                      mainImage === img
-                        ? "2px solid #E17A00"
-                        : "2px solid transparent",
-                    cursor: "pointer",
-                    transition: "border 0.2s ease",
-                    flex: "0 0 auto",
-                  }}
-                />
+                <Box key={img.id} sx={{ position: "relative" }}>
+                  <Box
+                    component="img"
+                    src={`https://skillglow.bexatm.com${img.src}`}
+                    alt={`Thumbnail ${index + 1}`}
+                    onClick={() => setMainImage(`https://skillglow.bexatm.com${img.src}`)}
+                    sx={{
+                      width: { xs: "100px", md: "148px" },
+                      height: { xs: "80px", md: "124px" },
+                      borderRadius: "6px",
+                      objectFit: "cover",
+                      border:
+                        mainImage === img.src
+                          ? "2px solid #E17A00"
+                          : "2px solid transparent",
+                      cursor: "pointer",
+                      transition: "border 0.2s ease",
+                      flex: "0 0 auto",
+                    }}
+                  />
+
+                  {/* ✅ Edit Icon for Each Thumbnail */}
+                  {isAdmin && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 6,
+                        right: 6,
+                      }}
+                    >
+                      <EditIconButton id={img.id} type="I" />
+                    </Box>
+                  )}
+                </Box>
               ))}
             </Box>
           </Box>
@@ -539,13 +623,15 @@ const CheckAvailabilty = () => {
               display: "flex",
               flexDirection: "column",
               gap: 2,
+              position: "relative",
             }}
           >
             {/* Row 1: Dates */}
             <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", md: "row" } }}>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, position: "relative" }}>
                 <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
-                  Start date
+                  {content.CON160006}
+                  {isAdmin && <EditIconButton id="CON160006" />}
                 </Typography>
                 <Select
                   fullWidth
@@ -562,10 +648,12 @@ const CheckAvailabilty = () => {
                 </Select>
               </Box>
 
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, position: "relative" }}>
                 <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
-                  End date
+                  {content.CON160007}
+                  {isAdmin && <EditIconButton id="CON160007" />}
                 </Typography>
+
                 <Select
                   fullWidth
                   size="small"
@@ -584,10 +672,12 @@ const CheckAvailabilty = () => {
 
             {/* Row 2: Capacity and Duty Cycle */}
             <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", md: "row" } }}>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, position: "relative" }}>
                 <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
-                  Capacity
+                  {content.CON160008}
+                  {isAdmin && <EditIconButton id="CON160008" />}
                 </Typography>
+
                 <Select
                   fullWidth
                   size="small"
@@ -603,10 +693,12 @@ const CheckAvailabilty = () => {
                 </Select>
               </Box>
 
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, position: "relative" }}>
                 <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
-                  Duty cycle
+                  {content.CON160009}
+                  {isAdmin && <EditIconButton id="CON160009" />}
                 </Typography>
+
                 <Select
                   fullWidth
                   size="small"
@@ -624,10 +716,12 @@ const CheckAvailabilty = () => {
             </Box>
 
             {/* Row 3: Location Input */}
-            <Box>
+            <Box sx={{ position: "relative" }}>
               <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
-                Location
+                {content.CON160010}
+                {isAdmin && <EditIconButton id="CON160010" />}
               </Typography>
+
               <Box
                 sx={{
                   display: "flex",
@@ -644,23 +738,27 @@ const CheckAvailabilty = () => {
             </Box>
 
             {/* Button */}
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                mt: 2,
-                p: 2,
-                backgroundColor: "#18294C",
-                textTransform: "none",
-                ...typography.buttonSBold,
-                fontWeight: 600,
-                "&:hover": {
-                  backgroundColor: "#0f1a32",
-                },
-              }}
-            >
-              Check Availability
-            </Button>
+            <Box sx={{ position: "relative" }}>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  mt: 2,
+                  p: 2,
+                  backgroundColor: "#18294C",
+                  textTransform: "none",
+                  ...typography.buttonSBold,
+                  fontWeight: 600,
+                  "&:hover": {
+                    backgroundColor: "#0f1a32",
+                  },
+                }}
+              >
+                {content.CON160011}
+                {isAdmin && <EditIconButton id="CON160011" />}
+              </Button>
+
+            </Box>
           </Box>
         </Box>
 
@@ -669,9 +767,12 @@ const CheckAvailabilty = () => {
 
       {/* Specs Accordion */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
-        <Typography variant="h6" fontSize={"48px"} fontWeight="bold" gutterBottom>
-          Specs
-        </Typography>
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography variant="h6" fontSize="48px" fontWeight="bold" gutterBottom>
+            {content.CON130000}
+          </Typography>
+          <EditIconButton id="CON130000" isAdmin={isAdmin} onEdit={handleEdit} />
+        </Box>
 
         {specData.map((section, index) => (
           <Accordion
@@ -688,9 +789,16 @@ const CheckAvailabilty = () => {
               expandIcon={<ExpandMoreIcon />}
               sx={{ backgroundColor: "#fff" }}
             >
-              <Typography fontWeight="bold" fontSize="20px">
-                {section.label}
-              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Typography fontWeight="bold" fontSize="20px">
+                  {section.label}
+                </Typography>
+                <EditIconButton
+                  id={section.id}
+                  isAdmin={isAdmin}
+                  onEdit={handleEdit}
+                />
+              </Box>
             </AccordionSummary>
 
             <AccordionDetails sx={{ p: 3, backgroundColor: "#fff" }}>
@@ -717,10 +825,20 @@ const CheckAvailabilty = () => {
                         },
                       }}
                     >
-                      <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
-                        {prop}
-                      </Typography>
-                      <Typography sx={{ fontSize: "14px", color: "inherit", mt: 1 }}>
+                      <Box display="flex" alignItems="center" gap={1}>
+                        <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                          {prop.text}
+                        </Typography>
+                        <EditIconButton
+                          id={prop.id}
+                          isAdmin={isAdmin}
+                          onEdit={handleEdit}
+                        />
+                      </Box>
+
+                      <Typography
+                        sx={{ fontSize: "14px", color: "inherit", mt: 1 }}
+                      >
                         ∅ diameter_mm mm
                       </Typography>
                     </Box>
@@ -745,7 +863,8 @@ const CheckAvailabilty = () => {
             fontSize: "48px",
           }}
         >
-          What's included
+          {content.CON110014}
+          <EditIconButton id="CON110014" />
         </Typography>
         <WhatsincludedCard />
 
@@ -757,19 +876,21 @@ const CheckAvailabilty = () => {
       {/*ElectroMagnet Repair Section */}
       <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
         {/* Heading */}
-         <Typography
-                variant="h4"
-                sx={{
-                  color: "#1c2434",
-                  ml: { xs: 2, md: 5 },
-                  fontWeight: 600,
-                  fontFamily: "Space Grotesk, Regular",
-                  fontSize: { xs: "28px", md: "48px" },
-                  mt: { xs: 3, md: 0 },
-                }}
-              >
-                Symptoms & Faults
-              </Typography>
+        <Box display="flex" alignItems="center" gap={1} ml={{ xs: 2, md: 5 }}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "#1c2434",
+              fontWeight: 600,
+              fontFamily: "Space Grotesk, Regular",
+              fontSize: { xs: "28px", md: "48px" },
+              mt: { xs: 3, md: 0 },
+            }}
+          >
+            {content.CON140000}
+          </Typography>
+          {isAdmin && <EditIconButton id="CON140000" />}
+        </Box>
 
         {/* Main Container */}
         <Box
@@ -789,7 +910,6 @@ const CheckAvailabilty = () => {
         >
           {/* Left - Timeline */}
           <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
-            {/* Vertical Line */}
             {!isMobile && (
               <Box
                 sx={{
@@ -806,7 +926,6 @@ const CheckAvailabilty = () => {
 
             {features.map((item, index) => {
               const isActive = hoveredIndex === index;
-
               return (
                 <Box
                   key={index}
@@ -817,10 +936,9 @@ const CheckAvailabilty = () => {
                     cursor: "pointer",
                     position: "relative",
                   }}
-                  onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
-                  onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
+                  onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+                  onClick={() => isMobile && setHoveredIndex(index)}
                 >
-                  {/* Active Line */}
                   {!isMobile && isActive && (
                     <Box
                       sx={{
@@ -834,9 +952,9 @@ const CheckAvailabilty = () => {
                     />
                   )}
 
-                  {/* Icon + Text */}
+                  {/* Text Section */}
                   <Box sx={{ ml: 4 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <Box display="flex" alignItems="center" mb={1}>
                       <CalendarMonthIcon
                         sx={{
                           fontSize: 20,
@@ -856,6 +974,7 @@ const CheckAvailabilty = () => {
                       >
                         {item.title}
                       </Typography>
+                      {isAdmin && <EditIconButton id={item.ids.title} />}
                     </Box>
 
                     <Typography
@@ -868,7 +987,9 @@ const CheckAvailabilty = () => {
                       }}
                     >
                       {item.desc}
+                      {isAdmin && <EditIconButton id={item.ids.desc} />}
                     </Typography>
+
                   </Box>
                 </Box>
               );
@@ -886,18 +1007,35 @@ const CheckAvailabilty = () => {
             }}
           >
             <Box
-              component="img"
-              src={features[hoveredIndex].image}
-              alt="ElectroMagnet Repair"
-              sx={{
-                width: "570px",
-                height:'530px',
-                maxWidth: isMobile ? "100%" : 600,
-                objectFit: "cover",
-                borderRadius: 3,
-                transition: "0.5s",
-              }}
-            />
+              sx={{ position: "relative" }}
+            >
+              <Box
+                component="img"
+                src={`https://skillglow.bexatm.com${features[hoveredIndex].image}`}
+                alt="ElectroMagnet Repair"
+                sx={{
+                  width: "570px",
+                  height: "530px",
+                  maxWidth: isMobile ? "100%" : 600,
+                  objectFit: "cover",
+                  borderRadius: 3,
+                  transition: "0.5s",
+                }}
+              />
+              {isAdmin && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <EditIconButton id={features[hoveredIndex].ids.image} type="I" />
+                </Box>
+              )}
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -905,11 +1043,8 @@ const CheckAvailabilty = () => {
 
 
       {/* FAQs Section */}
-      <Box
-        sx={{
-          mt: 3,
-        }}
-      >
+      <Box sx={{ mt: 3 }}>
+        {/* --- Header Button --- */}
         <Button
           disableElevation
           disableRipple
@@ -917,38 +1052,38 @@ const CheckAvailabilty = () => {
             ...typography.bodySmall,
             marginBottom: 2,
             ml: 8,
-            textTransform: "none", // keep text as-is
-            // fontSize: "0.8rem", // smaller font
-            fontWeight: 400, // medium weight
-            color: "#1a4dab", // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px", // pill shape
-            px: 2, // horizontal padding
-            py: 0.5, // vertical padding
-            boxShadow: "none", // remove shadow
+            textTransform: "none",
+            fontWeight: 400,
+            color: "#1a4dab",
+            backgroundColor: "rgba(36,121,233,0.08)",
+            borderRadius: "20px",
+            px: 2,
+            py: 0.5,
+            boxShadow: "none",
             "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+              backgroundColor: "rgba(36,121,233,0.15)",
               boxShadow: "none",
             },
           }}
         >
-          FAQs
+          {content.CON150000}
+          {isAdmin && <EditIconButton id="CON150000" />}
         </Button>
+
+        {/* --- Title --- */}
         <Typography
           sx={{
             ...typography.h3RB,
             fontWeight: 700,
             ml: 8,
-            // mt: 5
           }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
         >
-          FAQs
+          {content.CON150012}
+          {isAdmin && <EditIconButton id="CON150012" />}
         </Typography>
+
+        {/* --- Subtitle --- */}
         <Typography
-          //   variant="h5"
           sx={{
             ...typography.h3B1,
             fontWeight: 400,
@@ -957,10 +1092,11 @@ const CheckAvailabilty = () => {
             ml: 8,
           }}
         >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project
+          {content.CON150011}
+          {isAdmin && <EditIconButton id="CON150011" />}
         </Typography>
+
+        {/* --- FAQ Accordions --- */}
         <Box sx={{ px: 8, py: 6 }}>
           {faqData.map((item, index) => (
             <Accordion
@@ -992,9 +1128,13 @@ const CheckAvailabilty = () => {
                     ...typography.h3B1,
                     fontWeight: 400,
                   }}
-                //  fontWeight="bold"
                 >
                   {item.question}
+                  {isAdmin && (
+                    <EditIconButton
+                      id={`CON15000${index * 2 + 1}`}
+                    />
+                  )}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
@@ -1006,6 +1146,11 @@ const CheckAvailabilty = () => {
                   color="text.secondary"
                 >
                   {item.answer}
+                  {isAdmin && (
+                    <EditIconButton
+                      id={`CON15000${index * 2 + 2}`}
+                    />
+                  )}
                 </Typography>
               </AccordionDetails>
             </Accordion>
