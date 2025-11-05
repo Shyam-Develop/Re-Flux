@@ -138,7 +138,7 @@ export default function WhatsincludedCard() {
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  backgroundColor: "#f3f4f6",
+                 
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

@@ -556,7 +556,6 @@ const CheckAvailabilty = () => {
                   position: "absolute",
                   top: 8,
                   right: 8,
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
                   borderRadius: "50%",
                 }}
               >
@@ -1036,7 +1035,6 @@ const CheckAvailabilty = () => {
                     position: "absolute",
                     top: 10,
                     right: 10,
-                    backgroundColor: "rgba(255,255,255,0.9)",
                     borderRadius: "50%",
                   }}
                 >

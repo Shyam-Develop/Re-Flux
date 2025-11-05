@@ -597,7 +597,7 @@ const RefurbishedDetail = () => {
                   position: "absolute",
                   top: 8,
                   right: 8,
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  
                   borderRadius: "50%",
                 }}
               >
@@ -666,7 +666,7 @@ const RefurbishedDetail = () => {
                         position: "absolute",
                         top: 6,
                         right: 6,
-                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                       
                         borderRadius: "50%",                      
                       }}
                     >
@@ -881,7 +881,6 @@ const RefurbishedDetail = () => {
                 >
                   {content.CON120016}
                   <EditIconButton id="CON120016" />
-
                 </Typography>
                 <Typography
                   sx={{
@@ -922,7 +921,6 @@ const RefurbishedDetail = () => {
               >
                 {content.CON120018}
                 <EditIconButton id="CON120018" />
-
               </Button>
             </Box>
           </Box>
