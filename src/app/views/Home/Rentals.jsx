@@ -396,11 +396,11 @@ if (!content) return null;
                                  fontWeight: 400,
                                  color: "#677489",
                                }}
-                             >
-                               {p.lift} <EditIconButton id={p.ids[4]} />
+                             >Lift Capacity
+                              
                              </Typography>
                              <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
-                               Lift Capacity
+                                {p.lift} <EditIconButton id={p.ids[4]} />
                              </Typography>
                            </Box>
                            <Box>
@@ -430,9 +430,9 @@ if (!content) return null;
                                color: "#677489",
                              }}
                            >
-                             View Details <EditIconButton id={p.ids[6]} />
+                             Size Options <EditIconButton id={p.ids[6]} />
                            </Typography>
-                           <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#677489" }}>
+                           <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
                              {p.details}
                            </Typography>
                          </Box>
