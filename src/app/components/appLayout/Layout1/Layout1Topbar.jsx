@@ -23,6 +23,7 @@ import { themeShadows } from "app/components/baseTheme/themeColors";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Collapse from '@mui/material/Collapse';
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 const MenuButton = styled(Button)(({ theme }) => ({
 
@@ -312,41 +313,99 @@ export default function TopbarWithMegaMenu() {
                 {isLoggedIn ? (
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2,
+                      display: "flex", // ✅ Makes items align side by side
+                      alignItems: "center", // ✅ Vertically center
+                      gap: 1, // ✅ Adds a small space between admin and icon
+                      color: "#131313",
+                      ...typography.h5,
+                      fontWeight: 500,
+                      fontSize: "20px",
+                      textTransform: "none",
+                      position: "relative",
+                      "&.active": {
+                        color: "#00334E",
+                        fontWeight: 600,
+                        "&::after": {
+                          content: '""',
+                          position: "absolute",
+                          top: "51px",
+                          left: "50%",
+                          transform: "translateX(-50%) rotate(45deg)",
+                          width: "17px",
+                          height: "14px",
+                          backgroundColor: "#112B49",
+                          borderRadius: "1px",
+                        },
+                      },
                     }}
                   >
                     <Typography
                       sx={{
                         color: "#131313",
-                        fontWeight: 500,
-                        fontSize: "18px",
-                      }}
-                    >
-                      Welcome, {role || "User"}
-                    </Typography>
-
-                    <Button
-                      onClick={handleLogout}
-                      sx={{
-                        color: "#131313",
+                        ...typography.h5,
                         fontWeight: 500,
                         fontSize: "20px",
                         textTransform: "none",
+                        position: "relative",
+                        "&.active": {
+                          color: "#00334E",
+                          fontWeight: 600,
+                          "&::after": {
+                            content: '""',
+                            position: "absolute",
+                            top: "51px",
+                            left: "50%",
+                            transform: "translateX(-50%) rotate(45deg)",
+                            width: "17px",
+                            height: "14px",
+                            backgroundColor: "#112B49",
+                            borderRadius: "1px",
+                          },
+                        },
                       }}
                     >
-                      Logout
-                    </Button>
+                      {role || "User"}
+                    </Typography>
+
+                    <IconButton
+                      onClick={handleLogout}
+                      sx={{
+                        color: "#131313",
+                        "&:hover": { color: "#00334E" },
+                        p: 0, // removes extra padding
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
+                    </IconButton>
                   </Box>
                 ) : (
                   <Button
                     onClick={handleLogin}
                     sx={{
                       color: "#131313",
+                      ...typography.h5,
                       fontWeight: 500,
                       fontSize: "20px",
                       textTransform: "none",
+                      position: "relative",
+                      "&.active": {
+                        color: "#00334E",
+                        fontWeight: 600,
+                        "&::after": {
+                          content: '""',
+                          position: "absolute",
+                          top: "51px",
+                          left: "50%",
+                          transform: "translateX(-50%) rotate(45deg)",
+                          width: "17px",
+                          height: "14px",
+                          backgroundColor: "#112B49",
+                          borderRadius: "1px",
+                        },
+                      },
                     }}
                   >
                     Login
