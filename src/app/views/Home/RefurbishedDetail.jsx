@@ -430,13 +430,21 @@ const RefurbishedDetail = () => {
         onClick={() => handleEdit(id, type)}
         sx={{
           ml: 1,
-          p: 0.3,
-          "&:hover": { bgcolor: "rgba(255,255,255,0.9)" },
-          bgcolor: "rgba(255,255,255,0.7)",
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
           verticalAlign: "middle",
         }}
       >
-        <EditIcon fontSize="small" sx={{ color: "#007bff" }} />
+        <EditIcon fontSize="small" />
       </IconButton>
     ) : null;
 
@@ -589,7 +597,7 @@ const RefurbishedDetail = () => {
                   position: "absolute",
                   top: 8,
                   right: 8,
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  
                   borderRadius: "50%",
                 }}
               >
@@ -658,7 +666,7 @@ const RefurbishedDetail = () => {
                         position: "absolute",
                         top: 6,
                         right: 6,
-                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                       
                         borderRadius: "50%",                      
                       }}
                     >
@@ -873,7 +881,6 @@ const RefurbishedDetail = () => {
                 >
                   {content.CON120016}
                   <EditIconButton id="CON120016" />
-
                 </Typography>
                 <Typography
                   sx={{
@@ -914,7 +921,6 @@ const RefurbishedDetail = () => {
               >
                 {content.CON120018}
                 <EditIconButton id="CON120018" />
-
               </Button>
             </Box>
           </Box>

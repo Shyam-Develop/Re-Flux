@@ -90,18 +90,22 @@ export default function TopbarWithMegaMenu() {
   const appBarRef = useRef(null);
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
     // Check if logged in from localStorage
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const storedRole = localStorage.getItem("role");
     setIsLoggedIn(loggedIn);
+    if (storedRole) setRole(storedRole);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("role");
     setIsLoggedIn(false);
+    setRole("");
     navigate("/");
   };
 
@@ -305,31 +309,49 @@ export default function TopbarWithMegaMenu() {
                   </React.Fragment>
                 ))}
                 {/* ✅ Login / Logout Toggle Button */}
-            {isLoggedIn ? (
-              <Button
-                onClick={handleLogout}
-                sx={{
-                  color: "#131313",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  textTransform: "none",
-                }}
-              >
-                Logout
-              </Button>
-            ) : (
-              <Button
-                onClick={handleLogin}
-                sx={{
-                  color: "#131313",
-                  fontWeight: 500,
-                  fontSize: "20px",
-                  textTransform: "none",
-                }}
-              >
-                Login
-              </Button>
-            )}
+                {isLoggedIn ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "#131313",
+                        fontWeight: 500,
+                        fontSize: "18px",
+                      }}
+                    >
+                      Welcome, {role || "User"}
+                    </Typography>
+
+                    <Button
+                      onClick={handleLogout}
+                      sx={{
+                        color: "#131313",
+                        fontWeight: 500,
+                        fontSize: "20px",
+                        textTransform: "none",
+                      }}
+                    >
+                      Logout
+                    </Button>
+                  </Box>
+                ) : (
+                  <Button
+                    onClick={handleLogin}
+                    sx={{
+                      color: "#131313",
+                      fontWeight: 500,
+                      fontSize: "20px",
+                      textTransform: "none",
+                    }}
+                  >
+                    Login
+                  </Button>
+                )}
               </Box>
             </Box>
           </Box>

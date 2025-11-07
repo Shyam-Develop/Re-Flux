@@ -60,7 +60,21 @@ export default function ContactUs() {
       <IconButton
         size="small"
         onClick={() => handleEdit(id, type)}
-        sx={{ ml: 1, p: 0.3, "&:hover": { color: "#007bff" }, verticalAlign: "middle" }}
+       sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
+          verticalAlign: "middle",
+        }}
       >
         <EditIcon fontSize="small" />
       </IconButton>
