@@ -1,6 +1,6 @@
 // ProductListingPage.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -41,6 +41,8 @@ import Blogs4 from "../../../assets/Blogs4.jpg";
 import { typography, RefluxSvg } from 'app/utils/constant';
 import { useNavigate } from 'react-router-dom';
 import Footer from 'app/components/Card/Footer';
+import EditIcon from "@mui/icons-material/Edit";
+
 
 // Dummy data (same image repeated)
 const products = Array.from({ length: 6 }, (_, i) => ({
@@ -120,8 +122,6 @@ const blogData = [
 
 ];
 
-
-
 const fields = [
   { label: 'Categories', id: 'categories-1' },
   { label: 'Start date', id: 'start-date' },
@@ -129,6 +129,9 @@ const fields = [
   { label: 'Location', id: 'location' },
   { label: 'Categories', id: 'categories-2' }
 ];
+
+
+
 
 
 const Rentals = () => {
@@ -140,6 +143,65 @@ const Rentals = () => {
   const handleChange = (index) => {
     setExpanded(expanded === index ? null : index);
   };
+
+  //For CMS
+
+
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  //  Load content
+  useEffect(() => {
+    const apiUrl =
+      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C016";
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  //  Check admin role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  //  Edit function
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(
+      `/CmsEditor?contentId=C016&contentTextID=${contentTextID}&contentType=${type}`
+    );
+  };
+
+  //  Edit icon button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+          },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+if (!content) return null;
 
 
   return (
@@ -185,118 +247,225 @@ const Rentals = () => {
       {/* <Box sx={{ maxWidth: '1296px', mx: 'auto' }}> */}
       <Box sx={{}}>
 
-        <Box sx={{ fontFamily: 'Arial, sans-serif' }}>
-
-          {/* Filters */}
-          <Box sx={{ p: 2, padding: '40px' }}>
-            <Grid container spacing={2}>
-              {fields.map((field) => (
-                <Grid item xs={8} sm={3} md={2.4} key={field.id}>
-                  <Typography variant="body2" fontWeight={500} mb={0.5}>
-                    {field.label}
-                  </Typography>
-                  <FormControl fullWidth size="small">
-                    <Select
-                      defaultValue=""
-                      displayEmpty
-                      renderValue={(selected) =>
-                        selected ? selected : ''
-                      }
-                      sx={{ width: '200px', height: '56px' }} >
-                      <MenuItem value="option1">Option 1</MenuItem>
-                      <MenuItem value="option2">Option 2</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-
-          {/* Divider Line */}
-          <Divider sx={{ width: '95%', mx: 'auto', marginTop: '1%' }} />
-
-          {/* Product Count and Sort */}
-          <Box sx={{ py: 2, px: '30px' }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography sx={{ ...typography.h5, color: '#000000' }}>135 Products available</Typography>
-              <Box display="flex" alignItems="center" gap={1}>
-                <Typography variant="body2">Sort by</Typography>
-                <FormControl size="small">
-                  <Select defaultValue="az">
-                    <MenuItem value="az">A-Z</MenuItem>
-                    <MenuItem value="za">Z-A</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-            </Box>
-          </Box>
-
-          {/* Bottom Divider */}
-          <Divider sx={{ width: '95%', mx: 'auto' }} />
-        </Box>
-
 
         {/* Product grid */}
-        <Grid container spacing={3} sx={{ p: 5 }}>
-          {products.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card sx={{ borderRadius: '0px' }}>
-                <Box sx={{ position: 'relative' }}>
-                  <CardMedia
-                    component="img"
-                    width='384px'
-                    height="240px"
-                    image={product.image}
-                    alt={product.title}
-                  />
-                  <Chip
-                    label="🔧 Available for Rent"
-                    color="success"
-                    size="small"
-                    sx={{ position: 'absolute', top: 8, left: 8, borderRadius: '1px' }}
-                  />
-                  <Chip
-                    label="🛡️ Safety Tested"
-                    color="info"
-                    size="small"
-                    sx={{ position: 'absolute', top: 8, right: 8, borderRadius: '1px' }}
-                  />
-                  <Box
-                    className="hover-icon"
-                    sx={{
-                      position: 'absolute',
-                      top: 8,
-                      right: 8,
-                      width: 24,
-                      height: 24,
-                      border: '2px solid white',
-                      backgroundColor: '#1C2D4B',
-                      transform: 'rotate(45deg)',
-                      opacity: 0,
-                      transition: 'opacity 0.3s ease-in-out',
-                      zIndex: 2,
-                    }}
-                  />
-                </Box>
-                <CardContent>
-                  <Typography sx={{ ...typography.h4, color: '#1C2D4B' }}>{product.title}</Typography>
-                  <Typography sx={{ ...typography.h6, color: '#0E1626', mb: 1 }}>
-                    Size Options
-                    <Typography sx={{ ...typography.bodySmall, color: '#677489', }}> {product.sizes.join(' / ')}</Typography>
-                  </Typography>
-                  <Button variant="contained" fullWidth sx={{ backgroundColor: '#0b2d55' }} onClick={() => navigate("/home/CheckAvailabilty")}>
-                    View Details
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+         <Box sx={{ px: '5%', px:5, py:7}}>          
+       
+               {/* Product Cards */}
+               <Grid container spacing={4}>
+                 {[
+                   {
+                     img: content.RE1002,
+                     title: content.RE1003,
+                     subtitle: content.RE1004,
+                     price: content.RE1005,
+                     lift: content.RE1006,
+                     power: content.RE1007,
+                     details: content.RE1008,
+                     ids: ["RE1002", "RE1003", "RE1004", "RE1005", "RE1006", "RE1007", "RE1008"]
+                   },
+                   {
+                     img: content.RE1009,
+                     title: content.RE1010,
+                     subtitle: content.RE1011,
+                     price: content.RE1012,
+                     lift: content.RE1013,
+                     power: content.RE1014,
+                     details: content.RE1015,
+                     ids: ["RE1009", "RE1010", "RE1011", "RE1012", "RE1013", "RE1014", "RE1015"]
+                   },
+                   {
+                     img: content.RE1016,
+                     title: content.RE1017,
+                     subtitle: content.RE1018,
+                     price: content.RE1019,
+                     lift: content.RS1020,
+                     power: content.RE1021,
+                     details: content.RE1022,
+                     ids: ["RE1016", "RE1017", "RE1018", "RE1019", "RE1020", "RE1021", "RE1022"]
+                   }
+                 ].map((p, idx) => (
+                   <Grid item xs={12} sm={6} md={4} key={idx}>
+                     <Card
+                       sx={{
+                         borderRadius: 3,
+                         overflow: "hidden",
+                         boxShadow: 2,
+                         position: "relative",
+                         p: 2, // outer padding around card
+                         bgcolor: "#fff",
+                       }}
+                     >
+                       {/* Image Section */}
+                       <Box
+                         sx={{
+                           position: "relative",
+                           borderRadius: 2,
+                           overflow: "hidden",
+                           mb: 2,
+                         }}
+                       >
+                         <Box
+                           component="img"
+                           src={`https://skillglow.bexatm.com${p.img}`}
+                           alt={p.title}
+                           sx={{
+                             width: "100%",
+                             height: 220,
+                             objectFit: "cover",
+                             borderRadius: 2,
+                             display: "block",
+                           }}
+                         />
+       
+                         {/* 🔹 Top-left Chips */}
+                         <Box
+                           sx={{
+                             position: "absolute",
+                             top: 8,
+                             left: 8,
+                             display: "flex",
+                             gap: 1,
+                             flexWrap: "wrap",
+                           }}
+                         >
+                           <Chip
+                             label="🔧 Available for Rent"
+                             size="small"
+                             sx={{
+                               bgcolor: "#1b5e20",
+                               color: "white",
+                               fontSize: "13px",
+                               borderRadius: "1px",
+                               height: "24px",
+       
+                             }}
+                           />
+                           <Chip
+                             label="🛡️ Safety Tested"
+                             size="small"
+                             sx={{
+                               padding: '10px',
+                               bgcolor: "#1976d2",
+                               marginLeft: '70px',
+                               color: "white",
+                               fontSize: "13px",
+                               borderRadius: "1px",
+                               height: "24px",
+                             }}
+                           />
+                         </Box>
+       
+                         {/* 🔹 Edit Icon - bottom right corner of image */}
+                         <Box
+                           sx={{
+                             position: "absolute",
+                             bottom: 8,
+                             right: 8,
+                             borderRadius: "50%",
+                           }}
+                         >
+                           <EditIconButton id={p.ids[0]} type="I" />
+                         </Box>
+                       </Box>
+       
+                       {/* Card Content */}
+                       <CardContent sx={{ p: 0 }}>
+                         {/* Title & Price */}
+                         <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                           <Box>
+                             <Typography sx={{ ...typography.h4, height: '62px', fontWeight: 400, color: "#0B121E" }}>
+                               {p.title} <EditIconButton id={p.ids[1]} />
+                             </Typography>
+                             <Typography sx={{ ...typography.h6, fontWeight: 600, color: "#00000099" }}>
+                               {p.subtitle} <EditIconButton id={p.ids[2]} />
+                             </Typography>
+                           </Box>
+                           <Typography sx={{ ...typography.h5, fontWeight: 700, color: "#1A7B3F" }}>
+                             {p.price} <EditIconButton id={p.ids[3]} />
+                           </Typography>
+                         </Box>
+       
+                         {/* Lift Capacity & Power */}
+                         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                           <Box>
+                             <Typography
+                               sx={{
+                                 ...typography.bodyBase,
+                                 fontFamily: "Fira Sans",
+                                 fontWeight: 400,
+                                 color: "#677489",
+                               }}
+                             >
+                               {p.lift} <EditIconButton id={p.ids[4]} />
+                             </Typography>
+                             <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                               Lift Capacity
+                             </Typography>
+                           </Box>
+                           <Box>
+                             <Typography
+                               sx={{
+                                 ...typography.bodyBase,
+                                 fontFamily: "Fira Sans",
+                                 fontWeight: 400,
+                                 color: "#677489",
+                               }}
+                             >
+                               {p.power} <EditIconButton id={p.ids[5]} />
+                             </Typography>
+                             <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                               Power Supply
+                             </Typography>
+                           </Box>
+                         </Box>
+       
+                         {/* Details */}
+                         <Box sx={{ mt: 2 }}>
+                           <Typography
+                             sx={{
+                               ...typography.bodyBase,
+                               fontFamily: "Fira Sans",
+                               fontWeight: 400,
+                               color: "#677489",
+                             }}
+                           >
+                             View Details <EditIconButton id={p.ids[6]} />
+                           </Typography>
+                           <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#677489" }}>
+                             {p.details}
+                           </Typography>
+                         </Box>
+       
+                         {/* Button */}
+                         <Button
+                           variant="contained"
+                           fullWidth
+                           sx={{
+                             mt: 3,
+                             backgroundColor: "#0b2d55",
+                             color: "white",
+                             textTransform: "none",
+                             fontWeight: 600,
+                             borderRadius: 2,
+                             py: 1,
+                             "&:hover": { backgroundColor: "#103766" },
+                           }}
+                         >
+                           Check Availability
+                         </Button>
+                       </CardContent>
+                     </Card>
+                   </Grid>
+       
+       
+                 ))}
+               </Grid>
+       
+                            
+             </Box>
 
-        {/* Pagination */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-          <Pagination count={2} page={1} color="primary" />
-        </Box>
+
 
         {/* ROI Calculator Section */}
         <Box sx={{ p: 5 }}>
