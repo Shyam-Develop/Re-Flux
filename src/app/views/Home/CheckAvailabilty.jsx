@@ -62,9 +62,7 @@ import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
 import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 import Approach5 from "../../../assets/Approach5.jpg";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -223,6 +221,9 @@ const CheckAvailabilty = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // ✅ Fetch content from API
+
+   const navigate = useNavigate();
+
   useEffect(() => {
     fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C012")
       .then((res) => {
@@ -241,7 +242,9 @@ const CheckAvailabilty = () => {
 
   // ✅ Navigate to CMS editor
   const handleEdit = (contentTextID, type = "T") => {
-    window.location.href = `/CmsEditor?contentId=C012&contentTextID=${contentTextID}&contentType=${type}`;
+    navigate(
+      `/CmsEditor?contentId=C012&contentTextID=${contentTextID}&contentType=${type}`
+    );
   };
 
   // ✅ Reusable Edit button

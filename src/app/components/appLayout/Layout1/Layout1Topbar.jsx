@@ -328,10 +328,11 @@ export default function TopbarWithMegaMenu() {
                         "&::after": {
                           content: '""',
                           position: "absolute",
-                          top: "51px",
+                          top: "45px",
                           left: "50%",
                           transform: "translateX(-50%) rotate(45deg)",
                           width: "17px",
+                          paddingTop:'30px',
                           height: "14px",
                           backgroundColor: "#112B49",
                           borderRadius: "1px",
@@ -346,6 +347,7 @@ export default function TopbarWithMegaMenu() {
                         fontWeight: 500,
                         fontSize: "20px",
                         textTransform: "none",
+                       
                         position: "relative",
                         "&.active": {
                           color: "#00334E",
@@ -353,7 +355,7 @@ export default function TopbarWithMegaMenu() {
                           "&::after": {
                             content: '""',
                             position: "absolute",
-                            top: "51px",
+                            top: "30px",
                             left: "50%",
                             transform: "translateX(-50%) rotate(45deg)",
                             width: "17px",
@@ -391,13 +393,14 @@ export default function TopbarWithMegaMenu() {
                       fontSize: "20px",
                       textTransform: "none",
                       position: "relative",
+                      padding:'12px',
                       "&.active": {
                         color: "#00334E",
                         fontWeight: 600,
                         "&::after": {
                           content: '""',
                           position: "absolute",
-                          top: "51px",
+                          top: "30px",
                           left: "50%",
                           transform: "translateX(-50%) rotate(45deg)",
                           width: "17px",
