@@ -15,6 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { set } from "lodash";
 
 const CmsEditor = () => {
   const location = useLocation();
@@ -28,6 +29,9 @@ const CmsEditor = () => {
 
   const [preview, setPreview] = useState("");
   const [text, setText] = useState("");
+  const [contentArrayID, setcontentArrayID] = useState("");
+  const [contentArrayIndex, setcontentArrayIndex] = useState(0);
+  const [contentArray, setcontentArray] = useState(null);
   const [image, setImage] = useState(null);
   const [pageData, setPageData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -49,6 +53,15 @@ const CmsEditor = () => {
 
       if (contentType === "T") {
         setText(data[contentTextID] || "");
+      } else if (contentType === "A") {
+        const id = contentTextID;
+        const match = id.match(/^([A-Z0-9_]+)\[(\d+)\]$/);
+        const baseKey = match ? match[1] : id; // 👉 "CON190007"
+        const index = match ? parseInt(match[2], 10) : null; // 👉 0
+        setcontentArray(data);
+        setcontentArrayID(baseKey);
+        setcontentArrayIndex(index);
+        setText(data[baseKey][index] || "");
       } else if (contentType === "I") {
         const imagePath = data[contentTextID] || "";
         if (imagePath) setPreview(`https://skillglow.bexatm.com${imagePath}`);
@@ -70,7 +83,24 @@ const CmsEditor = () => {
   }, [contentId]);
 
   // --- Handle text change ---
-  const handleChange = (e) => setText(e.target.value);
+  //const handleChange = (e) => setText(e.target.value);
+
+  const handleChange = (e) => {
+    if (contentType == "T") {
+      setText(e.target.value);
+    }
+    if (contentType == "A") {
+      setText(e.target.value);
+      setcontentArray((prevData) => {
+        const updatedArray = [...prevData[contentArrayID]];
+        updatedArray[contentArrayIndex] = e.target.value;
+        return {
+          ...prevData,
+          [contentArrayID]: updatedArray,
+        };
+      });
+    }
+  };
 
   // --- Handle image preview ---
   const handleImageChange = (e) => {
@@ -88,14 +118,17 @@ const CmsEditor = () => {
     setLoading(true);
 
     try {
+      const updatedText =
+        contentType === "A" ? contentArray[contentArrayID] : text;
+        console.log("updatedText",updatedText);
       const res = await fetch(
         `https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=${contentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            cmsTextID: contentTextID,
-            cmsText: text,
+            cmsTextID: contentType === "A" ? contentArrayID:contentTextID,
+            cmsText: updatedText,
           }),
         }
       );
@@ -194,7 +227,7 @@ const CmsEditor = () => {
           ) : (
             <form id="cms-form" onSubmit={saveContent}>
               {/* --- Text Editor --- */}
-              {contentType === "T" && (
+              {(contentType === "T" || contentType == "A") && (
                 <Fragment>
                   <Typography
                     variant="subtitle1"

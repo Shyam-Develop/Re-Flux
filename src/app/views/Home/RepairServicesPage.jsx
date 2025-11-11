@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -6,21 +6,38 @@ import {
   Link,
   Card,
   CardMedia,
-  CardContent, Accordion,
+  CardContent,
+  Accordion,
   AccordionSummary,
   AccordionDetails,
-  Divider, IconButton, Grid, Modal, List, ListItem, ListItemIcon, ListItemText, TextField,
-  InputAdornment, Dialog, DialogContent, FormControl, Select, MenuItem, Stack, Chip,
+  Divider,
+  IconButton,
+  Grid,
+  Modal,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  InputAdornment,
+  Dialog,
+  DialogContent,
+  FormControl,
+  Select,
+  MenuItem,
+  Stack,
+  Chip,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'; import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
 import WhatsApp from "../../../assets/whatsappimg.jpg";
 import RepairsectionCard from "app/components/Card/RepairsectionCard";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -28,14 +45,14 @@ import serviceimg from "../../../assets/Repairservice.png";
 import before from "../../../assets/beforecstudy.png";
 import after from "../../../assets/aftercstudy.png";
 import Electromagnetrepair from "../../../assets/EletromagnetRepair.png";
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import RentServicesCard from "app/components/Card/RentServicesCard";
 import RentingMagnet from "../../../assets/RentingMagnet.png";
 import ResaleServices from "app/components/Card/ResaleServices";
-import ROIimage from '../../../assets/ROICalculator.jpg';
-import Brand1 from '../../../assets/Brand1.png';
+import ROIimage from "../../../assets/ROICalculator.jpg";
+import Brand1 from "../../../assets/Brand1.png";
 import Brand2crea from "../../../assets/Brand2crea.png";
 import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
@@ -46,42 +63,42 @@ import RepairServicesPageCard from "app/components/Card/RepairServicesPageCard";
 import ProcessCards from "app/components/Card/HowweworkCard";
 import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
 import { typography } from "app/utils/constant";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { useNavigate } from 'react-router-dom';
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { useNavigate } from "react-router-dom";
 import BrowseDialog from "app/components/DialogBox";
-import Footer from 'app/components/Card/Footer';
-
-
+import Footer from "app/components/Card/Footer";
+import EditIcon from "@mui/icons-material/Edit";
 
 const RepairServicesPage = () => {
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const UploadBox = ({ label }) => {
     return (
       <Box sx={{ my: 3 }}>
-        <Typography variant="h6" gutterBottom>{label}</Typography>
+        <Typography variant="h6" gutterBottom>
+          {label}
+        </Typography>
         <label htmlFor="upload-input">
           <Box
             sx={{
-              border: '2px dashed #ccc',
+              border: "2px dashed #ccc",
               borderRadius: 2,
               p: 4,
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'border-color 0.3s ease',
-              '&:hover': { borderColor: 'primary.main' },
+              textAlign: "center",
+              cursor: "pointer",
+              transition: "border-color 0.3s ease",
+              "&:hover": { borderColor: "primary.main" },
             }}
           >
             <IconButton component="span" size="large">
-              <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+              <UploadFileIcon sx={{ fontSize: 40, color: "text.secondary" }} />
             </IconButton>
             <Typography>
-              <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+              <strong style={{ color: "#1976d2" }}>Choose</strong> file to
+              upload
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Select image in jpeg, PNG
@@ -92,7 +109,7 @@ const RepairServicesPage = () => {
           id="upload-input"
           type="file"
           accept="image/jpeg, image/png"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
         />
       </Box>
     );
@@ -110,49 +127,28 @@ const RepairServicesPage = () => {
     setBrowseDialogOpen(false);
   };
 
-  const features = [
-    {
-      title: "TAT you can plan around",
-      desc: "Urgent 24–48h, Standard 72h, Overhaul 5–7 days—clear timelines with proactive updates.",
-      image: Electromagnetrepair,
-    },
-    {
-      title: "Certified safe, ASME-aligned",
-      desc: "Every job closes with a load-test certificate (kN), inspection checklist, and up to 12-month service warranty.",
-      image: serviceimg,
-    },
-    {
-      title: "All magnet types, all faults",
-      desc: "Circular, rectangular, suspension (oil/air); coils, leads, pole shoes, insulation class F/H plus controller/PSU repairs.",
-      image: before,
-    },
-    {
-      title: "Field-ready support, nationwide",
-      desc: "On-site diagnosis, pickup & drop, reinstall/commissioning Pan-India coverage with WhatsApp photo reports.",
-      image: after,
-    },
-  ];
-
-
   const benefits = [
     {
-      title: 'Lower Upfront Cost',
-      description: 'Skip the heavy investment. Pay only for the time you use the magnet.',
+      title: "Lower Upfront Cost",
+      description:
+        "Skip the heavy investment. Pay only for the time you use the magnet.",
     },
     {
-      title: 'Flexibility for Projects',
-      description: 'Rent different sizes or types as per project needs, without long-term commitments.',
+      title: "Flexibility for Projects",
+      description:
+        "Rent different sizes or types as per project needs, without long-term commitments.",
     },
     {
-      title: 'Zero Maintenance Hassle',
-      description: 'We handle service and upkeep — you focus on getting the job done.',
+      title: "Zero Maintenance Hassle",
+      description:
+        "We handle service and upkeep — you focus on getting the job done.",
     },
     {
-      title: 'Quick Availability',
-      description: 'Get magnets delivered and installed fast, exactly when your project demands it.',
+      title: "Quick Availability",
+      description:
+        "Get magnets delivered and installed fast, exactly when your project demands it.",
     },
   ];
-
 
   //ROI Calcultor
   const roiData = [
@@ -168,7 +164,6 @@ const RepairServicesPage = () => {
         "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
       image: ROIimage,
     },
-
   ];
 
   const partnerData = [
@@ -191,30 +186,6 @@ const RepairServicesPage = () => {
       id: 4,
       logo: Brand1,
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut nisl turpis. Mauris vitae commodo elit,",
-    },
-  ];
-
-
-  const faqData = [
-    {
-      question: "Do I need to be home during the cleaning?",
-      answer: "No, as long as we have access, you can carry on with your day.",
-    },
-    {
-      question: "Are your restoration services?",
-      answer: "Yes, we offer full restoration in select areas.",
-    },
-    {
-      question: "What happens if I’m not satisfied with the Magnet?",
-      answer: "We offer a satisfaction guarantee and support options.",
-    },
-    {
-      question: "Can I schedule recurring services?",
-      answer: "Yes, you can set weekly or monthly recurring schedules.",
-    },
-    {
-      question: "Is there a cancellation fee?",
-      answer: "Nope — cancel any time before 24 hours of service.",
     },
   ];
 
@@ -246,11 +217,6 @@ const RepairServicesPage = () => {
     },
   ];
 
-
-
-
-
-
   const [expanded, setExpanded] = useState(null);
 
   const handleChange = (index) => {
@@ -259,28 +225,122 @@ const RepairServicesPage = () => {
 
   // const [open, setOpen] = useState(false);
   const topImageStyle = {
-    width: '100%',
-    height: '329px',
-    overflow: 'hidden',
-    position: 'relative',
+    width: "100%",
+    height: "329px",
+    overflow: "hidden",
+    position: "relative",
   };
 
   const imageStyle = {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   };
 
   const overlayBoxStyle = {
-    position: 'absolute',
-    bottom: '5px',
-    left: '50px',
-    backgroundColor: '#F1F2F4',
-    width: '283px',
-    height: '66px',
-    padding: '14px 60px;',
-    textAlign: 'center',
+    position: "absolute",
+    bottom: "5px",
+    left: "50px",
+    backgroundColor: "#F1F2F4",
+    width: "283px",
+    height: "66px",
+    padding: "14px 60px;",
+    textAlign: "center",
   };
+
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  // ✅ Fetch content from API
+  useEffect(() => {
+    fetch(
+      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=RepairServicesPage"
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check login role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(
+      `/CmsEditor?contentId=RepairServicesPage&contentTextID=${contentTextID}&contentType=${type}`
+    );
+  };
+
+  // ✅ Reusable Edit button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  const features = [
+    {
+      title: content.CON140001,
+      desc: content.CON140002,
+      image: content.CON140003,
+      ids: { title: "CON140001", desc: "CON140002", image: "CON140003" },
+    },
+    {
+      title: content.CON140004,
+      desc: content.CON140005,
+      image: content.CON140006,
+      ids: { title: "CON140004", desc: "CON140005", image: "CON140006" },
+    },
+    {
+      title: content.CON140007,
+      desc: content.CON140008,
+      image: content.CON140009,
+      ids: { title: "CON140007", desc: "CON140008", image: "CON140009" },
+    },
+    {
+      title: content.CON140010,
+      desc: content.CON140011,
+      image: content.CON140012,
+      ids: { title: "CON140010", desc: "CON140011", image: "CON140012" },
+    },
+  ];
+
+  const faqData = [
+    { question: content.CON150001, answer: content.CON150002 },
+    { question: content.CON150003, answer: content.CON150004 },
+    { question: content.CON150005, answer: content.CON150006 },
+    { question: content.CON150007, answer: content.CON150008 },
+    { question: content.CON150009, answer: content.CON150010 },
+  ];
+  const baseNumber = 150000;
 
   return (
     <Box
@@ -294,67 +354,177 @@ const RepairServicesPage = () => {
       {/* Background Image */}
 
       <Box sx={topImageStyle}>
-        <img src={Repairservicemagnet} alt="Top Banner" style={imageStyle} />
+        <img
+          src={`https://skillglow.bexatm.com${content.CON190000}`}
+          alt="Top Banner"
+          style={imageStyle}
+        />
+        {isAdmin && (
+          <IconButton
+            size="small"
+            onClick={() => handleEdit("CON190000", "I")}
+            sx={{
+              position: "absolute",
+              bottom: 8,
+              right: 8,
+              bgcolor: "white",
+              color: "black",
+              "&:hover": { bgcolor: "primary.main", color: "white" },
+            }}
+          >
+            <EditIcon fontSize="small" />
+          </IconButton>
+        )}
 
-        <Box sx={overlayBoxStyle} >
-          <Typography sx={{ ...typography.h3, color: '#000000' }}>Services</Typography>
+        <Box sx={overlayBoxStyle}>
+          <Typography
+            sx={{ ...typography.h3, color: "#000000", fontWeight: 600 }}
+          >
+            {content.CON190001}
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190001")}
+                sx={{
+                  ml: 1,
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                    //borderColor: "#214870",
+                  },
+                  verticalAlign: "middle",
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Typography>
         </Box>
       </Box>
 
       {/* Content Section */}
-      <Box sx={{ padding: '60px 120px', backgroundColor: '#fff' }}>
-        <Grid container spacing={4} alignItems="center">
-          {/* Left Heading */}
-          <Grid item xs={12} md={5}>
-            <Typography
+      <Box
+        sx={{
+          padding: "60px 120px",
+          backgroundColor: "#fff",
+          maxWidth: "100%",
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "40px",
+            fontWeight: 700,
+            lineHeight: "44px",
+            color: "#1A2438",
+            fontFamily: "Space Grotesk, Regular",
+            ...typography.h1,
+          }}
+        >
+          {content.CON190002}
+          {isAdmin && (
+            <IconButton
+              size="small"
+              onClick={() => handleEdit("CON190002")}
               sx={{
-                fontSize: '36px',
-                fontWeight: 700,
-                lineHeight: '44px',
-                color: '#1A2438',
-                ...typography.h1
+                ml: 1,
+                p: 0.5,
+                borderRadius: "50%",
+                backgroundColor: "#f0f0f0",
+                color: "#1C2D4B",
+                border: "1px solid #ccc",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0",
+                  color: "#070808ff",
+                  //borderColor: "#214870",
+                },
+                verticalAlign: "middle",
               }}
             >
-              Circular Lifting <br /> Magnet
-            </Typography>
-          </Grid>
-
-          {/* Right Content */}
-          <Grid item xs={12} md={7}>
-            <Box sx={{ maxWidth: '600px' }}> {/* Increase this width */}
-              <Typography
+              <EditIcon fontSize="small" />
+            </IconButton>
+          )}
+        </Typography>
+        {/* Increase this width */}
+        <Typography
+          sx={{
+            fontSize: "18px",
+            lineHeight: "160%",
+            color: "#99A0AE",
+            maxWidth: "100%",
+            fontFamily: "Fira Sans, Regular",
+            ...typography.bodyBase,
+          }}
+        >
+          {content.CON190003}
+          {isAdmin && (
+            <IconButton
+              size="small"
+              onClick={() => handleEdit("CON190003")}
+              sx={{
+                ml: 1,
+                p: 0.5,
+                borderRadius: "50%",
+                backgroundColor: "#f0f0f0",
+                color: "#1C2D4B",
+                border: "1px solid #ccc",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0",
+                  color: "#070808ff",
+                  //borderColor: "#214870",
+                },
+                verticalAlign: "middle",
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          )}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "#2F6FBA",
+            mt: 2,
+            fontFamily: "Fira Sans",
+            ...typography.bodyStrong,
+          }}
+        >
+          <Link href="#" sx={{ textDecoration: "underline" }} underline="none">
+            {content.CON190004}
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190004")}
                 sx={{
-                  fontSize: '16px',
-                  lineHeight: '26px',
-                  color: '#99A0AE',
-                  ...typography.bodyBase
+                  ml: 1,
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                    //borderColor: "#214870",
+                  },
+                  verticalAlign: "middle",
                 }}
               >
-                Get powerful lifting magnets when you need them — without the upfront
-                cost. Flexible rental plans, quick installation, and reliable
-                performance for every project.
-              </Typography>
-
-              <Typography
-                sx={{
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  color: '#2F6FBA',
-                  mt: 2,
-                  ...typography.bodyStrong
-                }}
-              >
-                <Link href="#" sx={{ textDecoration: 'underline' }} underline="none">
-                  Request a quote →
-                </Link>
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Link>
+        </Typography>
       </Box>
-
-
-
 
       {/* Fault section */}
 
@@ -385,7 +555,30 @@ const RepairServicesPage = () => {
             },
           }}
         >
-          Common faults we fix
+          {content.CON190005}
+          {isAdmin && (
+            <IconButton
+              size="small"
+              onClick={() => handleEdit("CON190005")}
+              sx={{
+                ml: 1,
+                p: 0.5,
+                borderRadius: "50%",
+                backgroundColor: "#f0f0f0",
+                color: "#1C2D4B",
+                border: "1px solid #ccc",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0",
+                  color: "#070808ff",
+                  //borderColor: "#214870",
+                },
+                verticalAlign: "middle",
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          )}
         </Typography>
 
         {/* Sub Text */}
@@ -402,7 +595,30 @@ const RepairServicesPage = () => {
             },
           }}
         >
-          Self-diagnose quickly—share photos on WhatsApp for a fast quote.
+          {content.CON190006}
+          {isAdmin && (
+            <IconButton
+              size="small"
+              onClick={() => handleEdit("CON190006")}
+              sx={{
+                ml: 1,
+                p: 0.5,
+                borderRadius: "50%",
+                backgroundColor: "#f0f0f0",
+                color: "#1C2D4B",
+                border: "1px solid #ccc",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0",
+                  color: "#070808ff",
+                  //borderColor: "#214870",
+                },
+                verticalAlign: "middle",
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          )}
         </Typography>
 
         {/* Chips Section */}
@@ -423,43 +639,48 @@ const RepairServicesPage = () => {
             },
           }}
         >
-          {[
-            "Loose junctions",
-            "Capacity drop",
-            "Uneven flux",
-            "Pole-shoe wear",
-            "Loose junctions",
-            "Pole-shoe wear",
-            "Loose junctions",
-            "Capacity drop",
-          ].map((item, index) => (
-            <Chip
-              key={index}
-              label={item}
-              variant="outlined"
-              sx={{
-                fontSize: "20px",
-                fontWeight: 500,
-                fontFamily: "Space Grotesk, Regular",
-                borderRadius: "20px",
-                px: 1.5,
-                py: 0.5,
-
-                "&:hover": {
-                  bgcolor: "#1c2434",
-                  color: "white",
-                },
-
-                "@media (max-width: 900px)": {
-                  fontSize: "14px",
-                  px: 1,
-                  py: 0.3,
-                },
-              }}
-            />
+          {content.CON190007.map((item, index) => (
+            <Box key={index} position="relative">
+              <Chip
+                label={item}
+                variant="outlined"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 500,
+                  fontFamily: "Space Grotesk, Regular",
+                  borderRadius: "20px",
+                  px: 1.5,
+                  py: 0.5,
+                  "&:hover": {
+                    bgcolor: "#1c2434",
+                    color: "white",
+                  },
+                  "@media (max-width: 900px)": {
+                    fontSize: "14px",
+                    px: 1,
+                    py: 0.3,
+                  },
+                }}
+              />
+              {isAdmin && (
+                <IconButton
+                  size="small"
+                  onClick={() => handleEdit(`CON190007[${index}]`, "A")}
+                  sx={{
+                    position: "absolute",
+                    top: -8,
+                    right: -8,
+                    color: "black",
+                    bgcolor: "white",
+                    "&:hover": { bgcolor: "#eee" },
+                  }}
+                >
+                  <EditIcon fontSize="inherit" />
+                </IconButton>
+              )}
+            </Box>
           ))}
         </Stack>
-
         {/* Highlight Button */}
         <Button
           variant="contained"
@@ -473,18 +694,20 @@ const RepairServicesPage = () => {
             textTransform: "none",
 
             "@media (max-width: 900px)": {
-              width: '100%',
-              fontSize: '10px',
-              paddingTop: '10px',
-              paddingBottom: '10px'
+              width: "100%",
+              fontSize: "10px",
+              paddingTop: "10px",
+              paddingBottom: "10px",
             },
           }}
           onClick={() => handleClickOpen()}
         >
           <span style={{ textDecoration: "underline" }}>
-            Not sure what’s wrong?
+            {content.CON190008}
+            <EditIconButton id="CON190008" />
           </span>{" "}
-          Send photos/video on WhatsApp.
+          {content.CON190009}
+          <EditIconButton id="CON190009" />
         </Button>
       </Box>
 
@@ -495,14 +718,13 @@ const RepairServicesPage = () => {
         }}
       />
 
-
-
       {/* Scope Of Work */}
       <Box
         sx={{
           p: 4,
-          ml: 2
-        }}>
+          ml: 2,
+        }}
+      >
         {/* Section Heading */}
         <Typography
           sx={{
@@ -513,7 +735,8 @@ const RepairServicesPage = () => {
             // lineHeight: "110px"
           }}
         >
-          Scope Of Work (what we repair)
+          {content.CON190010}
+          <EditIconButton id="CON190010" />
         </Typography>
 
         {/* Sub Text */}
@@ -523,9 +746,11 @@ const RepairServicesPage = () => {
             fontWeight: 400,
             mb: 2,
             color: "text.secondary",
-            fontSize: "24px"
-          }}>
-          Electrical and mechanical restoration with document testing.
+            fontSize: "24px",
+          }}
+        >
+          {content.CON190011}
+          <EditIconButton id="CON190011" />
         </Typography>
 
         <RepairServicesPageCard />
@@ -537,8 +762,6 @@ const RepairServicesPage = () => {
           }}
         />
       </Box>
-
-
 
       {/* How We Work section*/}
       <Box>
@@ -555,7 +778,8 @@ const RepairServicesPage = () => {
             // lineHeight: "110px"
           }}
         >
-          How We Work
+          {content.CON190013}
+          <EditIconButton id="CON190013" />
         </Typography>
 
         {/* Sub Text */}
@@ -567,15 +791,14 @@ const RepairServicesPage = () => {
             // lineHeight: "130px",
             mb: 2,
             color: "text.secondary",
-            fontSize: "24px"
-          }}>
-          Electrical and mechanical restoration with document testing.
+            fontSize: "24px",
+          }}
+        >
+          {content.CON190014}
+          <EditIconButton id="CON190014" />
         </Typography>
         <ProcessCards />
-
       </Box>
-
-
 
       {/*ElectroMagnet Repair Section */}
 
@@ -591,7 +814,8 @@ const RepairServicesPage = () => {
             mt: { xs: 3, md: 0 },
           }}
         >
-          Symptoms & Faults
+          {content.CON140000}
+          {isAdmin && <EditIconButton id="CON140000" />}
         </Typography>
 
         {/* Main Container */}
@@ -679,6 +903,7 @@ const RepairServicesPage = () => {
                       >
                         {item.title}
                       </Typography>
+                      {isAdmin && <EditIconButton id={item.ids.title} />}
                     </Box>
 
                     <Typography
@@ -691,6 +916,7 @@ const RepairServicesPage = () => {
                       }}
                     >
                       {item.desc}
+                      {isAdmin && <EditIconButton id={item.ids.desc} />}
                     </Typography>
                   </Box>
                 </Box>
@@ -706,11 +932,12 @@ const RepairServicesPage = () => {
               display: "flex",
               justifyContent: "center",
               mt: isMobile ? 2 : 0,
+              position: "relative",
             }}
           >
             <Box
               component="img"
-              src={features[hoveredIndex].image}
+              src={`https://skillglow.bexatm.com${features[hoveredIndex].image}`}
               alt="ElectroMagnet Repair"
               sx={{
                 width: "100%",
@@ -720,13 +947,42 @@ const RepairServicesPage = () => {
                 transition: "0.5s",
               }}
             />
+            {isAdmin && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                    //borderColor: "#214870",
+                  },
+                }}
+              >
+                <EditIconButton
+                  id={features[hoveredIndex].ids.image}
+                  type="I"
+                />
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>
 
-
       {/* Before and After Case Studies */}
-      <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 4, md: 8 }, backgroundColor: "#fff" }}>
+      <Box
+        sx={{
+          px: { xs: 2, md: 8 },
+          py: { xs: 4, md: 8 },
+          backgroundColor: "#fff",
+        }}
+      >
         {/* Title Section */}
         <Typography
           variant="h4"
@@ -738,7 +994,8 @@ const RepairServicesPage = () => {
             mb: 1,
           }}
         >
-          Before and after case studies
+          {content.CON190015}
+          <EditIconButton id="CON190015" />
         </Typography>
 
         <Box sx={{ ml: 15, mt: 4 }}>
@@ -752,14 +1009,16 @@ const RepairServicesPage = () => {
               mb: 1,
             }}
           >
-            Circular Lifting Magnet
+            {content.CON190016}
+            <EditIconButton id="CON190016" />
           </Typography>
 
           <Typography
             variant="body2"
             sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
           >
-            Understanding growing demand and exceeding expectations from our customers in repairing
+            {content.CON190017}
+            <EditIconButton id="CON190017" />
           </Typography>
         </Box>
 
@@ -787,7 +1046,7 @@ const RepairServicesPage = () => {
             <IconButton
               sx={{
                 position: "absolute",
-                left: isMobile ? '-15px' : "-25px", // Push arrow outside
+                left: isMobile ? "-15px" : "-25px", // Push arrow outside
                 top: "50%",
                 transform: "translateY(-50%)",
                 bgcolor: "#1c2434",
@@ -800,7 +1059,7 @@ const RepairServicesPage = () => {
             </IconButton>
             <Box
               component="img"
-              src={before}
+              src={`https://skillglow.bexatm.com${content.CON190019}`}
               alt="Before"
               sx={{
                 width: "100%",
@@ -809,6 +1068,28 @@ const RepairServicesPage = () => {
                 display: "block",
               }}
             />
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190019", "I")}
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                    //borderColor: "#214870",
+                  },
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
           </Box>
 
           {/* AFTER IMAGE (Higher) + RIGHT ARROW (Outside border) */}
@@ -823,7 +1104,7 @@ const RepairServicesPage = () => {
             <IconButton
               sx={{
                 position: "absolute",
-                right: isMobile ? '-15px' : "-25px", // Push arrow outside
+                right: isMobile ? "-15px" : "-25px", // Push arrow outside
                 top: "50%",
                 transform: "translateY(-50%)",
                 bgcolor: "#1c2434",
@@ -836,7 +1117,7 @@ const RepairServicesPage = () => {
             </IconButton>
             <Box
               component="img"
-              src={after}
+              src={`https://skillglow.bexatm.com${content.CON190018}`}
               alt="After"
               sx={{
                 width: "100%",
@@ -845,10 +1126,30 @@ const RepairServicesPage = () => {
                 display: "block",
               }}
             />
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190018", "I")}
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                    //borderColor: "#214870",
+                  },
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
           </Box>
         </Box>
-
-
 
         {/* Button */}
         <Box sx={{ textAlign: "center", mt: 4 }}>
@@ -868,17 +1169,19 @@ const RepairServicesPage = () => {
               },
             }}
           >
-            View Case Study
+            {content.CON190020}
+            <EditIconButton id="CON190020" />
           </Button>
         </Box>
       </Box>
 
-
-
       {/* ROI Calculator */}
       <Box sx={{ p: 5 }}>
         <Box sx={{ mt: 8 }}>
-          <Typography gutterBottom sx={{ ...typography.displayL, color: '#1C2D4B', ml: 2 }}>
+          <Typography
+            gutterBottom
+            sx={{ ...typography.displayL, color: "#1C2D4B", ml: 2 }}
+          >
             ROI Calculator
           </Typography>
 
@@ -889,21 +1192,20 @@ const RepairServicesPage = () => {
               color: "#99A0AE",
               ml: 2,
               // maxWidth: "900px",
-              ...typography.h4
+              ...typography.h4,
             }}
           >
-            Get powerful lifting magnets when you need them — without the upfront
-            cost. Flexible rental plans, quick installation, and reliable
-            performance for every project!
+            Get powerful lifting magnets when you need them — without the
+            upfront cost. Flexible rental plans, quick installation, and
+            reliable performance for every project!
           </Typography>
 
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
+              display: "flex",
+              justifyContent: "flex-end",
               mr: 2,
               mb: 4,
-
             }}
           >
             <Typography
@@ -914,8 +1216,8 @@ const RepairServicesPage = () => {
                 alignItems: "center",
                 cursor: "pointer",
                 ...typography.h3,
-                color: '#2F6FBA',
-                textDecoration: 'underline'
+                color: "#2F6FBA",
+                textDecoration: "underline",
               }}
             >
               View All ROI Calculators
@@ -932,7 +1234,7 @@ const RepairServicesPage = () => {
                     borderRadius: 3,
                     overflow: "hidden",
                     boxShadow: 3,
-                    height: '400px',
+                    height: "400px",
                   }}
                 >
                   <CardMedia
@@ -978,7 +1280,12 @@ const RepairServicesPage = () => {
                       alignItems="center"
                     >
                       <Typography
-                        sx={{ ...typography.h4, fontWeight: 700, fontSize: '24px', color: '#0B121E' }}
+                        sx={{
+                          ...typography.h4,
+                          fontWeight: 700,
+                          fontSize: "24px",
+                          color: "#0B121E",
+                        }}
                       >
                         {item.title}
                       </Typography>
@@ -994,7 +1301,12 @@ const RepairServicesPage = () => {
                       </IconButton>
                     </Box>
                     <Typography
-                      sx={{ ...typography.bodyBase, fontWeight: 400, fontSize: '18px', color: '#99A0AE' }}
+                      sx={{
+                        ...typography.bodyBase,
+                        fontWeight: 400,
+                        fontSize: "18px",
+                        color: "#99A0AE",
+                      }}
                     >
                       {item.description}
                     </Typography>
@@ -1004,27 +1316,25 @@ const RepairServicesPage = () => {
             ))}
           </Grid>
         </Box>
-
       </Box>
-
 
       {/* Resale Refurbished Section */}
 
       <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
         <ResalerefurbishedCard />
-        <Box sx={{ mt: 2, textAlign: 'right' }}>
+        <Box sx={{ mt: 2, textAlign: "right" }}>
           <Typography
             component="a"
             href="#"
             sx={{
               ...typography.h3,
-              color: '#2F6FBA',
+              color: "#2F6FBA",
               fontWeight: 600,
-              fontSize: '28px',
+              fontSize: "28px",
               textDecoration: "underline",
               textUnderlineOffset: "4px",
-              '&:hover': {
-                textDecoration: 'underline',
+              "&:hover": {
+                textDecoration: "underline",
               },
             }}
             onClick={() => navigate("/home/SellMagnet")}
@@ -1033,10 +1343,6 @@ const RepairServicesPage = () => {
           </Typography>
         </Box>
       </Box>
-
-
-
-
 
       {/* FAQs Section */}
       <Box
@@ -1065,7 +1371,8 @@ const RepairServicesPage = () => {
             },
           }}
         >
-          FAQs
+          {content.CON150000}
+          {isAdmin && <EditIconButton id="CON150000" />}
         </Button>
         <Typography
           sx={{
@@ -1074,11 +1381,12 @@ const RepairServicesPage = () => {
             ml: 8,
             // mt: 5
           }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
+          //   variant="h3"
+          //   fontWeight="bold"
+          //   gutterBottom
         >
-          FAQs
+          {content.CON150012}
+          {isAdmin && <EditIconButton id="CON150012" />}
         </Typography>
         <Typography
           //   variant="h5"
@@ -1089,9 +1397,8 @@ const RepairServicesPage = () => {
             ml: 8,
           }}
         >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
+          {content.CON150011}
+          {isAdmin && <EditIconButton id="CON150011" />}
         </Typography>
         <Box sx={{ px: 8, py: 3 }}>
           {faqData.map((item, index) => (
@@ -1124,9 +1431,17 @@ const RepairServicesPage = () => {
                     ...typography.h3B1,
                     fontWeight: 400,
                   }}
-                //  fontWeight="bold"
+                  //  fontWeight="bold"
                 >
                   {item.question}
+                  {isAdmin && (
+                    <EditIconButton
+                      id={`CON${String(baseNumber + index * 2 + 1).padStart(
+                        6,
+                        "0"
+                      )}`}
+                    />
+                  )}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
@@ -1138,6 +1453,14 @@ const RepairServicesPage = () => {
                   color="text.secondary"
                 >
                   {item.answer}
+                  {isAdmin && (
+                    <EditIconButton
+                      id={`CON${String(baseNumber + index * 2 + 2).padStart(
+                        6,
+                        "0"
+                      )}`}
+                    />
+                  )}
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -1145,11 +1468,8 @@ const RepairServicesPage = () => {
         </Box>
       </Box>
 
-
-
-
       {/* Footer Section */}
-      <Box >
+      <Box>
         <Footer />
       </Box>
 
@@ -1196,7 +1516,6 @@ const RepairServicesPage = () => {
               fullWidth
               name="name"
               id="name"
-
             />
 
             <Typography
@@ -1218,7 +1537,6 @@ const RepairServicesPage = () => {
               fullWidth
               name="name"
               id="name"
-
             />
 
             <Typography
@@ -1240,7 +1558,6 @@ const RepairServicesPage = () => {
               fullWidth
               name="name"
               id="name"
-
             />
             <Typography
               sx={{
@@ -1259,7 +1576,6 @@ const RepairServicesPage = () => {
               fullWidth
               name="name"
               id="name"
-
             />
             <Typography
               sx={{
@@ -1277,26 +1593,12 @@ const RepairServicesPage = () => {
             <FormControl fullWidth>
               {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
               <Select
-
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-
               >
-                <MenuItem
-                  value={10}
-                >
-                  1-5
-                </MenuItem>
-                <MenuItem
-                  value={20}
-                >
-                  6-10
-                </MenuItem>
-                <MenuItem
-                  value={30}
-                >
-                  10-20
-                </MenuItem>
+                <MenuItem value={10}>1-5</MenuItem>
+                <MenuItem value={20}>6-10</MenuItem>
+                <MenuItem value={30}>10-20</MenuItem>
                 <MenuItem
                   //  sx={{
                   //   color: theme.palette.primary.contrastText
@@ -1329,7 +1631,6 @@ const RepairServicesPage = () => {
               minRows={3}
               name="name"
               id="name"
-
             />
             <Typography
               sx={{
@@ -1345,7 +1646,6 @@ const RepairServicesPage = () => {
               Photos/Videos
             </Typography>
             <UploadBox />
-
           </CardContent>
           {/* Buttons */}
           <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
@@ -1364,11 +1664,7 @@ const RepairServicesPage = () => {
             >
               Send on WhatsApp
             </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
+            <Button fullWidth variant="contained" color="primary">
               Submit Message
             </Button>
           </Box>
@@ -1608,10 +1904,6 @@ const RepairServicesPage = () => {
       {/* </Card> 
         </DialogContent>
       </Dialog> */}
-
-
-
-
     </Box>
   );
 };

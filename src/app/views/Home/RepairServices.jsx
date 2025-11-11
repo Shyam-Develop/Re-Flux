@@ -1,20 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Box, Grid, Typography, Button, Chip, Paper, Card,
-  CardMedia, CardContent, Link, IconButton, Accordion, AccordionSummary, TextField,
-  InputAdornment, AccordionDetails, useTheme
-} from '@mui/material';
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Chip,
+  Paper,
+  Card,
+  CardMedia,
+  CardContent,
+  Link,
+  IconButton,
+  Accordion,
+  AccordionSummary,
+  TextField,
+  InputAdornment,
+  AccordionDetails,
+  useTheme,
+} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-import { useNavigate } from 'react-router-dom';
-import { typography, RefluxSvg } from 'app/utils/constant';
-import Footer from 'app/components/Card/Footer';
+import { useNavigate } from "react-router-dom";
+import { typography, RefluxSvg } from "app/utils/constant";
+import Footer from "app/components/Card/Footer";
 import EditIcon from "@mui/icons-material/Edit";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ServiceCard = ({
   contentId = "C013",
@@ -33,6 +47,8 @@ const ServiceCard = ({
   serviceValue,
   serviceValueId,
   imageLeft = true,
+  onAdd,
+  onDelete,
 }) => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -42,6 +58,22 @@ const ServiceCard = ({
   useEffect(() => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Scroll to newly added fault chip after reload
+  useEffect(() => {
+    const targetId = localStorage.getItem("scrollToFaultId");
+    if (targetId) {
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.style.outline = "2px solid #1C2D4B";
+          setTimeout(() => (el.style.outline = ""), 1500);
+        }
+        localStorage.removeItem("scrollToFaultId");
+      }, 700);
+    }
   }, []);
 
   // ✅ Edit navigation (correctly uses passed ID)
@@ -81,6 +113,7 @@ const ServiceCard = ({
 
   return (
     <Paper
+      id={imageId}
       elevation={0}
       sx={{
         backgroundColor: "#fbfbfb",
@@ -88,12 +121,49 @@ const ServiceCard = ({
         p: 4,
         width: "1197px",
         mx: "auto",
+        mt: 4,
+        position: "relative", // ✅ important for absolute Add button
         "@media (max-width: 900px)": {
           width: "100%",
           p: 2,
         },
       }}
     >
+      {/* Add and Delete buttons */}
+      {isAdmin && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            display: "flex",
+            gap: 1,
+          }}
+        >
+          <IconButton
+            onClick={onAdd}
+            sx={{
+              background: "#1C2D4B",
+              color: "#fff",
+              "&:hover": { background: "#16233B" },
+            }}
+          >
+            <AddIcon />
+          </IconButton>
+
+          <IconButton
+            onClick={onDelete}
+            sx={{
+              background: "#B71C1C",
+              color: "#fff",
+              "&:hover": { background: "#7F0000" },
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      )}
+
       <Grid
         container
         spacing={4}
@@ -227,6 +297,8 @@ const ServiceCard = ({
           </Typography>
 
           {/* Fault Chips */}
+          {/* Fault Chips with edit, add, and delete buttons */}
+          {/* Fault Chips with neatly aligned edit/delete icons and auto-scroll on add */}
           <Box
             sx={{
               display: "flex",
@@ -241,31 +313,151 @@ const ServiceCard = ({
             {(Array.isArray(faults) ? faults : []).map((fault, index) => (
               <Chip
                 key={index}
-                label={fault}
+                id={`${faultsId}-${index}`} // For scroll targeting after add
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    {/* Fault text (clickable for admin) */}
+                    <Typography
+                      component="span"
+                      sx={{
+                        cursor: isAdmin ? "pointer" : "default",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        maxWidth: "180px",
+                        "&:hover": isAdmin
+                          ? { textDecoration: "underline" }
+                          : {},
+                      }}
+                      onClick={() =>
+                        isAdmin &&
+                        navigate(
+                          `/CmsEditor?contentId=${contentId}&contentTextID=${faultsId}[${index}]&contentType=A`
+                        )
+                      }
+                    >
+                      {fault}
+                    </Typography>
+
+                    {/* ✏️ Edit */}
+                    {isAdmin && (
+                      <IconButton
+                        size="small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(
+                            `/CmsEditor?contentId=${contentId}&contentTextID=${faultsId}[${index}]&contentType=A`
+                          );
+                        }}
+                        sx={{
+                          p: 0.3,
+                          color: "#1C2D4B",
+                          "&:hover": { backgroundColor: "#f1f1f1" },
+                        }}
+                      >
+                        <EditIcon fontSize="inherit" />
+                      </IconButton>
+                    )}
+
+                    {/* 🗑️ Delete */}
+                    {isAdmin && (
+                      <IconButton
+                        size="small"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          if (
+                            !window.confirm(`Delete "${fault}" from this list?`)
+                          )
+                            return;
+
+                          const updatedFaults = faults.filter(
+                            (_, i) => i !== index
+                          );
+
+                          const res = await fetch(
+                            "https://skillglow.bexatm.com/ATM/data/UpdateContentV1.php",
+                            {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                contentId,
+                                newContent: { [faultsId]: updatedFaults },
+                              }),
+                            }
+                          );
+                          const result = await res.json();
+                          if (result.success) window.location.reload();
+                          else alert("❌ Failed to delete fault.");
+                        }}
+                        sx={{
+                          p: 0.3,
+                          color: "#B71C1C",
+                          "&:hover": { backgroundColor: "#fbe9e7" },
+                        }}
+                      >
+                        <DeleteIcon fontSize="inherit" />
+                      </IconButton>
+                    )}
+                  </Box>
+                }
                 variant="outlined"
                 sx={{
-                  // width: "202px",
-                  padding: '15px',
-                  height: 44,
+                  fontSize: "18px",
                   fontWeight: 500,
-                  fontSize: "20px",
-                  ...typography.h5,
-                  borderRadius: "999px",
-                  border: "1px solid #ccc",
+                  fontFamily: "Space Grotesk, Regular",
+                  borderRadius: "20px",
+                  px: 1.5,
+                  py: 0.5,
                   display: "flex",
                   alignItems: "center",
                   "&:hover": {
-                    backgroundColor: "#27274c",
-                    color: "white",
-                  },
-                  "@media (max-width: 900px)": {
-                    width: "45%",
-                    height: "36px",
-                    fontSize: "0.8rem",
+                    bgcolor: isAdmin ? "#1c2434" : "inherit",
+                    color: isAdmin ? "white" : "inherit",
                   },
                 }}
               />
             ))}
+
+            {/* ➕ Add Fault Button (Admin Only) */}
+            {isAdmin && (
+              <IconButton
+                onClick={async () => {
+                  const newFaults = [...faults, "New Fault"];
+                  const newIndex = newFaults.length - 1;
+
+                  const res = await fetch(
+                    "https://skillglow.bexatm.com/ATM/data/UpdateContentV1.php",
+                    {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        contentId,
+                        newContent: { [faultsId]: newFaults },
+                      }),
+                    }
+                  );
+
+                  const result = await res.json();
+                  if (result.success) {
+                    // Save scroll target
+                    localStorage.setItem(
+                      "scrollToFaultId",
+                      `${faultsId}-${newIndex}`
+                    );
+                    window.location.reload();
+                  } else alert("❌ Failed to add new fault.");
+                }}
+                sx={{
+                  background: "#1C2D4B",
+                  color: "#fff",
+                  width: 36,
+                  height: 36,
+                  "&:hover": { background: "#16233B" },
+                }}
+              >
+                <AddIcon />
+              </IconButton>
+            )}
           </Box>
 
           {/* Service Highlights */}
@@ -331,31 +523,215 @@ const ServiceCard = ({
   );
 };
 
-
-
 const RepairServices = () => {
-
   const theme = useTheme();
 
   const [expanded, setExpanded] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [cards, setCards] = useState([]);
 
   //  Load content
   useEffect(() => {
-    const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C013";
-    fetch(apiUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
+    fetch("https://skillglow.bexatm.com/ATM/data/C013.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setContent(data);
+
+        const rsKeys = Object.keys(data)
+          .filter((k) => k.startsWith("RS"))
+          .sort(
+            (a, b) =>
+              parseInt(a.replace("RS", "")) - parseInt(b.replace("RS", ""))
+          );
+
+        const cardsDetected = [];
+
+        for (let i = 1005; i < rsKeys.length + 1000; i++) {
+          const image = data[`RS${i}`];
+          const title = data[`RS${i + 1}`];
+          const overlayTitle = data[`RS${i + 2}`];
+          const commonFault = data[`RS${i + 3}`];
+          const faults = data[`RS${i + 4}`];
+          const service = data[`RS${i + 5}`];
+          const serviceValue = data[`RS${i + 6}`];
+
+          // ✅ more flexible detection
+          if (
+            image &&
+            title &&
+            serviceValue &&
+            Array.isArray(faults) &&
+            typeof service === "string" &&
+            service.toLowerCase().includes("service")
+          ) {
+            cardsDetected.push({
+              image: `https://skillglow.bexatm.com${image}`,
+              imageId: `RS${i}`,
+              title,
+              titleId: `RS${i + 1}`,
+              overlayTitle,
+              overlayId: `RS${i + 2}`,
+              commonFault,
+              commonFaultId: `RS${i + 3}`,
+              faults,
+              faultsId: `RS${i + 4}`,
+              service,
+              serviceId: `RS${i + 5}`,
+              serviceValue,
+              serviceValueId: `RS${i + 6}`,
+              imageLeft: cardsDetected.length % 2 === 0,
+            });
+
+            i += 6; // skip next block
+          }
+        }
+console.log(cardsDetected);
+        setCards(cardsDetected);
       })
-      .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));
   }, []);
+
+  // ✅ Scroll to the new section after reload
+  useEffect(() => {
+    const targetId = localStorage.getItem("scrollToCardId");
+    if (targetId) {
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          el.style.outline = "3px solid #1C2D4B"; // highlight briefly
+          setTimeout(() => (el.style.outline = ""), 2000);
+        }
+        // clear the stored ID after scrolling
+        localStorage.removeItem("scrollToCardId");
+      }, 800);
+    }
+  }, []);
+
+  const handleAddCard = async (index) => {
+    const existingIds = Object.keys(content).filter((k) => k.startsWith("RS"));
+
+    const getNextId = () => {
+      const max = Math.max(
+        ...existingIds.map((id) => parseInt(id.replace("RS", "")))
+      );
+      const next = max + 1;
+      existingIds.push(`RS${next}`);
+      return `RS${next}`;
+    };
+
+    // 🔹 Generate all new IDs for this new card
+    const newIds = {
+      imageId: getNextId(),
+      titleId: getNextId(),
+      overlayId: getNextId(),
+      commonFaultId: getNextId(),
+      faultsId: getNextId(),
+      serviceId: getNextId(),
+      serviceValueId: getNextId(),
+    };
+
+    // 🔹 Build the new card JSON object
+    const sampleCard = {
+      [newIds.imageId]: "/ATM/images/sample_service.png",
+      [newIds.titleId]: "New Sample Service Title",
+      [newIds.overlayId]: "New Overlay Title",
+      [newIds.commonFaultId]: "Common faults",
+      [newIds.faultsId]: ["Sample Fault 1", "Sample Fault 2"],
+      [newIds.serviceId]: "Service Highlights:",
+      [newIds.serviceValueId]: "Sample service value details",
+    };
+
+    console.log("🆕 Sending new content block:", sampleCard);
+
+    // 🔹 Send to backend
+    const res = await fetch(
+      "https://skillglow.bexatm.com/ATM/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "C013",
+          newContent: sampleCard,
+        }),
+      }
+    );
+
+    const result = await res.json();
+    console.log("Server response:", result);
+
+    if (result.success) {
+      // 🔹 Update local state for instant UI feedback
+      const test={ ...content, ...sampleCard };
+      console.log("Updated content state:", test);
+      setContent({ ...content, ...sampleCard });
+      setCards([
+        ...cards,
+        {
+          image: `https://skillglow.bexatm.com${sampleCard[newIds.imageId]}`,
+          title: sampleCard[newIds.titleId],
+          overlayTitle: sampleCard[newIds.overlayId],
+          commonFault: sampleCard[newIds.commonFaultId],
+          faults: sampleCard[newIds.faultsId],
+          service: sampleCard[newIds.serviceId],
+          serviceValue: sampleCard[newIds.serviceValueId],
+          imageLeft: cards.length % 2 === 0,
+        },
+      ]);
+
+      // ✅ Save target for scroll after reload
+      localStorage.setItem("scrollToCardId", newIds.imageId);
+
+      // ✅ Delay reload slightly to ensure backend file update is complete
+      setTimeout(() => {
+        window.location.reload();
+      }, 800);
+    } else {
+      alert(
+        "❌ Failed to save new card. Please check backend permissions or file path."
+      );
+    }
+  };
+
+  const handleDeleteCard = async (card) => {
+    if (!window.confirm("Are you sure you want to delete this service card?"))
+      return;
+
+    const keysToDelete = [
+      card.imageId,
+      card.titleId,
+      card.overlayId,
+      card.commonFaultId,
+      card.faultsId,
+      card.serviceId,
+      card.serviceValueId,
+    ];
+
+    // 1️⃣ Update backend JSON file
+    const res = await fetch(
+      "https://skillglow.bexatm.com/ATM/data/DeleteContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "C013",
+          keys: keysToDelete,
+        }),
+      }
+    );
+
+    const result = await res.json();
+    console.log("Delete result:", result);
+
+    // 2️⃣ Update local React state
+    setCards(cards.filter((c) => c.imageId !== card.imageId));
+
+    window.location.reload();
+  };
 
   //  Check admin role
   useEffect(() => {
@@ -410,14 +786,12 @@ const RepairServices = () => {
       title: content.RS1057,
       description: content.RS1058,
       ids: { image: "RS1056", title: "RS1057", desc: "RS1058" },
-    },]
-
-
+    },
+  ];
 
   const handleChange = (index) => {
     setExpanded(expanded === index ? null : index);
   };
-
 
   const blogData = [
     {
@@ -446,36 +820,53 @@ const RepairServices = () => {
     },
   ];
 
-
-
   return (
     <>
       {/* Top Image */}
       <Box sx={topImageStyle}>
         <Box
           component="img"
-          src={`https://skillglow.bexatm.com${content.RS1002}`} style={imageStyle}
+          src={`https://skillglow.bexatm.com${content.RS1002}`}
+          style={imageStyle}
         />
         <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 2 }}>
           <EditIconButton id="RS1002" type="I" />
         </Box>
 
-        <Box sx={overlayBoxStyle} >
-          <Typography sx={{ ...typography.h3, color: '#000000' }}>{content.RS1001} <EditIconButton id="RS1001" /></Typography>
+        <Box sx={overlayBoxStyle}>
+          <Typography sx={{ ...typography.h3, color: "#000000" }}>
+            {content.RS1001} <EditIconButton id="RS1001" />
+          </Typography>
         </Box>
       </Box>
 
       {/* Top Text Section */}
-      <Box sx={{ padding: '30px 150px' }}>
+      <Box sx={{ padding: "30px 150px" }}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={12}>
-            <Typography sx={{ width: '1076px', ...typography.h1, fontWeight: 600, fontSize: '40px', color: '#1A2438' }}>
+            <Typography
+              sx={{
+                width: "1076px",
+                ...typography.h1,
+                fontWeight: 600,
+                fontSize: "40px",
+                color: "#1A2438",
+              }}
+            >
               {content.RS1003}
               <EditIconButton id="RS1003" />
             </Typography>
           </Grid>
-          <Grid item xs={12} md={12} >
-            <Typography sx={{ ...theme.typography.bodyBase, fontFamily: 'Fira Sans', fontWeight: 400, color: '#99A0AE', width: '1009px', }}>
+          <Grid item xs={12} md={12}>
+            <Typography
+              sx={{
+                ...theme.typography.bodyBase,
+                fontFamily: "Fira Sans",
+                fontWeight: 400,
+                color: "#99A0AE",
+                width: "1009px",
+              }}
+            >
               {content.RS1004}
               <EditIconButton id="RS1004" />
             </Typography>
@@ -484,105 +875,16 @@ const RepairServices = () => {
       </Box>
 
       {/* Service Cards Section */}
-      <Box sx={{ padding: '0 10px 10px' }}>
-        <ServiceCard
-          contentId="C013"
-          image={`https://skillglow.bexatm.com${content.RS1005}`}
-          imageId="RS1005"
-          title={content.RS1006}
-          titleId="RS1006"
-          overlayTitle={content.RS1007}
-          overlayId="RS1007"
-          commonFault={content.RS1008}
-          commonFaultId="RS1008"
-          faults={content.RS1009}
-          faultsId="RS1009"
-          service={content.RS1010}
-          serviceId="RS1010"
-          serviceValue={content.RS1011}
-          serviceValueId="RS1011"
-          imageLeft={true}
-        />
-
-        <ServiceCard
-          contentId="C013"
-          image={`https://skillglow.bexatm.com${content.RS1014}`}
-          imageId="RS1014"
-          title={content.RS1016}
-          titleId="RS1016"
-          overlayTitle={content.RS1015}
-          overlayId="RS1015"
-          commonFault={content.RS1017}
-          commonFaultId="RS1017"
-          faults={content.RS1018}
-          faultsId="RS1018"
-          service={content.RS1019}
-          serviceId="RS1019"
-          serviceValue={content.RS1020}
-          serviceValueId="RS1020"
-          imageLeft={false}
-        />
-
-        <ServiceCard
-          contentId="C013"
-          image={`https://skillglow.bexatm.com${content.RS1023}`}
-          imageId="RS1023"
-          title={content.RS1025}
-          titleId="RS1025"
-          overlayTitle={content.RS1024}
-          overlayId="RS1024"
-          commonFault={content.RS1026}
-          commonFaultId="RS1026"
-          faults={content.RS1027}
-          faultsId="RS1027"
-          service={content.RS1028}
-          serviceId="RS1028"
-          serviceValue={content.RS1029}
-          serviceValueId="RS1029"
-          imageLeft={true}
-        />
-
-        <ServiceCard
-          contentId="C013"
-          image={`https://skillglow.bexatm.com${content.RS1032}`}
-          imageId="RS1032"
-          title={content.RS1034}
-          titleId="RS1034"
-          overlayTitle={content.RS1033}
-          overlayId="RS1033"
-          commonFault={content.RS1035}
-          commonFaultId="RS1035"
-          faults={content.RS1036}
-          faultsId="RS1036"
-          service={content.RS1037}
-          serviceId="RS1037"
-          serviceValue={content.RS1038}
-          serviceValueId="RS1038"
-          imageLeft={false}
-        />
-
-        <ServiceCard
-          contentId="C013"
-          image={`https://skillglow.bexatm.com${content.RS1041}`}
-          imageId="RS1041"
-          overlayTitle={content.RS1042}
-          overlayId="RS1042"
-          title={content.RS1043}
-          titleId="RS1043"
-          commonFault={content.RS1044}
-          commonFaultId="RS1044"
-          faults={content.RS1045}
-          faultsId="RS1045"
-          service={content.RS1046}
-          serviceId="RS1046"
-          serviceValue={content.RS1047}
-          serviceValueId="RS1047"
-          imageLeft={true}
-        />
-
-
+      <Box sx={{ padding: "0 10px 10px" }}>
+        {cards.map((card, index) => (
+          <ServiceCard
+            key={index}
+            {...card}
+            onAdd={() => handleAddCard(index)}
+            onDelete={() => handleDeleteCard(card)}
+          />
+        ))}
       </Box>
-
 
       {/* //ROI Calculator */}
       <Box sx={{ p: 5 }}>
@@ -660,7 +962,9 @@ const RepairServices = () => {
                     height: "400px",
                   }}
                 >
-                  <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 2 }}>
+                  <Box
+                    sx={{ position: "absolute", top: 8, right: 8, zIndex: 2 }}
+                  >
                     <EditIconButton id={item.ids.image} type="I" />
                   </Box>
 
@@ -751,7 +1055,7 @@ const RepairServices = () => {
       </Box>
 
       {/* Resale Service */}
-      <Box sx={{ px: '5%', pb: 10 }}>
+      <Box sx={{ px: "5%", pb: 10 }}>
         {/* Heading */}
         <Box sx={{ mb: 4 }}>
           <Button
@@ -778,11 +1082,13 @@ const RepairServices = () => {
             {content.RS1059} <EditIconButton id="RS1059" />
           </Button>
 
-          <Typography sx={{ ...typography.displayL, fontWeight: 700, color: '#1A2438' }}>
+          <Typography
+            sx={{ ...typography.displayL, fontWeight: 700, color: "#1A2438" }}
+          >
             {content.RS1060} <EditIconButton id="RS1060" />
           </Typography>
 
-          <Typography sx={{ ...typography.h4, color: '#99A0AE' }}>
+          <Typography sx={{ ...typography.h4, color: "#99A0AE" }}>
             {content.RS1061} <EditIconButton id="RS1061" />
           </Typography>
         </Box>
@@ -798,7 +1104,15 @@ const RepairServices = () => {
               lift: content.RS1066,
               power: content.RS1067,
               details: content.RS1068,
-              ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"]
+              ids: [
+                "RS1062",
+                "RS1063",
+                "RS1064",
+                "RS1065",
+                "RS1066",
+                "RS1067",
+                "RS1068",
+              ],
             },
             {
               img: content.RS1069,
@@ -808,7 +1122,15 @@ const RepairServices = () => {
               lift: content.RS1073,
               power: content.RS1074,
               details: content.RS1075,
-              ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"]
+              ids: [
+                "RS1069",
+                "RS1070",
+                "RS1071",
+                "RS1072",
+                "RS1073",
+                "RS1074",
+                "RS1075",
+              ],
             },
             {
               img: content.RS1076,
@@ -818,8 +1140,16 @@ const RepairServices = () => {
               lift: content.RS1080,
               power: content.RS1081,
               details: content.RS1082,
-              ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"]
-            }
+              ids: [
+                "RS1076",
+                "RS1077",
+                "RS1078",
+                "RS1079",
+                "RS1080",
+                "RS1081",
+                "RS1082",
+              ],
+            },
           ].map((p, idx) => (
             <Grid item xs={12} sm={6} md={4} key={idx}>
               <Card
@@ -874,16 +1204,15 @@ const RepairServices = () => {
                         fontSize: "13px",
                         borderRadius: "1px",
                         height: "24px",
-
                       }}
                     />
                     <Chip
                       label="🛡️ Safety Tested"
                       size="small"
                       sx={{
-                        padding: '10px',
+                        padding: "10px",
                         bgcolor: "#1976d2",
-                        marginLeft: '70px',
+                        marginLeft: "70px",
                         color: "white",
                         fontSize: "13px",
                         borderRadius: "1px",
@@ -908,22 +1237,51 @@ const RepairServices = () => {
                 {/* Card Content */}
                 <CardContent sx={{ p: 0 }}>
                   {/* Title & Price */}
-                  <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                  >
                     <Box>
-                      <Typography sx={{ ...typography.h4, height: '62px', fontWeight: 400, color: "#0B121E" }}>
+                      <Typography
+                        sx={{
+                          ...typography.h4,
+                          height: "62px",
+                          fontWeight: 400,
+                          color: "#0B121E",
+                        }}
+                      >
                         {p.title} <EditIconButton id={p.ids[1]} />
                       </Typography>
-                      <Typography sx={{ ...typography.h6, fontWeight: 600, color: "#00000099" }}>
+                      <Typography
+                        sx={{
+                          ...typography.h6,
+                          fontWeight: 600,
+                          color: "#00000099",
+                        }}
+                      >
                         {p.subtitle} <EditIconButton id={p.ids[2]} />
                       </Typography>
                     </Box>
-                    <Typography sx={{ ...typography.h5, fontWeight: 700, color: "#1A7B3F" }}>
+                    <Typography
+                      sx={{
+                        ...typography.h5,
+                        fontWeight: 700,
+                        color: "#1A7B3F",
+                      }}
+                    >
                       {p.price} <EditIconButton id={p.ids[3]} />
                     </Typography>
                   </Box>
 
                   {/* Lift Capacity & Power */}
-                  <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mt: 2,
+                    }}
+                  >
                     <Box>
                       <Typography
                         sx={{
@@ -935,7 +1293,13 @@ const RepairServices = () => {
                       >
                         {p.lift} <EditIconButton id={p.ids[4]} />
                       </Typography>
-                      <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                      <Typography
+                        sx={{
+                          ...typography.h5,
+                          fontWeight: 500,
+                          color: "#0E1626",
+                        }}
+                      >
                         Lift Capacity
                       </Typography>
                     </Box>
@@ -950,7 +1314,13 @@ const RepairServices = () => {
                       >
                         {p.power} <EditIconButton id={p.ids[5]} />
                       </Typography>
-                      <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                      <Typography
+                        sx={{
+                          ...typography.h5,
+                          fontWeight: 500,
+                          color: "#0E1626",
+                        }}
+                      >
                         Power Supply
                       </Typography>
                     </Box>
@@ -968,7 +1338,13 @@ const RepairServices = () => {
                     >
                       View Details <EditIconButton id={p.ids[6]} />
                     </Typography>
-                    <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#677489" }}>
+                    <Typography
+                      sx={{
+                        ...typography.h5,
+                        fontWeight: 500,
+                        color: "#677489",
+                      }}
+                    >
                       {p.details}
                     </Typography>
                   </Box>
@@ -993,8 +1369,6 @@ const RepairServices = () => {
                 </CardContent>
               </Card>
             </Grid>
-
-
           ))}
         </Grid>
 
@@ -1029,12 +1403,7 @@ const RepairServices = () => {
           {/* Edit icon separate click */}
           <EditIconButton id="RS1083" />
         </Box>
-
-
       </Box>
-
-
-
 
       {/* FAQs Section */}
       <Box sx={{ px: 2, py: 2 }}>
@@ -1043,31 +1412,31 @@ const RepairServices = () => {
           disableElevation
           disableRipple
           sx={{
-            color: '#2F6FBA',
+            color: "#2F6FBA",
             backgroundColor: "#EAF3FC",
             borderRadius: "20px",
-            height: '33px',
+            height: "33px",
             ml: 8,
             boxShadow: "none",
             px: 2,
-            display: 'flex',
-            alignItems: 'center',
+            display: "flex",
+            alignItems: "center",
             "&:hover": {
               backgroundColor: "rgba(36,121,233,0.15)",
               boxShadow: "none",
             },
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <Typography
               sx={{
                 ...typography.bodySmall,
-                fontSize: '14px',
+                fontSize: "14px",
                 fontWeight: 400,
-                lineHeight: '150%',
-                letterSpacing: '0.14%',
-                display: 'flex',
-                alignItems: 'center',
+                lineHeight: "150%",
+                letterSpacing: "0.14%",
+                display: "flex",
+                alignItems: "center",
               }}
             >
               {content.RS1084}
@@ -1076,13 +1445,12 @@ const RepairServices = () => {
           </Box>
         </Button>
 
-
         <Typography
           sx={{
             ml: 8,
             ...typography.displayL,
-            color: '#1C2D4B',
-            fontWeight: 'bold',
+            color: "#1C2D4B",
+            fontWeight: "bold",
           }}
           variant="h3"
           gutterBottom
@@ -1093,7 +1461,7 @@ const RepairServices = () => {
         <Typography
           variant="h5"
           sx={{
-            color: '#1C2D4B',
+            color: "#1C2D4B",
             ...typography.h4,
             ml: 8,
             mb: 3,
@@ -1135,12 +1503,12 @@ const RepairServices = () => {
                   </IconButton>
                 }
               >
-                <Typography sx={{ ...typography.h4, color: '#0E1109' }}>
+                <Typography sx={{ ...typography.h4, color: "#0E1109" }}>
                   {content[faq.q]} <EditIconButton id={faq.q} />
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography sx={{ ...typography.bodyBase, color: '#0E1109' }}>
+                <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }}>
                   {content[faq.a]} <EditIconButton id={faq.a} />
                 </Typography>
               </AccordionDetails>
@@ -1148,8 +1516,6 @@ const RepairServices = () => {
           ))}
         </Box>
       </Box>
-
-
 
       {/* Blogs Section */}
       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
@@ -1182,7 +1548,13 @@ const RepairServices = () => {
         </Button>
 
         <Typography
-          sx={{ ...typography.displayL, color: "#1C2D4B", display: "flex", alignItems: "center", gap: 1 }}
+          sx={{
+            ...typography.displayL,
+            color: "#1C2D4B",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
           variant="h3"
           fontWeight="bold"
           gutterBottom
@@ -1219,7 +1591,6 @@ const RepairServices = () => {
                 bgcolor: "#fafafa",
                 cursor: "pointer",
               }}
-             
             >
               <Box sx={{ position: "relative" }}>
                 <CardMedia
@@ -1254,9 +1625,16 @@ const RepairServices = () => {
                   <EditIconButton id="RS1101" />
                 </Typography>
                 <Typography
-                  sx={{ ...typography?.bodyBase, color: "#677489", display: "flex", alignItems: "center", gap: 1 }}
+                  sx={{
+                    ...typography?.bodyBase,
+                    color: "#677489",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
                 >
-                  {blogData[0].author} <EditIconButton id="RS1102" /> • {blogData[0].date} <EditIconButton id="RS1103" />
+                  {blogData[0].author} <EditIconButton id="RS1102" /> •{" "}
+                  {blogData[0].date} <EditIconButton id="RS1103" />
                 </Typography>
 
                 <Link
@@ -1269,10 +1647,12 @@ const RepairServices = () => {
                     display: "inline-flex",
                     alignItems: "center",
                   }}
-                   onClick={() => navigate("/home/BlogDetails")}
+                  onClick={() => navigate("/home/BlogDetails")}
                 >
                   Discover More{" "}
-                  <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }} />
+                  <ArrowForwardIosIcon
+                    sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
+                  />
                 </Link>
               </CardContent>
             </Card>
@@ -1297,7 +1677,6 @@ const RepairServices = () => {
                         boxShadow: 0,
                         cursor: "pointer",
                       }}
-                      
                     >
                       <Box sx={{ position: "relative" }}>
                         <CardMedia
@@ -1343,8 +1722,8 @@ const RepairServices = () => {
                             gap: 1,
                           }}
                         >
-                          {item.author} <EditIconButton id={`RS${base + 1}`} /> • {item.date}{" "}
-                          <EditIconButton id={`RS${base + 2}`} />
+                          {item.author} <EditIconButton id={`RS${base + 1}`} />{" "}
+                          • {item.date} <EditIconButton id={`RS${base + 2}`} />
                         </Typography>
 
                         <Link
@@ -1361,7 +1740,13 @@ const RepairServices = () => {
                           onClick={() => navigate("/home/Blogpost")}
                         >
                           Discover More{" "}
-                          <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }} />
+                          <ArrowForwardIosIcon
+                            sx={{
+                              ml: 0.5,
+                              color: "#1F77D6",
+                              fontSize: "0.8rem",
+                            }}
+                          />
                         </Link>
                       </Box>
                     </Card>
@@ -1373,52 +1758,45 @@ const RepairServices = () => {
         </Grid>
       </Box>
 
-
       {/* Footer Section */}
-      <Box >
+      <Box>
         <Footer />
       </Box>
-
     </>
   );
 };
 
 const topImageStyle = {
-  width: '100%',
-  height: '329px',
-  overflow: 'hidden',
-  position: 'relative',
+  width: "100%",
+  height: "329px",
+  overflow: "hidden",
+  position: "relative",
 };
 
 const imageStyle = {
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
 };
 
 const overlayBoxStyle = {
-  position: 'absolute',
-  bottom: '5px',
-  left: '50px',
-  backgroundColor: '#F1F2F4',
-  width: '283px',
-  height: '66px',
-  padding: '14px 60px;',
-  textAlign: 'center',
+  position: "absolute",
+  bottom: "5px",
+  left: "50px",
+  backgroundColor: "#F1F2F4",
+  width: "283px",
+  height: "66px",
+  padding: "14px 60px;",
+  textAlign: "center",
 };
 
 const faultsList = [
-  'Loose junctions',
-  'Capacity drop',
-  'Uneven flux',
-  'Uneven flux',
-  'Loose junctions',
-  'Capacity drop'
+  "Loose junctions",
+  "Capacity drop",
+  "Uneven flux",
+  "Uneven flux",
+  "Loose junctions",
+  "Capacity drop",
 ];
 
 export default RepairServices;
-
-
-
-
-

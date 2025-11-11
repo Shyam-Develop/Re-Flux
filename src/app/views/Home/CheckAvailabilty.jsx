@@ -32,7 +32,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -52,24 +52,16 @@ import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
-import Roi1 from '../../../assets/Roi1.png';
-import Roi2 from '../../../assets/Roi2.png';
+import Roi1 from "../../../assets/Roi1.png";
+import Roi2 from "../../../assets/Roi2.png";
 import { typography } from "app/utils/constant";
-import Footer from 'app/components/Card/Footer';
+import Footer from "app/components/Card/Footer";
 import Checkavailimage from "../../../assets/aftercstudy.png";
 import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
 import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 import Approach5 from "../../../assets/Approach5.jpg";
-
-
-
-
-
-
-
-
 
 const renderSpecGrid = (properties) => (
   <Grid container spacing={2}>
@@ -105,16 +97,13 @@ const CheckAvailabilty = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const specs = [
-    { label: 'Diameter', value: 'Ø{{diameter_mm}} mm' },
-    { label: 'Overall height', value: 'Ø{{diameter_mm}} mm' },
-    { label: 'Net weight', value: 'Ø{{diameter_mm}} mm' },
-    { label: 'Face area', value: 'Ø{{diameter_mm}} mm' },
-    { label: 'IP rating', value: 'Ø{{diameter_mm}} mm' },
-    { label: 'Lifting eye/hanger', value: 'Ø{{diameter_mm}} mm' },
+    { label: "Diameter", value: "Ø{{diameter_mm}} mm" },
+    { label: "Overall height", value: "Ø{{diameter_mm}} mm" },
+    { label: "Net weight", value: "Ø{{diameter_mm}} mm" },
+    { label: "Face area", value: "Ø{{diameter_mm}} mm" },
+    { label: "IP rating", value: "Ø{{diameter_mm}} mm" },
+    { label: "Lifting eye/hanger", value: "Ø{{diameter_mm}} mm" },
   ];
-
-
-
 
   const benefits = [
     {
@@ -178,8 +167,6 @@ const CheckAvailabilty = () => {
     },
   ];
 
-
-
   const blogData = [
     {
       title: "7 Essential Tips For Efficient Electromagnet Servicing",
@@ -224,7 +211,9 @@ const CheckAvailabilty = () => {
 
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C012")
+    fetch(
+      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C012"
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -351,6 +340,8 @@ const CheckAvailabilty = () => {
     { id: "CON160005", src: content.CON160005 },
   ];
 
+  const baseNumber = 150000;
+
   return (
     <Box
       sx={{
@@ -383,7 +374,6 @@ const CheckAvailabilty = () => {
         >
           {content.CON110006}
           <EditIconButton id="CON110006" />
-
         </Typography>
 
         {/* Right Search Box */}
@@ -394,7 +384,7 @@ const CheckAvailabilty = () => {
             borderBottom: "1px solid #ccc",
             maxWidth: "300px",
             width: "100%",
-            marginRight: '60px'
+            marginRight: "60px",
           }}
         >
           <InputBase
@@ -442,7 +432,6 @@ const CheckAvailabilty = () => {
           >
             {content.CON110000}
             <EditIconButton id="CON110000" />
-
           </Typography>
 
           <Box
@@ -459,7 +448,6 @@ const CheckAvailabilty = () => {
             >
               {content.CON110001}
               <EditIconButton id="CON110001" />
-
             </Typography>
             <Typography
               sx={{
@@ -472,7 +460,6 @@ const CheckAvailabilty = () => {
             >
               {content.CON110002}
               <EditIconButton id="CON110002" />
-
             </Typography>
             <Typography
               sx={{
@@ -485,7 +472,6 @@ const CheckAvailabilty = () => {
             >
               {content.CON110003}
               <EditIconButton id="CON110003" />
-
             </Typography>
             <Typography
               sx={{
@@ -498,7 +484,6 @@ const CheckAvailabilty = () => {
             >
               {content.CON110004}
               <EditIconButton id="CON110004" />
-
             </Typography>
             <Typography
               sx={{
@@ -511,7 +496,6 @@ const CheckAvailabilty = () => {
             >
               {content.CON110005}
               <EditIconButton id="CON110005" />
-
             </Typography>
           </Box>
         </Box>
@@ -583,7 +567,9 @@ const CheckAvailabilty = () => {
                     component="img"
                     src={`https://skillglow.bexatm.com${img.src}`}
                     alt={`Thumbnail ${index + 1}`}
-                    onClick={() => setMainImage(`https://skillglow.bexatm.com${img.src}`)}
+                    onClick={() =>
+                      setMainImage(`https://skillglow.bexatm.com${img.src}`)
+                    }
                     sx={{
                       width: { xs: "100px", md: "148px" },
                       height: { xs: "80px", md: "124px" },
@@ -634,9 +620,17 @@ const CheckAvailabilty = () => {
             }}
           >
             {/* Row 1: Dates */}
-            <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", md: "row" } }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
               <Box sx={{ flex: 1, position: "relative" }}>
-                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
+                <Typography
+                  sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+                >
                   {content.CON160006}
                   {isAdmin && <EditIconButton id="CON160006" />}
                 </Typography>
@@ -656,7 +650,9 @@ const CheckAvailabilty = () => {
               </Box>
 
               <Box sx={{ flex: 1, position: "relative" }}>
-                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
+                <Typography
+                  sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+                >
                   {content.CON160007}
                   {isAdmin && <EditIconButton id="CON160007" />}
                 </Typography>
@@ -678,9 +674,17 @@ const CheckAvailabilty = () => {
             </Box>
 
             {/* Row 2: Capacity and Duty Cycle */}
-            <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", md: "row" } }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
               <Box sx={{ flex: 1, position: "relative" }}>
-                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
+                <Typography
+                  sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+                >
                   {content.CON160008}
                   {isAdmin && <EditIconButton id="CON160008" />}
                 </Typography>
@@ -701,7 +705,9 @@ const CheckAvailabilty = () => {
               </Box>
 
               <Box sx={{ flex: 1, position: "relative" }}>
-                <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
+                <Typography
+                  sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+                >
                   {content.CON160009}
                   {isAdmin && <EditIconButton id="CON160009" />}
                 </Typography>
@@ -724,7 +730,9 @@ const CheckAvailabilty = () => {
 
             {/* Row 3: Location Input */}
             <Box sx={{ position: "relative" }}>
-              <Typography sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}>
+              <Typography
+                sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+              >
                 {content.CON160010}
                 {isAdmin && <EditIconButton id="CON160010" />}
               </Typography>
@@ -739,7 +747,10 @@ const CheckAvailabilty = () => {
                   py: 0.5,
                 }}
               >
-                <InputBase placeholder="Chennai" sx={{ flex: 1, fontSize: "14px" }} />
+                <InputBase
+                  placeholder="Chennai"
+                  sx={{ flex: 1, fontSize: "14px" }}
+                />
                 <SearchIcon sx={{ color: "#777", fontSize: "24px" }} />
               </Box>
             </Box>
@@ -764,21 +775,27 @@ const CheckAvailabilty = () => {
                 {content.CON160011}
                 {isAdmin && <EditIconButton id="CON160011" />}
               </Button>
-
             </Box>
           </Box>
         </Box>
-
       </Box>
-
 
       {/* Specs Accordion */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
         <Box display="flex" alignItems="center" gap={1}>
-          <Typography variant="h6" fontSize="48px" fontWeight="bold" gutterBottom>
+          <Typography
+            variant="h6"
+            fontSize="48px"
+            fontWeight="bold"
+            gutterBottom
+          >
             {content.CON130000}
           </Typography>
-          <EditIconButton id="CON130000" isAdmin={isAdmin} onEdit={handleEdit} />
+          <EditIconButton
+            id="CON130000"
+            isAdmin={isAdmin}
+            onEdit={handleEdit}
+          />
         </Box>
 
         {specData.map((section, index) => (
@@ -857,7 +874,6 @@ const CheckAvailabilty = () => {
         ))}
       </Box>
 
-
       {/* Section Heading */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
         <Typography
@@ -874,9 +890,7 @@ const CheckAvailabilty = () => {
           <EditIconButton id="CON110014" />
         </Typography>
         <WhatsincludedCard />
-
       </Box>
-
 
       {/* <Whyitworkcard /> */}
 
@@ -996,7 +1010,6 @@ const CheckAvailabilty = () => {
                       {item.desc}
                       {isAdmin && <EditIconButton id={item.ids.desc} />}
                     </Typography>
-
                   </Box>
                 </Box>
               );
@@ -1013,9 +1026,7 @@ const CheckAvailabilty = () => {
               mt: isMobile ? 2 : 0,
             }}
           >
-            <Box
-              sx={{ position: "relative" }}
-            >
+            <Box sx={{ position: "relative" }}>
               <Box
                 component="img"
                 src={`https://skillglow.bexatm.com${features[hoveredIndex].image}`}
@@ -1038,15 +1049,16 @@ const CheckAvailabilty = () => {
                     borderRadius: "50%",
                   }}
                 >
-                  <EditIconButton id={features[hoveredIndex].ids.image} type="I" />
+                  <EditIconButton
+                    id={features[hoveredIndex].ids.image}
+                    type="I"
+                  />
                 </Box>
               )}
             </Box>
           </Box>
         </Box>
       </Box>
-
-
 
       {/* FAQs Section */}
       <Box sx={{ mt: 3 }}>
@@ -1138,7 +1150,10 @@ const CheckAvailabilty = () => {
                   {item.question}
                   {isAdmin && (
                     <EditIconButton
-                      id={`CON15000${index * 2 + 1}`}
+                      id={`CON${String(baseNumber + index * 2 + 1).padStart(
+                        6,
+                        "0"
+                      )}`}
                     />
                   )}
                 </Typography>
@@ -1154,7 +1169,10 @@ const CheckAvailabilty = () => {
                   {item.answer}
                   {isAdmin && (
                     <EditIconButton
-                      id={`CON15000${index * 2 + 2}`}
+                      id={`CON${String(baseNumber + index * 2 + 2).padStart(
+                        6,
+                        "0"
+                      )}`}
                     />
                   )}
                 </Typography>
@@ -1165,10 +1183,9 @@ const CheckAvailabilty = () => {
       </Box>
 
       {/* Footer Section */}
-      <Box >
+      <Box>
         <Footer />
       </Box>
-
     </Box>
   );
 };
