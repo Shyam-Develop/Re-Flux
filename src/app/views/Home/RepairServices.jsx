@@ -589,7 +589,7 @@ const RepairServices = () => {
             i += 6; // skip next block
           }
         }
-console.log(cardsDetected);
+        console.log(cardsDetected);
         setCards(cardsDetected);
       })
       .catch((err) => console.error("Error loading content:", err));
@@ -666,7 +666,7 @@ console.log(cardsDetected);
 
     if (result.success) {
       // 🔹 Update local state for instant UI feedback
-      const test={ ...content, ...sampleCard };
+      const test = { ...content, ...sampleCard };
       console.log("Updated content state:", test);
       setContent({ ...content, ...sampleCard });
       setCards([

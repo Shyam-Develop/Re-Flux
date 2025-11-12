@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Typography, Link, IconButton, Button } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+
 
 import BlogDetails1 from '../../../assets/BlogDetails1.jpg';
 import BlogDetails2 from '../../../assets/BlogDetails2.png';
@@ -33,7 +35,63 @@ const BlogDetails = () => {
 
   const navigate = useNavigate();
 
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const apiUrl =
+      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=BlogDetails";
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(
+      `/CmsEditor?contentId=BlogDetails&contentTextID=${contentTextID}&contentType=${type}`
+    );
+  };
+
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+            //borderColor: "#214870",
+          },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+
+  if (!content) return null;
+
+
   return (
+
     <Box sx={{ bgcolor: '#fff', py: 6 }}>
       <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 2 }}>
         <Grid container spacing={6}>
@@ -41,86 +99,129 @@ const BlogDetails = () => {
 
           <Grid item xs={12} md={8}>
             {/* Date */}
-            <Typography variant="body2" color="#2E8E7E" mb={1}>
-              Sunday, 1 Jan 2023
-            </Typography>
 
-            {/* Title */}
-            <Typography sx={{ ...typography.displayL, color: '#1C2D4B' }} mb={3}>
-              Enhancing User Interfaces with Grid Systems
-            </Typography>
+            <Box>
+              <Typography variant="body2" color="#2E8E7E" mb={1}>
+                {content.BD1001}
+                <EditIconButton id="BD1001" />
+              </Typography>
 
-            {/* Main Image */}
-            <Box
-              component="img"
-              src={BlogDetails1}
-              alt="Main blog visual"
-              sx={{
-                width: '100%',
-                height: 'auto',
-                maxHeight: 426,
-                objectFit: 'cover',
-                mb: 3,
-              }}
-            />
+              {/* Title */}
+              <Typography sx={{ ...typography.displayL, color: '#1C2D4B' }} mb={3}>
+                {content.BD1002}
+                <EditIconButton id="BD1002" />
+              </Typography>
 
-            {/* Main Paragraph */}
-            <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-              A grid system is an essential design framework that organizes content on web pages.
-              It consists of intersecting vertical and horizontal lines that form a matrix,
-              allowing for precise alignment and arrangement of page elements. By employing grid
-              systems, designers can achieve a cohesive aesthetic across websites, making layouts
-              not only visually appealing but also user-friendly.
-              <br /><br />
-              Navigating the streets of San Francisco is a breeze thanks to its grid layout, which
-              simplifies the journey for both residents and visitors. Similarly, grid systems on
-              web pages offer a reliable structure that aids both users and schemes. With a consistent
-              format for both readers and readability, designers can ensure a seamless experience.
-            </Typography>
+              {/* Main Image */}
 
+              <Box
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: '1137px',
+                  mx: 'auto',
+                }}
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1003}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1003" type="I" />
+                </Box>
+              </Box>
+
+
+              {/* Main Paragraph */}
+              <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
+                {content.BD1004.split("\n").map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+                <EditIconButton id="BD1004" />
+              </Typography>
+            </Box>
 
             {/* Blog details 2 */}
             <Box >
               <Typography variant="h5" fontWeight="bold" color={'#C0C5D0'} fontSize={16} mb={2} textAlign={'center'}>
-                Definition: A grid consists of columns, gutter, and margins that create a framework
-                for organizing elements on a page.
+                {content.BD1005}
+                <EditIconButton id="BD1005" />
               </Typography>
-              <Box
-                component="img"
-                src={BlogDetails2}
 
-                alt="Column Grid"
+              <Box
                 sx={{
+                  position: 'relative',
                   width: '100%',
-                  height: 'auto',
-                  maxHeight: 426,
-                  objectFit: 'cover',
-                  mb: 3,
+                  maxWidth: '1137px',
+                  mx: 'auto',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1006}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1006" type="I" />
+                </Box>
+              </Box>
+
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16} textAlign={'center'}>
-                Definition: A grid comprises columns, gutters, and margins that establish a layout
-                structure for page elements.
+                {content.BD1007}
+                <EditIconButton id="BD1007" />
               </Typography>
 
               <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-                Common grid types in web design include: column grid, modular grid, and hierarchical grid.
-                <br /><br />
-                A column grid divides a page into vertical sections, aligning UI elements and content to these columns.
-                <br /><br />
-                The modular grid builds upon the column grid by incorporating rows, creating modules where elements can be aligned. This type of grid is particularly effective for e-commerce sites and listings, as it allows for repeatable rows that enhance browsing.
-                <br /><br />
-                A hierarchical grid organizes content based on importance, utilizing columns, rows, and modules. The most significant elements occupy the largest sections of the grid.
-                <br /> <br />
+                {content.BD1008.split("\n").map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+                <EditIconButton id="BD1008" />
                 <Typography variant="body2" color={'#C0C5D0'} fontSize={16} >
-                  Understanding the Grid Structure
+                  {content.BD1009}
+                  <EditIconButton id="BD1009" />
                 </Typography>
-                No matter the grid type, all grids consist of three key components: columns, gutters, and margins.
-                <br /><br />
-                Columns are the primary structure of a grid, accommodating most of the content. To ensure adaptability across devices, column widths are typically expressed in percentages rather than fixed units, with the number of columns varying by screen size. For instance, a mobile grid might feature 4 columns, while a desktop grid could have 12.
-                <br /><br />
-                Gutters are the spaces between columns that separate different elements. While gutter widths are fixed, they can vary based on screen size; wider gutters are suitable for larger displays, while narrower gutters work better for mobile devices.
-                <br /><br />
+                {content.BD1010.split("\n").map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+                <EditIconButton id="BD1010" />
               </Typography>
 
 
@@ -128,36 +229,56 @@ const BlogDetails = () => {
             </Box>
 
             {/* Blog Details 3 */}
-
             <Box >
-
-              <Box
-                component="img"
-                src={BlogDetails3}
-
-                alt="Column Grid"
+            <Box
                 sx={{
+                  position: 'relative',
                   width: '100%',
-                  height: 'auto',
-                  maxHeight: 426,
-                  objectFit: 'cover',
-                  mb: 3,
+                  maxWidth: '1137px',
+                  mx: 'auto',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1011}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1011" type="I" />
+                </Box>
+              </Box>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16} textAlign={'center'}>
-                A grid is composed of three elements: (1) columns, (2) gutters, and (3) margins.
+                {content.BD1012}
+                <EditIconButton id="BD1012" />
               </Typography>
               <br></br>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={18} textAlign={'left'}>
-                Practical Applications of Grids
+                {content.BD1013}
+                <EditIconButton id="BD1013" />
               </Typography>
               <br></br>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16}>
-                Example 1: Hierarchical Grid
+                {content.BD1014}
+                <EditIconButton id="BD1014" />
               </Typography>
 
               <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-                Our first example comes from The Washington Post. This layout employs a hierarchical grid to create a newspaper-like reading experience. On desktop screens, two primary columns form the grid, with the leading news story occupying the most space in the left column, while secondary stories fill the smaller column and modules on the right.
+                {content.BD1015}
+                <EditIconButton id="BD1015" />
               </Typography>
 
             </Box>
@@ -167,85 +288,152 @@ const BlogDetails = () => {
             <Box >
 
               <Box
-                component="img"
-                src={BlogDetails4}
-
-                alt="Column Grid"
                 sx={{
+                  position: 'relative',
                   width: '100%',
-                  height: 'auto',
-                  maxHeight: 426,
-                  objectFit: 'cover',
-                  mb: 3,
+                  maxWidth: '1137px',
+                  mx: 'auto',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1016}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1016" type="I" />
+                </Box>
+              </Box>
+
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16} textAlign={'center'}>
-                The Washington Post effectively utilizes a hierarchical grid to enhance its reading experience. (Columns are highlighted in yellow, gutters in blue, and margins in purple.)
+                {content.BD1017}
+                <EditIconButton id="BD1017" />
               </Typography>
               <br></br>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16}>
-                Example 2: Column Grid
+                {content.BD1018}
+                <EditIconButton id="BD1018" />
               </Typography>
 
               <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-                Our second example is from Healthline, a health information website. This design features a column grid that creates a visually appealing layout. At this screen size, four evenly sized columns form the grid, with elements aligned within these columns. The gutters, which separate the columns, are consistently sized, aiding users in distinguishing between different articles. The margins are uniform on both sides.
+                {content.BD1019}
+                <EditIconButton id="BD1019" />
               </Typography>
 
             </Box>
 
             {/* Blog Details 5*/}
             <Box >
-              <Box
-                component="img"
-                src={BlogDetails5}
 
-                alt="Column Grid"
+               <Box
                 sx={{
+                  position: 'relative',
                   width: '100%',
-                  height: 'auto',
-                  maxHeight: 426,
-                  objectFit: 'cover',
-                  mb: 3,
+                  maxWidth: '1137px',
+                  mx: 'auto',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1020}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1020" type="I" />
+                </Box>
+              </Box>
+
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16} textAlign={'center'}>
-                Healthline’s four-column grid simplifies article scanning. (Columns are highlighted in yellow, gutters in blue, and margins in purple.)
+                {content.BD1021}
+                <EditIconButton id="BD1021" />
               </Typography>
               <br></br>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16}>
-                Example 3: Modular Grid
+                {content.BD1022}
+                <EditIconButton id="BD1022" />
               </Typography>
 
               <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-                Our third example is from Dribbble, a design showcase platform. The site employs a modular grid to facilitate an enjoyable browsing experience. On desktop, the layout consists of rows made up of 4 uniformly sized modules. The horizontal gutters are slightly wider than the vertical ones, and the margins are consistently sized on both sides, effectively separating each element.
+                {content.BD1023}
+                <EditIconButton id="BD1023" />
               </Typography>
             </Box>
 
             {/* Blog Details 6*/}
             <Box >
               <Box
-                component="img"
-                src={BlogDetails6}
-
-                alt="Column Grid"
                 sx={{
+                  position: 'relative',
                   width: '100%',
-                  height: 'auto',
-                  maxHeight: 426,
-                  objectFit: 'cover',
-                  mb: 3,
+                  maxWidth: '1137px',
+                  mx: 'auto',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1024}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1024" type="I" />
+                </Box>
+              </Box>
+
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16} textAlign={'center'}>
-                Dribbble’s modular grid enhances user browsing. (Columns are highlighted in yellow, gutters in blue, and margins in purple.)
+                 {content.BD1025}
+                <EditIconButton id="BD1025" />
               </Typography>
               <br></br>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16}>
-                Example 4: Breaking the Grid
+                 {content.BD1026}
+                <EditIconButton id="BD1026" />
               </Typography>
 
               <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-                Our final example is from Pinterest, which utilizes a column grid evident in its left navigation that spans 2 columns. Upon closer inspection, some images align with the margins while others do not. This intentional breaking of the grid can create visual interest but may also hinder quick scanning of content. It’s acceptable to break the grid occasionally, provided there’s a clear rationale.
+                {content.BD1027}
+                <EditIconButton id="BD1027" />
               </Typography>
             </Box>
 
@@ -253,31 +441,55 @@ const BlogDetails = () => {
             {/* Blog Details 7*/}
             <Box >
               <Box
-                component="img"
-                src={BlogDetails7}
-
-                alt="Column Grid"
                 sx={{
+                  position: 'relative',
                   width: '100%',
-                  height: 'auto',
-                  maxHeight: 426,
-                  objectFit: 'cover',
-                  mb: 3,
+                  maxWidth: '1137px',
+                  mx: 'auto',
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={`https://skillglow.bexatm.com${content.BD1028}`}
+                  alt="Main blog visual"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: 426,
+                    objectFit: 'cover',
+                    mb: 3,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="BD1028" type="I" />
+                </Box>
+              </Box>
+
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16} textAlign={'center'}>
-                Breaking the grid can lead to a disorganized browsing experience. (Columns are highlighted in yellow, gutters in blue, and margins in purple.)
+                 {content.BD1029}
+                <EditIconButton id="BD1029" />
               </Typography>
               <br></br>
               <Typography variant="body2" color={'#C0C5D0'} fontSize={16}>
-                Advantages of Using a Grid
+                 {content.BD1030}
+                <EditIconButton id="BD1030" />
               </Typography>
 
               <Typography sx={{ ...typography.h5, color: '#1C2D4B' }} lineHeight={1.8} mb={3}>
-                Implementing a grid offers benefits for both users and designers:<br></br>
-                - Designers can swiftly create well-aligned interfaces.<br></br>
-                - Users can easily navigate predictable grid-based layouts.<br></br>
-                - A well-structured grid adapts seamlessly to various screen sizes and orientations, making it a cornerstone of responsive web design. For instance, a desktop layout may feature 12 grid columns, which can be adjusted to 4 columns on mobile.
+                  {content.BD1031.split("\n").map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+                <EditIconButton id="BD1031" />
               </Typography>
             </Box>
 
@@ -626,7 +838,7 @@ const BlogDetails = () => {
       <Box >
         <Footer />
       </Box>
-    </Box>
+    </Box >
   );
 };
 
