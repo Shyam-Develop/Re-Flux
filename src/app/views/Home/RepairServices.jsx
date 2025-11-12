@@ -31,6 +31,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const ServiceCard = ({
+  index,
   contentId = "C013",
   image,
   imageId,
@@ -59,6 +60,9 @@ const ServiceCard = ({
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
+
+
+
 
   // ✅ Scroll to newly added fault chip after reload
   useEffect(() => {
@@ -129,7 +133,7 @@ const ServiceCard = ({
         },
       }}
     >
-      {/* Add and Delete buttons */}
+      {/*Delete buttons */}
       {isAdmin && (
         <Box
           sx={{
@@ -140,17 +144,6 @@ const ServiceCard = ({
             gap: 1,
           }}
         >
-          <IconButton
-            onClick={onAdd}
-            sx={{
-              background: "#1C2D4B",
-              color: "#fff",
-              "&:hover": { background: "#16233B" },
-            }}
-          >
-            <AddIcon />
-          </IconButton>
-
           <IconButton
             onClick={onDelete}
             sx={{
@@ -297,8 +290,8 @@ const ServiceCard = ({
           </Typography>
 
           {/* Fault Chips */}
-          {/* Fault Chips with edit, add, and delete buttons */}
           {/* Fault Chips with neatly aligned edit/delete icons and auto-scroll on add */}
+          {/* Fault Chips Section */}
           <Box
             sx={{
               display: "flex",
@@ -315,8 +308,8 @@ const ServiceCard = ({
                 key={index}
                 id={`${faultsId}-${index}`} // For scroll targeting after add
                 label={
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    {/* Fault text (clickable for admin) */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    {/* 🧩 Fault text (clickable for admin) */}
                     <Typography
                       component="span"
                       sx={{
@@ -417,10 +410,18 @@ const ServiceCard = ({
                 }}
               />
             ))}
+          </Box>
 
-            {/* ➕ Add Fault Button (Admin Only) */}
-            {isAdmin && (
-              <IconButton
+          {/* ✅ Add New Fault button (Admin Only, at bottom) */}
+          {isAdmin && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: 2,
+              }}
+            >
+              <Button
                 onClick={async () => {
                   const newFaults = [...faults, "New Fault"];
                   const newIndex = newFaults.length - 1;
@@ -439,7 +440,7 @@ const ServiceCard = ({
 
                   const result = await res.json();
                   if (result.success) {
-                    // Save scroll target
+                    // Save scroll target and reload
                     localStorage.setItem(
                       "scrollToFaultId",
                       `${faultsId}-${newIndex}`
@@ -447,18 +448,27 @@ const ServiceCard = ({
                     window.location.reload();
                   } else alert("❌ Failed to add new fault.");
                 }}
+                variant="contained"
                 sx={{
-                  background: "#1C2D4B",
+                  backgroundColor: "#1C2D4B",
                   color: "#fff",
-                  width: 36,
-                  height: 36,
-                  "&:hover": { background: "#16233B" },
+                  px: 3,
+                  py: 1,
+                  borderRadius: "10px",
+                  fontSize: "15px",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  "&:hover": { backgroundColor: "#16233B" },
                 }}
               >
                 <AddIcon />
-              </IconButton>
-            )}
-          </Box>
+                Add New Fault
+              </Button>
+            </Box>
+          )}
 
           {/* Service Highlights */}
           <Typography
@@ -589,11 +599,20 @@ const RepairServices = () => {
             i += 6; // skip next block
           }
         }
-console.log(cardsDetected);
+        console.log(cardsDetected);
         setCards(cardsDetected);
       })
       .catch((err) => console.error("Error loading content:", err));
   }, []);
+
+    useEffect(() => {
+  const fetchContent = async () => {
+    const response = await fetch(`/C013.json?nocache=${Date.now()}`);
+    const data = await response.json();
+    setContent(data);
+  };
+  fetchContent();
+}, []);
 
   // ✅ Scroll to the new section after reload
   useEffect(() => {
@@ -603,10 +622,9 @@ console.log(cardsDetected);
         const el = document.getElementById(targetId);
         if (el) {
           el.scrollIntoView({ behavior: "smooth", block: "start" });
-          el.style.outline = "3px solid #1C2D4B"; // highlight briefly
+          el.style.outline = "3px solid #1C2D4B";
           setTimeout(() => (el.style.outline = ""), 2000);
         }
-        // clear the stored ID after scrolling
         localStorage.removeItem("scrollToCardId");
       }, 800);
     }
@@ -637,7 +655,7 @@ console.log(cardsDetected);
 
     // 🔹 Build the new card JSON object
     const sampleCard = {
-      [newIds.imageId]: "/ATM/images/sample_service.png",
+      [newIds.imageId]: "/ATM/images/Roi2.png",
       [newIds.titleId]: "New Sample Service Title",
       [newIds.overlayId]: "New Overlay Title",
       [newIds.commonFaultId]: "Common faults",
@@ -666,7 +684,7 @@ console.log(cardsDetected);
 
     if (result.success) {
       // 🔹 Update local state for instant UI feedback
-      const test={ ...content, ...sampleCard };
+      const test = { ...content, ...sampleCard };
       console.log("Updated content state:", test);
       setContent({ ...content, ...sampleCard });
       setCards([
@@ -879,11 +897,42 @@ console.log(cardsDetected);
         {cards.map((card, index) => (
           <ServiceCard
             key={index}
+            index={index}
             {...card}
-            onAdd={() => handleAddCard(index)}
             onDelete={() => handleDeleteCard(card)}
           />
         ))}
+        {isAdmin && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              mt: 4,
+            }}
+          >
+            <Button
+              onClick={() => handleAddCard(cards.length - 1)}
+              variant="contained"
+              sx={{
+                backgroundColor: "#1C2D4B",
+                color: "#fff",
+                px: 4,
+                py: 1.5,
+                borderRadius: "10px",
+                fontSize: "16px",
+                textTransform: "none",
+                fontWeight: 500,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                "&:hover": { backgroundColor: "#16233B" },
+              }}
+            >
+              <AddIcon />
+              Add New Section
+            </Button>
+          </Box>
+        )}
       </Box>
 
       {/* //ROI Calculator */}
