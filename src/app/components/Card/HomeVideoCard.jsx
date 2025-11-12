@@ -126,7 +126,7 @@ const HomeVideoCard = ({
   };
 
   return (
-    <Box sx={{ position: "relative", width: "1440px", height: "908px" }}>
+    <Box sx={{ position: "relative", width: "100%", height: "908px" }}>
       {/* 🔹 Background Video */}
       <video
         style={{
