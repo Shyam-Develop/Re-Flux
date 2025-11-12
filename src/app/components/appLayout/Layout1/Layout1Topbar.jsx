@@ -310,45 +310,97 @@ export default function TopbarWithMegaMenu() {
                   </React.Fragment>
                 ))}
                 {/* ✅ Login / Logout Toggle Button */}
-                {isLoggedIn ? (
-                  <Box
-                    sx={{
-                      display: "flex", // ✅ Makes items align side by side
-                      alignItems: "center", // ✅ Vertically center
-                      gap: 1, // ✅ Adds a small space between admin and icon
-                      color: "#131313",
-                      ...typography.h5,
-                      fontWeight: 500,
-                      fontSize: "20px",
-                      textTransform: "none",
-                      position: "relative",
-                      "&.active": {
-                        color: "#00334E",
-                        fontWeight: 600,
-                        "&::after": {
-                          content: '""',
-                          position: "absolute",
-                          top: "45px",
-                          left: "50%",
-                          transform: "translateX(-50%) rotate(45deg)",
-                          width: "17px",
-                          paddingTop:'30px',
-                          height: "14px",
-                          backgroundColor: "#112B49",
-                          borderRadius: "1px",
+
+                <Box>
+                  {isLoggedIn ? (
+                    <Box
+                      sx={{
+                        display: "flex", // ✅ Makes items align side by side
+                        alignItems: "center", // ✅ Vertically center
+                        gap: 1, // ✅ Adds a small space between admin and icon
+                        color: "#131313",
+                        ...typography.h5,
+                        fontWeight: 500,
+                        fontSize: "20px",
+                        textTransform: "none",
+                        position: "relative",
+                        "&.active": {
+                          color: "#00334E",
+                          fontWeight: 600,
+                          "&::after": {
+                            content: '""',
+                            position: "absolute",
+                            top: "45px",
+                            left: "50%",
+                            transform: "translateX(-50%) rotate(45deg)",
+                            width: "17px",
+                            paddingTop: '30px',
+                            height: "14px",
+                            backgroundColor: "#112B49",
+                            borderRadius: "1px",
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <Typography
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: "#131313",
+                          ...typography.h5,
+                          fontWeight: 500,
+                          fontSize: "20px",
+                          textTransform: "none",
+
+                          position: "relative",
+                          "&.active": {
+                            color: "#00334E",
+                            fontWeight: 600,
+                            "&::after": {
+                              content: '""',
+                              position: "absolute",
+                              top: "30px",
+                              left: "50%",
+                              transform: "translateX(-50%) rotate(45deg)",
+                              width: "17px",
+                              height: "14px",
+                              backgroundColor: "#112B49",
+                              borderRadius: "1px",
+                            },
+                          },
+                        }}
+                      >
+                        {role || "User"}
+                      </Typography>
+
+                      <IconButton
+                        onClick={handleLogout}
+                        sx={{
+                          color: "#131313",
+                          "&:hover": { color: "#00334E" },
+                          p: 0, // removes extra padding
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          paddingBottom: '0px',
+                          border: '2px solid #835454',
+                          padding: '2px',
+                          color: '#ed8686'
+                        }}
+                      >
+                        <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    <Button
+                      onClick={handleLogin}
                       sx={{
                         color: "#131313",
                         ...typography.h5,
                         fontWeight: 500,
                         fontSize: "20px",
                         textTransform: "none",
-                       
                         position: "relative",
+                        padding: "12px",
+                        marginTop: "-12px", // 👈 moves it up slightly (adjust value)
                         "&.active": {
                           color: "#00334E",
                           fontWeight: 600,
@@ -366,54 +418,12 @@ export default function TopbarWithMegaMenu() {
                         },
                       }}
                     >
-                      {role || "User"}
-                    </Typography>
+                      Login
+                    </Button>
 
-                    <IconButton
-                      onClick={handleLogout}
-                      sx={{
-                        color: "#131313",
-                        "&:hover": { color: "#00334E" },
-                        p: 0, // removes extra padding
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
-                    </IconButton>
-                  </Box>
-                ) : (
-                  <Button
-                    onClick={handleLogin}
-                    sx={{
-                      color: "#131313",
-                      ...typography.h5,
-                      fontWeight: 500,
-                      fontSize: "20px",
-                      textTransform: "none",
-                      position: "relative",
-                      padding:'12px',
-                      "&.active": {
-                        color: "#00334E",
-                        fontWeight: 600,
-                        "&::after": {
-                          content: '""',
-                          position: "absolute",
-                          top: "30px",
-                          left: "50%",
-                          transform: "translateX(-50%) rotate(45deg)",
-                          width: "17px",
-                          height: "14px",
-                          backgroundColor: "#112B49",
-                          borderRadius: "1px",
-                        },
-                      },
-                    }}
-                  >
-                    Login
-                  </Button>
-                )}
+                  )}
+                </Box>
+
               </Box>
             </Box>
           </Box>
