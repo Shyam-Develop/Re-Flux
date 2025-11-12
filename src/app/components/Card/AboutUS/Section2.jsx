@@ -1,161 +1,219 @@
-import React from "react";
-import { Box, Card, CardContent, Typography, Chip, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Card, CardContent, Typography, Chip, Button, IconButton } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import img2 from "../../../../assets/aboutusSection2.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
-
-const steps = [
-  { step: "Step 1", title: "Diagnose", description: "Intake inspection, electrical tests, root-cause analysis.", image: img2 },
-  { step: "Step 2", title: "Quote", description: "Scope, parts, TAT band, warranty & price approval.", image: img2 },
-  { step: "Step 3", title: "Repair/rewind", description: "Electrical + mechanical by certified technicians.", image: img2 },
-  { step: "Step 4", title: "Load-test (kN)", description: "Pass/fail with recorded values and photos.", image: img2 },
-  { step: "Step 5", title: "Dispatch", description: "Pass/fail with recorded values and photos.", image: img2 },
-  { step: "Step 6", title: "Final Report", description: "Detailed documentation of test results.", image: img2 },
-];
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function HowWeWorkSwiper() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Fetch content
+  useEffect(() => {
+    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Aboutus")
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // Check admin role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // Edit handler
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(`/CmsEditor?contentId=Aboutus&contentTextID=${contentTextID}&contentType=${type}`);
+  };
+
+  // Admin edit icon
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  const services = [
+    { step: content.AU1021, title: content.AU1022, description: content.AU1023, image: `https://skillglow.bexatm.com${content.AU1024}` },
+    { step: content.AU1025, title: content.AU1026, description: content.AU1027, image: `https://skillglow.bexatm.com${content.AU1028}` },
+    { step: content.AU1029, title: content.AU1030, description: content.AU1031, image: `https://skillglow.bexatm.com${content.AU1032}` },
+    { step: content.AU1033, title: content.AU1034, description: content.AU1035, image: `https://skillglow.bexatm.com${content.AU1036}` },
+    { step: content.AU1037, title: content.AU1038, description: content.AU1039, image: `https://skillglow.bexatm.com${content.AU1040}` },
+    { step: content.AU1041, title: content.AU1042, description: content.AU1043, image: `https://skillglow.bexatm.com${content.AU1044}` },
+  ];
+
   return (
-   <Box
-  sx={{
-    width: { xs: '100%', md: '1440px' },
-    height: { xs: 'auto', md: '734px' },
-    px: 2,
-    py: 6,
-    mx: 'auto',
-  }}
->
-  {/* Section Heading */}
-  <Typography
-    sx={{
-      ...typography.displayL,
-      color: "#1C2D4B",
-      mt: { xs: 3, md: 5 },
-      fontSize: { xs: '28px', md: typography.displayL.fontSize },
-      textAlign: { xs: 'center', md: 'left' },
-    }}
-    gutterBottom
-  >
-    How we work
-  </Typography>
-
-  <Typography
-    variant="h5"
-    sx={{
-      ...typography.h5,
-      color: "#99A0AE",
-      mb: 4,
-      fontSize: { xs: '16px', md: typography.h5.fontSize },
-      textAlign: { xs: 'center', md: 'left' },
-    }}
-  >
-    Electrical and mechanical restoration with documented testing.
-  </Typography>
-
-  {/* Swiper */}
-  <Swiper
-    modules={[Pagination]}
-    spaceBetween={16}
-    slidesPerView={1}  // Default view is one card per slide for mobile
-    pagination={{ clickable: true }}
-    style={{ paddingBottom: "40px" }}
-    breakpoints={{
-      0: { slidesPerView: 1 },    // For very small screens, 1 card per slide
-      600: { slidesPerView: 2.2 }, // For small screens, 2 cards per slide
-      960: { slidesPerView: 4 },   // For medium screens, 4 cards per slide
-      1200: { slidesPerView: 5 },  // For large screens, 5 cards per slide
-    }}
-  >
-    {steps.map((item, index) => (
-      <SwiperSlide key={index}>
-        <Card
-          sx={{
-            borderRadius: 0,
-            border: "1px solid #e5e7eb",
-            boxShadow: "none",
-            overflow: "hidden",
-            width: { xs: '100%', sm: '250px' },
-            height: "418px",
-            mx: 'auto',
-          }}
-        >
-          <Box
-            component="img"
-            src={item.image}
-            alt={item.title}
-            sx={{
-              width: "100%",
-              height: '250px',
-              objectFit: "cover",
-            }}
-          />
-          <CardContent
-            sx={{
-              height: '148px',
-            }}
-          >
-            <Chip
-              label={item.step}
-              size="small"
-              sx={{
-                backgroundColor: "#e0f2fe",
-                color: "#0369a1",
-                fontWeight: 500,
-                mb: 1,
-              }}
-            />
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              {item.title}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "#4b5563", lineHeight: 1.5 }}>
-              {item.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-
-  {/* CTA */}
-  <Box sx={{ textAlign: { xs: "center", md: "center" }, mt: 6 }}>
-    <Button
-      variant="text"
-      endIcon={<span style={{ fontSize: "18px" }}>→</span>}
+    <Box
       sx={{
-        textTransform: "none",
-        fontWeight: 600,
-        fontSize: "1rem",
-        color: "#2563eb",
+        width: { xs: "100%", md: "1440px" },
+        height: { xs: "auto", md: "734px" },
+        px: 2,
+        py: 6,
+        mx: "auto",
+        mb: 20
       }}
-      onClick={() => navigate("/home/ViewCaseStudy")}
     >
-      View Case Study
-    </Button>
-  </Box>
+      {/* Section Heading */}
+      <Typography
+        sx={{
+          ...typography.displayL,
+          color: "#1C2D4B",
+          mt: { xs: 3, md: 5 },
+          fontSize: { xs: "28px", md: typography.displayL.fontSize },
+          textAlign: { xs: "center", md: "left" },
+        }}
+        gutterBottom
+      >
+        {content.AU1019}
+        <EditIconButton id="AU1019" />
+      </Typography>
 
-  {/* Custom Swiper styles */}
-  <style>
-    {`
-      .swiper-pagination {
-        bottom: 0 !important;
-      }
-      .swiper-pagination-bullet {
-        width: 30px;
-        height: 3px;
-        border-radius: 2px;
-        background: #d1d5db;
-        opacity: 1;
-      }
-      .swiper-pagination-bullet-active {
-        background: #2563eb !important;
-      }
-    `}
-  </style>
-</Box>
+      <Typography
+        variant="h5"
+        sx={{
+          ...typography.h5,
+          color: "#99A0AE",
+          mb: 4,
+          fontSize: { xs: "16px", md: typography.h5.fontSize },
+          textAlign: { xs: "center", md: "left" },
+        }}
+      >
+        {content.AU1020}
+        <EditIconButton id="AU1020" />
+      </Typography>
 
+      {/* Swiper */}
+      <Swiper
+        modules={[Pagination]}
+        spaceBetween={16}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        style={{ paddingBottom: "40px" }}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2.2 },
+          960: { slidesPerView: 4 },
+          1200: { slidesPerView: 5 },
+        }}
+      >
+        {services.map((service, index) => (
+          <SwiperSlide key={index}>
+            <Card
+              sx={{
+                borderRadius: 0,
+                border: "1px solid #e5e7eb",
+                boxShadow: "none",
+                overflow: "hidden",
+                width: { xs: "100%", sm: "250px" },
+                height: "510px",
+                mx: "auto",
+              }}
+            >
+              <Box >
+                <Box
+                  component="img"
+                  src={service.image}
+                  alt={service.title}
+                  sx={{
+                    width: "100%",
+                    height: "250px",
+                    objectFit: "cover",
+                  }}
+                />
+                <Box  sx={{ position:'absolute', bottom: '92%', left: '200px' }}>
+                  <EditIconButton id={`AU10${24 + index * 4}`} type="I" />
+                </Box>
+              </Box>
+
+              <CardContent sx={{ height: "174px" }}>
+                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                  <Chip
+                    label={service.step}
+                    size="small"
+                    sx={{
+                      backgroundColor: "#e0f2fe",
+                      color: "#0369a1",
+                      fontWeight: 500,
+                    }}
+                  />
+                  <EditIconButton id={`AU10${21 + index * 4}`} /> {/* Add this */}
+                </Box>
+                <Typography
+                  variant="h6"
+                  sx={{ ...typography.h3, fontWeight: 600, mb: 1, color: "#1C2D4B" }}
+                >
+                  {service.title}
+                  <EditIconButton id={`AU10${22 + index * 4}`} />
+                </Typography>
+                <Typography
+                  sx={{ ...typography.h5, fontWeight: 500, fontSize: '20px', color: "#4b5563", lineHeight: 1.5 }}
+                >
+                  {service.description}
+                  <EditIconButton id={`AU10${23 + index * 4}`} />
+                </Typography>
+              </CardContent>
+            </Card>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* CTA */}
+      <Box sx={{ textAlign: { xs: "center", md: "center" }, mt: 6 }}>
+        <Button
+          variant="text"
+          endIcon={<span style={{ fontSize: "18px" }}>→</span>}
+          sx={{
+            textTransform: "none",
+            fontWeight: 600,
+            fontSize: "1rem",
+            color: "#2563eb",
+          }}
+          onClick={() => navigate("/home/ViewCaseStudy")}
+        >
+          {content.AU1045}
+        </Button>
+        <EditIconButton id="AU1045" />
+      </Box>
+
+      {/* Swiper Pagination Style */}
+      <style>
+        {`
+          .swiper-pagination {
+            bottom: 0 !important;
+          }
+          .swiper-pagination-bullet {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+            background: #d1d5db;
+            opacity: 1;
+          }
+          .swiper-pagination-bullet-active {
+            background: #2563eb !important;
+          }
+        `}
+      </style>
+    </Box>
   );
 }
