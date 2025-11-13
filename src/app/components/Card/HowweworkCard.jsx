@@ -28,7 +28,7 @@ export default function ProcessCards() {
   // ✅ Fetch content from API
   useEffect(() => {
     fetch(
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=HowWeWorkCard"
+      `${process.env.REACT_APP_CMS_URL}?contentId=HowWeWorkCard`
     )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -82,42 +82,42 @@ export default function ProcessCards() {
   const steps = [
     {
       id: 1,
-      img: `https://skillglow.bexatm.com${content.CON190016}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190016}`,
       step: content.CON190017,
       title: content.CON190018,
       desc: content.CON190019,
     },
     {
       id: 2,
-      img: `https://skillglow.bexatm.com${content.CON190020}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190020}`,
       step: content.CON190021,
       title: content.CON190022,
       desc: content.CON190023,
     },
     {
       id: 3,
-      img: `https://skillglow.bexatm.com${content.CON190024}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190024}`,
       step: content.CON190025,
       title: content.CON190026,
       desc: content.CON190027,
     },
     {
       id: 4,
-      img: `https://skillglow.bexatm.com${content.CON190028}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190028}`,
       step: content.CON190029,
       title: content.CON190030,
       desc: content.CON190031,
     },
     {
       id: 6,
-      img: `https://skillglow.bexatm.com${content.CON190036}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190036}`,
       step: content.CON190037,
       title: content.CON190038,
       desc: content.CON190039,
     },
     {
       id: 5,
-      img: `https://skillglow.bexatm.com${content.CON190032}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190032}`,
       step: content.CON190033,
       title: content.CON190034,
       desc: content.CON190035,

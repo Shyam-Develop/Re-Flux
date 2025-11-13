@@ -87,7 +87,7 @@ export default function RepairServicesPageCard() {
   // ✅ Fetch content from API
   useEffect(() => {
     fetch(
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=RepairServiceCard"
+       `${process.env.REACT_APP_CMS_URL}?contentId=RepairServiceCard`
     )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -143,31 +143,31 @@ export default function RepairServicesPageCard() {
       id: 1,
       title: content.CON190040,
       type: content.CON190041,
-      img: `https://skillglow.bexatm.com${content.CON190042}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190042}`,
     },
     {
       id: 2,
       title: content.CON190043,
       type: content.CON190044,
-      img: `https://skillglow.bexatm.com${content.CON190045}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190045}`,
     },
     {
       id: 3,
       title: content.CON190046,
       type: content.CON190047,
-      img: `https://skillglow.bexatm.com${content.CON190048}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190048}`,
     },
     {
       id: 4,
       title: content.CON190049,
       type: content.CON190050,
-      img: `https://skillglow.bexatm.com${content.CON190051}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190051}`,
     },
     {
       id: 5,
       title: content.CON190052,
       type: content.CON190053,
-      img: `https://skillglow.bexatm.com${content.CON190054}`,
+      img: `https://cmsreflux.bexatm.com${content.CON190054}`,
     },
   ];
 

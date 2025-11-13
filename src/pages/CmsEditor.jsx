@@ -45,7 +45,7 @@ const CmsEditor = () => {
   const loadContent = async () => {
     try {
       const res = await fetch(
-        `https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=${contentId}`
+         `${process.env.REACT_APP_CMS_URL}?contentId=${contentId}`
       );
       if (!res.ok) throw new Error("Failed to fetch content");
       const data = await res.json();
@@ -64,7 +64,7 @@ const CmsEditor = () => {
         setText(data[baseKey][index] || "");
       } else if (contentType === "I") {
         const imagePath = data[contentTextID] || "";
-        if (imagePath) setPreview(`https://skillglow.bexatm.com${imagePath}`);
+        if (imagePath) setPreview(`https://cmsreflux.bexatm.com${imagePath}`);
       }
     } catch (err) {
       console.error("Error loading content:", err);
@@ -122,7 +122,7 @@ const CmsEditor = () => {
         contentType === "A" ? contentArray[contentArrayID] : text;
         console.log("updatedText",updatedText);
       const res = await fetch(
-        `https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=${contentId}`,
+        `https://cmsreflux.bexatm.com/ATM/ContentManageSysV1.php?contentId=${contentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -140,7 +140,7 @@ const CmsEditor = () => {
         const formData = new FormData();
         formData.append("file", image);
         formData.append("filePath", "/images/");
-        await fetch("https://skillglow.bexatm.com/ATM/ImageUpload.php", {
+        await fetch("https://cmsreflux.bexatm.com/ATM/ImageUpload.php", {
           method: "POST",
           body: formData,
         });

@@ -63,11 +63,7 @@ import handshake1 from "../../../assets/handshake3.jpg";
 import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 import Approach5 from "../../../assets/Approach5.jpg";
 import { useNavigate } from "react-router-dom";
-
-
-
-
-
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const renderSpecGrid = (properties) => (
   <Grid container spacing={2}>
@@ -217,11 +213,11 @@ const CheckAvailabilty = () => {
 
   // ✅ Fetch content from API
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C012"
+      `${process.env.REACT_APP_CMS_URL}?contentId=C012`
     )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -236,6 +232,49 @@ const CheckAvailabilty = () => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
+
+  useEffect(() => {
+    const targetId = localStorage.getItem("scrollToFaqId");
+    if (targetId) {
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.style.outline = "2px solid #1C2D4B";
+          setTimeout(() => (el.style.outline = ""), 1500);
+        }
+        localStorage.removeItem("scrollToFaqId");
+      }, 1000);
+    }
+  }, []);
+
+  const handleDeleteFAQ = async (qId, aId) => {
+    if (!window.confirm("Delete this FAQ?")) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C012",
+            keys: [qId, aId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        window.location.reload();
+      } else {
+        alert("Failed to delete FAQ.");
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
 
   // ✅ Navigate to CMS editor
   const handleEdit = (contentTextID, type = "T") => {
@@ -335,13 +374,26 @@ const CheckAvailabilty = () => {
     },
   ];
 
-  const faqData = [
-    { question: content.CON150001, answer: content.CON150002 },
-    { question: content.CON150003, answer: content.CON150004 },
-    { question: content.CON150005, answer: content.CON150006 },
-    { question: content.CON150007, answer: content.CON150008 },
-    { question: content.CON150009, answer: content.CON150010 },
-  ];
+  const faqData = [];
+
+  Object.keys(content)
+    .filter((k) => /^CON150\d{3}$/.test(k)) // only 150xxx
+    .map((k) => parseInt(k.replace("CON", "")))
+    .sort((a, b) => a - b)
+    .filter((id) => id % 2 === 1) // only odd (question)
+    .forEach((id) => {
+      const qId = `CON${String(id).padStart(6, "0")}`;
+      const aId = `CON${String(id + 1).padStart(6, "0")}`;
+
+      if (content[qId] && content[aId]) {
+        faqData.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    });
 
   const thumbnailImages = [
     { id: "CON160001", src: content.CON160001 },
@@ -537,7 +589,7 @@ const CheckAvailabilty = () => {
             <Box sx={{ position: "relative" }}>
               <Box
                 component="img"
-                src={`https://skillglow.bexatm.com${content.CON160000}`}
+                src={`https://cmsreflux.bexatm.com${content.CON160000}`}
                 alt="Main Lifting Magnet"
                 sx={{
                   width: { xs: "100%", md: "887px" },
@@ -576,10 +628,10 @@ const CheckAvailabilty = () => {
                 <Box key={img.id} sx={{ position: "relative" }}>
                   <Box
                     component="img"
-                    src={`https://skillglow.bexatm.com${img.src}`}
+                    src={`https://cmsreflux.bexatm.com${img.src}`}
                     alt={`Thumbnail ${index + 1}`}
                     onClick={() =>
-                      setMainImage(`https://skillglow.bexatm.com${img.src}`)
+                      setMainImage(`https://cmsreflux.bexatm.com${img.src}`)
                     }
                     sx={{
                       width: { xs: "100px", md: "148px" },
@@ -1040,7 +1092,7 @@ const CheckAvailabilty = () => {
             <Box sx={{ position: "relative" }}>
               <Box
                 component="img"
-                src={`https://skillglow.bexatm.com${features[hoveredIndex].image}`}
+                src={`https://cmsreflux.bexatm.com${features[hoveredIndex].image}`}
                 alt="ElectroMagnet Repair"
                 sx={{
                   width: "570px",
@@ -1107,8 +1159,8 @@ const CheckAvailabilty = () => {
             ml: 8,
           }}
         >
-          {content.CON150012}
-          {isAdmin && <EditIconButton id="CON150012" />}
+          {content.CON140013}
+          {isAdmin && <EditIconButton id="CON140013" />}
         </Typography>
 
         {/* --- Subtitle --- */}
@@ -1121,8 +1173,8 @@ const CheckAvailabilty = () => {
             ml: 8,
           }}
         >
-          {content.CON150011}
-          {isAdmin && <EditIconButton id="CON150011" />}
+          {content.CON140014}
+          {isAdmin && <EditIconButton id="CON140014" />}
         </Typography>
 
         {/* --- FAQ Accordions --- */}
@@ -1130,6 +1182,7 @@ const CheckAvailabilty = () => {
           {faqData.map((item, index) => (
             <Accordion
               key={index}
+              id={item.qId} // ← REQUIRED for scrolling!
               expanded={expanded === index}
               onChange={() => handleChange(index)}
               disableGutters
@@ -1160,12 +1213,24 @@ const CheckAvailabilty = () => {
                 >
                   {item.question}
                   {isAdmin && (
-                    <EditIconButton
-                      id={`CON${String(baseNumber + index * 2 + 1).padStart(
-                        6,
-                        "0"
-                      )}`}
-                    />
+                    <>
+                      <EditIconButton id={item.qId} />
+
+                      {/* Delete BOTH question + answer */}
+                      <IconButton
+                        size="small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteFAQ(item.qId, item.aId);
+                        }}
+                        sx={{
+                          color: "#B71C1C",
+                          "&:hover": { backgroundColor: "#fbe9e7" },
+                        }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </>
                   )}
                 </Typography>
               </AccordionSummary>
@@ -1179,17 +1244,95 @@ const CheckAvailabilty = () => {
                 >
                   {item.answer}
                   {isAdmin && (
-                    <EditIconButton
-                      id={`CON${String(baseNumber + index * 2 + 2).padStart(
-                        6,
-                        "0"
-                      )}`}
-                    />
+                    <>
+                      <EditIconButton id={item.aId} />
+                    </>
                   )}
                 </Typography>
               </AccordionDetails>
             </Accordion>
           ))}
+          {/* ✅ Add New FAQ Button (Admin only) */}
+          {isAdmin && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: 3,
+              }}
+            >
+              <Button
+                onClick={async () => {
+                  try {
+                    // 1️⃣ Get the current maximum CON ID in FAQ section
+                    const existingIds = Object.keys(content)
+                      .filter((k) => k.startsWith("CON150"))
+                      .map((k) => parseInt(k.replace("CON", ""), 10));
+
+                    const maxId = Math.max(...existingIds);
+                    const nextQId = `CON${String(maxId + 1).padStart(6, "0")}`;
+                    const nextAId = `CON${String(maxId + 2).padStart(6, "0")}`;
+
+                    // 2️⃣ Prepare new FAQ entries
+                    const newFAQ = {
+                      [nextQId]: "New FAQ Question?",
+                      [nextAId]: "New FAQ Answer.",
+                    };
+
+                    // 3️⃣ Save to backend
+                    const res = await fetch(
+                      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          contentId: "C012", // ✅ your JSON file
+                          newContent: newFAQ,
+                        }),
+                      }
+                    );
+
+                    const result = await res.json();
+                    console.log("Add FAQ result:", result);
+
+                    if (result.success) {
+                      // 4️⃣ Store target for smooth scroll after reload
+                      localStorage.setItem("scrollToFaqId", nextQId);
+
+                      // Reload after small delay
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 800);
+                    } else {
+                      alert(
+                        "❌ Failed to add FAQ. Check permissions or backend path."
+                      );
+                    }
+                  } catch (err) {
+                    console.error("Error adding FAQ:", err);
+                  }
+                }}
+                variant="contained"
+                sx={{
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                  px: 3,
+                  py: 1,
+                  borderRadius: "10px",
+                  fontSize: "15px",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  "&:hover": { backgroundColor: "#16233B" },
+                }}
+              >
+                <AddIcon />
+                Add New FAQ
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
 

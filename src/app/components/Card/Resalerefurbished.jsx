@@ -23,7 +23,7 @@ export default function ResalerefurbishedCard() {
   // ✅ Fetch content from API
   useEffect(() => {
     fetch(
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Resalerefurbished"
+       `${process.env.REACT_APP_CMS_URL}?contentId=Resalerefurbished`
     )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -80,7 +80,7 @@ export default function ResalerefurbishedCard() {
       title: content.CON190060,
       size: content.CON190061,
       certified: content.CON190062,
-      imgSrc: `https://skillglow.bexatm.com${content.CON190063}`,
+      imgSrc: `https://cmsreflux.bexatm.com${content.CON190063}`,
       liftCapacity: content.CON190064,
       powerSupply: content.CON190065,
       included: content.CON190066,
@@ -90,7 +90,7 @@ export default function ResalerefurbishedCard() {
       title: content.CON190067,
       size: content.CON190068,
       certified: content.CON190069,
-      imgSrc: `https://skillglow.bexatm.com${content.CON190070}`,
+      imgSrc: `https://cmsreflux.bexatm.com${content.CON190070}`,
       liftCapacity: content.CON190071,
       powerSupply: content.CON190072,
       included: content.CON190073,
@@ -100,7 +100,7 @@ export default function ResalerefurbishedCard() {
       title: content.CON190074,
       size: content.CON190075,
       certified: content.CON190076,
-      imgSrc: `https://skillglow.bexatm.com${content.CON190077}`,
+      imgSrc: `https://cmsreflux.bexatm.com${content.CON190077}`,
       liftCapacity: content.CON190078,
       powerSupply: content.CON190079,
       included: content.CON190080,
