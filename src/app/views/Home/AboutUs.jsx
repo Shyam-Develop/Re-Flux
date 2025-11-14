@@ -73,7 +73,7 @@ const AboutUS = () => {
 
     useEffect(() => {
         const apiUrl =
-            "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Aboutus";
+            `${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`;
         fetch(apiUrl)
             .then((res) => {
                 if (!res.ok) throw new Error("Network response was not ok");
@@ -410,7 +410,7 @@ const AboutUS = () => {
                                 <Box sx={{ position: "relative", marginLeft: "30%" }}>
                                     <Box
                                         component="img"
-                                        src={`https://skillglow.bexatm.com${content.AU1081}`}
+                                        src={`https://cmsreflux.bexatm.com${content.AU1081}`}
                                         alt="Electro Flux Logo"
                                         sx={{ width: "151px", height: "158px", mb: 2 }}
                                     />

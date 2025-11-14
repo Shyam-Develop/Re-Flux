@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,59 +9,111 @@ import {
   useTheme,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
-import serviceimg from "../../../assets/Repairservice.png";
-
-const services = [
-  {
-    id: 1,
-    title: "Electromagnet Repair",
-    desc: "Businesses to accelerate their digital transformation journey while achieving efficiency, scalability.",
-    turnaround: ["3–5d", "5–7d", "10–12d"],
-    img: serviceimg,
-  },
-  {
-    id: 2,
-    title: "Electromagnet Repair",
-    desc: "Businesses to accelerate their digital transformation journey while achieving efficiency, scalability.",
-    turnaround: ["3–5d", "5–7d", "10–12d"],
-    img: serviceimg,
-  },
-  {
-    id: 3,
-    title: "Electromagnet Repair",
-    desc: "Businesses to accelerate their digital transformation journey while achieving efficiency, scalability.",
-    turnaround: ["3–5d", "5–7d", "10–12d"],
-    img: serviceimg,
-  },
-  {
-    id: 4,
-    title: "Electromagnet Repair",
-    desc: "Businesses to accelerate their digital transformation journey while achieving efficiency, scalability.",
-    turnaround: ["3–5d", "5–7d", "10–12d"],
-    img: serviceimg,
-  },
-  {
-    id: 5,
-    title: "Electromagnet Repair",
-    desc: "Businesses to accelerate their digital transformation journey while achieving efficiency, scalability.",
-    turnaround: ["3–5d", "5–7d", "10–12d"],
-    img: serviceimg,
-  },
-];
 
 const RepairsectionCard = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // ✅ Fetch content JSON
+  useEffect(() => {
+    fetch("https://cmsreflux.bexatm.com/API/ContentManageSysV1.php?contentId=Home")
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check admin role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(`/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`);
+  };
+
+  // ✅ Admin edit icon button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  // ✅ Build services array from JSON (your example structure)
+  const services = [
+    {
+      id: 1,
+      title: content.HM1004,
+      desc: content.HM1005,
+      turnaround: content.HM1006,
+      img: `https://cmsreflux.bexatm.com${content.HM1007}`,
+      ids: { title: "HM1004", desc: "HM1005", turnaround: "HM1006", img: "HM1007" },
+    },
+    {
+      id: 2,
+      title: content.HM1008,
+      desc: content.HM1009,
+      turnaround: content.HM1010,
+      img: `https://cmsreflux.bexatm.com${content.HM1011}`,
+      ids: { title: "HM1008", desc: "HM1009", turnaround: "HM1010", img: "HM1011" },
+    },
+    {
+      id: 3,
+      title: content.HM1012,
+      desc: content.HM1013,
+      turnaround: content.HM1014,
+      img: `https://cmsreflux.bexatm.com${content.HM1015}`,
+      ids: { title: "HM1012", desc: "HM1013", turnaround: "HM1014", img: "HM1015" },
+    },
+    {
+      id: 4,
+      title: content.HM1016,
+      desc: content.HM1017,
+      turnaround: content.HM1018,
+      img: `https://cmsreflux.bexatm.com${content.HM1019}`,
+      ids: { title: "HM1016", desc: "HM1017", turnaround: "HM1018", img: "HM1019" },
+    },
+    {
+      id: 5,
+      title: content.HM1020,
+      desc: content.HM1021,
+      turnaround: content.HM1022,
+      img: `https://cmsreflux.bexatm.com${content.HM1023}`,
+      ids: { title: "HM1020", desc: "HM1021", turnaround: "HM1022", img: "HM1023" },
+    },
+  ];
+
   return (
-    <Grid container spacing={3} >
+    <Grid container spacing={3}>
       {services.map((service) => (
         <Grid item xs={12} sm={6} md={4} key={service.id}>
           <Box
-            onClick={() => navigate("/home/RepairServicesPage")}
+
             sx={{
               width: "100%",
               maxWidth: 412,
@@ -83,25 +135,30 @@ const RepairsectionCard = () => {
                   backgroundColor: "#6aa9ff",
                   color: "#fff",
                 },
-                "& .MuiDivider-root": {
-                  backgroundColor: "#fff",
-                },
+                "& .MuiDivider-root": { backgroundColor: "#fff" },
               },
             }}
           >
-            {/* Image */}
-            <Box
-              component="img"
-              src={service.img}
-              alt={service.title}
-              sx={{
-                width: "100%",
-                height: "auto",
-                maxHeight: 260,
-                borderRadius: "7px",
-                objectFit: "cover",
-              }}
-            />
+            {/* Image with Edit Icon */}
+            <Box sx={{ position: "relative" }}>
+              <Box
+                component="img"
+                src={service.img}
+                alt={service.title}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  maxHeight: 260,
+                  borderRadius: "7px",
+                  objectFit: "cover",
+                }}
+              />
+              {isAdmin && (
+                <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+                  <EditIconButton id={service.ids.img} type="I" />
+                </Box>
+              )}
+            </Box>
 
             {/* Content */}
             <Box sx={{ mt: 3 }}>
@@ -114,10 +171,11 @@ const RepairsectionCard = () => {
                 }}
               >
                 <Typography
-                variant="h3"
-                  sx={{color: "#1B2F43", fontSize: "28px", fontWeight:600}}
+                  variant="h3"
+                  sx={{ color: "#1B2F43", fontSize: "28px", fontWeight: 600 }}
                 >
                   {service.title}
+                  <EditIconButton id={service.ids.title} />
                 </Typography>
                 <IconButton
                   size="small"
@@ -128,6 +186,7 @@ const RepairsectionCard = () => {
                     backgroundColor: "#f1f3f4",
                     transition: "all 0.3s ease",
                   }}
+                  onClick={() => navigate("/home/RepairServicesPage")}
                 >
                   <ArrowForwardIosIcon fontSize="small" />
                 </IconButton>
@@ -135,49 +194,68 @@ const RepairsectionCard = () => {
 
               <Divider sx={{ mb: 2 }} />
 
-              <Typography variant="p" sx={{ fontWeight:400, fontSize:'18px', color: "#666", mb: 1 }}>
+              <Typography
+                sx={{ fontWeight: 400, fontSize: "18px", color: "#666", mb: 1 }}
+              >
                 {service.desc}
+                <EditIconButton id={service.ids.desc} />
               </Typography>
 
-              <Typography variant="h5" sx={{ fontWeight:500, color: "#0E1626", mb: 0.5 }}>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: 500, color: "#0E1626", mb: 0.5 }}
+              >
                 Turnaround Time
               </Typography>
-              <Typography variant="p" sx={{ fontWeight:400, fontSize:'18px', color: "#677489" }}>
-                {service.turnaround.join(" / ")}
+
+              <Typography
+                sx={{ fontWeight: 400, fontSize: "18px", color: "#677489" }}
+              >
+                {Array.isArray(service.turnaround)
+                  ? service.turnaround.join(" / ")
+                  : service.turnaround}
+                <EditIconButton id={service.ids.turnaround} />
               </Typography>
             </Box>
           </Box>
         </Grid>
       ))}
 
-
       {/* View All Services */}
       <Grid item xs={12} sm={3} md={4}>
-        <Box>
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            mt: 5,
+            mr: 10,
+            cursor: "pointer",
+            transition: "0.3s",
+          }}
+        >
           <Typography
             sx={{
-              height: "100%",
-              display: "flex",
-              // alignItems: "flex",
-              justifyContent: "center",
-              mt: 25,
-              mr:17,
-              cursor: "pointer",
-              textDecoration: "none",
-              transition: "0.3s",
               fontSize: { xs: "18px", sm: "20px", md: "24px" },
               fontWeight: "bold",
               color: "#1a4dab",
-              textDecoration: "none",
               "&:hover": {
                 transform: "scale(1.40)",
                 textDecoration: "underline",
               },
             }}
-            onClick={() => navigate("/home/RepairServices")}>
-            View All Services →
+            onClick={() => navigate("/home/RepairServices")}
+          >
+            {content.HM1024}
           </Typography>
+
+          {/* ✅ Edit icon next to text */}
+          <Box sx={{ paddingLeft: '45px'}} >
+             <EditIconButton id="HM1024" />
+          </Box>
         </Box>
+
       </Grid>
     </Grid>
   );

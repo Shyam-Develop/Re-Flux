@@ -69,8 +69,6 @@ const fields = [
 
 
 
-
-
 const Rentals = () => {
 
   const navigate = useNavigate()
@@ -83,14 +81,13 @@ const Rentals = () => {
 
   //For CMS
 
-
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
   //  Load content
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C016";
+      `${process.env.REACT_APP_CMS_URL}?contentId=C016`
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -146,26 +143,26 @@ const Rentals = () => {
       title: content.RE1039,
       author: content.RE1040,
       date: content.RE1041,
-      image: `https://skillglow.bexatm.com${content.RE1042}`,
+      image: `https://cmsreflux.bexatm.com${content.RE1042}`,
       featured: true,
     },
     {
       title: content.RE1043,
       author: content.RE1044,
       date: content.RE1045,
-      image: `https://skillglow.bexatm.com${content.RE1046}`,
+      image: `https://cmsreflux.bexatm.com${content.RE1046}`,
     },
     {
       title: content.RE1047,
       author: content.RE1048,
       date: content.RE1049,
-      image: `https://skillglow.bexatm.com${content.RE1050}`,
+      image: `https://cmsreflux.bexatm.com${content.RE1050}`,
     },
     {
       title: content.RE1051,
       author: content.RE1052,
       date: content.RE1053,
-      image: `https://skillglow.bexatm.com${content.RE1054}`,
+      image: `https://cmsreflux.bexatm.com${content.RE1054}`,
     },
 
   ];
@@ -261,6 +258,14 @@ const Rentals = () => {
                     position: "relative",
                     p: 2, // outer padding around card
                     bgcolor: "#fff",
+                    transition: "all 0.6s ease",
+
+                    // "&:hover": {
+                    //   bgcolor: "#1C2D4B", // or "#1976d2"
+                    //   color: "#fff",
+                    //   cursor: "pointer",
+                    // },
+
                   }}
                 >
                   {/* Image Section */}
@@ -274,7 +279,7 @@ const Rentals = () => {
                   >
                     <Box
                       component="img"
-                      src={`https://skillglow.bexatm.com${p.img}`}
+                      src={`https://cmsreflux.bexatm.com${p.img}`}
                       alt={p.title}
                       sx={{
                         width: "100%",

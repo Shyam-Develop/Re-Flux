@@ -1,320 +1,365 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
+  Grid,
   Card,
   CardContent,
   Typography,
   Button,
-  CardMedia,
   Chip,
+  IconButton,
 } from "@mui/material";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
-import { Pagination } from "swiper/modules";
 
-export default function RentServicesCard({ services }) {
+export default function RentServices() {
   const navigate = useNavigate();
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetch(
+      `${process.env.REACT_APP_CMS_URL}?contentId=HomeRentService`
+    )
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  const handleEdit = (contentTextID, type = "T") => {
+    const currentScroll = window.scrollY;
+    localStorage.setItem("scrollPos", currentScroll);
+    navigate(
+      `/CmsEditor?contentId=HomeRentService&contentTextID=${contentTextID}&contentType=${type}`
+    );
+  };
+
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 0.5,
+          p: 0.3,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+  const services = [
+    {
+      img: content.HR1004,
+      title: content.HR1005,
+      subtitle: content.HR1006,
+      lift: content.HR1007,
+      power: content.HR1008,
+      details: content.HR1009,
+      price: content.HR1010,
+      ids: [
+        "HR1004",
+        "HR1005",
+        "HR1006",
+        "HR1007",
+        "HR1008",
+        "HR1009",
+        "HR1010",
+      ],
+    },
+    {
+      img: content.HR1011,
+      title: content.HR1012,
+      subtitle: content.HR1013,
+      lift: content.HR1014,
+      power: content.HR1015,
+      details: content.HR1016,
+      price: content.HR1017,
+      ids: [
+        "HR1011",
+        "HR1012",
+        "HR1013",
+        "HR1014",
+        "HR1015",
+        "HR1016",
+        "HR1017",
+      ],
+    },
+    {
+      img: content.HR1018,
+      title: content.HR1019,
+      subtitle: content.HR1020,
+      lift: content.HR1021,
+      power: content.HR1022,
+      details: content.HR1023,
+      price: content.HR1024,
+      ids: [
+        "HR1018",
+        "HR1019",
+        "HR1020",
+        "HR1021",
+        "HR1022",
+        "HR1023",
+        "HR1024",
+      ],
+    },
+    
+  ];
 
   return (
-    <Box sx={{ p: { xs: 2, md: 6 } }}>
-      {/* Section Tag */}
-      <Button
-        disableElevation
-        disableRipple
-        sx={{
-          ...typography.bodySmall,
-          mb: 2,
-          textTransform: "none",
-          fontWeight: 400,
-          color: "#1a4dab",
-          backgroundColor: "rgba(36,121,233,0.08)",
-          borderRadius: "20px",
-          px: 2,
-          py: 0.5,
-          "&:hover": { backgroundColor: "rgba(36,121,233,0.15)" },
-        }}
-      >
-        Rent Services
-      </Button>
+    <Box sx={{ px: { xs: 2, md: "5%" }, py: 7, bgcolor: "#fff" }}>
+      {/* Tag Line */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Button
+          disableRipple
+          sx={{
+            ...typography.bodySmall,
+            mb: 2,
+            textTransform: "none",
+            fontWeight: 400,
+            color: "#1a4dab",
+            backgroundColor: "rgba(36,121,233,0.08)",
+            borderRadius: "20px",
+            px: 2,
+            py: 0.5,
+            "&:hover": { backgroundColor: "rgba(36,121,233,0.15)" },
+          }}
+        >
+          {content.HR1001}
+        </Button>
+        <EditIconButton id="HR1001" />
+      </Box>
 
       {/* Heading */}
-      <Typography
-        sx={{
-          ...typography.h3RB,
-          fontWeight: 700,
-        }}
-      >
-        Rent Industrial Magnets with Ease
-      </Typography>
-      <Typography
-        variant="h5"
-        sx={{
-          ...typography.h3B1,
-          fontWeight: 400,
-          mb: 4,
-          color: "text.secondary",
-        }}
-      >
-        Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Typography sx={{ ...typography.h3RB, fontWeight: 700 }}>
+          {content.HR1002}
+        </Typography>
+        <EditIconButton id="HR1002" />
+      </Box>
 
-      {/* Swiper */}
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={20}
-        slidesPerView={3}
-        pagination={{ clickable: true }}
-        style={{ paddingBottom: "40px" }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
-        }}
-      >
-        {services.map((service) => (
-          <SwiperSlide key={service.id}>
+      {/* Description */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 5 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            ...typography.h3B1,
+            color: "text.secondary",
+            fontWeight: 400,
+          }}
+        >
+          {content.HR1003}
+        </Typography>
+        <EditIconButton id="HR1003" />
+      </Box>
+
+      {/* Product Cards */}
+      <Grid container spacing={4}>
+        {services.map((p, idx) => (
+          <Grid item xs={12} sm={6} md={4} key={idx}>
             <Card
               sx={{
-                padding: "15px",
-                borderRadius: '20px',
-                border: "1px solid #e0e0e0",
-                backgroundColor:'#FAFAFA',
+                borderRadius: 3,
+                width:'416px',
                 overflow: "hidden",
-                width: "416px",
-                height: "628px",
+                position: "relative",
+                p: 2,
+                bgcolor: "#FAFAFA",
+                border: "1px solid #e0e0e0",
+                transition: "all 0.4s ease",
+                height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                transition: "all 0.4s ease",
+                justifyContent: "space-between",
                 "&:hover": {
-                   transform: "scale(1.004)",
                   backgroundColor: "#1C2D4B",
                   color: "#fff",
-                   borderRadius: '20px',
+                  transform: "scale(1.01)",
                 },
                 "&:hover .MuiButton-root": {
-                  backgroundColor: '#b18028',
+                  backgroundColor: "#b18028",
                   color: "#fff",
                 },
               }}
             >
-              {/* Image */}
-              <Box sx={{ position: "relative", overflow: "hidden" }}>
-                <CardMedia
+              {/* Image Section */}
+              <Box
+                sx={{
+                  position: "relative",
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  mb: 2,
+                }}
+              >
+                <Box
                   component="img"
-                  image={service.img}
-                  alt={service.title}
+                  src={`https://cmsreflux.bexatm.com${p.img}`}
+                  alt={p.title}
                   sx={{
-                    width: "384px",
-                    height: "240px",
+                    width: "100%",
+                    height: 220,
                     objectFit: "cover",
+                    borderRadius: 2,
+                    display: "block",
                     transition: "transform 0.4s ease",
-                    "&:hover": { transform: "scale(1.08)" },
+                    "&:hover": { transform: "scale(1.05)" },
                   }}
                 />
-
-                {/* Chips at top */}
+                {/* Chips */}
                 <Box
                   sx={{
                     position: "absolute",
-                    top: 10,
-                    left: 10,
-                    right: 10,
+                    top: 8,
+                    left: 8,
                     display: "flex",
-                   
-                    justifyContent: "space-between",
+                    gap: 1,
                   }}
                 >
                   <Chip
                     label="🔧 Available for Rent"
                     size="small"
                     sx={{
-                      ...typography.bodyBase,
-                      fontSize: "14px",
                       bgcolor: "#1B7B4E",
-                      color: "#F1F2F4",
-                      borderRadius:'0px',
+                      color: "white",
+                      fontSize: "13px",
+                      height: "24px",
                     }}
                   />
                   <Chip
                     label="🛡️ Safety Tested"
                     size="small"
-                    sx={{ ...typography.bodyBase, fontSize:'14px', bgcolor: "#2F6FBA", borderRadius:'0px', color: "#F1F2F4" }}
+                    sx={{
+                      bgcolor: "#2F6FBA",
+                      color: "white",
+                      fontSize: "13px",
+                      height: "24px",
+                    }}
                   />
+                </Box>
+                {/* Edit Icon */}
+                <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
+                  <EditIconButton id={p.ids[0]} type="I" />
                 </Box>
               </Box>
 
-              {/* Content */}
-              <CardContent
-                sx={{
-                  width: "100%",
-                  flexGrow: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  p: 2,
-                }}
-              >
-                {/* Title + Price */}
+              {/* Card Content */}
+              <CardContent sx={{ p: 0 }}>
+                {/* Title & Price */}
                 <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    mb: 1,
-                  }}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="flex-start"
                 >
-                  <Box sx={{width:'70%'}}>
-                    <Typography
-                      sx={{
-                        ...typography.h4,
-                        fontSize:'24px',
-                        
-                        // lineHeight: '130%',
-                      }}
-                    >
-                      {service.title}
+                  <Box>
+                    <Typography sx={{ ...typography.h4, fontWeight: 700 }}>
+                      {p.title} <EditIconButton id={p.ids[1]} />
                     </Typography>
                     <Typography
                       sx={{
                         ...typography.h6,
-                        fontSize: "16px",
-                       // color: "#00000099",
+                        fontWeight: 600,
+                        color: "inherit",
+                        opacity: 0.9,
                       }}
                     >
-                      {service.type}
+                      {p.subtitle} <EditIconButton id={p.ids[2]} />
                     </Typography>
                   </Box>
-                  <Typography
+
+                  <Box
                     sx={{
-                      ...typography.h6,
-                      fontSize: "16px",
-                      fontWeight: 600,
-                     
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
                     }}
                   >
-                    Starting at 
-                    <Typography sx={{ ...typography.h4, color:"#178270"}}  >${service.price}</Typography>
-                  </Typography>
+                    <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
+                      Start at
+                    </Typography>
+                    <Typography
+                      sx={{
+                        ...typography.h5,
+                        fontWeight: 700,
+                        color: "#178270",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
+                      }}
+                    >
+                      {p.price}
+                      <EditIconButton id={p.ids[6]} />
+                    </Typography>
+                  </Box>
                 </Box>
 
-                {/* Lift Capacity + Power Supply */}
+                {/* Lift & Power */}
                 <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom: '20px'
-                  }}
+                  sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}
                 >
                   <Box>
-                    <Typography
-                      sx={{ ...typography.h5 }}
-                    >
+                    <Typography sx={{ color: "inherit", opacity: 0.8 }}>
                       Lift Capacity
                     </Typography>
-                    <Typography
-                      sx={{ fontSize: "18px", ...typography.bodyBase , color:'#677489' }}
-                    >
-                      {service.liftCapacity}
+                    <Typography sx={{ ...typography.h5, fontWeight: 500 }}>
+                      {p.lift} <EditIconButton id={p.ids[3]} />
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography
-                      sx={{ fontSize: "14px", fontWeight: 600 }}
-                    >
+                    <Typography sx={{ color: "inherit", opacity: 0.8 }}>
                       Power Supply
                     </Typography>
-                    <Typography
-                      sx={{ fontSize: "18px", ...typography.bodyBase , color:'#677489'}}
-                    >
-                      {service.powerSupply}
+                    <Typography sx={{ ...typography.h5, fontWeight: 500 }}>
+                      {p.power} <EditIconButton id={p.ids[4]} />
                     </Typography>
                   </Box>
                 </Box>
 
-                {/* Sizes */}
-                <Box sx={{width:'262px', height:'59px', marginBottom: '35px'}}>
-                  <Typography
-                    sx={{
-                      // fontSize: "14px",
-                      ...typography.h5, 
-                      // color:'#0E1626',
-                      LineHeight : '130%'
-                    }}
-                  >
-                    {service.sizes}
+                {/* Details */}
+                <Box sx={{ mt: 3 }}>
+                  <Typography sx={{ color: "inherit", opacity: 0.8 }}>
+                    Size Options <EditIconButton id={p.ids[5]} />
                   </Typography>
-                   <Typography
-                      sx={{ fontSize: "18px", ...typography.bodyBase , color:'#677489'}}
-                    >
-                      View Details
-                    </Typography>
+                  <Typography sx={{ ...typography.h5, fontWeight: 500 }}>
+                    {p.details}
+                  </Typography>
                 </Box>
-              </CardContent>
 
-
-              {/* Button */}
-              <Box sx={{ p: 2, pt: 0, width: "100%" }}>
+                {/* Button */}
                 <Button
                   onClick={() => navigate("/home/CheckAvailabilty")}
-                  fullWidth
                   variant="contained"
+                  fullWidth
                   sx={{
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    borderRadius: 1.5,
-                    textTransform: "none",
-                    backgroundColor: "#0b2d55", // normal state
+                    mt: 3,
+                    backgroundColor: "#0b2d55",
                     color: "#fff",
-                    "&:hover": {
-                      backgroundColor: "#1C2D4B", // hover state
-                    },
+                    textTransform: "none",
+                    fontWeight: 600,
+                    borderRadius: 2,
+                    py: 1,
+                    transition: "all 0.3s ease",
                   }}
                 >
                   Check Availability
                 </Button>
-              </Box>
-
+              </CardContent>
             </Card>
-          </SwiperSlide>
+          </Grid>
         ))}
-
-        {/* Custom Swiper styles */}
-        <style>
-          {`
-        .swiper-pagination {
-          bottom: 0 !important;
-        }
-        .swiper-pagination-bullet {
-          width: 30px;
-          height: 3px;
-          border-radius: 2px;
-          background: #d1d5db;
-          opacity: 1;
-        }
-        .swiper-pagination-bullet-active {
-          background: #2563eb !important;
-        }
-      `}
-        </style>
-      </Swiper>
+      </Grid>
     </Box>
-
-
-
   );
 }
-
-
-
-
-
-
-
-

@@ -21,7 +21,7 @@ const Legal = () => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    const apiUrl = "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C001";
+    const apiUrl = `${process.env.REACT_APP_CMS_URL}?contentId=C001`;
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");

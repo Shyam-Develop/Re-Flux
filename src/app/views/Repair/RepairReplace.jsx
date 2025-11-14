@@ -127,7 +127,7 @@ const RepairReplace = () => {
 
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C007";
+      `${process.env.REACT_APP_CMS_URL}?contentId=C007`
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -895,7 +895,7 @@ const RepairReplace = () => {
                 <Box sx={{ position: "relative", height: "100%" }}>
                   <CardMedia
                     component="img"
-                    image={`https://skillglow.bexatm.com${item.image.value}`}
+                    image={`https://cmsreflux.bexatm.com${item.image.value}`}
                     alt={item.name.value}
                     sx={{
                       height: "100%",

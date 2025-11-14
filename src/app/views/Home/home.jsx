@@ -66,6 +66,7 @@ import Testimonials from "app/components/Card/OurCustomerCard";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HomeVideoCard from "app/components/Card/HomeVideoCard";
 import Footer from 'app/components/Card/Footer';
+import EditIcon from "@mui/icons-material/Edit";
 import TopbarWithMegaMenu from "app/components/appLayout/Layout1/Layout1Topbar";
 import { DisplayL, displayL, H4 } from "app/components/Typography";
 
@@ -113,18 +114,18 @@ const UploadBox = ({ label }) => {
 };
 
 const RefluxSvg = ({ color = "#111B2D", width = 20, height = 20 }) => (
-    <svg
-        width={width}
-        height={height}
-        viewBox="0 0 114 114"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <path
-            d="M57.1457 0.0644531C25.9403 0.0644531 0.634766 25.3821 0.634766 56.62C0.634766 87.8579 25.9403 113.181 57.1457 113.181C88.3511 113.181 113.657 87.8528 113.657 56.62C113.657 25.3871 88.3511 0.0644531 57.1457 0.0644531ZM49.4187 104.452L54.0115 93.0608H48.7172L58.2358 81.7356L55.8536 89.6461L61.6829 89.6764L49.4187 104.447V104.452ZM57.6958 81.7507C57.5191 81.7608 57.3273 81.7709 57.1457 81.7709C56.964 81.7709 56.7772 81.7608 56.5955 81.7507C49.9739 81.4123 44.715 75.9416 44.715 69.2333C44.715 62.5251 50.2717 56.7564 57.1457 56.7109C64.0196 56.7614 69.5763 62.3483 69.5763 69.2333C69.5763 76.1184 64.3174 81.4123 57.6958 81.7507ZM69.5763 83.5793C73.2354 80.1848 75.7134 74.6838 75.7134 69.3041C75.7134 59.0346 67.4011 50.7149 57.1507 50.7149C46.9003 50.7149 38.588 59.0396 38.588 69.3041C38.588 74.6838 41.066 80.1848 44.7251 83.5793C39.6529 79.6594 35.7566 73.3654 35.7566 66.4652C35.7566 54.6348 45.3408 45.0422 57.1557 45.0422C68.9707 45.0422 78.5549 54.6348 78.5549 66.4652C78.5549 73.3654 74.6536 79.6594 69.5864 83.5793H69.5763ZM85.1967 66.349C85.1967 50.8412 72.6398 38.2682 57.1457 38.2682C41.6515 38.2682 29.0997 50.8412 29.0997 66.349C29.0997 75.5021 33.8186 83.1348 40.5916 88.2519C32.1581 82.6751 26.0008 74.1231 26.0008 63.2474C26.0008 46.0322 39.9456 32.0752 57.1457 32.0752C74.3457 32.0752 88.2905 46.0272 88.2905 63.2474C88.2905 74.1231 82.1332 82.6751 73.6997 88.2519C80.4727 83.1348 85.1967 75.4971 85.1967 66.349ZM94.1904 63.207C94.1904 42.7286 77.601 26.1247 57.1457 26.1247C36.6903 26.1247 20.1009 42.7337 20.1009 63.207C20.1009 75.7648 26.9295 86.2263 36.4682 92.9396C25.0671 85.7868 16.7295 74.2949 16.7295 59.8276C16.7295 37.4853 34.8229 19.376 57.1457 19.376C79.4684 19.376 97.5618 37.4853 97.5618 59.8276C97.5618 74.2898 89.2191 85.7868 77.8231 92.9396C87.3618 86.2263 94.1904 75.7648 94.1904 63.207ZM81.9414 97.6172C94.8566 89.1914 104.34 76.6842 104.34 60.0954C104.34 34.0048 83.2031 12.8597 57.1457 12.8597C31.0882 12.8597 9.95147 34.0048 9.95147 60.0954C9.95147 76.6842 19.4398 89.1864 32.3549 97.6172C17.5825 88.8126 6.67599 75.2748 6.67599 56.8069C6.67599 28.9029 29.2763 6.29284 57.1457 6.29284C85.015 6.29284 107.615 28.908 107.615 56.8069C107.615 75.2748 96.7139 88.8126 81.9363 97.6172H81.9414Z"
-            fill={color}
-        />
-    </svg>
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 114 114"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M57.1457 0.0644531C25.9403 0.0644531 0.634766 25.3821 0.634766 56.62C0.634766 87.8579 25.9403 113.181 57.1457 113.181C88.3511 113.181 113.657 87.8528 113.657 56.62C113.657 25.3871 88.3511 0.0644531 57.1457 0.0644531ZM49.4187 104.452L54.0115 93.0608H48.7172L58.2358 81.7356L55.8536 89.6461L61.6829 89.6764L49.4187 104.447V104.452ZM57.6958 81.7507C57.5191 81.7608 57.3273 81.7709 57.1457 81.7709C56.964 81.7709 56.7772 81.7608 56.5955 81.7507C49.9739 81.4123 44.715 75.9416 44.715 69.2333C44.715 62.5251 50.2717 56.7564 57.1457 56.7109C64.0196 56.7614 69.5763 62.3483 69.5763 69.2333C69.5763 76.1184 64.3174 81.4123 57.6958 81.7507ZM69.5763 83.5793C73.2354 80.1848 75.7134 74.6838 75.7134 69.3041C75.7134 59.0346 67.4011 50.7149 57.1507 50.7149C46.9003 50.7149 38.588 59.0396 38.588 69.3041C38.588 74.6838 41.066 80.1848 44.7251 83.5793C39.6529 79.6594 35.7566 73.3654 35.7566 66.4652C35.7566 54.6348 45.3408 45.0422 57.1557 45.0422C68.9707 45.0422 78.5549 54.6348 78.5549 66.4652C78.5549 73.3654 74.6536 79.6594 69.5864 83.5793H69.5763ZM85.1967 66.349C85.1967 50.8412 72.6398 38.2682 57.1457 38.2682C41.6515 38.2682 29.0997 50.8412 29.0997 66.349C29.0997 75.5021 33.8186 83.1348 40.5916 88.2519C32.1581 82.6751 26.0008 74.1231 26.0008 63.2474C26.0008 46.0322 39.9456 32.0752 57.1457 32.0752C74.3457 32.0752 88.2905 46.0272 88.2905 63.2474C88.2905 74.1231 82.1332 82.6751 73.6997 88.2519C80.4727 83.1348 85.1967 75.4971 85.1967 66.349ZM94.1904 63.207C94.1904 42.7286 77.601 26.1247 57.1457 26.1247C36.6903 26.1247 20.1009 42.7337 20.1009 63.207C20.1009 75.7648 26.9295 86.2263 36.4682 92.9396C25.0671 85.7868 16.7295 74.2949 16.7295 59.8276C16.7295 37.4853 34.8229 19.376 57.1457 19.376C79.4684 19.376 97.5618 37.4853 97.5618 59.8276C97.5618 74.2898 89.2191 85.7868 77.8231 92.9396C87.3618 86.2263 94.1904 75.7648 94.1904 63.207ZM81.9414 97.6172C94.8566 89.1914 104.34 76.6842 104.34 60.0954C104.34 34.0048 83.2031 12.8597 57.1457 12.8597C31.0882 12.8597 9.95147 34.0048 9.95147 60.0954C9.95147 76.6842 19.4398 89.1864 32.3549 97.6172C17.5825 88.8126 6.67599 75.2748 6.67599 56.8069C6.67599 28.9029 29.2763 6.29284 57.1457 6.29284C85.015 6.29284 107.615 28.908 107.615 56.8069C107.615 75.2748 96.7139 88.8126 81.9363 97.6172H81.9414Z"
+      fill={color}
+    />
+  </svg>
 );
 
 const HomePage = () => {
@@ -133,6 +134,9 @@ const HomePage = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
+
+
+
   //=================VIDEO-Loading===============================//
   const [selected, setSelected] = useState(null);
   const [loadingId, setLoadingId] = useState(null);
@@ -201,51 +205,8 @@ const HomePage = () => {
     clearInterval(intervalRef.current);
   };
   //----------------------------------------------------------------------------------------//
-  const benefits = [
-    {
-      title: "Lower Upfront Cost",
-      description:
-        "Skip the heavy investment. Pay only for the time you use the magnet.",
-    },
-    {
-      title: "Flexibility for Projects",
-      description:
-        "Rent different sizes or types as per project needs, without long-term commitments.",
-    },
-    {
-      title: "Zero Maintenance Hassle",
-      description:
-        "We handle service and upkeep — you focus on getting the job done.",
-    },
-    {
-      title: "Quick Availability",
-      description:
-        "Get magnets delivered and installed fast, exactly when your project demands it.",
-    },
-  ];
 
   //ROI Calcultor
-  const roiData = [
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    // Add more as needed...
-  ];
 
   const partnerData = [
     {
@@ -270,63 +231,10 @@ const HomePage = () => {
     },
   ];
 
-  const faqData = [
-    {
-      question: "Do I need to be home during the cleaning?",
-      answer: "No, as long as we have access, you can carry on with your day.",
-    },
-    {
-      question: "Are your restoration services?",
-      answer: "Yes, we offer full restoration in select areas.",
-    },
-    {
-      question: "What happens if I’m not satisfied with the Magnet?",
-      answer: "We offer a satisfaction guarantee and support options.",
-    },
-    {
-      question: "Can I schedule recurring services?",
-      answer: "Yes, you can set weekly or monthly recurring schedules.",
-    },
-    {
-      question: "Is there a cancellation fee?",
-      answer: "Nope — cancel any time before 24 hours of service.",
-    },
-  ];
 
-  const blogData = [
-    {
-      title: "7 Essential Tips For Efficient Electromagnet Servicing",
-      author: "Hannah Cole",
-      date: "March 5, 2035",
-      image: Blogs1,
-      featured: true,
-    },
-    {
-      title: "The Advantages of Using Electromagnets in Repairs",
-      author: "Lucas Wei",
-      date: "March 18, 2035",
-      image: Blogs2,
-    },
-    {
-      title: "Electromagnet Maintenance Checklist for Technicians",
-      author: "Mia Langston",
-      date: "April 1, 2035",
-      image: Blogs3,
-    },
-    {
-      title: "How Frequently Should You Service Electromagnets?",
-      author: "Julian Snow",
-      date: "April 25, 2035",
-      image: Blogs4,
-    },
-  ];
 
-  const cards = [
-    {
-      title: "Repair vs Replace ROI Instantly",
-      desc: "Our ROI Calculator shows payback and TCO (repair vs rental vs replace) in seconds — make data-backed decisions.",
-    },
-  ];
+
+
 
   const [expanded, setExpanded] = useState(null);
 
@@ -341,6 +249,171 @@ const HomePage = () => {
 
   const [active, setActive] = useState("01");
   const activeItem = items.find((item) => item.id === active);
+
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // ✅ Fetch content JSON
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Home`)
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check admin role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  const handleEdit = (contentTextID, type = "T") => {
+
+    navigate(`/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`);
+  };
+
+  // ✅ Admin edit icon button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+
+  const cards = [
+    { title: content.HM1050, desc: content.HM1051, idT: "HM1050", idD: "HM1051" },
+    { title: content.HM1052, desc: content.HM1053, idT: "HM1052", idD: "HM1053" },
+    { title: content.HM1054, desc: content.HM1055, idT: "HM1054", idD: "HM1055" },
+    { title: content.HM1056, desc: content.HM1057, idT: "HM1056", idD: "HM1057" },
+    { title: content.HM1058, desc: content.HM1059, idT: "HM1058", idD: "HM1059" },
+    { title: content.HM1060, desc: content.HM1061, idT: "HM1060", idD: "HM1061" },
+  ];
+
+
+  // View ALL magnet Rent
+  const benefits = [
+    {
+      title: content.HM1063,
+      description: content.HM1064,
+      titleId: "HM1063",
+      descId: "HM1064",
+    },
+    {
+      title: content.HM1065,
+      description: content.HM1066,
+      titleId: "HM1065",
+      descId: "HM1066",
+    },
+    {
+      title: content.HM1067,
+      description: content.HM1068,
+      titleId: "HM1067",
+      descId: "HM1068",
+    },
+    {
+      title: content.HM1069,
+      description: content.HM1070,
+      titleId: "HM1069",
+      descId: "HM1070",
+    },
+  ];
+
+
+  //ROI Calculator
+  const roiList = [
+    {
+      title: content.HM1100,
+      titleId: "HM1100",
+
+      description: content.HM1101,
+      descriptionId: "HM1101",
+
+      image: `https://cmsreflux.bexatm.com${content.HM1102}`,
+      imageId: "HM1102",
+    },
+    {
+      title: content.HM1103,
+      titleId: "HM1103",
+
+      description: content.HM1104,
+      descriptionId: "HM1104",
+
+      image: `https://cmsreflux.bexatm.com${content.HM1105}`,
+      imageId: "HM1105",
+    },
+    {
+      title: content.HM1106,
+      titleId: "HM1106",
+
+      description: content.HM1107,
+      descriptionId: "HM1107",
+
+      image: `https://cmsreflux.bexatm.com${content.HM1108}`,
+      imageId: "HM1108",
+    },
+  ];
+
+  //Faq Data
+  const faqData = [
+    { qKey: "HM1122", aKey: "HM1123" },
+    { qKey: "HM1124", aKey: "HM1125" },
+    { qKey: "HM1126", aKey: "HM1127" },
+    { qKey: "HM1128", aKey: "HM1129" },
+    { qKey: "HM1130", aKey: "HM1131" },
+  ];
+
+
+  //BlogData
+  const blogData = [
+    {
+      titleKey: "HM1135",
+      authorKey: "HM1136",
+      dateKey: "HM1137",
+      imageKey: "HM1135_IMG",
+      image: `https://cmsreflux.bexatm.com${content.HM1135_IMG}`,
+    },
+    {
+      titleKey: "HM1138",
+      authorKey: "HM1139",
+      dateKey: "HM1140",
+      imageKey: "HM1138_IMG",
+      image: `https://cmsreflux.bexatm.com${content.HM1138_IMG}`,
+    },
+    {
+      titleKey: "HM1141",
+      authorKey: "HM1142",
+      dateKey: "HM1143",
+      imageKey: "HM1141_IMG",
+      image: `https://cmsreflux.bexatm.com${content.HM1141_IMG}`,
+    },
+    {
+      titleKey: "HM1144",
+      authorKey: "HM1145",
+      dateKey: "HM1146",
+      imageKey: "HM1144_IMG",
+      image: `https://cmsreflux.bexatm.com${content.HM1144_IMG}`,
+    }
+  ];
+
+
 
   return (
 
@@ -377,7 +450,7 @@ const HomePage = () => {
             display: { xs: "none", md: "block" }, // 👈 hide on mobile
             position: "relative",
             width: "100%",
-            
+
           }}
         >
           <HomeVideoCard
@@ -533,7 +606,8 @@ const HomePage = () => {
             ...theme.typography.bodySmall,
           }}
         >
-          Repair Services
+          {content.HM1001}
+          <EditIconButton id="HM1001" />
         </Button>
 
         <Typography
@@ -546,7 +620,8 @@ const HomePage = () => {
           }}
           gutterBottom
         >
-          Our Repair Services
+          {content.HM1002}
+          <EditIconButton id="HM1002" />
         </Typography>
 
         <Typography
@@ -560,93 +635,68 @@ const HomePage = () => {
             fontWeight: 400
           }}
         >
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project
+          {content.HM1003}
+          <EditIconButton id="HM1003" />
         </Typography>
 
         <RepairsectionCard />
       </Box>
 
 
-      <Box sx={{ textAlign: "center", mt: 10 }}>
-        {/* Top Button */}
-        <Button
-          onClick={handleClickOpen}
-          variant="contained"
-          sx={{
-            fontFamily: "Inter-Medium",
-            bgcolor: "#b3570d", // orange/brown shade
-            borderRadius: "25px",
-            px: 3,
-            py: 1,
-            // fontWeight: "bold",
-            fontSize: "14px",
-            fontWeight: 500,
-            lineHeight: "1.5",
-            "&:hover": {
-              bgcolor: "#944708",
-            },
-          }}
-        >
-          Request a Repair Quote
-        </Button>
-
-        {/* Links */}
-        <Box
-          sx={{
-            mt: 2,
-            display: "flex",
-            justifyContent: "center",
-            gap: 4,
-            ...theme.typography.buttonLink,
-            fontWeight: 600,
-            color: "#0e8bf1ff",
-          }}>
-          <Link
-            href="#"
-            underline="none" // disable default MUI underline
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 3,
+          mt: 6,
+          flexWrap: "wrap", // mobile-friendly
+        }}
+      >
+        {/* 🔸 Request Quote Button */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Button
+            onClick={handleClickOpen}
+            variant="contained"
             sx={{
-              color: "#0e8bf1ff",
-              display: "flex",
-              alignItems: "center",
-              fontWeight: 600,
+              fontFamily: "Inter-Medium",
+              bgcolor: "#b3570d",
+              borderRadius: "25px",
+              px: 3,
+              py: 1,
+              fontSize: "14px",
+              fontWeight: 500,
+              lineHeight: "1.5",
+              textTransform: "none",
+              "&:hover": { bgcolor: "#944708" },
             }}
           >
-            <span style={{ borderBottom: "2px solid #0e8bf1ff" }}>WhatsApp Photos</span>
-            <ArrowRightAltIcon
-              sx={{
-                ml: 0.5,
-                fontSize: 20,
-                mt: '2px',
-                position: 'relative',
-                top: '5px',
-              }}
-            />
-          </Link>
+            {content.HM1025}
+          </Button>
+          <EditIconButton id="HM1025" />
+        </Box>
 
-
+        {/* 🔹 WhatsApp an Engineer Link */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+          <WhatsAppIcon sx={{ color: "#25D366", fontSize: 26 }} />
           <Link
             href="#"
-            // underline="none"
+            underline="hover"
             sx={{
               color: "#0e8bf1ff",
+              fontWeight: 600,
               display: "flex",
               alignItems: "center",
-              fontWeight: 500,
+              fontSize: "15px",
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            Book Site Visit <ArrowRightAltIcon
-              sx={{
-                ml: 0.5,
-                fontSize: 20,
-                mt: '2px',
-                position: 'relative',
-                top: '5px',
-              }}
+            {content.HM1026}
+            <ArrowRightAltIcon
+              sx={{ fontSize: 20, ml: 0.3, mt: "2px", position: "relative", top: "2px" }}
             />
           </Link>
+          <EditIconButton id="HM1026" />
         </Box>
       </Box>
 
@@ -666,13 +716,11 @@ const HomePage = () => {
             mb: 1,
           }}
         >
-          Before and after case studies
+          {content.HM1027}
+          <EditIconButton id="HM1027" type="T" />
         </Typography>
 
-        <Box sx={{
-          ml: 15,
-          mt: 4
-        }}>
+        <Box sx={{ ml: 15, mt: 4 }}>
           <Typography
             variant="h6"
             sx={{
@@ -684,16 +732,17 @@ const HomePage = () => {
               mb: 1,
             }}
           >
-            Circular Lifting Magnet
+            {content.HM1028}
+            <EditIconButton id="HM1028" type="T" />
           </Typography>
 
           <Typography
             variant="body2"
             sx={{ color: "#99A0AE", mb: 4, ...theme.typography.bodyBase }}
           >
-            Understanding growing demand and exceeding expectations from our customers in repairing
+            {content.HM1029}
+            <EditIconButton id="HM1029" type="T" />
           </Typography>
-
         </Box>
 
         {/* Images and Arrows */}
@@ -708,19 +757,19 @@ const HomePage = () => {
             flexWrap: "wrap",
           }}
         >
-          {/* BEFORE IMAGE (Lower) + LEFT ARROW (Outside border) */}
+          {/* BEFORE IMAGE */}
           <Box
             sx={{
               position: "relative",
-              width: isMobile ? "100%" : "500px",
-              mt: isMobile ? 2 : 8,
+              width: isMobile ? "100%" : "600px", // was 500px → increased width
+              mt: isMobile ? 2 : 8, // slightly reduced margin-top for balance
               overflow: "visible",
             }}
           >
             <IconButton
               sx={{
                 position: "absolute",
-                left: isMobile ? '-15px' : "-25px", // Push arrow outside
+                left: isMobile ? "-15px" : "-25px",
                 top: "50%",
                 transform: "translateY(-50%)",
                 bgcolor: "#1c2434",
@@ -731,24 +780,29 @@ const HomePage = () => {
             >
               <ArrowBackIcon />
             </IconButton>
+
             <Box
               component="img"
-              src={before}
+              src={`https://cmsreflux.bexatm.com${content.HM1030}`}
               alt="Before"
               sx={{
                 width: "100%",
-                height: "auto",
+                height: { xs: 250, md: 380 }, // fixed larger height while keeping ratio
+                borderRadius: "1px",
                 objectFit: "cover",
                 display: "block",
               }}
             />
+            <Box sx={{ position: 'absolute', top: 8, right: 8, zIndex: 3 }}>
+              <EditIconButton id="HM1030" type="I" />
+            </Box>
           </Box>
 
-          {/* AFTER IMAGE (Higher) + RIGHT ARROW (Outside border) */}
+          {/* AFTER IMAGE */}
           <Box
             sx={{
               position: "relative",
-              width: isMobile ? "100%" : "500px",
+              width: isMobile ? "100%" : "600px", // was 500px
               mt: isMobile ? 2 : 0,
               overflow: "visible",
             }}
@@ -756,7 +810,7 @@ const HomePage = () => {
             <IconButton
               sx={{
                 position: "absolute",
-                right: isMobile ? '-15px' : "-25px", // Push arrow outside
+                right: isMobile ? "-15px" : "-25px",
                 top: "50%",
                 transform: "translateY(-50%)",
                 bgcolor: "#1c2434",
@@ -767,18 +821,24 @@ const HomePage = () => {
             >
               <ArrowForwardIcon />
             </IconButton>
+
             <Box
               component="img"
-              src={after}
+              src={`https://cmsreflux.bexatm.com${content.HM1031}`}
               alt="After"
               sx={{
                 width: "100%",
-                height: "auto",
+                height: { xs: 250, md: 380 }, // same height for visual balance
+                borderRadius: "1px",
                 objectFit: "cover",
                 display: "block",
               }}
             />
+            <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+              <EditIconButton id="HM1031" type="I" />
+            </Box>
           </Box>
+
         </Box>
 
         {/* Button */}
@@ -799,174 +859,228 @@ const HomePage = () => {
               },
             }}
           >
-            View Case Study
+            {content.HM1032}
           </Button>
+          <EditIconButton id="HM1032" />
         </Box>
       </Box>
+
 
 
       {/*ElectroMagnet Repair Section */}
       <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
         {/* Heading */}
-        <Typography
-          sx={{
-            ...theme.typography.displayM,
-            lineHeight: "1.2",
-            color: "#1c2434",
-            mb: 2,
-            ml: isMobile ? 0 : 5,
-            fontFamily: "Space Grotesk, Regular",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          ElectroMagnet Repair
-        </Typography>
-
-        {/* Subheading */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: 500,
-            color: "#1c2434",
-            mb: 4,
-            ml: isMobile ? 0 : 5,
-            fontFamily: "Inter, sans-serif",
-            textAlign: isMobile ? "center" : "left",
-            px: isMobile ? 2 : 0,
-          }}
-        >
-          Coil rewinds, terminal rebuilds, housing & controllers — restored to
-          spec with certified load testing
-        </Typography>
-
-        {/* Main Container */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            border: "1px solid #ddd",
-            borderRadius: 3,
-            px: isMobile ? 2 : 4,
-            py: isMobile ? 3 : 4,
-            gap: 6,
-            width: "100%",
-            bgcolor: "white",
-          }}
-        >
-          {/* Left - Timeline */}
-          <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
-            {/* Vertical Line */}
-            {!isMobile && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  bottom: 0,
-                  left: "10px",
-                  width: "2px",
-                  bgcolor: "#ccc",
-                  borderRadius: 1,
-                }}
-              />
-            )}
-
-            {features.map((item, index) => {
-              const isActive = hoveredIndex === index;
-
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    mb: 4,
-                    cursor: "pointer",
-                    position: "relative",
-                  }}
-                  onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
-                  onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
-                >
-                  {/* Active Line */}
-                  {!isMobile && isActive && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        left: "10px",
-                        width: "2px",
-                        bgcolor: "#1976d2",
-                        height: "100%",
-                        borderRadius: 1,
-                      }}
-                    />
-                  )}
-
-                  {/* Icon + Text */}
-                  <Box sx={{ ml: 4 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                      <CalendarMonthIcon
-                        sx={{
-                          fontSize: 20,
-                          color: isActive ? "#1976d2" : "#666",
-                          mr: 1,
-                          transition: "0.3s",
-                        }}
-                      />
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          ...theme.typography.h3B1,
-                          fontWeight: 400,
-                          color: isActive ? "#1976d2" : "#1c2434",
-                          transition: "0.3s",
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                    </Box>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        ...theme.typography.bodyBasemedium,
-                        fontWeight: 400,
-                        transition: "0.3s",
-                        ml: 4,
-                      }}
-                    >
-                      {item.desc}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-
-          {/* Right - Image */}
-          <Box
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: isMobile ? 0 : 5 }}>
+          <Typography
             sx={{
-              flex: 1,
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              mt: isMobile ? 2 : 0,
+              ...theme.typography.displayM,
+              lineHeight: "1.2",
+              color: "#1c2434",
+              mb: 2,
+              fontFamily: "Space Grotesk, Regular",
+              textAlign: isMobile ? "center" : "left",
             }}
           >
-            <Box
-              component="img"
-              src={features[hoveredIndex].image}
-              alt="ElectroMagnet Repair"
-              sx={{
-                width: "100%",
-                maxWidth: isMobile ? "100%" : 600,
-                objectFit: "cover",
-                borderRadius: 3,
-                transition: "0.5s",
-              }}
-            />
-          </Box>
+            {content.HM1033}
+          </Typography>
+          <EditIconButton id="HM1033" />
         </Box>
+
+        {/* Subheading */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, ml: isMobile ? 0 : 5 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 500,
+              color: "#1c2434",
+              mb: 4,
+              fontFamily: "Inter, sans-serif",
+              textAlign: isMobile ? "center" : "left",
+              px: isMobile ? 2 : 0,
+            }}
+          >
+            {content.HM1034}
+          </Typography>
+          <EditIconButton id="HM1034" />
+        </Box>
+
+        {/* Features Array */}
+        {(() => {
+          const features = [
+            {
+              title: content.HM1035,
+              desc: content.HM1036,
+              image: content.HM1037,
+            },
+            {
+              title: content.HM1038,
+              desc: content.HM1039,
+              image: content.HM1040,
+            },
+            {
+              title: content.HM1041,
+              desc: content.HM1042,
+              image: content.HM1043,
+            },
+            {
+              title: content.HM1044,
+              desc: content.HM1045,
+              image: content.HM1046,
+            },
+          ];
+
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: isMobile ? "column" : "row",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                border: "1px solid #ddd",
+                borderRadius: 3,
+                px: isMobile ? 2 : 4,
+                py: isMobile ? 3 : 4,
+                gap: 6,
+                width: "100%",
+                bgcolor: "white",
+              }}
+            >
+              {/* Left Section */}
+              <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+                {!isMobile && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      bottom: 0,
+                      left: "10px",
+                      width: "2px",
+                      bgcolor: "#ccc",
+                      borderRadius: 1,
+                    }}
+                  />
+                )}
+
+                {features.map((item, index) => {
+                  const isActive = hoveredIndex === index;
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        mb: 4,
+                        cursor: "pointer",
+                        position: "relative",
+                      }}
+                      onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+                      onClick={() => isMobile && setHoveredIndex(index)}
+                    >
+                      {!isMobile && isActive && (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            left: "10px",
+                            width: "2px",
+                            bgcolor: "#1976d2",
+                            height: "100%",
+                            borderRadius: 1,
+                          }}
+                        />
+                      )}
+
+                      <Box sx={{ ml: 4 }}>
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                          <CalendarMonthIcon
+                            sx={{
+                              fontSize: 20,
+                              color: isActive ? "#1976d2" : "#666",
+                              mr: 1,
+                              transition: "0.3s",
+                            }}
+                          />
+                          <Typography
+                            variant="subtitle1"
+                            sx={{
+                              ...theme.typography.h3B1,
+                              fontWeight: 400,
+                              color: isActive ? "#1976d2" : "#1c2434",
+                              transition: "0.3s",
+                            }}
+                          >
+                            {item.title}
+                          </Typography>
+                          <EditIconButton id={`HM10${35 + index * 3}`} />
+                        </Box>
+
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              ...theme.typography.bodyBasemedium,
+                              fontWeight: 400,
+                              transition: "0.3s",
+                              ml: 4,
+                            }}
+                          >
+                            {item.desc}
+                          </Typography>
+                          <EditIconButton id={`HM10${36 + index * 3}`} />
+                        </Box>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+
+              {/* Right Section (Image Display) */}
+              <Box
+                sx={{
+                  flex: 1,
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: isMobile ? 2 : 0,
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "relative",
+                    width: "100%",
+                    maxWidth: isMobile ? "100%" : 600,
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={`https://cmsreflux.bexatm.com${features[hoveredIndex]?.image}`}
+                    alt="ElectroMagnet Repair"
+                    sx={{
+                      width: "100%",
+                      height: { xs: 250, md: 450 },
+                      objectFit: "cover",
+                      borderRadius: 4,
+                      display: "block",
+                    }}
+                  />
+
+                  {/* ✅ Edit Icon on top-right of the image */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                    }}
+                  >
+                    <EditIconButton id={`HM10${37 + hoveredIndex * 3}`} type="I" />
+                  </Box>
+                </Box>
+              </Box>
+
+
+
+            </Box>
+          );
+        })()}
       </Box>
 
 
@@ -984,12 +1098,7 @@ const HomePage = () => {
           alignItems: "center",
         }}
       >
-        <Grid
-          container
-          spacing={2}
-          justifyContent="center"
-          alignItems="flex-start"
-        >
+        <Grid container spacing={2} justifyContent="center" alignItems="flex-start">
           {/* Left Section */}
           <Grid item xs={12} md={4}>
             <Box
@@ -999,22 +1108,28 @@ const HomePage = () => {
                 alignItems: { xs: "center", md: "flex-start" },
                 textAlign: { xs: "center", md: "left" },
                 mt: { xs: 0, md: 18 },
-                ml: 23
+                ml: 23,
               }}
             >
+              {/* Title with Edit */}
               <Typography
                 sx={{
                   fontFamily: "SpaceGrotesk-Regular",
                   ...theme.typography.h2,
                   lineHeight: 1.2,
                   fontWeight: 600,
-                  fontSize: '32px',
+                  fontSize: "32px",
                   mb: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
                 }}
               >
-                Why Choose <br /> Reflux?
+                {content.HM1047}
+                <EditIconButton id="HM1047" type="T" />
               </Typography>
 
+              {/* Description with Edit */}
               <Typography
                 sx={{
                   color: "text.secondary",
@@ -1022,43 +1137,44 @@ const HomePage = () => {
                   fontSize: "16px",
                   fontWeight: 400,
                   maxWidth: "320px",
-                  ...theme.typography.bodySmall
+                  ...theme.typography.bodySmall,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
                 }}
               >
-                We handle service and upkeep — you focus on getting the job done.
+                {content.HM1048}
+                <EditIconButton id="HM1048" type="T" />
               </Typography>
 
-              <Button
-                variant="contained"
-                sx={{
-                  fontFamily: "SpaceGrotesk-Regular",
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  borderRadius: "10px",
-                  px: 3,
-                  backgroundColor: "#00A99D",
-                  "&:hover": { backgroundColor: "#00897B" },
-                }}
-              >
-                About Us
-              </Button>
+              {/* Button with Edit */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    fontFamily: "SpaceGrotesk-Regular",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    borderRadius: "10px",
+                    px: 3,
+                    backgroundColor: "#00A99D",
+                    "&:hover": { backgroundColor: "#00897B" },
+                  }}
+                >
+                  {content.HM1049}
+                </Button>
+                <EditIconButton id="HM1049" type="T" />
+              </Box>
 
-              {/* Arrow */}
+              {/* Arrow image */}
               <Box
                 sx={{
-                  // position: "absolute",
-                  // bottom: -90,
                   ml: 30,
                   right: { xs: "5%", md: "20%" },
                   textAlign: "right",
                 }}
               >
-                <Box
-                  component="img"
-                  src={about}
-                  alt="Arrow"
-                  sx={{ width: 140 }}
-                />
+                <Box component="img" src={about} alt="Arrow" sx={{ width: 140 }} />
               </Box>
             </Box>
           </Grid>
@@ -1080,10 +1196,10 @@ const HomePage = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: 4,
-                  mt: 0, // first column slightly higher
+                  mt: 0,
                 }}
               >
-                {cards.concat(cards, cards).map((card, i) => (
+                {cards.slice(0, 3).map((card, i) => (
                   <Box
                     key={i}
                     sx={{
@@ -1098,31 +1214,29 @@ const HomePage = () => {
                         fontWeight: 500,
                         mb: 1,
                         color: "#0B121E",
-                        ...theme.typography.h5,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                       }}
                     >
                       {card.title}
+                      <EditIconButton id={card.idT} type="T" />
                     </Typography>
-                    <Link
-                      underline="hover"
+                    <Typography
                       sx={{
-                        fontSize: "18px",
+                        fontSize: "16px",
                         fontWeight: 400,
                         color: "#555",
-                        cursor: "pointer",
                         lineHeight: 1.5,
-                        ...theme.typography.bodyBase
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                       }}
                     >
                       {card.desc}
-                    </Link>
-                    <Divider
-                      sx={{
-                        mt: 1,
-                        borderColor: "#00A99D",
-                        width: "100%",
-                      }}
-                    />
+                      <EditIconButton id={card.idD} type="D" />
+                    </Typography>
+                    <Divider sx={{ mt: 2, border: '2px solid', borderColor: "#00A99D", width: "100%" }} />
                   </Box>
                 ))}
               </Box>
@@ -1133,10 +1247,10 @@ const HomePage = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: 4,
-                  mt: { xs: 0, md: 10 }, // shifted down for staggered look
+                  mt: { xs: 0, md: 10 },
                 }}
               >
-                {cards.concat(cards, cards).map((card, i) => (
+                {cards.slice(3, 6).map((card, i) => (
                   <Box
                     key={i}
                     sx={{
@@ -1149,97 +1263,59 @@ const HomePage = () => {
                       sx={{
                         fontSize: "20px",
                         fontWeight: 500,
-                        ...theme.typography.h5,
                         mb: 1,
-                        color: "#1A1A1A",
+                        color: "#0B121E",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                       }}
                     >
                       {card.title}
+                      <EditIconButton id={card.idT} type="T" />
                     </Typography>
-                    <Link
-                      underline="hover"
+                    <Typography
                       sx={{
                         fontSize: "16px",
                         fontWeight: 400,
                         color: "#555",
-                        cursor: "pointer",
                         lineHeight: 1.5,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                       }}
                     >
                       {card.desc}
-                    </Link>
-                    <Divider
-                      sx={{
-                        mt: 1,
-                        borderColor: "#00A99D",
-                        width: "100%",
-                      }}
-                    />
+                      <EditIconButton id={card.idD} type="D" />
+                    </Typography>
+                    <Divider sx={{ mt: 2, border: '2px solid', borderColor: "#00A99D", width: "100%" }} />
                   </Box>
                 ))}
               </Box>
             </Box>
           </Grid>
         </Grid>
-
-
-        {/* Modal */}
-        <Modal open={open} onClose={handleClose}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              borderRadius: 2,
-              p: 4,
-            }}
-          >
-            <Typography sx={{ fontSize: "20px", fontWeight: 500, mb: 2 }}>
-              ROI Calculator Info
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              This modal opens when you click the subtitle link. Replace with your
-              own content.
-            </Typography>
-            <Button
-              onClick={handleClose}
-              sx={{
-                mt: 3,
-                backgroundColor: "#00A99D",
-                color: "white",
-                "&:hover": { backgroundColor: "#00897B" },
-              }}
-            >
-              Close
-            </Button>
-          </Box>
-        </Modal>
       </Box>
-
 
 
       {/* Rent Services section */}
 
-      <RentServicesCard services={services} />
+      <RentServicesCard />
 
       {/* View all magnets for rent Section*/}
       <Box>
+        {/* ✅ View All Magnets (editable) */}
         <Typography
           component={Link}
           to="/home/Rentals"
           sx={{
-            ...theme.typography.h3R,
-            // fontSize: "1.5rem", 
+            ...typography.h3R,
             color: "#1a4dab",
             fontWeight: 600,
             ml: 120,
           }}
         >
-          View All Magnets for Rent
+          {content.HM1072}
+          <EditIconButton id="HM1072" />
           <ArrowRightAltIcon
             sx={{
               color: "#1a4dab",
@@ -1250,36 +1326,59 @@ const HomePage = () => {
             }}
           />
         </Typography>
+
         <Box sx={{ flexGrow: 1, padding: 4 }}>
           <Grid container spacing={4} alignItems="center">
-            {/* Left Side - Image */}
+            {/* Left Side Image */}
             <Grid item xs={12} md={6}>
-              <Box
-                component="img"
-                src={RentingMagnet} // <- replace this with your actual path
-                alt="Magnet Excavator"
-                sx={{ width: "100%", borderRadius: 2, height: '584px' }}
-              />
+              <Box sx={{ position: "relative", width: "100%" }}>
+
+                {/* Image */}
+                <Box
+                  component="img"
+                  src={`https://cmsreflux.bexatm.com${content.HM1071}`}
+                  alt="Magnet Excavator"
+                  sx={{
+                    width: "100%",
+                    borderRadius: 2,
+                    height: "584px",
+                    display: "block"
+                  }}
+                />
+
+                {/* Edit Icon - Top Right */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <EditIconButton id="HM1071" type="I" />
+                </Box>
+
+              </Box>
             </Grid>
 
-            {/* Right Side - Text */}
+
+            {/* Right Side Text */}
             <Grid item xs={12} md={6}>
               <Typography
                 sx={{
-                  ...theme.typography.displayM,
+                  ...typography.displayM,
                   fontWeight: 600,
                   color: "#33425D",
                 }}
-
               >
-                Why Renting Magnets is Smarter
+                {content.HM1062}
+                <EditIconButton id="HM1062" />
               </Typography>
+
               <List>
                 {benefits.map((item, index) => (
                   <ListItem alignItems="flex-start" key={index} sx={{ pl: 0 }}>
                     <ListItemIcon sx={{ minWidth: 32 }}>
                       <Typography
-                        variant="h6"
                         sx={{
                           width: 30,
                           height: 30,
@@ -1293,37 +1392,35 @@ const HomePage = () => {
                           fontWeight: 700,
                           fontSize: "24px",
                         }}
-
                       >
                         {index + 1}
                       </Typography>
                     </ListItemIcon>
-                    <ListItemText
-                      sx={{
 
-                        ml: 2,
-                      }}
+                    <ListItemText
+                      sx={{ ml: 2 }}
                       primary={
                         <Typography
-
                           sx={{
-                            fontFamily: "SpaceGrotesk-Bold",
+                            ...typography.h3B,
                             fontWeight: 700,
                             fontSize: "24px",
                           }}
                         >
                           {item.title}
+                          <EditIconButton id={item.titleId} />
                         </Typography>
                       }
                       secondary={
                         <Typography
                           sx={{
-                            ...theme.typography.h3medium,
-                            fontWeight: 500
+                            ...typography.h3medium,
+                            fontWeight: 500,
                           }}
                           color="textSecondary"
                         >
                           {item.description}
+                          <EditIconButton id={item.descId} />
                         </Typography>
                       }
                     />
@@ -1334,8 +1431,6 @@ const HomePage = () => {
           </Grid>
         </Box>
       </Box>
-
-
 
       {/* Resale Services */}
       <Box>
@@ -1356,7 +1451,8 @@ const HomePage = () => {
               },
             }}
           >
-            Request a Quote
+            {content.HM1082}
+            <EditIconButton id="HM1082" />
           </Button>
         </Box>
       </Box>
@@ -1374,7 +1470,7 @@ const HomePage = () => {
           py: { xs: 6, md: 10 },
         }}
       >
-        {/* Title */}
+        {/* Header */}
         <Typography
           sx={{
             ...theme.typography.h3RB,
@@ -1384,7 +1480,8 @@ const HomePage = () => {
             mb: 2,
           }}
         >
-          ROI Calculator
+          {content.HM1097}
+          <EditIconButton id="HM1097" />
         </Typography>
 
         {/* Subtitle */}
@@ -1400,11 +1497,11 @@ const HomePage = () => {
             mx: { xs: "auto", md: 0 },
           }}
         >
-          Get powerful lifting magnets when you need them — without the upfront cost.
-          Flexible rental plans, quick installation, and reliable performance for every project!
+          {content.HM1098}
+          <EditIconButton id="HM1098" />
         </Typography>
 
-        {/* View All Link */}
+        {/* View All */}
         <Typography
           sx={{
             ...theme.typography.h3R,
@@ -1417,7 +1514,9 @@ const HomePage = () => {
           }}
           onClick={() => navigate("/repair-replace/roi-cal")}
         >
-          View All ROI Calculators
+          {content.HM1099}
+          <EditIconButton id="HM1099" />
+
           <ArrowRightAltIcon
             sx={{
               color: "#1a4dab",
@@ -1428,13 +1527,12 @@ const HomePage = () => {
           />
         </Typography>
 
-        {/* Cards Section */}
+        {/* Cards */}
         <Box sx={{ width: "100%", mx: "auto" }}>
           <Grid container spacing={4} justifyContent="center">
-            {roiData.map((item, index) => (
+            {roiList.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Card
-                  onClick={() => navigate("/repair-replace")}
                   sx={{
                     position: "relative",
                     borderRadius: 3,
@@ -1447,18 +1545,40 @@ const HomePage = () => {
                   }}
                 >
                   {/* Background Image */}
-                  <CardMedia
-                    component="img"
-                    image={item.image}
-                    alt={item.title}
+                  <Box
                     sx={{
-                      height: "100%",
                       width: "100%",
-                      objectFit: "cover",
+                      height: { xs: 280, sm: 300, md: 320 },   // FIXED HEIGHT like design
+                      overflow: "hidden",
                     }}
-                  />
+                  >
+                    <CardMedia
+                      component="img"
+                      image={item.image}
+                      alt={item.title}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center",
+                      }}
+                    />
 
-                  {/* Overlay White Card */}
+
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        zIndex: 10,
+                      }}
+                    >
+                      <EditIconButton id={item.imageId} type="I" />
+                    </Box>
+                  </Box>
+
+
+                  {/* Overlay */}
                   <Box
                     sx={{
                       position: "absolute",
@@ -1473,21 +1593,6 @@ const HomePage = () => {
                       display: "flex",
                       flexDirection: "column",
                       gap: 0.5,
-                      "&:hover": {
-                        bgcolor: "#0b2d55",
-                        color: "white",
-                        "& .MuiTypography-root": {
-                          color: "white",
-                          transform: "scale(1.05)",
-                        },
-                        "& .MuiDivider-root": {
-                          borderColor: "rgba(255,255,255,0.3)",
-                        },
-                        "& .MuiIconButton-root": {
-                          backgroundColor: "#6aa9ff",
-                          color: "white",
-                        },
-                      },
                     }}
                   >
                     <Box
@@ -1503,13 +1608,10 @@ const HomePage = () => {
                         }}
                       >
                         {item.title}
+                        <EditIconButton id={item.titleId} />
                       </Typography>
-                      <IconButton
-                        size="small"
-                        sx={{
-                          backgroundColor: "#f0f0f0",
-                        }}
-                      >
+
+                      <IconButton size="small" sx={{ backgroundColor: "#f0f0f0" }}>
                         <ArrowForwardIosIcon fontSize="small" />
                       </IconButton>
                     </Box>
@@ -1523,6 +1625,7 @@ const HomePage = () => {
                       }}
                     >
                       {item.description}
+                      <EditIconButton id={item.descriptionId} />
                     </Typography>
                   </Box>
                 </Card>
@@ -1535,189 +1638,264 @@ const HomePage = () => {
 
 
 
+
       {/* Our Brands Section */}
-        <Box sx={{ px: 8, py: 6 }}>
-                    {/* Heading */}
-                    <Typography
-                        sx={{
-                            ...typography.displayL,
-                            fontSize: "56px",
-                            fontWeight: 700,
-                            color: "#1C2D4B",
-                            mb: 1,
-                        }}
-                    >
-                        Our brands
-                    </Typography>
+      <Box sx={{ px: { xs: 2, md: 8 }, py: 6 }}>
+        {/* 🔹 Heading */}
+        <Typography
+          sx={{
+            ...typography.displayL,
+            fontSize: { xs: "36px", md: "56px" },
+            fontWeight: 700,
+            color: "#1C2D4B",
+            mb: 1,
+          }}
+        >
+          {content.HM1109}
+          <EditIconButton id="HM1109" />
+        </Typography>
 
-                    {/* Subheading */}
-                    <Typography
-                        sx={{
-                            ...typography.h4,
-                            fontWeight:400,
-                            fontSize: "24px",
-                            color: "#99A0AE",
-                            mb: 6,
-                        }}
-                    >
-                        Together, we deliver complete magnetic solutions from design and manufacturing
-                        to repair and rental services.
-                    </Typography>
+        {/* 🔹 Subheading */}
+        <Typography
+          sx={{
+            ...typography.h4,
+            fontWeight: 400,
+            fontSize: { xs: "18px", md: "24px" },
+            color: "#99A0AE",
+            mb: 6,
+          }}
+        >
+          {content.HM1110}
+          <EditIconButton id="HM1110" />
+        </Typography>
 
-                    {/* Two brand sections */}
-                    <Grid container spacing={4}>
-                        {/* Left Brand */}
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            sx={{
-                                borderRight: { md: "1px solid #E0E0E0" },
-                                pr: { md: 4 },
-                            }}
-                        >
-                            <Box display="flex" flexDirection="column" alignItems="flex-start">
-                                <Box
-                                    component="img"
-                                    src={Brand1}// update with your logo path
-                                    alt="Electro Flux Logo"
-                                    sx={{ marginLeft: '30%', width: '151px', height: '158px', mb: 2 }}
-                                />
-                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
-                                    Electro Flux Equipments Pvt. Ltd. is the OEM manufacturer of electro-lifting
-                                    magnets, separators, and magnetic handling systems.
-                                </Typography>
-                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
-                                    With decades of experience, the brand powers industries with engineered
-                                    lifting solutions built to global standards.
-                                </Typography>
-                                <Box display="flex" alignItems="center" sx={{ color: "#2F6FBA", fontWeight: 600 }}>
-                                    <Link
-                                        href="#"
-                                        underline="none"
-                                    >
-                                        Learn more
-                                    </Link>
-                                    <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
-                                </Box>
-                            </Box>
-                        </Grid>
-
-                        {/* Right Brand */}
-                        <Grid item xs={12} md={6} sx={{ pl: { md: 4 } }}>
-                            <Box display="flex" flexDirection="column" alignItems="flex-start">
-
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: 2,
-                                        justifyContent: "center",
-                                        py: 7,
-                                        marginLeft: '30%'
-                                    }}
-                                >
-                                    {/* SVG Icon */}
-                                    <RefluxSvg width={60} height={60} color="#00374C" />
-
-                                    {/* Text Part */}
-                                    <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-                                        <Typography
-                                            sx={{
-                                                fontFamily: "Fira Sans, sans-serif",
-                                                fontWeight: 700,
-                                                fontSize: "30px",
-                                                color: "#00374C",
-                                                lineHeight: 1,
-                                            }}
-                                        >
-                                            ReFlux
-                                        </Typography>
-                                        <Typography
-                                            sx={{
-                                                fontFamily: "Fira Sans, sans-serif",
-                                                fontWeight: 400,
-                                                fontSize: "14px",
-                                                letterSpacing: "6px",
-                                                color: "#00374C",
-                                                mt: 0.5,
-                                            }}
-                                        >
-                                            MAGNETS
-                                        </Typography>
-                                    </Box>
-                                </Box>
-
-                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
-                                    Re-flux is the service and lifecycle brand of Electro Flux—dedicated to repair,
-                                    rental, and resale of industrial magnets across India.
-                                </Typography>
-                                <Typography sx={{ ...typography.bodyBase, fontFamily: "'Fira Sans', sans-serif", fontWeight: 400, fontSize: '18px', color: "#000000", mb: 1 }}>
-                                    From certified repairs to refurbished magnets with warranty, Re-flux ensures
-                                    reliability, safety, and uptime in every operation.
-                                </Typography>
-                                <Box display="flex" alignItems="center" sx={{ color: "#2F6FBA", fontWeight: 600 }}>
-                                    <Link
-                                        href="#"
-                                        underline="none"
-                                        
-                                    >
-                                        Learn more
-                                    </Link>
-                                    <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
-                                </Box>
-                            </Box>
-                        </Grid>
-                    </Grid>
+        {/* 🔹 Two Brands Section */}
+        <Grid container spacing={4}>
+          {/* Left Brand */}
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              borderRight: { md: "1px solid #E0E0E0" },
+              pr: { md: 4 },
+            }}
+          >
+            <Box display="flex" flexDirection="column" alignItems="flex-start">
+              {/* Brand Image */}
+              <Box sx={{ position: "relative", marginLeft: "30%" }}>
+                <Box
+                  component="img"
+                  src={`https://cmsreflux.bexatm.com${content.HM1114}`}
+                  alt="Electro Flux Logo"
+                  sx={{ width: "151px", height: "158px", mb: 2 }}
+                />
+                <Box sx={{ position: "absolute", top: 0, right: -30 }}>
+                  <EditIconButton id="HM1114" type="I" />
                 </Box>
+              </Box>
+
+              {/* Brand Description */}
+              <Typography
+                sx={{
+                  ...typography.bodyBase,
+                  fontFamily: "'Fira Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: "18px",
+                  color: "#000000",
+                  mb: 1,
+                }}
+              >
+                {content.HM1111}
+                <EditIconButton id="HM1111" />
+              </Typography>
+
+              <Typography
+                sx={{
+                  ...typography.bodyBase,
+                  fontFamily: "'Fira Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: "18px",
+                  color: "#000000",
+                  mb: 1,
+                }}
+              >
+                {content.HM1112}
+                <EditIconButton id="HM1112" />
+              </Typography>
+
+              {/* Learn More */}
+              <Box display="flex" alignItems="center">
+                <Link
+                  href="#"
+                  underline="none"
+                  sx={{ color: "#2F6FBA", fontWeight: 600 }}
+                >
+                  {content.HM1113}
+                </Link>
+                <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
+                <EditIconButton id="HM1113" />
+              </Box>
+            </Box>
+          </Grid>
+
+          {/* Right Brand */}
+          <Grid item xs={12} md={6} sx={{ pl: { md: 4 } }}>
+            <Box display="flex" flexDirection="column" alignItems="flex-start">
+              {/* ReFlux Logo + Text */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  justifyContent: "center",
+                  py: 7,
+                  marginLeft: "30%",
+                  position: "relative",
+                }}
+              >
+                {/* SVG Icon */}
+                <Box>
+                  <RefluxSvg width={60} height={60} color="#00374C" />
+                  <Box sx={{ position: "absolute", top: 20, right: -30 }}>
+                    <EditIconButton id="HM1115" type="I" />
+                  </Box>
+                </Box>
+
+                {/* Text */}
+                <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                  <Typography
+                    sx={{
+                      fontFamily: "Fira Sans, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "30px",
+                      color: "#00374C",
+                      lineHeight: 1,
+                    }}
+                  >
+                    ReFlux
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "Fira Sans, sans-serif",
+                      fontWeight: 400,
+                      fontSize: "14px",
+                      letterSpacing: "6px",
+                      color: "#00374C",
+                      mt: 0.5,
+                    }}
+                  >
+                    MAGNETS
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* ReFlux Description */}
+              <Typography
+                sx={{
+                  ...typography.bodyBase,
+                  fontFamily: "'Fira Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: "18px",
+                  color: "#000000",
+                  mb: 1,
+                }}
+              >
+                {content.HM1116}
+                <EditIconButton id="HM1116" />
+              </Typography>
+
+              <Typography
+                sx={{
+                  ...typography.bodyBase,
+                  fontFamily: "'Fira Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: "18px",
+                  color: "#000000",
+                  mb: 1,
+                }}
+              >
+                {content.HM1117}
+                <EditIconButton id="HM1117" />
+              </Typography>
+
+              {/* Learn More */}
+              <Box display="flex" alignItems="center">
+                <Link
+                  href="#"
+                  underline="none"
+                  sx={{ color: "#2F6FBA", fontWeight: 600 }}
+                >
+                  {content.HM1118}
+                </Link>
+                <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
+                <EditIconButton id="HM1118" />
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+
+
 
 
 
       {/* FAQs Section */}
-      <Button
-        disableElevation
-        disableRipple
-        sx={{
-          marginBottom: 2,
-          ml: 9,
-          textTransform: "none",           // keep text as-is
-          fontSize: "0.8rem",              // smaller font
-          fontWeight: 500,                 // medium weight
-          color: "#1a4dab",                // dark blue text
-          backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-          borderRadius: "20px",            // pill shape
-          px: 2,                           // horizontal padding
-          py: 0.5,                         // vertical padding
-          boxShadow: "none",               // remove shadow
-          "&:hover": {
-            backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+      <Box sx={{ display: "flex", alignItems: "center", ml: 9 }}>
+        <Button
+          disableElevation
+          disableRipple
+          sx={{
+            marginBottom: 2,
+            textTransform: "none",
+            fontSize: "0.8rem",
+            fontWeight: 500,
+            color: "#1a4dab",
+            backgroundColor: "rgba(36,121,233,0.08)",
+            borderRadius: "20px",
+            px: 2,
+            py: 0.5,
             boxShadow: "none",
-          },
-        }}
-      >
-        FAQs
-      </Button>
-      <Typography
-        sx={{
-          ml: 8,
-          // mt: 5
-          ...theme.typography.displayL,
-          color: '#1C2D4B'
-        }}
-        variant="h3" fontWeight="bold" gutterBottom>
-        FAQs
-      </Typography>
-      <Typography
-        variant="h5" sx={{
-          mb: 4,
-          color: '#1C2D4B',
-          ...theme.typography.h4,
-          ml: 8
-        }}>
-        Get powerful lifting magnets when you need them — without the upfront
-        cost. Flexible rental plans, quick installation, and reliable
-        performance for every project!
-      </Typography>
+            "&:hover": {
+              backgroundColor: "rgba(36,121,233,0.15)",
+              boxShadow: "none",
+            },
+          }}
+        >
+          {content.HM1119}
+        </Button>
+        <EditIconButton id="HM1119" />
+      </Box>
+
+      {/* Heading */}
+      <Box sx={{ display: "flex", alignItems: "center", ml: 8 }}>
+        <Typography
+          sx={{ ...theme.typography.displayL, color: "#1C2D4B" }}
+          variant="h3"
+          fontWeight="bold"
+          gutterBottom
+        >
+          {content.HM1120}
+        </Typography>
+        <EditIconButton id="HM1120" />
+      </Box>
+
+      {/* Sub Content */}
+      <Box sx={{ display: "flex", alignItems: "center", ml: 8 }}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 4,
+            color: "#1C2D4B",
+            ...theme.typography.h4,
+          }}
+        >
+          {content.HM1121}
+        </Typography>
+        <EditIconButton id="HM1121" />
+      </Box>
+
+      {/* FAQ List */}
       <Box sx={{ px: 8, py: 6 }}>
         {faqData.map((item, index) => (
           <Accordion
@@ -1744,14 +1922,27 @@ const HomePage = () => {
                 </IconButton>
               }
             >
-              <Typography sx={{ ...theme.typography.h4, color: '#0E1109' }}>
-                {item.question}
-              </Typography>
+              {/* Question + Edit */}
+              <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+                <Typography
+                  sx={{ ...theme.typography.h4, color: "#0E1109" }}
+                >
+                  {content[item.qKey]}
+                </Typography>
+                <EditIconButton id={item.qKey} />
+              </Box>
             </AccordionSummary>
+
             <AccordionDetails>
-              <Typography sx={{ ...theme.typography.bodyBase, color: '#0E1109' }}>
-                {item.answer}
-              </Typography>
+              {/* Answer + Edit */}
+              <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+                <Typography
+                  sx={{ ...theme.typography.bodyBase, color: "#0E1109" }}
+                >
+                  {content[item.aKey]}
+                </Typography>
+                <EditIconButton id={item.aKey} />
+              </Box>
             </AccordionDetails>
           </Accordion>
         ))}
@@ -1759,56 +1950,76 @@ const HomePage = () => {
 
 
 
+
+      =========================
       {/* Blogs Section */}
+
       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
+
         {/* Section Header */}
         <Button
           disableElevation
           disableRipple
           sx={{
             marginBottom: 2,
-            // ml: 8,
-            textTransform: "none",           // keep text as-is
-            fontSize: "0.8rem",              // smaller font
-            fontWeight: 500,                 // medium weight
-            color: "#1a4dab",                // dark blue text
-            backgroundColor: "rgba(36,121,233,0.08)", // very light blue background
-            borderRadius: "20px",            // pill shape
-            px: 2,                           // horizontal padding
-            py: 0.5,                         // vertical padding
-            boxShadow: "none",               // remove shadow
+            textTransform: "none",
+            fontSize: "0.8rem",
+            fontWeight: 500,
+            color: "#1a4dab",
+            backgroundColor: "rgba(36,121,233,0.08)",
+            borderRadius: "20px",
+            px: 2,
+            py: 0.5,
+            boxShadow: "none",
             "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)", // slightly darker on hover
+              backgroundColor: "rgba(36,121,233,0.15)",
               boxShadow: "none",
             },
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 0.5,
           }}
         >
-          Blogs
+          {content.HM1132}
+          <EditIconButton id="HM1132" />
         </Button>
+
+        {/* Main Heading */}
         <Typography
           sx={{
-
-            ...theme.typography.displayL,
-            color: '#1C2D4B'
+            ...typography.displayL,
+            color: "#1C2D4B",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
           }}
-          variant="h3" fontWeight="bold" gutterBottom>
-          Blogs
+          variant="h3"
+          fontWeight="bold"
+          gutterBottom
+        >
+          {content.HM1133}
+          <EditIconButton id="HM1133" />
         </Typography>
+
+        {/* Sub Text */}
         <Typography
-          variant="h5" sx={{
+          variant="h5"
+          sx={{
             mb: 4,
-            color: '#1C2D4B',
-            ...theme.typography.h4,
-
-          }}>
-          Get powerful lifting magnets when you need them — without the upfront
-          cost. Flexible rental plans, quick installation, and reliable
-          performance for every project!
+            color: "#1C2D4B",
+            ...typography.h4,
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          {content.HM1134}
+          <EditIconButton id="HM1134" />
         </Typography>
-
 
         {/* Blog Section */}
         <Grid container spacing={3}>
+
           {/* Featured Post */}
           <Grid item xs={12} md={6}>
             <Card
@@ -1820,49 +2031,68 @@ const HomePage = () => {
                 bgcolor: "#fafafa",
                 cursor: "pointer",
               }}
-              onClick={() => navigate("/home/BlogDetails")}
             >
-              <CardMedia
-                component="img"
-                image={blogData[0].image}
-                alt={blogData[0].title}
-                sx={{
-                  borderRadius: 3,
-                  width: "100%",
-                  height: { xs: 240, sm: 280, md: 300 },
-                  objectFit: "cover",
-                }}
-              />
+              <Box sx={{ position: "relative" }}>
+                <CardMedia
+                  component="img"
+                  image={blogData[0].image}
+                  alt={content[blogData[0].titleKey]}
+                  sx={{
+                    borderRadius: 3,
+                    width: "100%",
+                    height: { xs: 240, sm: 280, md: 300 },
+                    objectFit: "cover",
+                  }}
+                />
+                <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
+                  <EditIconButton id={blogData[0].imageKey} type="I" />
+                </Box>
+              </Box>
+
               <CardContent>
                 <Typography
                   sx={{
-                    ...theme.typography?.h5,
+                    ...typography?.h5,
                     color: "#0E1109",
                     fontSize: { xs: "1.2rem", md: "1.5rem" },
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
                   }}
                   gutterBottom
                 >
-                  {blogData[0].title}
+                  {content[blogData[0].titleKey]}
+                  <EditIconButton id={blogData[0].titleKey} />
                 </Typography>
-                <Typography sx={{ ...theme.typography?.bodyBase, color: "#677489" }}>
-                  {blogData[0].author} • {blogData[0].date}
+
+                <Typography
+                  sx={{
+                    ...typography?.bodyBase,
+                    color: "#677489",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  {content[blogData[0].authorKey]}
+                  <EditIconButton id={blogData[0].authorKey} /> • {content[blogData[0].dateKey]}
+                  <EditIconButton id={blogData[0].dateKey} />
                 </Typography>
+
                 <Link
                   href="#"
                   underline="none"
                   sx={{
-                    ...theme.typography?.bodyBasemedium,
-                    fontWeight: 500,
-                    fontSize: '16px'
+                    color: "#1F77D6",
+                    ...typography?.bodyBasemedium,
+                    mt: 1,
+                    display: "inline-flex",
+                    alignItems: "center",
                   }}
+                  onClick={() => navigate("/home/BlogDetails")}
                 >
-                  <Typography sx={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: "#1F77D6" }}>
-                    Discover More{" "}
-
-                    <ArrowForwardIosIcon
-                      sx={{ color: "#1F77D6", fontSize: "0.9rem" }}
-                    />
-                  </Typography>
+                  Discover More{" "}
+                  <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }} />
                 </Link>
               </CardContent>
             </Card>
@@ -1871,6 +2101,7 @@ const HomePage = () => {
           {/* Other Posts */}
           <Grid item xs={12} md={6}>
             <Grid container spacing={2} direction="column">
+
               {blogData.slice(1).map((item, idx) => (
                 <Grid item key={idx}>
                   <Card
@@ -1885,68 +2116,91 @@ const HomePage = () => {
                       boxShadow: 0,
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/home/Blogpost")}
                   >
-                    <CardMedia
-                      component="img"
-                      image={item.image}
-                      alt={item.title}
-                      sx={{
-                        width: { xs: 100, sm: 120, md: 130 },
-                        height: { xs: 100, sm: 120, md: 141 },
-                        borderRadius: 2,
-                        objectFit: "cover",
-                        mr: 2,
-                      }}
-                    />
+
+                    {/* Thumbnail */}
+                    <Box sx={{ position: "relative" }}>
+                      <CardMedia
+                        component="img"
+                        image={item.image}
+                        alt={content[item.titleKey]}
+                        sx={{
+                          width: { xs: 100, sm: 120, md: 130 },
+                          height: { xs: 100, sm: 120, md: 141 },
+                          borderRadius: 2,
+                          objectFit: "cover",
+                          mr: 2,
+                        }}
+                      />
+                      <Box sx={{ position: "absolute", bottom: 6, right: 6 }}>
+                        <EditIconButton id={item.imageKey} type="I" />
+                      </Box>
+                    </Box>
+
+                    {/* Content */}
                     <Box sx={{ flex: 1 }}>
                       <Typography
                         sx={{
-                          ...theme.typography?.h4,
+                          ...typography?.h4,
                           color: "#0E1109",
                           fontSize: { xs: "0.95rem", sm: "1.1rem" },
                           mb: 0.5,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
                         }}
                       >
-                        {item.title}
+                        {content[item.titleKey]}
+                        <EditIconButton id={item.titleKey} />
                       </Typography>
+
                       <Typography
                         sx={{
-                          ...theme.typography?.bodyBase,
+                          ...typography?.bodyBase,
                           color: "#677489",
                           fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
                         }}
                       >
-                        {item.author} • {item.date}
+                        {content[item.authorKey]}
+                        <EditIconButton id={item.authorKey} /> • {content[item.dateKey]}
+                        <EditIconButton id={item.dateKey} />
                       </Typography>
+
                       <Link
                         href="#"
                         underline="none"
                         sx={{
-
-                          ...theme.typography?.bodyBasemedium,
+                          color: "#1F77D6",
+                          ...typography?.bodyBasemedium,
                           mt: 0.5,
                           fontSize: { xs: "0.75rem", sm: "0.85rem" },
                           display: "inline-flex",
                           alignItems: "center",
                         }}
+                        onClick={() => navigate("/home/Blogpost")}
                       >
-                        <Typography sx={{ color: "#1F77D6", }}>
-                          Discover More{" "}
-
-                          <ArrowForwardIosIcon
-                            sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }}
-                          />
-                        </Typography>
+                        Discover More{" "}
+                        <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }} />
                       </Link>
                     </Box>
                   </Card>
                 </Grid>
               ))}
+
             </Grid>
           </Grid>
         </Grid>
       </Box>
+
+
+
+
+
+
+
 
       {/* Footer Section */}
       <Box >
@@ -2186,68 +2440,69 @@ const HomePage = () => {
 };
 
 export default HomePage;
-const services = [
-  {
-    id: 1,
-    title: "Rectangular Lifting Magnet",
-    type: "Permanent Magnet",
-    liftCapacity: "3 Tons",
-    powerSupply: "None Required",
-    sizes: "500mm / 800mm / 1000mm",
-    price: 30,
-    img: rentserviceimg,
-  },
-  {
-    id: 2,
-    title: "Bespoke Lifting Magnet",
-    type: "Custom Coil",
-    liftCapacity: "Varied",
-    powerSupply: "Custom",
-    sizes: "Custom Sizes Available",
-    price: 100,
-    img: rentserviceimg,
-  },
-  {
-    id: 3,
-    title: "Mini Lifting Magnet",
-    type: "Coil",
-    liftCapacity: "1 Ton",
-    powerSupply: "220V",
-    sizes: "300mm / 500mm",
-    price: 20,
-    img: rentserviceimg,
-  },
-  {
-    id: 4,
-    title: "Rectangular Lifting Magnet",
-    type: "Permanent Magnet",
-    liftCapacity: "3 Tons",
-    powerSupply: "None Required",
-    sizes: "500mm / 800mm / 1000mm",
-    price: 30,
-    img: rentserviceimg,
-  },
-  {
-    id: 5,
-    title: "Bespoke Lifting Magnet",
-    type: "Custom Coil",
-    liftCapacity: "Varied",
-    powerSupply: "Custom",
-    sizes: "Custom Sizes Available",
-    price: 100,
-    img: rentserviceimg,
-  },
-  {
-    id: 6,
-    title: "Mini Lifting Magnet",
-    type: "Coil",
-    liftCapacity: "1 Ton",
-    powerSupply: "220V",
-    sizes: "300mm / 500mm",
-    price: 20,
-    img: rentserviceimg,
-  },
-];
+// const services = [
+//   {
+//     id: 1,
+//     title: "Rectangular Lifting Magnet",
+//     type: "Permanent Magnet",
+//     liftCapacity: "3 Tons",
+//     powerSupply: "None Required",
+//     sizes: "500mm / 800mm / 1000mm",
+//     price: 30,
+//     img: rentserviceimg,
+//   },
+//   {
+//     id: 2,
+//     title: "Bespoke Lifting Magnet",
+//     type: "Custom Coil",
+//     liftCapacity: "Varied",
+//     powerSupply: "Custom",
+//     sizes: "Custom Sizes Available",
+//     price: 100,
+//     img: rentserviceimg,
+//   },
+//   {
+//     id: 3,
+//     title: "Mini Lifting Magnet",
+//     type: "Coil",
+//     liftCapacity: "1 Ton",
+//     powerSupply: "220V",
+//     sizes: "300mm / 500mm",
+//     price: 20,
+//     img: rentserviceimg,
+//   },
+//   {
+//     id: 4,
+//     title: "Rectangular Lifting Magnet",
+//     type: "Permanent Magnet",
+//     liftCapacity: "3 Tons",
+//     powerSupply: "None Required",
+//     sizes: "500mm / 800mm / 1000mm",
+//     price: 30,
+//     img: rentserviceimg,
+//   },
+//   {
+//     id: 5,
+//     title: "Bespoke Lifting Magnet",
+//     type: "Custom Coil",
+//     liftCapacity: "Varied",
+//     powerSupply: "Custom",
+//     sizes: "Custom Sizes Available",
+//     price: 100,
+//     img: rentserviceimg,
+//   },
+//   {
+//     id: 6,
+//     title: "Mini Lifting Magnet",
+//     type: "Coil",
+//     liftCapacity: "1 Ton",
+//     powerSupply: "220V",
+//     sizes: "300mm / 500mm",
+//     price: 20,
+//     img: rentserviceimg,
+//   },
+// ];
+
 {/* <Box sx={{ display: "flex", gap: 2, mb: 3, mt: 3 }}>
           {[
             { id: "01", title: "Repair" },

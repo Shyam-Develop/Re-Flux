@@ -32,7 +32,7 @@ export default function SellRentServicesCard({ services }) {
 
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C008";
+      `${process.env.REACT_APP_CMS_URL}?contentId=C008`;
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -230,7 +230,7 @@ export default function SellRentServicesCard({ services }) {
                 {/* Image */}
                 <CardMedia
                   component="img"
-                  image={`https://skillglow.bexatm.com${item.image.value}`}
+                  image={`https://cmsreflux.bexatm.com${item.image.value}`}
                   alt={item.title.value}
                   sx={{
                     width: { xs: '100%', md: '395px' },

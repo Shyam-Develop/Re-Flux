@@ -108,7 +108,7 @@ const CmsEditor = () => {
     if (file) {
       setImage(file);
       setPreview(URL.createObjectURL(file));
-      setText(`/ATM/images/${file.name}`);
+      setText(`/API/images/${file.name}`);
     }
   };
 
@@ -122,7 +122,7 @@ const CmsEditor = () => {
         contentType === "A" ? contentArray[contentArrayID] : text;
         console.log("updatedText",updatedText);
       const res = await fetch(
-        `https://cmsreflux.bexatm.com/ATM/ContentManageSysV1.php?contentId=${contentId}`,
+        `https://cmsreflux.bexatm.com/API/ContentManageSysV1.php?contentId=${contentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -140,7 +140,7 @@ const CmsEditor = () => {
         const formData = new FormData();
         formData.append("file", image);
         formData.append("filePath", "/images/");
-        await fetch("https://cmsreflux.bexatm.com/ATM/ImageUpload.php", {
+        await fetch("https://cmsreflux.bexatm.com/API/ImageUpload.php", {
           method: "POST",
           body: formData,
         });

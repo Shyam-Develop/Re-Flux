@@ -34,7 +34,7 @@ export default function AboutUsRepairServicesPageCard() {
   // ✅ Fetch content from CMS
   useEffect(() => {
     fetch(
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Aboutus"
+      `${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`
     )
       .then((res) => res.json())
       .then((data) => setContent(data))
@@ -85,37 +85,37 @@ export default function AboutUsRepairServicesPageCard() {
       id: 1,
       title: content.AU1048,
       type: content.AU1049,
-      img: `https://skillglow.bexatm.com${content.AU1050}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1050}`,
     },
     {
       id: 2,
       title: content.AU1051,
       type: content.AU1052,
-      img: `https://skillglow.bexatm.com${content.AU1053}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1053}`,
     },
     {
       id: 3,
       title: content.AU1054,
       type: content.AU1055,
-      img: `https://skillglow.bexatm.com${content.AU1056}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1056}`,
     },
     {
       id: 4,
       title: content.AU1057,
       type: content.AU1058,
-      img: `https://skillglow.bexatm.com${content.AU1059}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1059}`,
     },
     {
       id: 5,
       title: content.AU1060,
       type: content.AU1061,
-      img: `https://skillglow.bexatm.com${content.AU1062}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1062}`,
     },
     {
       id: 6,
       title: content.AU1063,
       type: content.AU1064,
-      img: `https://skillglow.bexatm.com${content.AU1065}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1065}`,
     },
   ];
 

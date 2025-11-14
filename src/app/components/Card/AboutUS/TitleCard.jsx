@@ -23,7 +23,7 @@ export default function AboutUsCard() {
 
    useEffect(() => {
       const apiUrl =
-        "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Aboutus";
+        `${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`
       fetch(apiUrl)
         .then((res) => {
           if (!res.ok) throw new Error("Network response was not ok");
@@ -106,7 +106,7 @@ export default function AboutUsCard() {
         {/* Image */}
         <CardMedia
           component="img"
-          image={`https://skillglow.bexatm.com${content.AU1002}`} 
+          image={`https://cmsreflux.bexatm.com${content.AU1002}`} 
           alt="About Us"
           sx={{
             width: "100%",

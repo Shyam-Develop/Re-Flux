@@ -402,7 +402,7 @@ const RefurbishedDetail = () => {
 
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C011")
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C011`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -458,25 +458,25 @@ const RefurbishedDetail = () => {
       id: 1,
       title: content.CON110001,
       description: content.CON110002,
-      img: `https://skillglow.bexatm.com${content.CON110003}`,
+      img: `https://cmsreflux.bexatm.com${content.CON110003}`,
     },
     {
       id: 2,
       title: content.CON110004,
       description: content.CON110005,
-      img: `https://skillglow.bexatm.com${content.CON110006}`,
+      img: `https://cmsreflux.bexatm.com${content.CON110006}`,
     },
     {
       id: 3,
       title: content.CON110007,
       description: content.CON110008,
-      img: `https://skillglow.bexatm.com${content.CON110009}`,
+      img: `https://cmsreflux.bexatm.com${content.CON110009}`,
     },
     {
       id: 4,
       title: content.CON110010,
       description: content.CON110011,
-      img: `https://skillglow.bexatm.com${content.CON110012}`,
+      img: `https://cmsreflux.bexatm.com${content.CON110012}`,
     },
   ];
 
@@ -577,7 +577,7 @@ const RefurbishedDetail = () => {
               {/* 🖼️ Image */}
               <Box
                 component="img"
-                src={`https://skillglow.bexatm.com${content.CON120019}`}
+                src={`https://cmsreflux.bexatm.com${content.CON120019}`}
                 alt="Main Lifting Magnet"
                 sx={{
                   width: "664px",
@@ -640,10 +640,10 @@ const RefurbishedDetail = () => {
                   {/* 🖼️ Thumbnail Image */}
                   <Box
                     component="img"
-                    src={`https://skillglow.bexatm.com${thumb.src}`}
+                    src={`https://cmsreflux.bexatm.com${thumb.src}`}
                     alt={`Thumbnail ${index + 1}`}
                     onClick={() =>
-                      setMainImage(`https://skillglow.bexatm.com${thumb.src}`)
+                      setMainImage(`https://cmsreflux.bexatm.com${thumb.src}`)
                     }
                     sx={{
                       width: "148px",

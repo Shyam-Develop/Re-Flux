@@ -18,7 +18,7 @@ export default function ServicesSection() {
 
   // Fetch JSON data via API
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C005")
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C005`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));
@@ -217,7 +217,7 @@ export default function ServicesSection() {
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${service.image}`}
+                  src={`https://cmsreflux.bexatm.com${service.image}`}
                   alt="service icon"
                   sx={{
                     width: "45px",
