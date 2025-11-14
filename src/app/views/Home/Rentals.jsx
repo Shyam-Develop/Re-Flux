@@ -69,8 +69,6 @@ const fields = [
 
 
 
-
-
 const Rentals = () => {
 
   const navigate = useNavigate()
@@ -82,7 +80,6 @@ const Rentals = () => {
   };
 
   //For CMS
-
 
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
