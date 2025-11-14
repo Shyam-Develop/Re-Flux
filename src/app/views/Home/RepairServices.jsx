@@ -29,6 +29,7 @@ import { typography, RefluxSvg } from "app/utils/constant";
 import Footer from "app/components/Card/Footer";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 const ServiceCard = ({
   index,
@@ -355,29 +356,64 @@ const ServiceCard = ({
                         size="small"
                         onClick={async (e) => {
                           e.stopPropagation();
-                          if (
-                            !window.confirm(`Delete "${fault}" from this list?`)
-                          )
-                            return;
+
+                          // SweetAlert2 Confirmation
+                          const confirm = await Swal.fire({
+                            title: `Delete "${fault}" from this list?`,
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Yes, delete it",
+                          });
+
+                          if (!confirm.isConfirmed) return;
 
                           const updatedFaults = faults.filter(
                             (_, i) => i !== index
                           );
 
-                          const res = await fetch(
-                            "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
-                            {
-                              method: "POST",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({
-                                contentId,
-                                newContent: { [faultsId]: updatedFaults },
-                              }),
+                          try {
+                            // Backend request
+                            const res = await fetch(
+                              "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+                              {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                  contentId,
+                                  newContent: { [faultsId]: updatedFaults },
+                                }),
+                              }
+                            );
+                            const result = await res.json();
+
+                            // SweetAlert2 Success/Failure
+                            if (result.success) {
+                              Swal.fire({
+                                title: "Deleted!",
+                                text: `"${fault}" has been removed.`,
+                                icon: "success",
+                                timer: 1500,
+                                showConfirmButton: false,
+                              }).then(() => {
+                                window.location.reload();
+                              });
+                            } else {
+                              Swal.fire({
+                                title: "Failed!",
+                                text: "Failed to delete fault.",
+                                icon: "error",
+                              });
                             }
-                          );
-                          const result = await res.json();
-                          if (result.success) window.location.reload();
-                          else alert("❌ Failed to delete fault.");
+                          } catch (err) {
+                            Swal.fire({
+                              title: "Error!",
+                              text: "Something went wrong.",
+                              icon: "error",
+                            });
+                            console.error("Delete error:", err);
+                          }
                         }}
                         sx={{
                           p: 0.3,
@@ -543,8 +579,11 @@ const RepairServices = () => {
 
   //  Load content
   useEffect(() => {
-    fetch("https://cmsreflux.bexatm.com/API/data/C013.json")
-      .then((res) => res.json())
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C013`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
       .then((data) => {
         setContent(data);
 
@@ -713,8 +752,17 @@ const RepairServices = () => {
   };
 
   const handleDeleteCard = async (card) => {
-    if (!window.confirm("Are you sure you want to delete this service card?"))
-      return;
+    const confirm = await Swal.fire({
+      title: "Delete Service Card?",
+      text: "Are you sure you want to delete this service card?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it",
+    });
+
+    if (!confirm.isConfirmed) return;
 
     const keysToDelete = [
       card.imageId,
@@ -726,26 +774,51 @@ const RepairServices = () => {
       card.serviceValueId,
     ];
 
-    // 1️⃣ Update backend JSON file
-    const res = await fetch(
-      "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contentId: "C013",
-          keys: keysToDelete,
-        }),
+    try {
+      // Backend call
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C013",
+            keys: keysToDelete,
+          }),
+        }
+      );
+
+      const result = await res.json();
+      console.log("Delete result:", result);
+
+      if (result.success) {
+        // Update local state
+        setCards((prev) => prev.filter((c) => c.imageId !== card.imageId));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Service card has been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Unable to delete service card.",
+          icon: "error",
+        });
       }
-    );
-
-    const result = await res.json();
-    console.log("Delete result:", result);
-
-    // 2️⃣ Update local React state
-    setCards(cards.filter((c) => c.imageId !== card.imageId));
-
-    window.location.reload();
+    } catch (error) {
+      console.error("Delete error:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong while deleting.",
+        icon: "error",
+      });
+    }
   };
 
   //  Check admin role
@@ -753,6 +826,23 @@ const RepairServices = () => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
+
+  useEffect(() => {
+    const targetId = localStorage.getItem("scrollToFaqIdRS");
+    if (!targetId) return;
+
+    const t = setTimeout(() => {
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1800);
+      }
+      localStorage.removeItem("scrollToFaqIdRS");
+    }, 700);
+
+    return () => clearTimeout(t);
+  }, [content]);
 
   //  Edit function
   const handleEdit = (contentTextID, type = "T") => {
@@ -834,6 +924,159 @@ const RepairServices = () => {
       image: `https://cmsreflux.bexatm.com${content.RS1117}`,
     },
   ];
+
+  const rsFaqData = (() => {
+    if (!content) return [];
+
+    const out = [];
+
+    // -----------------------------
+    // 1) FIXED FAQ AREA (RS1087–RS1096)
+    // -----------------------------
+    for (let i = 1087; i <= 1096; i += 2) {
+      const qId = `RS${i}`;
+      const aId = `RS${i + 1}`;
+      if (content[qId] && content[aId]) {
+        out.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    }
+
+    // -----------------------------
+    // 2) NEW FAQ AREA (AFTER BLOG)
+    // BLOG ends at RS1117
+    // -----------------------------
+    const allKeys = Object.keys(content)
+      .filter((k) => /^RS\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RS", ""), 10))
+      .sort((a, b) => a - b);
+
+    const blogEnd = 1117;
+
+    for (let i of allKeys) {
+      if (i <= blogEnd) continue; // ❌ skip blog area & old data
+      if (i % 2 === 0) continue; // questions are odd; skip even numbers
+
+      const qId = `RS${i}`;
+      const aId = `RS${i + 1}`;
+
+      if (content[qId] && content[aId]) {
+        out.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    }
+
+    return out;
+  })();
+
+  const handleAddRSFAQ = async () => {
+    if (!content) return alert("Content not loaded yet");
+
+    // Collect all numeric RS IDs
+    const allRsIds = Object.keys(content)
+      .filter((k) => /^RS\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RS", ""), 10));
+
+    const maxId = Math.max(...allRsIds); // last ID in file
+
+    // Next FAQ must be odd ID (question)
+    let nextQ = maxId + 1;
+    if (nextQ % 2 === 0) nextQ++;
+
+    const nextA = nextQ + 1;
+
+    const nextQId = `RS${nextQ}`;
+    const nextAId = `RS${nextA}`;
+
+    const newFAQ = {
+      [nextQId]: "New FAQ Question?",
+      [nextAId]: "New FAQ Answer.",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "C013",
+          newContent: newFAQ,
+        }),
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem("scrollToFaqIdRS", nextQId);
+      setTimeout(() => window.location.reload(), 600);
+    } else {
+      alert("Failed to add FAQ");
+    }
+  };
+
+  const handleDeleteFAQ = async (qId, aId) => {
+    const confirm = await Swal.fire({
+      title: "Delete FAQ?",
+      text: "Are you sure you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C013",
+            keys: [qId, aId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong.",
+        icon: "error",
+      });
+      console.error("Delete error:", err);
+    }
+  };
 
   return (
     <>
@@ -1518,15 +1761,10 @@ const RepairServices = () => {
 
         {/* Accordion Section */}
         <Box sx={{ px: 8, py: 3 }}>
-          {[
-            { q: "RS1087", a: "RS1088" },
-            { q: "RS1089", a: "RS1090" },
-            { q: "RS1091", a: "RS1092" },
-            { q: "RS1093", a: "RS1094" },
-            { q: "RS1095", a: "RS1096" },
-          ].map((faq, index) => (
+          {rsFaqData.map((item, index) => (
             <Accordion
               key={index}
+              id={item.qId} // ⭐ required for scroll
               expanded={expanded === index}
               onChange={() => handleChange(index)}
               disableGutters
@@ -1550,16 +1788,53 @@ const RepairServices = () => {
                 }
               >
                 <Typography sx={{ ...typography.h4, color: "#0E1109" }}>
-                  {content[faq.q]} <EditIconButton id={faq.q} />
+                  {item.question}
+                  <EditIconButton id={item.qId} />
+
+                  {/* DELETE FAQ */}
+                  <IconButton
+                    size="small"
+                    onClick={() => handleDeleteFAQ(item.qId, item.aId)}
+                    sx={{
+                      ml: 1,
+                      color: "#B71C1C",
+                      "&:hover": { backgroundColor: "#fbe9e7" },
+                    }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
                 </Typography>
               </AccordionSummary>
+
               <AccordionDetails>
                 <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }}>
-                  {content[faq.a]} <EditIconButton id={faq.a} />
+                  {item.answer}
+                  <EditIconButton id={item.aId} />
                 </Typography>
               </AccordionDetails>
             </Accordion>
           ))}
+
+          {/* Add New FAQ Button */}
+          {isAdmin && (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleAddRSFAQ}
+                sx={{
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                  px: 3,
+                  py: 1,
+                  borderRadius: "8px",
+                  textTransform: "none",
+                  "&:hover": { backgroundColor: "#16233B" },
+                }}
+              >
+                <AddIcon /> Add New FAQ
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
 

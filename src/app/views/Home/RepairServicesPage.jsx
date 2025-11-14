@@ -69,6 +69,7 @@ import BrowseDialog from "app/components/DialogBox";
 import Footer from "app/components/Card/Footer";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 const RepairServicesPage = () => {
   const theme = useTheme();
@@ -255,9 +256,7 @@ const RepairServicesPage = () => {
 
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_CMS_URL}?contentId=RepairServicesPage`
-    )
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=RepairServicesPage`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -288,7 +287,17 @@ const RepairServicesPage = () => {
   }, []);
 
   const handleDeleteFAQ = async (qId, aId) => {
-    if (!window.confirm("Delete this FAQ?")) return;
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it",
+    });
+
+    if (!confirm.isConfirmed) return;
 
     try {
       const res = await fetch(
@@ -306,12 +315,29 @@ const RepairServicesPage = () => {
       const result = await res.json();
 
       if (result.success) {
-        window.location.reload();
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
       } else {
-        alert("Failed to delete FAQ.");
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
       }
     } catch (err) {
       console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong.",
+        icon: "error",
+      });
     }
   };
 
@@ -1461,7 +1487,7 @@ const RepairServicesPage = () => {
           {faqData.map((item, index) => (
             <Accordion
               key={index}
-               id={item.qId} // ← REQUIRED for scrolling!
+              id={item.qId} // ← REQUIRED for scrolling!
               expanded={expanded === index}
               onChange={() => handleChange(index)}
               disableGutters

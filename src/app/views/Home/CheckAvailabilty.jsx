@@ -64,6 +64,7 @@ import WhatsincludedCard from "app/components/Card/WhatsincludedCard";
 import Approach5 from "../../../assets/Approach5.jpg";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 const renderSpecGrid = (properties) => (
   <Grid container spacing={2}>
@@ -216,9 +217,7 @@ const CheckAvailabilty = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_CMS_URL}?contentId=C012`
-    )
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C012`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -249,7 +248,17 @@ const CheckAvailabilty = () => {
   }, []);
 
   const handleDeleteFAQ = async (qId, aId) => {
-    if (!window.confirm("Delete this FAQ?")) return;
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it",
+    });
+
+    if (!confirm.isConfirmed) return;
 
     try {
       const res = await fetch(
@@ -267,12 +276,29 @@ const CheckAvailabilty = () => {
       const result = await res.json();
 
       if (result.success) {
-        window.location.reload();
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been successfully removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
       } else {
-        alert("Failed to delete FAQ.");
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
       }
     } catch (err) {
       console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+      });
     }
   };
 
