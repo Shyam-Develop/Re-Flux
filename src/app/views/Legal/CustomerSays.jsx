@@ -22,7 +22,7 @@ export default function CustomerSays() {
   // 🔹 Load content
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C002";
+      `${process.env.REACT_APP_CMS_URL}?contentId=C002`
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -144,7 +144,7 @@ export default function CustomerSays() {
                 align="center"
                 sx={{
                   ...typography.displayL,
-                  fontWeight:700,
+                  fontWeight: 700,
                   color: "#232323",
                   "@media (max-width: 900px)": { fontSize: "1.8rem" },
                 }}
@@ -171,7 +171,7 @@ export default function CustomerSays() {
                 align="left"
                 sx={{
                   ...typography.h4,
-                  fontWeight:400,
+                  fontWeight: 400,
                   color: "#6B768A",
                   "@media (max-width: 900px)": {
                     fontSize: "1rem",
@@ -241,46 +241,57 @@ export default function CustomerSays() {
                   }}
                 >
                   {/* Name */}
-                  <Typography sx={{ ...typography.h3B, fontWeight:700, fontSize:"28px", color: "#232323" }}>
+                  <Typography sx={{ ...typography.h3B, fontWeight: 700, fontSize: "28px", color: "#232323" }}>
                     {item.name}
                     <EditIconButton id={nameId} />
                   </Typography>
 
                   {/* Role */}
-                  <Typography sx={{ mb: 1, ...typography.h5, fontWeight:500, fontSize:"16px", color: "#6B768A" }}>
+                  <Typography sx={{ mb: 1, ...typography.h5, fontWeight: 500, fontSize: "16px", color: "#6B768A" }}>
                     {item.role}
                     <EditIconButton id={roleId} />
                   </Typography>
 
                   {/* Text */}
-                  <Typography sx={{ ...typography.h6, fontWeight:400, fontSize:"18px", color: "#5C5C5C" }}>
+                  <Typography sx={{ ...typography.h6, fontWeight: 400, fontSize: "18px", color: "#5C5C5C" }}>
                     {item.text}
                     <EditIconButton id={textId} />
                   </Typography>
 
                   {/* Image (only 3rd) */}
                   {item.image && (
-                    <Box
-                      component="img"
-                      src={`https://skillglow.bexatm.com${item.image}`}
-                      alt={item.name}
-                      sx={{
-                        width: "100%",
-                        height: 567,
-                        borderRadius: 2,
-                        objectFit: "cover",
-                        mt: 2,
-                        "@media (max-width: 900px)": { height: 250 },
-                      }}
-                    />
-                  )}
+                    <Box sx={{ position: "relative", width: "100%" }}>
 
-                  {/* Edit Icon for Image */}
-                  {item.image && (
-                    <Box sx={{ position: "absolute", top: 10, right: 10 }}>
-                      <EditIconButton id={imageId} type="I" />
+                      {/* Image */}
+                      <Box
+                        component="img"
+                        src={`https://cmsreflux.bexatm.com${item.image}`}
+                        alt={item.name}
+                        sx={{
+                          width: "100%",
+                          height: 567,
+                          borderRadius: 2,
+                          objectFit: "cover",
+                          mt: 2,
+                          "@media (max-width: 900px)": { height: 250 },
+                        }}
+                      />
+
+                      {/* Edit Icon - Top Right */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: 16,
+                          right: 16,
+                          zIndex: 10,   // ensure visible above the image
+                        }}
+                      >
+                        <EditIconButton id={imageId} type="I" />
+                      </Box>
+
                     </Box>
                   )}
+
                 </Box>
               );
             })}

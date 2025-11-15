@@ -20,7 +20,7 @@ export default function RentServices() {
 
   useEffect(() => {
     fetch(
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=HomeRentService"
+      `${process.env.REACT_APP_CMS_URL}?contentId=HomeRentService`
     )
       .then((res) => res.json())
       .then((data) => setContent(data))
@@ -206,7 +206,7 @@ export default function RentServices() {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${p.img}`}
+                  src={`https://cmsreflux.bexatm.com${p.img}`}
                   alt={p.title}
                   sx={{
                     width: "100%",

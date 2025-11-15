@@ -21,7 +21,7 @@ export default function WhatsincludedCard() {
   // ✅ Fetch JSON from your PHP API (C006)
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C006";
+      `${process.env.REACT_APP_CMS_URL}?contentId=C006`;
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -150,7 +150,7 @@ export default function WhatsincludedCard() {
                 {item.image ? (
                   <Box
                     component="img"
-                    src={`https://skillglow.bexatm.com${item.image}`}
+                    src={`https://cmsreflux.bexatm.com${item.image}`}
                     alt={item.title}
                     sx={{
                       width: "45px",

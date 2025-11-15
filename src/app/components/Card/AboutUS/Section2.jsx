@@ -15,7 +15,7 @@ export default function HowWeWorkSwiper() {
 
   // Fetch content
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Aboutus")
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));
@@ -55,12 +55,12 @@ export default function HowWeWorkSwiper() {
   if (!content) return null;
 
   const services = [
-    { step: content.AU1021, title: content.AU1022, description: content.AU1023, image: `https://skillglow.bexatm.com${content.AU1024}` },
-    { step: content.AU1025, title: content.AU1026, description: content.AU1027, image: `https://skillglow.bexatm.com${content.AU1028}` },
-    { step: content.AU1029, title: content.AU1030, description: content.AU1031, image: `https://skillglow.bexatm.com${content.AU1032}` },
-    { step: content.AU1033, title: content.AU1034, description: content.AU1035, image: `https://skillglow.bexatm.com${content.AU1036}` },
-    { step: content.AU1037, title: content.AU1038, description: content.AU1039, image: `https://skillglow.bexatm.com${content.AU1040}` },
-    { step: content.AU1041, title: content.AU1042, description: content.AU1043, image: `https://skillglow.bexatm.com${content.AU1044}` },
+    { step: content.AU1021, title: content.AU1022, description: content.AU1023, image: `https://cmsreflux.bexatm.com${content.AU1024}` },
+    { step: content.AU1025, title: content.AU1026, description: content.AU1027, image: `https://cmsreflux.bexatm.com${content.AU1028}` },
+    { step: content.AU1029, title: content.AU1030, description: content.AU1031, image: `https://cmsreflux.bexatm.com${content.AU1032}` },
+    { step: content.AU1033, title: content.AU1034, description: content.AU1035, image: `https://cmsreflux.bexatm.com${content.AU1036}` },
+    { step: content.AU1037, title: content.AU1038, description: content.AU1039, image: `https://cmsreflux.bexatm.com${content.AU1040}` },
+    { step: content.AU1041, title: content.AU1042, description: content.AU1043, image: `https://cmsreflux.bexatm.com${content.AU1044}` },
   ];
 
   return (

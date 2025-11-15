@@ -15,7 +15,7 @@ export default function IndustriesSwiper() {
 
   // Fetch content
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=Aboutus")
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));
@@ -59,22 +59,22 @@ export default function IndustriesSwiper() {
     {
       title: content.AU1067,
       description: content.AU1068,
-      img: `https://skillglow.bexatm.com${content.AU1069}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1069}`,
     },
     {
       title: content.AU1070,
       description: content.AU1071,
-      img: `https://skillglow.bexatm.com${content.AU1072}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1072}`,
     },
     {
       title: content.AU1073,
       description: content.AU1074,
-      img: `https://skillglow.bexatm.com${content.AU1075}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1075}`,
     },
     {
       title: content.AU1076,
       description: content.AU1077,
-      img: `https://skillglow.bexatm.com${content.AU1078}`,
+      img: `https://cmsreflux.bexatm.com${content.AU1078}`,
     },
   ];
 

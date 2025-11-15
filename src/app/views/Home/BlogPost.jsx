@@ -75,7 +75,7 @@ const BlogPost = () => {
 
     useEffect(() => {
         const apiUrl =
-            "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C010";
+            `${process.env.REACT_APP_CMS_URL}?contentId=C010`
         fetch(apiUrl)
             .then((res) => {
                 if (!res.ok) throw new Error("Network response was not ok");
@@ -153,7 +153,7 @@ const BlogPost = () => {
                     >
                         <Box
                             component="img"
-                            src={`https://skillglow.bexatm.com${content.BP1002}`}
+                            src={`https://cmsreflux.bexatm.com${content.BP1002}`}
                             alt="Main blog post"
                             sx={{
                                 width: '100%',
@@ -277,7 +277,7 @@ const BlogPost = () => {
                                 <Box sx={{ position: "relative", width: { xs: "100%", md: 296 }, flexShrink: 0 }}>
                                     <Box
                                         component="img"
-                                        src={`https://skillglow.bexatm.com${item.img.value}`}
+                                        src={`https://cmsreflux.bexatm.com${item.img.value}`}
                                         alt={item.title.value}
                                         sx={{
                                             width: "100%",
@@ -538,7 +538,7 @@ const BlogPost = () => {
                                         <Box sx={{ position: "relative", mb: 2 }}>
                                             <Box
                                                 component="img"
-                                                src={`https://skillglow.bexatm.com${post.img.value}`}
+                                                src={`https://cmsreflux.bexatm.com${post.img.value}`}
                                                 alt={post.title.value}
                                                 sx={{
                                                     width: "100%",

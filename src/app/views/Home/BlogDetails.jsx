@@ -19,7 +19,7 @@ const BlogDetails = () => {
 
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=BlogDetails";
+      `${process.env.REACT_APP_CMS_URL}?contentId=BlogDetails`
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -103,7 +103,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1003}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1003}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -155,7 +155,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1006}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1006}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -219,7 +219,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1011}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1011}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -276,7 +276,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1016}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1016}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -328,7 +328,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1020}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1020}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -378,7 +378,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1024}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1024}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -429,7 +429,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1028}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1028}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -485,7 +485,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1032}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1032}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -545,7 +545,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1037}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1037}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -593,7 +593,7 @@ const BlogDetails = () => {
               >
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1040}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1040}`}
                   alt="Main blog visual"
                   sx={{
                     width: '100%',
@@ -654,7 +654,7 @@ const BlogDetails = () => {
               <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1046}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1046}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -689,7 +689,7 @@ const BlogDetails = () => {
               <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1050}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1050}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -723,7 +723,7 @@ const BlogDetails = () => {
               <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1054}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1054}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -756,7 +756,7 @@ const BlogDetails = () => {
               <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1058}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1058}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -789,7 +789,7 @@ const BlogDetails = () => {
               <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1062}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1062}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -822,7 +822,7 @@ const BlogDetails = () => {
               <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1066}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1066}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -856,7 +856,7 @@ const BlogDetails = () => {
              <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1070}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1070}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -889,7 +889,7 @@ const BlogDetails = () => {
              <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1074}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1074}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -922,7 +922,7 @@ const BlogDetails = () => {
              <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1078}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1078}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -955,7 +955,7 @@ const BlogDetails = () => {
              <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1082}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1082}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -988,7 +988,7 @@ const BlogDetails = () => {
              <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1086}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1086}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />
@@ -1021,7 +1021,7 @@ const BlogDetails = () => {
              <Box sx={{ position: 'relative', width: '100%' }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content.BD1090}`}
+                  src={`https://cmsreflux.bexatm.com${content.BD1090}`}
                   alt="Electro Lifting Magnet Innovations"
                   sx={{ width: '100%', height: 151, objectFit: 'cover', mb: 1.5 }}
                 />

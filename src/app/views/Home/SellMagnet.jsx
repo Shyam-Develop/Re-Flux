@@ -187,7 +187,7 @@ const SellMagnet = () => {
   //  Load content
   useEffect(() => {
     const apiUrl =
-      "https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C019";
+      `${process.env.REACT_APP_CMS_URL}?contentId=C019`;
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -282,25 +282,25 @@ const SellMagnet = () => {
       title: content.SM1060,
       author: content.SM1061,
       date: content.SM1062,
-      image: `https://skillglow.bexatm.com${content.SM1063}`,
+      image: `https://cmsreflux.bexatm.com${content.SM1063}`,
     },
     {
       title: content.SM1064,
       author: content.SM1065,
       date: content.SM1066,
-      image: `https://skillglow.bexatm.com${content.SM1067}`,
+      image: `https://cmsreflux.bexatm.com${content.SM1067}`,
     },
     {
       title: content.SM1068,
       author: content.SM1069,
       date: content.SM1070,
-      image: `https://skillglow.bexatm.com${content.SM1071}`,
+      image: `https://cmsreflux.bexatm.com${content.SM1071}`,
     },
     {
       title: content.SM1072,
       author: content.SM1073,
       date: content.SM1074,
-      image: `https://skillglow.bexatm.com${content.SM1075}`,
+      image: `https://cmsreflux.bexatm.com${content.SM1075}`,
     },
   ];
 
@@ -475,7 +475,7 @@ const SellMagnet = () => {
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, pl: 2 }}>
                 <Box
                   component="img"
-                  src={`https://skillglow.bexatm.com${content?.[service.imgId] || ""}`}
+                  src={`https://cmsreflux.bexatm.com${content?.[service.imgId] || ""}`}
                   alt={content?.[service.titleId] || ""}
                   sx={{
                     width: "45px",
@@ -774,7 +774,7 @@ const SellMagnet = () => {
               <Box sx={{ position: "relative", height: "100%" }}>
                 <CardMedia
                   component="img"
-                  image={`https://skillglow.bexatm.com${item.image.value}`}
+                  image={`https://cmsreflux.bexatm.com${item.image.value}`}
                   alt={item.name.value}
                   sx={{
                     height: "100%",

@@ -1,18 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Box, Button, Divider, Grid, Link, Modal, Typography, useMediaQuery, useTheme, Paper, TextField,
-  MenuItem, Card,
-  CardMedia, IconButton
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Link,
+  Modal,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Paper,
+  TextField,
+  MenuItem,
+  Card,
+  CardMedia,
+  IconButton,
 } from "@mui/material";
-import ROIimage from '../../../assets/ROICalculator.jpg';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import ROIimage from "../../../assets/ROICalculator.jpg";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { typography } from "app/utils/constant";
 import EquipmentSwiper from "app/components/Card/RepairReplaceCard";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import Brand1 from '../../../assets/Brand1.png';
-import Repair from "../../../assets/RRimage.jpg"
-import Footer from 'app/components/Card/Footer';
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Brand1 from "../../../assets/Brand1.png";
+import Repair from "../../../assets/RRimage.jpg";
+import Footer from "app/components/Card/Footer";
 import Rentinstead from "../../../assets/Rentinstaed.jpg";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
@@ -94,16 +106,16 @@ const services = [
 ];
 
 const RoiCalculator = () => {
-
   const theme = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C014")
+    fetch(
+      `${process.env.REACT_APP_CMS_URL}?contentId=C014`
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -190,7 +202,6 @@ const RoiCalculator = () => {
     },
   ];
 
-
   return (
     <Box
       display="grid"
@@ -213,7 +224,12 @@ const RoiCalculator = () => {
           }}
         >
           {/* Title & Description */}
-          <Box sx={{ textAlign: { xs: "center", md: "left" }, px: { xs: 1, md: 0 } }}>
+          <Box
+            sx={{
+              textAlign: { xs: "center", md: "left" },
+              px: { xs: 1, md: 0 },
+            }}
+          >
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -244,11 +260,7 @@ const RoiCalculator = () => {
 
           {/* Cards */}
           <Box sx={{ px: { xs: 1, md: 6 }, mb: "5%" }}>
-            <Grid
-              container
-              spacing={3}
-              justifyContent="flex-start"
-            >
+            <Grid container spacing={3} justifyContent="flex-start">
               {roiData.map((item, index) => (
                 <Grid
                   item
@@ -270,7 +282,7 @@ const RoiCalculator = () => {
                     {/* Background Image */}
                     <CardMedia
                       component="img"
-                      image={`https://skillglow.bexatm.com${item.image}`}
+                      image={`https://cmsreflux.bexatm.com${item.image}`}
                       alt={item.title}
                       sx={{
                         height: "100%",
@@ -289,11 +301,14 @@ const RoiCalculator = () => {
                           bgcolor: "white",
                           color: "black",
                           zIndex: 2, // ✅ ensures it appears above image
-                          "&:hover": { bgcolor: "primary.main", color: "white" },
+                          "&:hover": {
+                            bgcolor: "primary.main",
+                            color: "white",
+                          },
                         }}
                       >
-                        <EditIcon  type="I"/>
-                      </IconButton >
+                        <EditIcon type="I" />
+                      </IconButton>
                     )}
 
                     {/* Overlay White Card */}
@@ -323,14 +338,24 @@ const RoiCalculator = () => {
                         },
                       }}
                     >
-                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
                         <Typography
                           variant="subtitle1"
                           fontWeight="bold"
                           sx={{ fontSize: { xs: "18px", md: "24px" } }}
                         >
                           {item.title}
-                          {isAdmin && <EditIconButton id={Object.keys(content).find(key => content[key] === item.title)} />}
+                          {isAdmin && (
+                            <EditIconButton
+                              id={Object.keys(content).find(
+                                (key) => content[key] === item.title
+                              )}
+                            />
+                          )}
                         </Typography>
                         <IconButton
                           size="small"
@@ -350,10 +375,15 @@ const RoiCalculator = () => {
                         sx={{ fontSize: { xs: "14px", md: "18px" } }}
                       >
                         {item.description}
-                        {isAdmin && <EditIconButton id={Object.keys(content).find(key => content[key] === item.description)} />}
+                        {isAdmin && (
+                          <EditIconButton
+                            id={Object.keys(content).find(
+                              (key) => content[key] === item.description
+                            )}
+                          />
+                        )}
                       </Typography>
                     </Box>
-
                   </Card>
                 </Grid>
               ))}
@@ -364,15 +394,10 @@ const RoiCalculator = () => {
           <Box>
             <SellRentServicesCard services={services} />
           </Box>
-
-          {/* Footer */}
-          <Box>
-            <Footer />
-          </Box>
         </Box>
       </Box>
+      <Footer />
     </Box>
-
   );
-}
+};
 export default RoiCalculator;

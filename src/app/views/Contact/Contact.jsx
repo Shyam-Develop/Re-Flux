@@ -39,7 +39,7 @@ export default function ContactUs() {
 
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/ContentManageSysV1.php?contentId=C004")
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C004`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));

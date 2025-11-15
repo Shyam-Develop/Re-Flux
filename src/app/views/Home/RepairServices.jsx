@@ -61,9 +61,6 @@ const ServiceCard = ({
     setIsAdmin(role === "admin");
   }, []);
 
-
-
-
   // ✅ Scroll to newly added fault chip after reload
   useEffect(() => {
     const targetId = localStorage.getItem("scrollToFaultId");
@@ -368,7 +365,7 @@ const ServiceCard = ({
                           );
 
                           const res = await fetch(
-                            "https://skillglow.bexatm.com/ATM/data/UpdateContentV1.php",
+                            "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
                             {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
@@ -427,7 +424,7 @@ const ServiceCard = ({
                   const newIndex = newFaults.length - 1;
 
                   const res = await fetch(
-                    "https://skillglow.bexatm.com/ATM/data/UpdateContentV1.php",
+                    "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
                     {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
@@ -546,7 +543,7 @@ const RepairServices = () => {
 
   //  Load content
   useEffect(() => {
-    fetch("https://skillglow.bexatm.com/ATM/data/C013.json")
+    fetch("https://cmsreflux.bexatm.com/API/data/C013.json")
       .then((res) => res.json())
       .then((data) => {
         setContent(data);
@@ -579,7 +576,7 @@ const RepairServices = () => {
             service.toLowerCase().includes("service")
           ) {
             cardsDetected.push({
-              image: `https://skillglow.bexatm.com${image}`,
+              image: `https://cmsreflux.bexatm.com${image}`,
               imageId: `RS${i}`,
               title,
               titleId: `RS${i + 1}`,
@@ -605,14 +602,14 @@ const RepairServices = () => {
       .catch((err) => console.error("Error loading content:", err));
   }, []);
 
-    useEffect(() => {
-  const fetchContent = async () => {
-    const response = await fetch(`/C013.json?nocache=${Date.now()}`);
-    const data = await response.json();
-    setContent(data);
-  };
-  fetchContent();
-}, []);
+  useEffect(() => {
+    const fetchContent = async () => {
+      const response = await fetch(`/C013.json?nocache=${Date.now()}`);
+      const data = await response.json();
+      setContent(data);
+    };
+    fetchContent();
+  }, []);
 
   // ✅ Scroll to the new section after reload
   useEffect(() => {
@@ -655,7 +652,7 @@ const RepairServices = () => {
 
     // 🔹 Build the new card JSON object
     const sampleCard = {
-      [newIds.imageId]: "/ATM/images/Roi2.png",
+      [newIds.imageId]: "/API/images/Roi2.png",
       [newIds.titleId]: "New Sample Service Title",
       [newIds.overlayId]: "New Overlay Title",
       [newIds.commonFaultId]: "Common faults",
@@ -668,7 +665,7 @@ const RepairServices = () => {
 
     // 🔹 Send to backend
     const res = await fetch(
-      "https://skillglow.bexatm.com/ATM/data/UpdateContentV1.php",
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -690,7 +687,7 @@ const RepairServices = () => {
       setCards([
         ...cards,
         {
-          image: `https://skillglow.bexatm.com${sampleCard[newIds.imageId]}`,
+          image: `https://cmsreflux.bexatm.com${sampleCard[newIds.imageId]}`,
           title: sampleCard[newIds.titleId],
           overlayTitle: sampleCard[newIds.overlayId],
           commonFault: sampleCard[newIds.commonFaultId],
@@ -731,7 +728,7 @@ const RepairServices = () => {
 
     // 1️⃣ Update backend JSON file
     const res = await fetch(
-      "https://skillglow.bexatm.com/ATM/data/DeleteContentV1.php",
+      "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -794,13 +791,13 @@ const RepairServices = () => {
   //ROI Calculator
   const roiData = [
     {
-      image: `https://skillglow.bexatm.com${content.RS1053}`,
+      image: `https://cmsreflux.bexatm.com${content.RS1053}`,
       title: content.RS1054,
       description: content.RS1055,
       ids: { image: "RS1053", title: "RS1054", desc: "RS1055" },
     },
     {
-      image: `https://skillglow.bexatm.com${content.RS1056}`,
+      image: `https://cmsreflux.bexatm.com${content.RS1056}`,
       title: content.RS1057,
       description: content.RS1058,
       ids: { image: "RS1056", title: "RS1057", desc: "RS1058" },
@@ -816,25 +813,25 @@ const RepairServices = () => {
       title: content.RS1101,
       author: content.RS1102,
       date: content.RS1103,
-      image: `https://skillglow.bexatm.com${content.RS1104}`,
+      image: `https://cmsreflux.bexatm.com${content.RS1104}`,
     },
     {
       title: content.RS1106,
       author: content.RS1107,
       date: content.RS1108,
-      image: `https://skillglow.bexatm.com${content.RS1109}`,
+      image: `https://cmsreflux.bexatm.com${content.RS1109}`,
     },
     {
       title: content.RS1110,
       author: content.RS1111,
       date: content.RS1112,
-      image: `https://skillglow.bexatm.com${content.RS1113}`,
+      image: `https://cmsreflux.bexatm.com${content.RS1113}`,
     },
     {
       title: content.RS1114,
       author: content.RS1115,
       date: content.RS1116,
-      image: `https://skillglow.bexatm.com${content.RS1117}`,
+      image: `https://cmsreflux.bexatm.com${content.RS1117}`,
     },
   ];
 
@@ -844,7 +841,7 @@ const RepairServices = () => {
       <Box sx={topImageStyle}>
         <Box
           component="img"
-          src={`https://skillglow.bexatm.com${content.RS1002}`}
+          src={`https://cmsreflux.bexatm.com${content.RS1002}`}
           style={imageStyle}
         />
         <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 2 }}>
@@ -1222,7 +1219,7 @@ const RepairServices = () => {
                 >
                   <Box
                     component="img"
-                    src={`https://skillglow.bexatm.com${p.img}`}
+                    src={`https://cmsreflux.bexatm.com${p.img}`}
                     alt={p.title}
                     sx={{
                       width: "100%",
