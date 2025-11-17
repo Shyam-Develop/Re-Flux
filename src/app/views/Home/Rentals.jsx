@@ -1,6 +1,6 @@
 // ProductListingPage.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -14,64 +14,49 @@ import {
   Chip,
   Pagination,
   IconButton,
-  Accordion, AccordionSummary, AccordionDetails, InputAdornment, Link,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  InputAdornment,
+  Link,
   AppBar,
   Toolbar,
   Select,
   FormControl,
   Container,
   Divider,
-  Paper
-} from '@mui/material';
+  Paper,
+} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import rentalimg from "../../../assets/rental_img.jpg";
-import ROIimage from '../../../assets/ROICalculator.jpg';
-import { typography, RefluxSvg } from 'app/utils/constant';
-import { useNavigate } from 'react-router-dom';
-import Footer from 'app/components/Card/Footer';
+import ROIimage from "../../../assets/ROICalculator.jpg";
+import { typography, RefluxSvg } from "app/utils/constant";
+import { useNavigate } from "react-router-dom";
+import Footer from "app/components/Card/Footer";
 import EditIcon from "@mui/icons-material/Edit";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 // Dummy data (same image repeated)
 const products = Array.from({ length: 6 }, (_, i) => ({
-  title: 'Circular Lifting Magnet',
-  sizes: ['700mm', '900mm', '1200mm'],
+  title: "Circular Lifting Magnet",
+  sizes: ["700mm", "900mm", "1200mm"],
   image: rentalimg,
 }));
 
-
-// const roiData = [
-//   {
-//     title: "Repair vs Replace",
-//     description:
-//       "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-//     image: ROIimage,
-//   },
-//   {
-//     title: "Repair vs Replace",
-//     description:
-//       "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-//     image: ROIimage,
-//   },
-// ]
-
-
 const fields = [
-  { label: 'Categories', id: 'categories-1' },
-  { label: 'Start date', id: 'start-date' },
-  { label: 'End date', id: 'end-date' },
-  { label: 'Location', id: 'location' },
-  { label: 'Categories', id: 'categories-2' }
+  { label: "Categories", id: "categories-1" },
+  { label: "Start date", id: "start-date" },
+  { label: "End date", id: "end-date" },
+  { label: "Location", id: "location" },
+  { label: "Categories", id: "categories-2" },
 ];
 
-
-
 const Rentals = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [expanded, setExpanded] = useState(null);
 
@@ -86,8 +71,7 @@ const Rentals = () => {
 
   //  Load content
   useEffect(() => {
-    const apiUrl =
-      `${process.env.REACT_APP_CMS_URL}?contentId=C016`
+    const apiUrl = `${process.env.REACT_APP_CMS_URL}?contentId=C016`;
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -102,6 +86,21 @@ const Rentals = () => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
+
+  useEffect(() => {
+    const id = localStorage.getItem("scrollToFaqIdRE");
+    if (!id) return;
+
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1500);
+      }
+      localStorage.removeItem("scrollToFaqIdRE");
+    }, 700);
+  }, [content]);
 
   //  Edit function
   const handleEdit = (contentTextID, type = "T") => {
@@ -164,8 +163,153 @@ const Rentals = () => {
       date: content.RE1053,
       image: `https://cmsreflux.bexatm.com${content.RE1054}`,
     },
-
   ];
+
+  const reFaqData = (() => {
+    if (!content) return [];
+
+    const out = [];
+
+    // RE FAQs start at RE1026 and end at RE1035
+    for (let i = 1026; i <= 1035; i += 2) {
+      const qId = `RE${i}`;
+      const aId = `RE${i + 1}`;
+      if (content[qId] && content[aId]) {
+        out.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    }
+
+    // BLOG ends at RE1054
+    const blogEnd = 1054;
+
+    // find additional FAQs added later
+    const allKeys = Object.keys(content)
+      .filter((k) => /^RE\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RE", ""), 10))
+      .sort((a, b) => a - b);
+
+    for (let i of allKeys) {
+      if (i <= blogEnd) continue; // ignore blogs
+      if (i % 2 === 0) continue; // questions are odd numbered
+
+      const qId = `RE${i}`;
+      const aId = `RE${i + 1}`;
+
+      if (content[qId] && content[aId]) {
+        out.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    }
+
+    return out;
+  })();
+
+  const handleAddREFaq = async () => {
+    if (!content) return alert("Content not loaded");
+
+    const existing = Object.keys(content)
+      .filter((k) => /^RE\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RE", ""), 10));
+
+    const maxId = Math.max(...existing);
+
+    let nextQ = maxId + 1;
+    if (nextQ % 2 === 0) nextQ += 1; // ensure odd id for question
+    const nextA = nextQ + 1;
+
+    const nextQId = `RE${nextQ}`;
+    const nextAId = `RE${nextA}`;
+
+    const newFAQ = {
+      [nextQId]: "New FAQ Question?",
+      [nextAId]: "New FAQ Answer.",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "C016",
+          newContent: newFAQ,
+        }),
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem("scrollToFaqIdRE", nextQId);
+      setTimeout(() => window.location.reload(), 500);
+    } else {
+      alert("Failed to add RE FAQ.");
+    }
+  };
+
+  const handleDeleteREFaq = async (qId, aId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C016",
+            keys: [qId, aId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been successfully removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <Box sx={{ p: 0 }}>
@@ -174,19 +318,26 @@ const Rentals = () => {
       {/* AppBar with Diagonal Right Cut */}
       <Box
         sx={{
-          position: 'relative',
-          backgroundColor: '#112B55',
-          height: '100px',
-          clipPath: 'polygon(0 0, 100% 0, 100% 35%, 95% 100%, 0% 104%)',
-          color: 'white',
+          position: "relative",
+          backgroundColor: "#112B55",
+          height: "100px",
+          clipPath: "polygon(0 0, 100% 0, 100% 35%, 95% 100%, 0% 104%)",
+          color: "white",
         }}
       >
-        <Toolbar sx={{ height: '100%', justifyContent: 'space-between' }}>
-          <Typography variant="h5" sx={{ ...typography.displayM, color: '#FFFFFF', paddingLeft: '70px' }}>
+        <Toolbar sx={{ height: "100%", justifyContent: "space-between" }}>
+          <Typography
+            variant="h5"
+            sx={{
+              ...typography.displayM,
+              color: "#FFFFFF",
+              paddingLeft: "70px",
+            }}
+          >
             {content.RE1001}
             <EditIconButton id="RE1001" />
           </Typography>
-          <Box sx={{ paddingRight: '10%' }}>
+          <Box sx={{ paddingRight: "10%" }}>
             <TextField
               variant="standard"
               placeholder="Search for a product"
@@ -194,13 +345,13 @@ const Rentals = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <SearchIcon sx={{ color: 'white' }} />
+                    <SearchIcon sx={{ color: "white" }} />
                   </InputAdornment>
                 ),
                 disableUnderline: true,
                 sx: {
-                  color: 'white',
-                  borderBottom: '1px solid white',
+                  color: "white",
+                  borderBottom: "1px solid white",
                 },
               }}
             />
@@ -210,11 +361,8 @@ const Rentals = () => {
 
       {/* <Box sx={{ maxWidth: '1296px', mx: 'auto' }}> */}
       <Box sx={{}}>
-
-
         {/* Product grid */}
-        <Box sx={{ px: '5%', px: 5, py: 7 }}>
-
+        <Box sx={{ px: "5%", px: 5, py: 7 }}>
           {/* Product Cards */}
           <Grid container spacing={4}>
             {[
@@ -226,7 +374,15 @@ const Rentals = () => {
                 lift: content.RE1006,
                 power: content.RE1007,
                 details: content.RE1008,
-                ids: ["RE1002", "RE1003", "RE1004", "RE1005", "RE1006", "RE1007", "RE1008"]
+                ids: [
+                  "RE1002",
+                  "RE1003",
+                  "RE1004",
+                  "RE1005",
+                  "RE1006",
+                  "RE1007",
+                  "RE1008",
+                ],
               },
               {
                 img: content.RE1009,
@@ -236,7 +392,15 @@ const Rentals = () => {
                 lift: content.RE1013,
                 power: content.RE1014,
                 details: content.RE1015,
-                ids: ["RE1009", "RE1010", "RE1011", "RE1012", "RE1013", "RE1014", "RE1015"]
+                ids: [
+                  "RE1009",
+                  "RE1010",
+                  "RE1011",
+                  "RE1012",
+                  "RE1013",
+                  "RE1014",
+                  "RE1015",
+                ],
               },
               {
                 img: content.RE1016,
@@ -246,8 +410,16 @@ const Rentals = () => {
                 lift: content.RE1020,
                 power: content.RE1021,
                 details: content.RE1022,
-                ids: ["RE1016", "RE1017", "RE1018", "RE1019", "RE1020", "RE1021", "RE1022"]
-              }
+                ids: [
+                  "RE1016",
+                  "RE1017",
+                  "RE1018",
+                  "RE1019",
+                  "RE1020",
+                  "RE1021",
+                  "RE1022",
+                ],
+              },
             ].map((p, idx) => (
               <Grid item xs={12} sm={6} md={4} key={idx}>
                 <Card
@@ -265,7 +437,6 @@ const Rentals = () => {
                     //   color: "#fff",
                     //   cursor: "pointer",
                     // },
-
                   }}
                 >
                   {/* Image Section */}
@@ -310,16 +481,15 @@ const Rentals = () => {
                           fontSize: "13px",
                           borderRadius: "1px",
                           height: "24px",
-
                         }}
                       />
                       <Chip
                         label="🛡️ Safety Tested"
                         size="small"
                         sx={{
-                          padding: '10px',
+                          padding: "10px",
                           bgcolor: "#1976d2",
-                          marginLeft: '70px',
+                          marginLeft: "70px",
                           color: "white",
                           fontSize: "13px",
                           borderRadius: "1px",
@@ -344,16 +514,39 @@ const Rentals = () => {
                   {/* Card Content */}
                   <CardContent sx={{ p: 0 }}>
                     {/* Title & Price */}
-                    <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                    <Box
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="flex-start"
+                    >
                       <Box>
-                        <Typography sx={{ ...typography.h4, height: '62px', fontWeight: 400, color: "#0B121E" }}>
+                        <Typography
+                          sx={{
+                            ...typography.h4,
+                            height: "62px",
+                            fontWeight: 400,
+                            color: "#0B121E",
+                          }}
+                        >
                           {p.title} <EditIconButton id={p.ids[1]} />
                         </Typography>
-                        <Typography sx={{ ...typography.h6, fontWeight: 600, color: "#00000099" }}>
+                        <Typography
+                          sx={{
+                            ...typography.h6,
+                            fontWeight: 600,
+                            color: "#00000099",
+                          }}
+                        >
                           {p.subtitle} <EditIconButton id={p.ids[2]} />
                         </Typography>
                       </Box>
-                      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-end",
+                        }}
+                      >
                         <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
                           Start at
                         </Typography>
@@ -376,7 +569,13 @@ const Rentals = () => {
                     </Box>
 
                     {/* Lift Capacity & Power */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mt: 3,
+                      }}
+                    >
                       <Box>
                         <Typography
                           sx={{
@@ -385,10 +584,16 @@ const Rentals = () => {
                             fontWeight: 400,
                             color: "#677489",
                           }}
-                        >Lift Capacity
-
+                        >
+                          Lift Capacity
                         </Typography>
-                        <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                        <Typography
+                          sx={{
+                            ...typography.h5,
+                            fontWeight: 500,
+                            color: "#0E1626",
+                          }}
+                        >
                           {p.lift} <EditIconButton id={p.ids[4]} />
                         </Typography>
                       </Box>
@@ -403,7 +608,13 @@ const Rentals = () => {
                         >
                           Power Supply
                         </Typography>
-                        <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                        <Typography
+                          sx={{
+                            ...typography.h5,
+                            fontWeight: 500,
+                            color: "#0E1626",
+                          }}
+                        >
                           {p.power} <EditIconButton id={p.ids[5]} />
                         </Typography>
                       </Box>
@@ -421,7 +632,13 @@ const Rentals = () => {
                       >
                         Size Options <EditIconButton id={p.ids[6]} />
                       </Typography>
-                      <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626" }}>
+                      <Typography
+                        sx={{
+                          ...typography.h5,
+                          fontWeight: 500,
+                          color: "#0E1626",
+                        }}
+                      >
                         {p.details}
                       </Typography>
                     </Box>
@@ -446,15 +663,9 @@ const Rentals = () => {
                   </CardContent>
                 </Card>
               </Grid>
-
-
             ))}
           </Grid>
-
-
         </Box>
-
-
 
         {/* FAQs Section */}
         <Box sx={{ px: 5, py: 1 }}>
@@ -464,7 +675,7 @@ const Rentals = () => {
             disableRipple
             sx={{
               marginBottom: 2,
-              marginTop: '30px',
+              marginTop: "30px",
               textTransform: "none",
               fontSize: "0.8rem",
               fontWeight: 500,
@@ -487,7 +698,7 @@ const Rentals = () => {
           <Typography
             sx={{
               ...typography.displayL,
-              color: '#1C2D4B',
+              color: "#1C2D4B",
               display: "flex",
               alignItems: "center",
               gap: 1,
@@ -505,7 +716,7 @@ const Rentals = () => {
             variant="h5"
             sx={{
               ...typography.h4,
-              color: '#99A0AE',
+              color: "#99A0AE",
               display: "flex",
               alignItems: "center",
               gap: 1,
@@ -518,15 +729,10 @@ const Rentals = () => {
 
           {/* 🔹 FAQ Accordions */}
           <Box>
-            {[
-              { q: content.RE1026, a: content.RE1027, qid: "RE1026", aid: "RE1027" },
-              { q: content.RE1028, a: content.RE1029, qid: "RE1028", aid: "RE1029" },
-              { q: content.RE1030, a: content.RE1031, qid: "RE1030", aid: "RE1031" },
-              { q: content.RE1032, a: content.RE1033, qid: "RE1032", aid: "RE1033" },
-              { q: content.RE1034, a: content.RE1035, qid: "RE1034", aid: "RE1035" },
-            ].map((item, index) => (
+            {reFaqData.map((item, index) => (
               <Accordion
                 key={index}
+                id={item.qId}
                 expanded={expanded === index}
                 onChange={() => handleChange(index)}
                 disableGutters
@@ -552,14 +758,23 @@ const Rentals = () => {
                   <Typography
                     sx={{
                       ...typography.h4,
-                      color: '#0E1109',
-                      display: 'flex',
-                      alignItems: 'center',
+                      color: "#0E1109",
+                      display: "flex",
+                      alignItems: "center",
                       gap: 1,
                     }}
                   >
-                    {item.q}
-                    <EditIconButton id={item.qid} />
+                    {item.question}
+                    <EditIconButton id={item.qId} />
+                    {isAdmin && (
+                      <IconButton
+                        size="small"
+                        onClick={() => handleDeleteREFaq(item.qId, item.aId)}
+                        sx={{ ml: 1, color: "#B71C1C" }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    )}
                   </Typography>
                 </AccordionSummary>
 
@@ -567,21 +782,38 @@ const Rentals = () => {
                   <Typography
                     sx={{
                       ...typography.bodyBase,
-                      color: '#0E1109',
-                      display: 'flex',
-                      alignItems: 'center',
+                      color: "#0E1109",
+                      display: "flex",
+                      alignItems: "center",
                       gap: 1,
                     }}
                   >
-                    {item.a}
-                    <EditIconButton id={item.aid} />
+                    {item.answer}
+                    <EditIconButton id={item.aId} />
                   </Typography>
                 </AccordionDetails>
               </Accordion>
             ))}
+            {/* ADD NEW FAQ BUTTON */}
+            {isAdmin && (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <Button
+                  variant="contained"
+                  onClick={handleAddREFaq}
+                  sx={{
+                    backgroundColor: "#1C2D4B",
+                    color: "#fff",
+                    borderRadius: 2,
+                    px: 3,
+                    py: 1,
+                  }}
+                >
+                  <AddIcon /> Add New FAQ
+                </Button>
+              </Box>
+            )}
           </Box>
         </Box>
-
 
         {/* Blogs Section */}
         <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
@@ -614,7 +846,13 @@ const Rentals = () => {
           </Button>
 
           <Typography
-            sx={{ ...typography.displayL, color: "#1C2D4B", display: "flex", alignItems: "center", gap: 1 }}
+            sx={{
+              ...typography.displayL,
+              color: "#1C2D4B",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
             variant="h3"
             fontWeight="bold"
             gutterBottom
@@ -651,7 +889,6 @@ const Rentals = () => {
                   bgcolor: "#fafafa",
                   cursor: "pointer",
                 }}
-
               >
                 <Box sx={{ position: "relative" }}>
                   <CardMedia
@@ -686,9 +923,16 @@ const Rentals = () => {
                     <EditIconButton id="RE1039" />
                   </Typography>
                   <Typography
-                    sx={{ ...typography?.bodyBase, color: "#677489", display: "flex", alignItems: "center", gap: 1 }}
+                    sx={{
+                      ...typography?.bodyBase,
+                      color: "#677489",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
                   >
-                    {blogData[0].author} <EditIconButton id="RE1040" /> • {blogData[0].date} <EditIconButton id="RE1041" />
+                    {blogData[0].author} <EditIconButton id="RE1040" /> •{" "}
+                    {blogData[0].date} <EditIconButton id="RE1041" />
                   </Typography>
 
                   <Link
@@ -704,7 +948,9 @@ const Rentals = () => {
                     onClick={() => navigate("/home/BlogDetails")}
                   >
                     Discover More{" "}
-                    <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }} />
+                    <ArrowForwardIosIcon
+                      sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
+                    />
                   </Link>
                 </CardContent>
               </Card>
@@ -729,7 +975,6 @@ const Rentals = () => {
                           boxShadow: 0,
                           cursor: "pointer",
                         }}
-
                       >
                         <Box sx={{ position: "relative" }}>
                           <CardMedia
@@ -744,7 +989,9 @@ const Rentals = () => {
                               mr: 2,
                             }}
                           />
-                          <Box sx={{ position: "absolute", bottom: 6, right: 6 }}>
+                          <Box
+                            sx={{ position: "absolute", bottom: 6, right: 6 }}
+                          >
                             <EditIconButton id={`RE${base + 3}`} type="I" />
                           </Box>
                         </Box>
@@ -775,8 +1022,9 @@ const Rentals = () => {
                               gap: 1,
                             }}
                           >
-                            {item.author} <EditIconButton id={`RE${base + 1}`} /> • {item.date}{" "}
-                            <EditIconButton id={`RE${base + 2}`} />
+                            {item.author}{" "}
+                            <EditIconButton id={`RE${base + 1}`} /> •{" "}
+                            {item.date} <EditIconButton id={`RE${base + 2}`} />
                           </Typography>
 
                           <Link
@@ -793,7 +1041,13 @@ const Rentals = () => {
                             onClick={() => navigate("/home/Blogpost")}
                           >
                             Discover More{" "}
-                            <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }} />
+                            <ArrowForwardIosIcon
+                              sx={{
+                                ml: 0.5,
+                                color: "#1F77D6",
+                                fontSize: "0.8rem",
+                              }}
+                            />
                           </Link>
                         </Box>
                       </Card>
@@ -804,15 +1058,12 @@ const Rentals = () => {
             </Grid>
           </Grid>
         </Box>
-
       </Box>
-
 
       {/* Footer */}
-      <Box >
+      <Box>
         <Footer />
       </Box>
-
     </Box>
   );
 };

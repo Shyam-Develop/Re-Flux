@@ -45,7 +45,6 @@ import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -63,16 +62,14 @@ import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import { typography } from "app/utils/constant";
 import { grey } from "@mui/material/colors";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
-import Refurbishedmagnet from "../../../assets/topbarservice1.jpg"
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import Footer from 'app/components/Card/Footer';
+import Refurbishedmagnet from "../../../assets/topbarservice1.jpg";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import Footer from "app/components/Card/Footer";
 import rentalimg from "../../../assets/rental_img.jpg";
 import EditIcon from "@mui/icons-material/Edit";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
-
-
 
 const RefurbishedElectromagnet = () => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -87,29 +84,30 @@ const RefurbishedElectromagnet = () => {
     setBrowseDialogOpen(false);
   };
 
-
-
   const UploadBox = ({ label }) => {
     return (
       <Box sx={{ my: 3 }}>
-        <Typography variant="h6" gutterBottom>{label}</Typography>
+        <Typography variant="h6" gutterBottom>
+          {label}
+        </Typography>
         <label htmlFor="upload-input">
           <Box
             sx={{
-              border: '2px dashed #ccc',
+              border: "2px dashed #ccc",
               borderRadius: 2,
               p: 4,
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'border-color 0.3s ease',
-              '&:hover': { borderColor: 'primary.main' },
+              textAlign: "center",
+              cursor: "pointer",
+              transition: "border-color 0.3s ease",
+              "&:hover": { borderColor: "primary.main" },
             }}
           >
             <IconButton component="span" size="large">
-              <UploadFileIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
+              <UploadFileIcon sx={{ fontSize: 40, color: "text.secondary" }} />
             </IconButton>
             <Typography>
-              <strong style={{ color: '#1976d2' }}>Choose</strong> file to upload
+              <strong style={{ color: "#1976d2" }}>Choose</strong> file to
+              upload
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Select image in jpeg, PNG
@@ -120,13 +118,11 @@ const RefurbishedElectromagnet = () => {
           id="upload-input"
           type="file"
           accept="image/jpeg, image/png"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
         />
       </Box>
     );
   };
-
-
 
   const services = [
     {
@@ -173,27 +169,6 @@ const RefurbishedElectromagnet = () => {
     // add more cards here
   ];
 
-  //sell or exchange section
-  // const servicesnew = [
-  //   {
-  //     id: 1,
-  //     title: "Sell Us",
-  //     type: "Rental unit eliminated production loss",
-  //     icon: HandshakeIcon,
-  //     img: handshake1,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Exchange",
-  //     type: "Class-H insulation, terminals/ leads to OEM spec",
-  //     icon: HandshakeIcon,
-  //     img: handshake1,
-  //   },
-  // ];
-
-
-
- 
   const partnerData = [
     {
       id: 1,
@@ -217,8 +192,6 @@ const RefurbishedElectromagnet = () => {
     },
   ];
 
-
-
   const images = [
     Roi1, // Default large image
     Roi2,
@@ -241,7 +214,6 @@ const RefurbishedElectromagnet = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -259,10 +231,27 @@ const RefurbishedElectromagnet = () => {
     setIsAdmin(role === "admin");
   }, []);
 
+  useEffect(() => {
+    const id = localStorage.getItem("scrollToRMFaq");
+    if (!id) return;
+
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1500);
+      }
+    }, 700);
+
+    localStorage.removeItem("scrollToRMFaq");
+  }, [content]);
+
   // ✅ Navigate to CMS editor
   const handleEdit = (contentTextID, type = "T") => {
-
-    navigate(`/CmsEditor?contentId=RefurbishedMagnet&contentTextID=${contentTextID}&contentType=${type}`);
+    navigate(
+      `/CmsEditor?contentId=RefurbishedMagnet&contentTextID=${contentTextID}&contentType=${type}`
+    );
   };
 
   // ✅ Admin edit icon button
@@ -289,7 +278,6 @@ const RefurbishedElectromagnet = () => {
 
   if (!content) return null;
 
-
   //Refurbished Magnet
   const refurbishedProducts = [
     {
@@ -300,7 +288,15 @@ const RefurbishedElectromagnet = () => {
       powerSupply: content.RM1015,
       included: content.RM1016,
       imgSrc: `https://cmsreflux.bexatm.com${content.RM1011_IMG}`,
-      keys: ["RM1011", "RM1012", "RM1013", "RM1014", "RM1015", "RM1016", "RM1011_IMG"]
+      keys: [
+        "RM1011",
+        "RM1012",
+        "RM1013",
+        "RM1014",
+        "RM1015",
+        "RM1016",
+        "RM1011_IMG",
+      ],
     },
     {
       title: content.RM1017,
@@ -310,7 +306,15 @@ const RefurbishedElectromagnet = () => {
       powerSupply: content.RM1021,
       included: content.RM1022,
       imgSrc: `https://cmsreflux.bexatm.com${content.RM1017_IMG}`,
-      keys: ["RM1017", "RM1018", "RM1019", "RM1020", "RM1021", "RM1022", "RM1017_IMG"]
+      keys: [
+        "RM1017",
+        "RM1018",
+        "RM1019",
+        "RM1020",
+        "RM1021",
+        "RM1022",
+        "RM1017_IMG",
+      ],
     },
     {
       title: content.RM1023,
@@ -320,7 +324,15 @@ const RefurbishedElectromagnet = () => {
       powerSupply: content.RM1027,
       included: content.RM1028,
       imgSrc: `https://cmsreflux.bexatm.com${content.RM1023_IMG}`,
-      keys: ["RM1023", "RM1024", "RM1025", "RM1026", "RM1027", "RM1028", "RM1023_IMG"]
+      keys: [
+        "RM1023",
+        "RM1024",
+        "RM1025",
+        "RM1026",
+        "RM1027",
+        "RM1028",
+        "RM1023_IMG",
+      ],
     },
     {
       title: content.RM1029,
@@ -330,7 +342,15 @@ const RefurbishedElectromagnet = () => {
       powerSupply: content.RM1033,
       included: content.RM1034,
       imgSrc: `https://cmsreflux.bexatm.com${content.RM1029_IMG}`,
-      keys: ["RM1029", "RM1030", "RM1031", "RM1032", "RM1033", "RM1034", "RM1029_IMG"]
+      keys: [
+        "RM1029",
+        "RM1030",
+        "RM1031",
+        "RM1032",
+        "RM1033",
+        "RM1034",
+        "RM1029_IMG",
+      ],
     },
     {
       title: content.RM1035,
@@ -340,7 +360,15 @@ const RefurbishedElectromagnet = () => {
       powerSupply: content.RM1039,
       included: content.RM1040,
       imgSrc: `https://cmsreflux.bexatm.com${content.RM1035_IMG}`,
-      keys: ["RM1035", "RM1036", "RM1037", "RM1038", "RM1039", "RM1040", "RM1035_IMG"]
+      keys: [
+        "RM1035",
+        "RM1036",
+        "RM1037",
+        "RM1038",
+        "RM1039",
+        "RM1040",
+        "RM1035_IMG",
+      ],
     },
     {
       title: content.RM1041,
@@ -350,10 +378,17 @@ const RefurbishedElectromagnet = () => {
       powerSupply: content.RM1045,
       included: content.RM1046,
       imgSrc: `https://cmsreflux.bexatm.com${content.RM1041_IMG}`,
-      keys: ["RM1041", "RM1042", "RM1043", "RM1044", "RM1045", "RM1046", "RM1041_IMG"]
-    }
+      keys: [
+        "RM1041",
+        "RM1042",
+        "RM1043",
+        "RM1044",
+        "RM1045",
+        "RM1046",
+        "RM1041_IMG",
+      ],
+    },
   ];
-
 
   //How it works
   const steps = [
@@ -363,7 +398,6 @@ const RefurbishedElectromagnet = () => {
     { num: "RM1059", title: "RM1060", desc: "RM1061" },
     { num: "RM1062", title: "RM1063", desc: "RM1064" },
   ];
-
 
   //Sell or exchange
   const servicesnew = [
@@ -383,35 +417,172 @@ const RefurbishedElectromagnet = () => {
     },
   ];
 
-
   //Blog
   const blogData = [
-  {
-    title: content.RM1100,
-    author: content.RM1101,
-    date: content.RM1102,
-    image: `https://cmsreflux.bexatm.com${content.RM1103}`,
-  },
-  {
-    title: content.RM1104,
-    author: content.RM1105,
-    date: content.RM1106,
-    image: `https://cmsreflux.bexatm.com${content.RM1107}`,
-  },
-  {
-    title: content.RM1108,
-    author: content.RM1109,
-    date: content.RM1110,
-    image: `https://cmsreflux.bexatm.com${content.RM1111}`,
-  },
-  {
-    title: content.RM1112,
-    author: content.RM1113,
-    date: content.RM1114,
-    image: `https://cmsreflux.bexatm.com${content.RM1115}`,
-  },
-];
+    {
+      title: content.RM1100,
+      author: content.RM1101,
+      date: content.RM1102,
+      image: `https://cmsreflux.bexatm.com${content.RM1103}`,
+    },
+    {
+      title: content.RM1104,
+      author: content.RM1105,
+      date: content.RM1106,
+      image: `https://cmsreflux.bexatm.com${content.RM1107}`,
+    },
+    {
+      title: content.RM1108,
+      author: content.RM1109,
+      date: content.RM1110,
+      image: `https://cmsreflux.bexatm.com${content.RM1111}`,
+    },
+    {
+      title: content.RM1112,
+      author: content.RM1113,
+      date: content.RM1114,
+      image: `https://cmsreflux.bexatm.com${content.RM1115}`,
+    },
+  ];
 
+  const rmFaqData = (() => {
+    if (!content) return [];
+
+    const faqs = [];
+
+    // 1️⃣ Add fixed FAQs (1087–1096 only)
+    for (let i = 1087; i <= 1096; i += 2) {
+      const qId = `RM${i}`;
+      const aId = `RM${i + 1}`;
+
+      if (content[qId] && content[aId]) {
+        faqs.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    }
+
+    // 2️⃣ Add only newly added FAQs (IDs > 1115)
+    const allRMIds = Object.keys(content)
+      .filter((k) => /^RM\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RM", ""), 10))
+      .sort((a, b) => a - b);
+
+    for (const id of allRMIds) {
+      if (id <= 1115) continue; // Skip all original + blog + other content
+      if (id % 2 === 0) continue; // Only odd = question
+
+      const qId = `RM${id}`;
+      const aId = `RM${id + 1}`;
+
+      const q = content[qId];
+      const a = content[aId];
+
+      // Must be valid Q/A
+      if (!q || !a) continue;
+
+      // Must look like text question (must contain '?')
+      if (typeof q !== "string" || !q.trim().includes("?")) continue;
+
+      faqs.push({ qId, aId, question: q, answer: a });
+    }
+
+    return faqs;
+  })();
+
+  const handleAddRMFAQ = async () => {
+    const allIds = Object.keys(content)
+      .filter((k) => /^RM\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RM", ""), 10));
+
+    let nextQ = Math.max(...allIds) + 1;
+
+    if (nextQ % 2 === 0) nextQ++; // force odd = question
+    const nextA = nextQ + 1;
+
+    const newItems = {
+      [`RM${nextQ}`]: "New FAQ Question?",
+      [`RM${nextA}`]: "New FAQ Answer.",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "RefurbishedMagnet",
+          newContent: newItems,
+        }),
+      }
+    );
+
+    const result = await res.json();
+    if (result.success) {
+      localStorage.setItem("scrollToRMFaq", `RM${nextQ}`);
+      setTimeout(() => window.location.reload(), 600);
+    } else {
+      alert("Failed to add FAQ");
+    }
+  };
+
+  const handleDeleteRMFAQ = async (qId, aId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "RefurbishedMagnet",
+            keys: [qId, aId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been successfully removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <Box
@@ -426,7 +597,6 @@ const RefurbishedElectromagnet = () => {
         p: 2,
       }}
     >
-
       <Box
         sx={{
           flexDirection: "column",
@@ -446,11 +616,11 @@ const RefurbishedElectromagnet = () => {
             display: "flex",
             alignItems: "left",
             justifyContent: "left",
-            gap: 1
+            gap: 1,
           }}
         >
           {content.RM1001}
-          <Box sx={{ marginRight: '240px' }}>
+          <Box sx={{ marginRight: "240px" }}>
             <EditIconButton id="RM1001" />
           </Box>
         </Typography>
@@ -467,7 +637,7 @@ const RefurbishedElectromagnet = () => {
             color: "gray",
             display: "flex",
             alignItems: "center",
-            gap: 1
+            gap: 1,
           }}
         >
           {content.RM1002}
@@ -483,7 +653,7 @@ const RefurbishedElectromagnet = () => {
             color: "#999",
             display: "flex",
             alignItems: "center",
-            gap: 1
+            gap: 1,
           }}
         >
           {content.RM1003}
@@ -502,7 +672,7 @@ const RefurbishedElectromagnet = () => {
               textDecoration: "underline",
               display: "flex",
               alignItems: "center",
-              gap: 0.5
+              gap: 0.5,
             }}
           >
             {content.RM1004}
@@ -518,7 +688,7 @@ const RefurbishedElectromagnet = () => {
               textDecoration: "underline",
               display: "flex",
               alignItems: "center",
-              gap: 0.5
+              gap: 0.5,
             }}
           >
             {content.RM1005}
@@ -534,7 +704,7 @@ const RefurbishedElectromagnet = () => {
               textDecoration: "underline",
               display: "flex",
               alignItems: "center",
-              gap: 0.5
+              gap: 0.5,
             }}
           >
             {content.RM1006}
@@ -589,9 +759,8 @@ const RefurbishedElectromagnet = () => {
           ))}
         </Box>
 
-
         {/* Refurbished section */}
-        <Box sx={{ pb: 10, mt: '20px' }}>
+        <Box sx={{ pb: 10, mt: "20px" }}>
           <Grid container spacing={4}>
             {refurbishedProducts.map((product, idx) => (
               <Grid
@@ -601,30 +770,29 @@ const RefurbishedElectromagnet = () => {
                 md={4}
                 key={idx}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center', // center cards on mobile
+                  display: "flex",
+                  justifyContent: "center", // center cards on mobile
                 }}
               >
                 <Box
                   sx={{
                     borderRadius: 3,
-                    border: '1px solid #dbdbdb',
+                    border: "1px solid #dbdbdb",
                     p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: { xs: '100%', sm: '100%', md: '430px' }, // 💡 Responsive width
-                    maxWidth: '430px',
-                    height: '100%',
+                    display: "flex",
+                    flexDirection: "column",
+                    width: { xs: "100%", sm: "100%", md: "430px" }, // 💡 Responsive width
+                    maxWidth: "430px",
+                    height: "100%",
                   }}
                 >
-
                   {/* Title & size */}
                   <Typography
                     sx={{
                       ...typography.h4,
                       fontWeight: 700,
-                      fontSize: '24px',
-                      color: '#0B121E',
+                      fontSize: "24px",
+                      color: "#0B121E",
                       mb: 0.5,
                     }}
                   >
@@ -632,13 +800,13 @@ const RefurbishedElectromagnet = () => {
                     <EditIconButton id={product.keys[0]} />
                   </Typography>
 
-                  <Box sx={{ display: 'flex' }}>
+                  <Box sx={{ display: "flex" }}>
                     <Typography
                       sx={{
                         ...typography.h5,
                         fontWeight: 500,
-                        fontSize: '20px',
-                        color: '#00000099',
+                        fontSize: "20px",
+                        color: "#00000099",
                         mb: 1,
                       }}
                     >
@@ -649,12 +817,12 @@ const RefurbishedElectromagnet = () => {
                     <Typography
                       sx={{
                         ...typography.bodySmall,
-                        fontFamily: 'Fira Sans',
+                        fontFamily: "Fira Sans",
                         fontWeight: 400,
-                        fontSize: '14px',
-                        color: '#00000099',
+                        fontSize: "14px",
+                        color: "#00000099",
                         // mb: 1,
-                        marginLeft: '4%',
+                        marginLeft: "4%",
                         // marginTop: '5px',
                       }}
                     >
@@ -666,9 +834,9 @@ const RefurbishedElectromagnet = () => {
                   {/* Image with badges */}
                   <Box
                     sx={{
-                      position: 'relative',
+                      position: "relative",
                       borderRadius: 2,
-                      overflow: 'hidden',
+                      overflow: "hidden",
                       mb: 2,
                     }}
                   >
@@ -678,25 +846,27 @@ const RefurbishedElectromagnet = () => {
                       src={product.imgSrc}
                       alt={product.title}
                       sx={{
-                        width: '100%',
-                        height: '240px',
-                        objectFit: 'cover',
+                        width: "100%",
+                        height: "240px",
+                        objectFit: "cover",
                         borderRadius: 2,
-                        display: 'block',
+                        display: "block",
                         zIndex: 1,
                       }}
                     />
 
                     {/* EDIT ICON — now correctly visible + at top-right */}
-                    <Box sx={{ position: 'absolute', bottom: '85%', left: '90%' }}>
+                    <Box
+                      sx={{ position: "absolute", bottom: "85%", left: "90%" }}
+                    >
                       <EditIconButton
                         id={product.keys[6]}
                         type="I"
                         sx={{
-                          position: 'absolute',
-                          top: 6,          // moved slightly up
+                          position: "absolute",
+                          top: 6, // moved slightly up
                           right: 6,
-                          zIndex: 30,      // higher than image + chip
+                          zIndex: 30, // higher than image + chip
                         }}
                       />
                     </Box>
@@ -706,15 +876,15 @@ const RefurbishedElectromagnet = () => {
                       label="🔧 Available for Rent"
                       size="small"
                       sx={{
-                        position: 'absolute',
-                        top: 6,          // moved up
+                        position: "absolute",
+                        top: 6, // moved up
                         left: 8,
-                        bgcolor: '#1b5e20',
-                        color: 'white',
+                        bgcolor: "#1b5e20",
+                        color: "white",
                         fontWeight: 400,
-                        fontSize: '14px',
-                        borderRadius: '2px',
-                        zIndex: 25,      // make sure it appears above the image
+                        fontSize: "14px",
+                        borderRadius: "2px",
+                        zIndex: 25, // make sure it appears above the image
                       }}
                     />
 
@@ -724,35 +894,62 @@ const RefurbishedElectromagnet = () => {
                       size="small"
                       color="info"
                       sx={{
-                        position: 'absolute',
+                        position: "absolute",
                         bottom: 40,
                         left: 8,
                         fontWeight: 400,
-                        fontSize: '14px',
-                        borderRadius: '2px',
+                        fontSize: "14px",
+                        borderRadius: "2px",
                         zIndex: 25,
                       }}
                     />
                   </Box>
 
-
                   {/* Specs */}
                   <Grid container spacing={2} sx={{ mb: 2 }}>
                     <Grid item xs={6}>
-                      <Typography sx={{ ...typography.h6, fontWeight: 600, color: '#0E1626' }}>
+                      <Typography
+                        sx={{
+                          ...typography.h6,
+                          fontWeight: 600,
+                          color: "#0E1626",
+                        }}
+                      >
                         Lift Capacity
                       </Typography>
-                      <Typography sx={{ ...typography.bodySmall, fontWeight: 400, fontFamily: 'Fira Sans', fontSize: '18px', color: '#677489' }}>
+                      <Typography
+                        sx={{
+                          ...typography.bodySmall,
+                          fontWeight: 400,
+                          fontFamily: "Fira Sans",
+                          fontSize: "18px",
+                          color: "#677489",
+                        }}
+                      >
                         {product.liftCapacity}
                         <EditIconButton id={product.keys[3]} />
                       </Typography>
                     </Grid>
 
                     <Grid item xs={6}>
-                      <Typography sx={{ ...typography.h6, fontWeight: 600, color: '#0E1626' }}>
+                      <Typography
+                        sx={{
+                          ...typography.h6,
+                          fontWeight: 600,
+                          color: "#0E1626",
+                        }}
+                      >
                         Power Supply
                       </Typography>
-                      <Typography sx={{ ...typography.bodySmall, fontWeight: 400, fontFamily: 'Fira Sans', fontSize: '18px', color: '#677489' }}>
+                      <Typography
+                        sx={{
+                          ...typography.bodySmall,
+                          fontWeight: 400,
+                          fontFamily: "Fira Sans",
+                          fontSize: "18px",
+                          color: "#677489",
+                        }}
+                      >
                         {product.powerSupply}
                         <EditIconButton id={product.keys[4]} />
                       </Typography>
@@ -761,10 +958,24 @@ const RefurbishedElectromagnet = () => {
 
                   {/* Included */}
                   <Box sx={{ mb: 3, mt: 3 }}>
-                    <Typography sx={{ ...typography.h6, fontWeight: 600, color: '#0E1626' }}>
+                    <Typography
+                      sx={{
+                        ...typography.h6,
+                        fontWeight: 600,
+                        color: "#0E1626",
+                      }}
+                    >
                       Included
                     </Typography>
-                    <Typography sx={{ ...typography.bodySmall, fontWeight: 400, fontFamily: 'Fira Sans', fontSize: '18px', color: '#677489' }}>
+                    <Typography
+                      sx={{
+                        ...typography.bodySmall,
+                        fontWeight: 400,
+                        fontFamily: "Fira Sans",
+                        fontSize: "18px",
+                        color: "#677489",
+                      }}
+                    >
                       {product.included}
                       <EditIconButton id={product.keys[5]} />
                     </Typography>
@@ -775,9 +986,9 @@ const RefurbishedElectromagnet = () => {
                     variant="contained"
                     fullWidth
                     sx={{
-                      backgroundColor: '#1C2D4B',
-                      height: '44px',
-                      textTransform: 'none',
+                      backgroundColor: "#1C2D4B",
+                      height: "44px",
+                      textTransform: "none",
                       borderRadius: 3,
                       ...typography.bodyStrong,
                     }}
@@ -791,12 +1002,7 @@ const RefurbishedElectromagnet = () => {
           </Grid>
         </Box>
       </Box>
-
-
-
-
       {/* Left - Features with vertical timeline */}
-
       <Box
         sx={{
           display: "flex",
@@ -899,9 +1105,6 @@ const RefurbishedElectromagnet = () => {
           </Box>
         </Box>
       </Box>
-
-
-
       {/* Optional: Section for “Sell or exchange your used magnet” */}
       <Box>
         <Typography
@@ -962,10 +1165,14 @@ const RefurbishedElectromagnet = () => {
                 }}
               >
                 {/* Image + EDIT */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, pl: 2 }}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, pl: 2 }}
+                >
                   <Box
                     component="img"
-                    src={`https://cmsreflux.bexatm.com${content?.[service.imgId] || ""}`}
+                    src={`https://cmsreflux.bexatm.com${
+                      content?.[service.imgId] || ""
+                    }`}
                     alt={content?.[service.titleId] || ""}
                     sx={{
                       width: "45px",
@@ -1057,16 +1264,9 @@ const RefurbishedElectromagnet = () => {
             ))}
           </Box>
         </Box>
-
       </Box>
-
-
-
-
-
       {/*  ROI Calculator  */}
       <Box sx={{ p: 5, mt: 5 }}>
-
         {/* TITLE */}
         <Typography
           gutterBottom
@@ -1118,7 +1318,6 @@ const RefurbishedElectromagnet = () => {
 
         {/* ROI CARDS */}
         <Grid container spacing={4}>
-
           {/* CARD 1 */}
           <Grid item xs={12} md={6}>
             <Card
@@ -1174,7 +1373,11 @@ const RefurbishedElectromagnet = () => {
                   },
                 }}
               >
-                <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
                   <Typography
                     sx={{
                       ...typography.h4,
@@ -1262,7 +1465,11 @@ const RefurbishedElectromagnet = () => {
                   },
                 }}
               >
-                <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
                   <Typography
                     sx={{
                       ...typography.h4,
@@ -1294,12 +1501,8 @@ const RefurbishedElectromagnet = () => {
               </Box>
             </Card>
           </Grid>
-
         </Grid>
       </Box>
-
-
-
       <Box sx={{ mt: 5 }}>
         {/* FAQs Button */}
         <Button
@@ -1355,15 +1558,10 @@ const RefurbishedElectromagnet = () => {
 
         {/* FAQ Accordion Section */}
         <Box sx={{ px: 8, py: 6 }}>
-          {[
-            { q: "RM1087", a: "RM1088" },
-            { q: "RM1089", a: "RM1090" },
-            { q: "RM1091", a: "RM1092" },
-            { q: "RM1093", a: "RM1094" },
-            { q: "RM1095", a: "RM1096" },
-          ].map((item, index) => (
+          {rmFaqData.map((item, index) => (
             <Accordion
               key={index}
+              id={item.qId}
               expanded={expanded === index}
               onChange={() => handleChange(index)}
               disableGutters
@@ -1387,8 +1585,15 @@ const RefurbishedElectromagnet = () => {
                 }
               >
                 <Typography sx={{ ...typography.h3B1, fontWeight: 400 }}>
-                  {content[item.q]}
-                  <EditIconButton id={item.q} type="T" />
+                  {item.question}
+                  <EditIconButton id={item.qId} type="T" />
+                  <IconButton
+                    size="small"
+                    onClick={() => handleDeleteRMFAQ(item.qId, item.aId)}
+                    sx={{ ml: 1, color: "#B71C1C" }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
                 </Typography>
               </AccordionSummary>
 
@@ -1397,17 +1602,32 @@ const RefurbishedElectromagnet = () => {
                   sx={{ ...typography.bodyBase, fontWeight: 400 }}
                   color="text.secondary"
                 >
-                  {content[item.a]}
-                  <EditIconButton id={item.a} type="T" />
+                  {item.answer}
+                  <EditIconButton id={item.aId} type="T" />
                 </Typography>
               </AccordionDetails>
             </Accordion>
           ))}
+          {/* ADD NEW FAQ BUTTON */}
+          {isAdmin && (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleAddRMFAQ}
+                sx={{
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                  borderRadius: 2,
+                  px: 3,
+                  py: 1,
+                }}
+              >
+                <AddIcon /> Add New FAQ
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
-
-
-
       {/* Blogs Section */}
       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
         {/* Section Header */}
@@ -1482,7 +1702,6 @@ const RefurbishedElectromagnet = () => {
                 bgcolor: "#fafafa",
                 cursor: "pointer",
               }}
-
             >
               <Box sx={{ position: "relative" }}>
                 <CardMedia
@@ -1569,7 +1788,6 @@ const RefurbishedElectromagnet = () => {
                         boxShadow: 0,
                         cursor: "pointer",
                       }}
-
                     >
                       <Box sx={{ position: "relative" }}>
                         <CardMedia
@@ -1615,8 +1833,8 @@ const RefurbishedElectromagnet = () => {
                             gap: 1,
                           }}
                         >
-                          {item.author} <EditIconButton id={`RM${base + 1}`} /> •{" "}
-                          {item.date} <EditIconButton id={`RM${base + 2}`} />
+                          {item.author} <EditIconButton id={`RM${base + 1}`} />{" "}
+                          • {item.date} <EditIconButton id={`RM${base + 2}`} />
                         </Typography>
 
                         <Link
@@ -1634,7 +1852,11 @@ const RefurbishedElectromagnet = () => {
                         >
                           Discover More{" "}
                           <ArrowForwardIosIcon
-                            sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }}
+                            sx={{
+                              ml: 0.5,
+                              color: "#1F77D6",
+                              fontSize: "0.8rem",
+                            }}
                           />
                         </Link>
                       </Box>
@@ -1645,11 +1867,8 @@ const RefurbishedElectromagnet = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>;
-
-      {/* Rent Services instaed */}
-
-
+      </Box>
+      ;{/* Rent Services instaed */}
       <Dialog
         open={BrowseDialogopen}
         onClose={handledialogClose}
@@ -1691,7 +1910,6 @@ const RefurbishedElectromagnet = () => {
               fullWidth
               name="name"
               id="name"
-
             />
 
             <Typography
@@ -1713,7 +1931,6 @@ const RefurbishedElectromagnet = () => {
               fullWidth
               name="name"
               id="name"
-
             />
 
             <Typography
@@ -1735,7 +1952,6 @@ const RefurbishedElectromagnet = () => {
               fullWidth
               name="name"
               id="name"
-
             />
             <Typography
               sx={{
@@ -1754,7 +1970,6 @@ const RefurbishedElectromagnet = () => {
               fullWidth
               name="name"
               id="name"
-
             />
             <Typography
               sx={{
@@ -1772,26 +1987,12 @@ const RefurbishedElectromagnet = () => {
             <FormControl fullWidth>
               {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
               <Select
-
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-
               >
-                <MenuItem
-                  value={10}
-                >
-                  1-5
-                </MenuItem>
-                <MenuItem
-                  value={20}
-                >
-                  6-10
-                </MenuItem>
-                <MenuItem
-                  value={30}
-                >
-                  10-20
-                </MenuItem>
+                <MenuItem value={10}>1-5</MenuItem>
+                <MenuItem value={20}>6-10</MenuItem>
+                <MenuItem value={30}>10-20</MenuItem>
                 <MenuItem
                   //  sx={{
                   //   color: theme.palette.primary.contrastText
@@ -1824,7 +2025,6 @@ const RefurbishedElectromagnet = () => {
               minRows={3}
               name="name"
               id="name"
-
             />
             <Typography
               sx={{
@@ -1840,7 +2040,6 @@ const RefurbishedElectromagnet = () => {
               Photos/Videos
             </Typography>
             <UploadBox />
-
           </CardContent>
           {/* Buttons */}
           <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
@@ -1859,11 +2058,7 @@ const RefurbishedElectromagnet = () => {
             >
               Send on WhatsApp
             </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
+            <Button fullWidth variant="contained" color="primary">
               Submit Message
             </Button>
           </Box>
@@ -1876,17 +2071,11 @@ const RefurbishedElectromagnet = () => {
           {/* </Card> */}
         </DialogContent>
       </Dialog>
-
-
-
-
       <SellRentServicesCard services={services} />
-
       {/* Footer Section */}
-      <Box >
+      <Box>
         <Footer />
       </Box>
-
     </Box>
   );
 };
