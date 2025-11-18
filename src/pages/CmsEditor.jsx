@@ -45,7 +45,7 @@ const CmsEditor = () => {
   const loadContent = async () => {
     try {
       const res = await fetch(
-         `${process.env.REACT_APP_CMS_URL}?contentId=${contentId}`
+        `${process.env.REACT_APP_CMS_URL}?contentId=${contentId}`
       );
       if (!res.ok) throw new Error("Failed to fetch content");
       const data = await res.json();
@@ -62,6 +62,22 @@ const CmsEditor = () => {
         setcontentArrayID(baseKey);
         setcontentArrayIndex(index);
         setText(data[baseKey][index] || "");
+      } else if (contentType === "S") {
+        const id = contentTextID;
+
+        // Pattern like: CON210051_0_test or CON210051_0_Insulation_(MΩ_@_500_V)
+        const match = id.match(/^([A-Z0-9]+)_(\d+)_(.+)$/);
+
+        if (match) {
+          const baseKey = match[1];
+          const index = parseInt(match[2]);
+          const field = match[3]; // now supports ANY characters
+
+          setcontentArrayID(`${baseKey}_${index}_${field}`);
+          setText(data[`${baseKey}_${index}_${field}`] || "");
+        } else {
+          setText(data[id] || "");
+        }
       } else if (contentType === "I") {
         const imagePath = data[contentTextID] || "";
         if (imagePath) setPreview(`https://cmsreflux.bexatm.com${imagePath}`);
@@ -86,11 +102,9 @@ const CmsEditor = () => {
   //const handleChange = (e) => setText(e.target.value);
 
   const handleChange = (e) => {
-    if (contentType == "T") {
-      setText(e.target.value);
-    }
-    if (contentType == "A") {
-      setText(e.target.value);
+    setText(e.target.value);
+
+    if (contentType === "A") {
       setcontentArray((prevData) => {
         const updatedArray = [...prevData[contentArrayID]];
         updatedArray[contentArrayIndex] = e.target.value;
@@ -120,14 +134,19 @@ const CmsEditor = () => {
     try {
       const updatedText =
         contentType === "A" ? contentArray[contentArrayID] : text;
-        console.log("updatedText",updatedText);
+      console.log("updatedText", updatedText);
       const res = await fetch(
         `https://cmsreflux.bexatm.com/API/ContentManageSysV1.php?contentId=${contentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            cmsTextID: contentType === "A" ? contentArrayID:contentTextID,
+            cmsTextID:
+              contentType === "A"
+                ? contentArrayID
+                : contentType === "S"
+                ? contentArrayID
+                : contentTextID,
             cmsText: updatedText,
           }),
         }
@@ -227,7 +246,9 @@ const CmsEditor = () => {
           ) : (
             <form id="cms-form" onSubmit={saveContent}>
               {/* --- Text Editor --- */}
-              {(contentType === "T" || contentType == "A") && (
+              {(contentType === "T" ||
+                contentType == "A" ||
+                contentType === "S") && (
                 <Fragment>
                   <Typography
                     variant="subtitle1"

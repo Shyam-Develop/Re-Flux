@@ -364,7 +364,7 @@ const ServiceCard = ({
                             showCancelButton: true,
                             confirmButtonColor: "#d33",
                             cancelButtonColor: "#3085d6",
-                            confirmButtonText: "Yes, delete it",
+                            confirmButtonText: "Yes",
                           });
 
                           if (!confirm.isConfirmed) return;
@@ -753,13 +753,13 @@ const RepairServices = () => {
 
   const handleDeleteCard = async (card) => {
     const confirm = await Swal.fire({
-      title: "Delete Service Card?",
-      text: "Are you sure you want to delete this service card?",
+      title: "Delete Service?",
+      text: "Are you sure you want to delete this service?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it",
+      confirmButtonText: "Yes",
     });
 
     if (!confirm.isConfirmed) return;
@@ -797,7 +797,7 @@ const RepairServices = () => {
 
         Swal.fire({
           title: "Deleted!",
-          text: "Service card has been removed.",
+          text: "Service has been removed.",
           icon: "success",
           timer: 1500,
           showConfirmButton: false,
@@ -1031,7 +1031,7 @@ const RepairServices = () => {
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete",
+      confirmButtonText: "Yes",
     });
 
     if (!confirm.isConfirmed) return;

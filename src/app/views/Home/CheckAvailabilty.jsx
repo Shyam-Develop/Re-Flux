@@ -255,7 +255,7 @@ const CheckAvailabilty = () => {
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it",
+      confirmButtonText: "Yes",
     });
 
     if (!confirm.isConfirmed) return;
