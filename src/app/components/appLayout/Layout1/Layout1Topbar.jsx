@@ -495,18 +495,25 @@ export default function TopbarWithMegaMenu() {
         </Box>
 
         {/* Slide-down Mobile Menu */}
-        <Collapse in={mobileMenuOpen} timeout="auto" unmountOnExit>
+        <Collapse in={mobileMenuOpen} timeout={300} unmountOnExit>
           <Box
             sx={{
-              px: 2,
-              pb: 3,
+              width: "100vw",
+              position: "fixed",
+              top: 80,       // <-- FIXED (menu opens BELOW topbar)
+              left: 0,
               backgroundColor: "#fff",
-              boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-              maxHeight: "90vh",
+              borderBottomLeftRadius: "22px",
+              borderBottomRightRadius: "22px",
+              boxShadow: "0px 6px 25px rgba(0,0,0,0.15)",
+              pt: 2,
+              pb: 3,
+              px: 2,
+              zIndex: 2000,
+              maxHeight: "85vh",
               overflowY: "auto",
             }}
           >
-
 
             {/* Services */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
@@ -1069,6 +1076,56 @@ export default function TopbarWithMegaMenu() {
                 </Box>
               </Collapse>
             </Box>
+
+            {/* Login / User Section */}
+            <Box sx={{ mt: 1,  }}>
+              {isLoggedIn ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    px: 1,
+                    py: 0.3,
+                    backgroundColor: "#F8F9FA",
+                    borderRadius: "12px",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "#111B2D",
+                      fontWeight: 600,
+                      fontSize: "18px",
+                    }}
+                  >
+                    Admin
+                  </Typography>
+
+                  <IconButton onClick={handleLogout} sx={{ color: "#00334E" }}>
+                    <LogoutOutlinedIcon sx={{ fontSize: 26 }} />
+                  </IconButton>
+                </Box>
+              ) : (
+                <Button
+                  fullWidth
+                  onClick={handleLogin}
+                  sx={{
+                    textTransform: "none",
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    color: "#fff",
+                    backgroundColor: "#00334E",
+                    py: 0.4,
+                    borderRadius: "12px",
+                    "&:hover": { backgroundColor: "#002536" },
+                  }}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
+
 
           </Box>
         </Collapse>

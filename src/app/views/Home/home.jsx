@@ -1056,7 +1056,7 @@ const HomePage = () => {
                     alt="ElectroMagnet Repair"
                     sx={{
                       width: "100%",
-                      height: { xs: 250, md: 450 },
+                      height: { xs: 250, md: 570 },
                       objectFit: "cover",
                       borderRadius: 4,
                       display: "block",
@@ -1951,7 +1951,7 @@ const HomePage = () => {
 
 
 
-      =========================
+      
       {/* Blogs Section */}
 
       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
