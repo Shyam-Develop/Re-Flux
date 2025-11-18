@@ -7,26 +7,26 @@ import {
   Popover,
   Typography,
   Divider,
-  useTheme, Card,
+  useTheme,
+  Card,
   CardMedia,
   CardContent,
   IconButton,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link, useNavigate } from "react-router-dom";  // or any other ico
+import { Link, useNavigate } from "react-router-dom"; // or any other ico
 import { typography } from "app/utils/constant";
 import { themeShadows } from "app/components/baseTheme/themeColors";
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import Collapse from '@mui/material/Collapse';
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 const MenuButton = styled(Button)(({ theme }) => ({
-
   background: "transparent",
   borderRadius: 0,
   padding: "12px 0",
@@ -54,15 +54,12 @@ const MenuButton = styled(Button)(({ theme }) => ({
       borderRight: "8px solid transparent",
       borderTop: "8px solid #112B49", // triangle color
     },
-
   },
   "&:hover": {
     background: "transparent",
     color: theme.palette.warning.main,
   },
 }));
-
-
 
 const TopbarRoot = styled("div")(({ theme }) => ({
   top: 0,
@@ -81,8 +78,6 @@ const TopbarContainer = styled(Box)(({ theme }) => ({
   background: theme.palette.card,
   borderBottom: `3px solid ${theme.palette.border}`,
 }));
-
-
 
 export default function TopbarWithMegaMenu() {
   const theme = useTheme();
@@ -112,7 +107,6 @@ export default function TopbarWithMegaMenu() {
 
   const handleLogin = () => navigate("/login");
 
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
 
@@ -121,10 +115,7 @@ export default function TopbarWithMegaMenu() {
     setActiveMenu(menu);
   };
 
-
-
-
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -163,7 +154,6 @@ export default function TopbarWithMegaMenu() {
     setOpenMore(false);
     menuSetter(!currentValue);
   };
-
 
   if (!isMobile) {
     // Desktop view (your existing JSX)
@@ -247,109 +237,18 @@ export default function TopbarWithMegaMenu() {
                   marginBottom: "20px",
                 }}
               >
-                {["Services", "Rental", "Resale", "Contact", "More"].map((menu) => (
-                  <React.Fragment key={menu}>
-                    <MenuButton
-                      onClick={(e) => handleOpen(e, menu)}
-                      className={activeMenu === menu ? "active" : ""}
-                      sx={{
-                        color: "#131313",
-                        ...typography.h5,
-                        fontWeight: 500,
-                        fontSize: "20px",
-                        textTransform: "none",
-                        position: "relative",
-                        "&.active": {
-                          color: "#00334E",
-                          fontWeight: 600,
-                          "&::after": {
-                            content: '""',
-                            position: "absolute",
-                            top: "51px",
-                            left: "50%",
-                            transform: "translateX(-50%) rotate(45deg)",
-                            width: "17px",
-                            height: "14px",
-                            backgroundColor: "#112B49",
-                            borderRadius: "1px",
-                          },
-                        },
-                      }}
-                    >
-                      {menu}
-                    </MenuButton>
-
-                    {/* Popover */}
-                    <Popover
-                      open={activeMenu === menu}
-                      anchorEl={anchorEl}
-                      onClose={handleClose}
-                      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                      PaperProps={{
-                        sx: {
-                          marginTop: "32px",
-                          left: 0,
-                          backgroundColor: theme.palette.background.default,
-                          width: appBarRef.current?.offsetWidth || "100%",
-                          borderRadius: 0,
-                          boxShadow: theme.shadows[5],
-                          p: 0,
-                        },
-                      }}
-                      disableRestoreFocus
-                    >
-                      <Box sx={{ borderTop: "3px solid #112B49", width: "100%" }} />
-                      <Box sx={{ p: 2 }}>
-                        {menu === "Services" && <ServicesPopoverContent />}
-                        {menu === "Rental" && <RentalPopoverContent />}
-                        {menu === "Resale" && <ResalePopoverContent />}
-                        {menu === "Contact" && <ContactPopoverContent />}
-                        {menu === "More" && <MorePopoverContent />}
-                      </Box>
-                    </Popover>
-                  </React.Fragment>
-                ))}
-                {/* ✅ Login / Logout Toggle Button */}
-
-                <Box>
-                  {isLoggedIn ? (
-                    <Box
-                      sx={{
-                        display: "flex", // ✅ Makes items align side by side
-                        alignItems: "center", // ✅ Vertically center
-                        gap: 1, // ✅ Adds a small space between admin and icon
-                        color: "#131313",
-                        ...typography.h5,
-                        fontWeight: 500,
-                        fontSize: "20px",
-                        textTransform: "none",
-                        position: "relative",
-                        "&.active": {
-                          color: "#00334E",
-                          fontWeight: 600,
-                          "&::after": {
-                            content: '""',
-                            position: "absolute",
-                            top: "45px",
-                            left: "50%",
-                            transform: "translateX(-50%) rotate(45deg)",
-                            width: "17px",
-                            paddingTop: '30px',
-                            height: "14px",
-                            backgroundColor: "#112B49",
-                            borderRadius: "1px",
-                          },
-                        },
-                      }}
-                    >
-                      <Typography
+                {["Services", "Rental", "Resale", "Contact", "More"].map(
+                  (menu) => (
+                    <React.Fragment key={menu}>
+                      <MenuButton
+                        onClick={(e) => handleOpen(e, menu)}
+                        className={activeMenu === menu ? "active" : ""}
                         sx={{
                           color: "#131313",
                           ...typography.h5,
                           fontWeight: 500,
                           fontSize: "20px",
                           textTransform: "none",
-
                           position: "relative",
                           "&.active": {
                             color: "#00334E",
@@ -357,7 +256,7 @@ export default function TopbarWithMegaMenu() {
                             "&::after": {
                               content: '""',
                               position: "absolute",
-                              top: "30px",
+                              top: "51px",
                               left: "50%",
                               transform: "translateX(-50%) rotate(45deg)",
                               width: "17px",
@@ -368,71 +267,97 @@ export default function TopbarWithMegaMenu() {
                           },
                         }}
                       >
-                        {role || "User"}
-                      </Typography>
+                        {menu}
+                      </MenuButton>
 
-                      <IconButton
-                        onClick={handleLogout}
-                        sx={{
-                          color: "#131313",
-                          "&:hover": { color: "#00334E" },
-                          p: 0, // removes extra padding
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          paddingBottom: '0px',
-                          border: '2px solid #835454',
-                          padding: '2px',
-                          color: '#ed8686'
+                      {/* Popover */}
+                      <Popover
+                        open={activeMenu === menu}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "left",
                         }}
+                        PaperProps={{
+                          sx: {
+                            marginTop: "32px",
+                            left: 0,
+                            backgroundColor: theme.palette.background.default,
+                            width: appBarRef.current?.offsetWidth || "100%",
+                            borderRadius: 0,
+                            boxShadow: theme.shadows[5],
+                            p: 0,
+                          },
+                        }}
+                        disableRestoreFocus
                       >
-                        <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
-                      </IconButton>
-                    </Box>
-                  ) : (
-                    <Button
-                      onClick={handleLogin}
+                        <Box
+                          sx={{ borderTop: "3px solid #112B49", width: "100%" }}
+                        />
+                        <Box sx={{ p: 2 }}>
+                          {menu === "Services" && <ServicesPopoverContent />}
+                          {menu === "Rental" && <RentalPopoverContent />}
+                          {menu === "Resale" && <ResalePopoverContent />}
+                          {menu === "Contact" && <ContactPopoverContent />}
+                          {menu === "More" && <MorePopoverContent />}
+                        </Box>
+                      </Popover>
+                    </React.Fragment>
+                  )
+                )}
+                {/* ✅ Login / Logout Toggle Button */}
+
+                <Box>
+                  {/* SHOW ONLY AFTER LOGIN */}
+                  {isLoggedIn && (
+                    <Box
                       sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                         color: "#131313",
                         ...typography.h5,
                         fontWeight: 500,
                         fontSize: "20px",
                         textTransform: "none",
                         position: "relative",
-                        padding: "12px",
-                        marginTop: "-12px", // 👈 moves it up slightly (adjust value)
-                        "&.active": {
-                          color: "#00334E",
-                          fontWeight: 600,
-                          "&::after": {
-                            content: '""',
-                            position: "absolute",
-                            top: "30px",
-                            left: "50%",
-                            transform: "translateX(-50%) rotate(45deg)",
-                            width: "17px",
-                            height: "14px",
-                            backgroundColor: "#112B49",
-                            borderRadius: "1px",
-                          },
-                        },
                       }}
                     >
-                      Login
-                    </Button>
+                      <Typography
+                        sx={{
+                          color: "#131313",
+                          ...typography.h5,
+                          fontWeight: 500,
+                          fontSize: "20px",
+                          textTransform: "none",
+                        }}
+                      >
+                        {role || "User"}
+                      </Typography>
 
+                      <IconButton
+                        onClick={handleLogout}
+                        sx={{
+                          "&:hover": { color: "#00334E" },
+                          p: 0,
+                          border: "2px solid #835454",
+                          padding: "2px",
+                          color: "#ed8686",
+                        }}
+                      >
+                        <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
+                      </IconButton>
+                    </Box>
                   )}
                 </Box>
-
               </Box>
             </Box>
           </Box>
         </TopbarContainer>
       </TopbarRoot>
-
     );
   }
-
 
   // ===== MOBILE VIEW =====
   return (
@@ -488,7 +413,6 @@ export default function TopbarWithMegaMenu() {
             </Box>
           </Box>
 
-
           <IconButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
@@ -500,7 +424,7 @@ export default function TopbarWithMegaMenu() {
             sx={{
               width: "100vw",
               position: "fixed",
-              top: 80,       // <-- FIXED (menu opens BELOW topbar)
+              top: 80, // <-- FIXED (menu opens BELOW topbar)
               left: 0,
               backgroundColor: "#fff",
               borderBottomLeftRadius: "22px",
@@ -514,7 +438,6 @@ export default function TopbarWithMegaMenu() {
               overflowY: "auto",
             }}
           >
-
             {/* Services */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
               <Button
@@ -541,28 +464,84 @@ export default function TopbarWithMegaMenu() {
               <Collapse in={openServices} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
                   {/* Electromagnet Repair */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Electromagnet Repair
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Coil Rewinds</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Terminals</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Coil Rewinds
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Terminals
+                  </Typography>
 
                   {/* Rectangular Magnet */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Rectangular Magnet
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Face Machining</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Pole-Shoe Rework</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Face Machining
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Pole-Shoe Rework
+                  </Typography>
 
                   {/* Suspension Magnet */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Suspension Magnet Service (Oil / Air-cooled)
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Overhaul</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Oil Changes</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Overhaul
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Oil Changes
+                  </Typography>
 
                   {/* Emergency Support */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Emergency Support (24×7)
                   </Typography>
                   <Typography
@@ -574,7 +553,11 @@ export default function TopbarWithMegaMenu() {
                   >
                     Call +91 12345 67890
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 2 }}>Whatsapp</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 2 }}
+                  >
+                    Whatsapp
+                  </Typography>
 
                   {/* Image Card */}
                   <Card
@@ -597,7 +580,7 @@ export default function TopbarWithMegaMenu() {
                           fontWeight: 600,
                           fontSize: "16px",
                           color: "#111B2D",
-                          ...typography.bodyBase
+                          ...typography.bodyBase,
                         }}
                       >
                         It’s more than Magnets
@@ -612,18 +595,23 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 600,
                       fontSize: "18px",
                       mb: 1,
-                      ...typography.h4
+                      ...typography.h4,
                     }}
                   >
                     ROI Calculators
                   </Typography>
-                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map(
-                    (item, i) => (
-                      <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
-                        {item}
-                      </Typography>
-                    )
-                  )}
+                  {[
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                  ].map((item, i) => (
+                    <Typography
+                      key={i}
+                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
+                    >
+                      {item}
+                    </Typography>
+                  ))}
                 </Box>
               </Collapse>
             </Box>
@@ -654,25 +642,73 @@ export default function TopbarWithMegaMenu() {
               <Collapse in={openRental} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
                   {/* Circular Magnet */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Circular Magnet
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Permanent Magnet</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Electro-Lifting Magnet</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Electro-Lifting Magnet
+                  </Typography>
 
                   {/* Overband */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Overband
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Permanent Magnet</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Permanent Magnet</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
 
                   {/* Rectangle Magnet */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Rectangle Magnet
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Permanent Magnet</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Electro-Lifting Magnet</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Electro-Lifting Magnet
+                  </Typography>
 
                   {/* Browse All Rentals */}
                   <Typography
@@ -684,7 +720,7 @@ export default function TopbarWithMegaMenu() {
                       mt: 1,
                       textDecoration: "underline",
                       cursor: "pointer",
-                      ...typography.h4
+                      ...typography.h4,
                     }}
                     onClick={() => navigate("/home/rentals")}
                   >
@@ -712,7 +748,7 @@ export default function TopbarWithMegaMenu() {
                           fontWeight: 600,
                           fontSize: "16px",
                           color: "#111B2D",
-                          ...typography.bodyBase
+                          ...typography.bodyBase,
                         }}
                       >
                         It’s more than Magnets
@@ -727,18 +763,23 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 600,
                       fontSize: "18px",
                       mb: 1,
-                      ...typography.h4
+                      ...typography.h4,
                     }}
                   >
                     ROI Calculators
                   </Typography>
-                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map(
-                    (item, i) => (
-                      <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
-                        {item}
-                      </Typography>
-                    )
-                  )}
+                  {[
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                  ].map((item, i) => (
+                    <Typography
+                      key={i}
+                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
+                    >
+                      {item}
+                    </Typography>
+                  ))}
                 </Box>
               </Collapse>
             </Box>
@@ -769,34 +810,96 @@ export default function TopbarWithMegaMenu() {
               <Collapse in={openResale} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
                   {/* Browse Refurbished Inventory */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Browse Refurbished Inventory
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Circular Magnets</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Rectangular Magnets</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Circular Magnets
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Rectangular Magnets
+                  </Typography>
 
                   {/* Sell / Exchange Your Magnet */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Sell / Exchange Your Magnet
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Permanent Magnet</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Permanent Magnet</Typography>
-
-                  {/* Overband */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
-                    Overband
-                  </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Permanent Magnet</Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}>Permanent Magnet</Typography>
-
-                  {/* Rectangle Magnet */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
-                    Rectangle Magnet
-                  </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5, }}>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
                     Permanent Magnet
                   </Typography>
-                  <Typography sx={{ color: "#111B2D", mb: 1.5, ...typography.bodyBase }}>Permanent Magnet</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+
+                  {/* Overband */}
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
+                    Overband
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+
+                  {/* Rectangle Magnet */}
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
+                    Rectangle Magnet
+                  </Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Permanent Magnet
+                  </Typography>
+                  <Typography
+                    sx={{ color: "#111B2D", mb: 1.5, ...typography.bodyBase }}
+                  >
+                    Permanent Magnet
+                  </Typography>
 
                   {/* Image Card */}
                   <Card
@@ -837,7 +940,11 @@ export default function TopbarWithMegaMenu() {
                   >
                     ROI Calculators
                   </Typography>
-                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+                  {[
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                  ].map((item, i) => (
                     <Typography key={i} sx={{ color: "#111B2D", mb: 0.8 }}>
                       {item}
                     </Typography>
@@ -873,16 +980,28 @@ export default function TopbarWithMegaMenu() {
               <Collapse in={openContact} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
                   {/* Request Quote / Book Visit */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     Request a Quote
                   </Typography>
-                  <Typography sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}>Book a Site Visit</Typography>
+                  <Typography
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                  >
+                    Book a Site Visit
+                  </Typography>
                   <Typography
                     sx={{
                       color: "#00334E",
                       textDecoration: "underline",
                       mb: 0.5,
-                      ...typography.bodyBase
+                      ...typography.bodyBase,
                     }}
                   >
                     contact@lift.agency
@@ -892,14 +1011,22 @@ export default function TopbarWithMegaMenu() {
                       color: "#00334E",
                       textDecoration: "underline",
                       mb: 1.5,
-                      ...typography.bodyBase
+                      ...typography.bodyBase,
                     }}
                   >
                     (123) 456-7890
                   </Typography>
 
                   {/* WhatsApp */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     WhatsApp an Engineer
                   </Typography>
 
@@ -924,7 +1051,7 @@ export default function TopbarWithMegaMenu() {
                           fontWeight: 600,
                           fontSize: "16px",
                           color: "#111B2D",
-                          ...typography.bodyBase
+                          ...typography.bodyBase,
                         }}
                       >
                         It’s more than Magnets
@@ -939,13 +1066,20 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 600,
                       fontSize: "18px",
                       mb: 1,
-                      ...typography.h4
+                      ...typography.h4,
                     }}
                   >
                     ROI Calculators
                   </Typography>
-                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
-                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
+                  {[
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                  ].map((item, i) => (
+                    <Typography
+                      key={i}
+                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
+                    >
                       {item}
                     </Typography>
                   ))}
@@ -965,7 +1099,6 @@ export default function TopbarWithMegaMenu() {
                   fontWeight: 600,
                   color: "#00334E",
                   py: 1.2,
-
                 }}
               >
                 More
@@ -981,34 +1114,85 @@ export default function TopbarWithMegaMenu() {
               <Collapse in={openMore} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
                   {/* ROI Calculator */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mb: 1,
+                    }}
+                  >
                     ROI Calculator
                   </Typography>
-                  {["Repair vs Replace", "Rental vs Buy", "AMC vs Reactive."].map((item, i) => (
-                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
+                  {[
+                    "Repair vs Replace",
+                    "Rental vs Buy",
+                    "AMC vs Reactive.",
+                  ].map((item, i) => (
+                    <Typography
+                      key={i}
+                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
+                    >
                       {item}
                     </Typography>
                   ))}
 
                   {/* Downloads */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mt: 2, mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mt: 2,
+                      mb: 1,
+                    }}
+                  >
                     Downloads
                   </Typography>
-                  {["Safety labels", "Electro-Lifting Magnet"].map((item, i) => (
-                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
-                      {item}
-                    </Typography>
-                  ))}
+                  {["Safety labels", "Electro-Lifting Magnet"].map(
+                    (item, i) => (
+                      <Typography
+                        key={i}
+                        sx={{
+                          color: "#111B2D",
+                          mb: 0.8,
+                          ...typography.bodyBase,
+                        }}
+                      >
+                        {item}
+                      </Typography>
+                    )
+                  )}
 
                   {/* Case Studies */}
-                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mt: 2, mb: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      color: "#AE5609",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      mt: 2,
+                      mb: 1,
+                    }}
+                  >
                     Case Studies
                   </Typography>
-                  {["Before and After", "Turn Around Time (TAT)"].map((item, i) => (
-                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
-                      {item}
-                    </Typography>
-                  ))}
+                  {["Before and After", "Turn Around Time (TAT)"].map(
+                    (item, i) => (
+                      <Typography
+                        key={i}
+                        sx={{
+                          color: "#111B2D",
+                          mb: 0.8,
+                          ...typography.bodyBase,
+                        }}
+                      >
+                        {item}
+                      </Typography>
+                    )
+                  )}
 
                   {/* Standalone Links */}
                   {["FAQ", "About Us", "Legal"].map((item, i) => (
@@ -1020,7 +1204,7 @@ export default function TopbarWithMegaMenu() {
                         fontSize: "18px",
                         mt: 2,
                         mb: 0.8,
-                        ...typography.bodyBase
+                        ...typography.bodyBase,
                       }}
                     >
                       {item}
@@ -1048,7 +1232,7 @@ export default function TopbarWithMegaMenu() {
                           fontWeight: 600,
                           fontSize: "16px",
                           color: "#111B2D",
-                          ...typography.bodyBase
+                          ...typography.bodyBase,
                         }}
                       >
                         It’s more than Magnets
@@ -1063,13 +1247,20 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 600,
                       fontSize: "18px",
                       mb: 1,
-                      ...typography.h4
+                      ...typography.h4,
                     }}
                   >
                     ROI Calculators
                   </Typography>
-                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
-                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
+                  {[
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                    "Rent Vs Replace?",
+                  ].map((item, i) => (
+                    <Typography
+                      key={i}
+                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
+                    >
                       {item}
                     </Typography>
                   ))}
@@ -1078,7 +1269,7 @@ export default function TopbarWithMegaMenu() {
             </Box>
 
             {/* Login / User Section */}
-            <Box sx={{ mt: 1,  }}>
+            <Box sx={{ mt: 1 }}>
               {isLoggedIn ? (
                 <Box
                   sx={{
@@ -1125,26 +1316,19 @@ export default function TopbarWithMegaMenu() {
                 </Button>
               )}
             </Box>
-
-
           </Box>
         </Collapse>
       </TopbarContainer>
     </TopbarRoot>
   );
-
-};
-
-
+}
 
 const ServicesPopoverContent = () => {
-
   const navigate = useNavigate();
 
   return (
     <Box sx={{ position: "relative" }}>
       {/* Blue line before Grid */}
-
 
       <Grid container spacing={0}>
         {/* Column 1 */}
@@ -1298,9 +1482,10 @@ const ServicesPopoverContent = () => {
                 fontSize: "24px",
                 lineHeight: "130%",
                 mb: 2,
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
-              onClick={() => navigate("./repair-replace/roi-cal")}>
+              onClick={() => navigate("./repair-replace/roi-cal")}
+            >
               ROI Calculators
             </Typography>
 
@@ -1347,7 +1532,6 @@ const ServicesPopoverContent = () => {
 };
 
 const RentalPopoverContent = () => {
-
   const navigate = useNavigate();
 
   return (
@@ -1426,7 +1610,12 @@ const RentalPopoverContent = () => {
         {/* Divider + ROI */}
         <Divider orientation="vertical" flexItem />
 
-        <Box display="flex" flexDirection="column" alignItems="flex-start" ml={2}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          ml={2}
+        >
           <Typography
             sx={{
               color: "#AE5609",
@@ -1436,7 +1625,8 @@ const RentalPopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-            onClick={() => navigate("./repair-replace/roi-cal")}>
+            onClick={() => navigate("./repair-replace/roi-cal")}
+          >
             ROI Calculators
           </Typography>
 
@@ -1460,7 +1650,6 @@ const RentalPopoverContent = () => {
         </Box>
       </Grid>
     </Grid>
-
   );
 };
 
@@ -1478,8 +1667,8 @@ const ResalePopoverContent = () => {
             flexDirection: "row",
             gap: 3, // space between the two
             alignItems: "flex-start",
-            paddingLeft: '25px',
-            mt: 2
+            paddingLeft: "25px",
+            mt: 2,
           }}
         >
           {/* Electromagnet Repair */}
@@ -1494,8 +1683,10 @@ const ResalePopoverContent = () => {
               alignItems: "flex-start",
             }}
           >
-            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: 'pointer' }}
-              onClick={() => navigate("/home/RefurbishedElectromagnet")}>
+            <Typography
+              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
+              onClick={() => navigate("/home/RefurbishedElectromagnet")}
+            >
               Browse Refurbished
               <br /> Inventory
             </Typography>
@@ -1515,7 +1706,7 @@ const ResalePopoverContent = () => {
               width: 140,
               height: 144,
               display: "flex",
-              paddingBottom: '25px',
+              paddingBottom: "25px",
               flexDirection: "column",
               gap: 1.5,
               justifyContent: "center",
@@ -1547,7 +1738,7 @@ const ResalePopoverContent = () => {
             justifyContent: "center",
             alignItems: "flex-start",
             gap: 1.5,
-            paddingLeft: '25px'
+            paddingLeft: "25px",
           }}
         >
           <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
@@ -1563,7 +1754,6 @@ const ResalePopoverContent = () => {
           </Typography>
         </Box>
       </Grid>
-
 
       {/* Column 2 */}
       <Grid item xs={3}>
@@ -1610,8 +1800,14 @@ const ResalePopoverContent = () => {
         </Box>
       </Grid>
 
-
-      <Grid item xs={5} display="flex" flexDirection="row" alignItems="flex-start" gap={2}>
+      <Grid
+        item
+        xs={5}
+        display="flex"
+        flexDirection="row"
+        alignItems="flex-start"
+        gap={2}
+      >
         {/* Column 3 */}
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           <ServiceCard imgserv={imgserv} />
@@ -1629,26 +1825,51 @@ const ResalePopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-            onClick={() => navigate("./repair-replace/roi-cal")}>
+            onClick={() => navigate("./repair-replace/roi-cal")}
+          >
             ROI Calculators
           </Typography>
 
-          <Typography sx={{ ...typography.bodyBase, fontWeight: 400, fontSize: "18px", lineHeight: "160%", color: "#111B2D", mb: 1 }}>
+          <Typography
+            sx={{
+              ...typography.bodyBase,
+              fontWeight: 400,
+              fontSize: "18px",
+              lineHeight: "160%",
+              color: "#111B2D",
+              mb: 1,
+            }}
+          >
             Rent Vs Replace?
           </Typography>
-          <Typography sx={{ ...typography.bodyBase, fontWeight: 400, fontSize: "18px", lineHeight: "160%", color: "#111B2D", mb: 1 }}>
+          <Typography
+            sx={{
+              ...typography.bodyBase,
+              fontWeight: 400,
+              fontSize: "18px",
+              lineHeight: "160%",
+              color: "#111B2D",
+              mb: 1,
+            }}
+          >
             Rent Vs Replace?
           </Typography>
-          <Typography sx={{ ...typography.bodyBase, fontWeight: 400, fontSize: "18px", lineHeight: "160%", color: "#111B2D" }}>
+          <Typography
+            sx={{
+              ...typography.bodyBase,
+              fontWeight: 400,
+              fontSize: "18px",
+              lineHeight: "160%",
+              color: "#111B2D",
+            }}
+          >
             Rent Vs Replace?
           </Typography>
         </Box>
       </Grid>
     </Grid>
-
   );
 };
-
 
 const ContactPopoverContent = () => {
   const navigate = useNavigate();
@@ -1657,7 +1878,12 @@ const ContactPopoverContent = () => {
     <Grid container spacing={1} sx={{ px: 1, py: 2 }}>
       {/* Column 1 */}
       <Grid item xs={3}>
-        <Box display="flex" flexDirection="column" gap={0.8} sx={{ paddingLeft: '70px' }}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={0.8}
+          sx={{ paddingLeft: "70px" }}
+        >
           <Typography
             sx={{
               color: "#AE5609",
@@ -1665,7 +1891,7 @@ const ContactPopoverContent = () => {
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: "120%",
-              ...typography.h4
+              ...typography.h4,
             }}
           >
             Request a Quote
@@ -1682,7 +1908,7 @@ const ContactPopoverContent = () => {
               lineHeight: "120%",
               textDecoration: "none",
               "&:hover": { textDecoration: "underline" },
-              ...typography.h4
+              ...typography.h4,
             }}
           >
             Book a Site Visit
@@ -1697,7 +1923,7 @@ const ContactPopoverContent = () => {
               color: "#111B2D",
               borderBottom: "1px solid #1E88E5",
               width: "fit-content",
-              ...typography.h4
+              ...typography.h4,
             }}
           >
             contact@lift.agency
@@ -1712,7 +1938,7 @@ const ContactPopoverContent = () => {
               color: "#111B2D",
               borderBottom: "1px solid #1E88E5",
               width: "fit-content",
-              ...typography.h4
+              ...typography.h4,
             }}
           >
             (123) 456-7890
@@ -1730,7 +1956,7 @@ const ContactPopoverContent = () => {
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: "120%",
-              ...typography.h4
+              ...typography.h4,
             }}
           >
             WhatsApp an Engineer
@@ -1759,9 +1985,10 @@ const ContactPopoverContent = () => {
                 fontSize: "18px",
                 lineHeight: "120%",
                 mb: 0.5,
-                ...typography.h4
+                ...typography.h4,
               }}
-              onClick={() => navigate("./repair-replace/roi-cal")}>
+              onClick={() => navigate("./repair-replace/roi-cal")}
+            >
               ROI Calculators
             </Typography>
 
@@ -1775,7 +2002,7 @@ const ContactPopoverContent = () => {
                     fontSize: "16px",
                     lineHeight: "140%",
                     color: "#111B2D",
-                    ...typography.bodyBase
+                    ...typography.bodyBase,
                   }}
                 >
                   {item}
@@ -1862,12 +2089,18 @@ const MorePopoverContent = () => {
             <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
               FAQ
             </Typography>
-            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: 'pointer' }}
-              onClick={() => navigate("/about-us")}>
+            <Typography
+              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
+              onClick={() => navigate("/about-us")}
+            >
               About Us
             </Typography>
-            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: 'pointer' }}
-              onClick={() => navigate("/legal")}> Legal
+            <Typography
+              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
+              onClick={() => navigate("/legal")}
+            >
+              {" "}
+              Legal
             </Typography>
           </Box>
         </Box>
@@ -1901,7 +2134,8 @@ const MorePopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-            onClick={() => navigate("./repair-replace/roi-cal")}>
+            onClick={() => navigate("./repair-replace/roi-cal")}
+          >
             ROI Calculators
           </Typography>
 
@@ -1943,7 +2177,6 @@ const MorePopoverContent = () => {
         </Box>
       </Grid>
     </Grid>
-
   );
 };
 
@@ -1982,19 +2215,18 @@ const ServiceCard = ({ imgserv }) => {
   return (
     <Card
       sx={{
-        width: 223,             // card width
-        height: 307,            // card height
-        borderRadius: 2,        // theme radius (≈ 8px)
-        boxShadow: 3,           // shadow depth
-        overflow: "hidden",     // clip children to rounded corners
+        width: 223, // card width
+        height: 307, // card height
+        borderRadius: 2, // theme radius (≈ 8px)
+        boxShadow: 3, // shadow depth
+        overflow: "hidden", // clip children to rounded corners
         opacity: 1,
         transform: "rotate(0deg)", // angle: 0deg
         display: "flex",
         flexDirection: "column",
-        bgcolor: "#F7F9FC"
+        bgcolor: "#F7F9FC",
       }}
     >
-
       {/* Image */}
       <CardMedia
         component="img"
@@ -2005,11 +2237,10 @@ const ServiceCard = ({ imgserv }) => {
           height: 190,
           // p: 1.5,              // padding (12px)
           objectFit: "cover",
-          borderRadius: 2,     // theme spacing rounding (~8px)
+          borderRadius: 2, // theme spacing rounding (~8px)
           opacity: 1,
         }}
       />
-
 
       {/* Content Section */}
       <CardContent
@@ -2034,14 +2265,16 @@ const ServiceCard = ({ imgserv }) => {
           It's more than Magnets
         </Typography>
 
-
-        <IconButton size="small" sx={{ bgcolor: "primary.main", color: "white" }}>
+        <IconButton
+          size="small"
+          sx={{ bgcolor: "primary.main", color: "white" }}
+        >
           <EditIcon fontSize="small" />
         </IconButton>
       </CardContent>
     </Card>
   );
-}
+};
 
 //  <Popover
 //   open={open}
@@ -2139,7 +2372,8 @@ const ServiceCard = ({ imgserv }) => {
 //           </Grid>
 //         </Popover>
 
-{/* <Popover
+{
+  /* <Popover
   open={open}
   onClose={handleClose}
   anchorReference="anchorPosition"   // ⬅️ manual positioning
@@ -2156,4 +2390,5 @@ const ServiceCard = ({ imgserv }) => {
     },
   }}
   disableRestoreFocus
-> */}
+> */
+}
