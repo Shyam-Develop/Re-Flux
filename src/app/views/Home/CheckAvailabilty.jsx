@@ -343,32 +343,33 @@ const CheckAvailabilty = () => {
       label: content.CON130001, // Mechanical
       id: "CON130001",
       properties: [
-        { id: "CON130002", text: content.CON130002 },
-        { id: "CON130003", text: content.CON130003 },
-        { id: "CON130004", text: content.CON130004 },
-        { id: "CON130005", text: content.CON130005 },
-        { id: "CON130006", text: content.CON130006 },
-        { id: "CON130007", text: content.CON130007 },
+        { texId: "CON130002", text: content.CON130002, descId: "CON130003", desc: content.CON130003 },
+        { texId: "CON130004", text: content.CON130004, descId: "CON130005", desc: content.CON130005 },
+        { texId: "CON130006", text: content.CON130006, descId: "CON130007", desc: content.CON130007 },
+        { texId: "CON130008", text: content.CON130008, descId: "CON130009", desc: content.CON130009 },
+        { texId: "CON130010", text: content.CON130010, descId: "CON130011", desc: content.CON130011 },
       ],
     },
     {
-      label: content.CON130008, // Electrical
-      id: "CON130008",
+      label: content.CON130012, // Electrical
+      id: "CON130012",
       properties: [
-        { id: "CON130009", text: content.CON130009 },
-        { id: "CON130010", text: content.CON130010 },
-        { id: "CON130011", text: content.CON130011 },
-        { id: "CON130012", text: content.CON130012 },
+        { texId: "CON130013", text: content.CON130013, descId: "CON130014", desc: content.CON130014 },
+        { texId: "CON130015", text: content.CON130015, descId: "CON130016", desc: content.CON130016 },
+        { texId: "CON130017", text: content.CON130017, descId: "CON130018", desc: content.CON130018 },
+        { texId: "CON130019", text: content.CON130019, descId: "CON130020", desc: content.CON130020 },
+        { texId: "CON130021", text: content.CON130021, descId: "CON130022", desc: content.CON130022 },
       ],
     },
     {
-      label: content.CON130013, // Performance
-      id: "CON130013",
+      label: content.CON130023, // Performance
+      id: "CON130023",
       properties: [
-        { id: "CON130014", text: content.CON130014 },
-        { id: "CON130015", text: content.CON130015 },
-        { id: "CON130016", text: content.CON130016 },
-        { id: "CON130017", text: content.CON130017 },
+        { texId: "CON130024", text: content.CON130024, descId: "CON130025", desc: content.CON130025 },
+        { texId: "CON130026", text: content.CON130026, descId: "CON130027", desc: content.CON130027 },
+        { texId: "CON130028", text: content.CON130028, descId: "CON130029", desc: content.CON130029 },
+        { texId: "CON130030", text: content.CON130030, descId: "CON130031", desc: content.CON130031 },
+        { texId: "CON130032", text: content.CON130032, descId: "CON130033", desc: content.CON130033 },
       ],
     },
   ];
@@ -619,7 +620,7 @@ const CheckAvailabilty = () => {
                 alt="Main Lifting Magnet"
                 sx={{
                   width: { xs: "100%", md: "887px" },
-                  height: { xs: "auto", md: "500px" },
+                  height: { xs: "auto", md: "625px" },
                   borderRadius: "10px",
                   objectFit: "cover",
                 }}
@@ -695,11 +696,11 @@ const CheckAvailabilty = () => {
           <Box
             sx={{
               width: { xs: "100%", md: "452px" },
-              height: "60%",
+              height: "90%",
               border: "1px solid #E17A00",
               borderRadius: "12px",
               padding: "24px",
-              marginTop: { xs: "20px", md: "40px" },
+              marginTop: { xs: "20px", md: "4px" },
               marginRight: { xs: 0, md: "90px" },
               lineHeight: "2",
               display: "flex",
@@ -817,13 +818,92 @@ const CheckAvailabilty = () => {
               </Box>
             </Box>
 
-            {/* Row 3: Location Input */}
+            {/* Row 3: Capacity and Duty Cycle */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
+              <Box sx={{ flex: 1, position: "relative" }}>
+                <Typography
+                  sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+                >
+                  {content.CON160010}
+                  {isAdmin && <EditIconButton id="CON160010" />}
+                </Typography>
+
+                <Select
+                  fullWidth
+                  size="small"
+                  defaultValue=""
+                  sx={{
+                    ...typography.bodyBasemedium,
+                    fontWeight: 400,
+                    border: "1px solid #E17A00",
+                  }}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="option1">Option 1</MenuItem>
+                </Select>
+              </Box>
+
+              <Box sx={{ flex: 1, position: "relative" }}>
+                <Typography
+                  sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+                >
+                  {content.CON160011}
+                  {isAdmin && <EditIconButton id="CON160011" />}
+                </Typography>
+
+                <Select
+                  fullWidth
+                  size="small"
+                  defaultValue=""
+                  sx={{
+                    ...typography.bodyBasemedium,
+                    fontWeight: 400,
+                    border: "1px solid #E17A00",
+                  }}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="option1">Option 1</MenuItem>
+                </Select>
+              </Box>
+            </Box>
+
+            {/* Row 4: Location Input */}
             <Box sx={{ position: "relative" }}>
               <Typography
                 sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
               >
-                {content.CON160010}
-                {isAdmin && <EditIconButton id="CON160010" />}
+                {content.CON160012}
+                {isAdmin && <EditIconButton id="CON160012" />}
+              </Typography>
+
+              <Select
+                fullWidth
+                size="small"
+                defaultValue=""
+                sx={{
+                  ...typography.bodyBasemedium,
+                  fontWeight: 400,
+                  border: "1px solid #E17A00",
+                }}
+              >
+                <MenuItem value="All">All</MenuItem>
+                <MenuItem value="option1">Option 1</MenuItem>
+              </Select>
+            </Box>
+
+            {/* Row 5: Location Input */}
+            <Box sx={{ position: "relative" }}>
+              <Typography
+                sx={{ ...typography.h3medium, fontWeight: 500, mb: "4px" }}
+              >
+                {content.CON160013}
+                {isAdmin && <EditIconButton id="CON160013" />}
               </Typography>
 
               <Box
@@ -850,10 +930,11 @@ const CheckAvailabilty = () => {
                 variant="contained"
                 fullWidth
                 sx={{
-                  mt: 2,
-                  p: 2,
+                  mt: 1.4,
+                  p: 1.4,
                   backgroundColor: "#18294C",
                   textTransform: "none",
+                  borderRadius: '10px',
                   ...typography.buttonSBold,
                   fontWeight: 600,
                   "&:hover": {
@@ -861,8 +942,8 @@ const CheckAvailabilty = () => {
                   },
                 }}
               >
-                {content.CON160011}
-                {isAdmin && <EditIconButton id="CON160011" />}
+                {content.CON160014}
+                {isAdmin && <EditIconButton id="CON160014" />}
               </Button>
             </Box>
           </Box>
@@ -870,7 +951,7 @@ const CheckAvailabilty = () => {
       </Box>
 
       {/* Specs Accordion */}
-      <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
+      <Box sx={{ p: { xs: 2, md: 6 }, mt: 8, backgroundColor: "#f9fafb" }}>
         <Box display="flex" alignItems="center" gap={1}>
           <Typography
             variant="h6"
@@ -922,7 +1003,7 @@ const CheckAvailabilty = () => {
                       sx={{
                         borderRadius: "12px",
                         p: 2,
-                        height: "100px",
+                        height: "248px",
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -939,20 +1020,27 @@ const CheckAvailabilty = () => {
                       }}
                     >
                       <Box display="flex" alignItems="center" gap={1}>
-                        <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                        <Typography sx={{ ...typography.h4, fontSize: "24px", fontWeight: 400 }}>
                           {prop.text}
                         </Typography>
                         <EditIconButton
-                          id={prop.id}
+                          id={prop.texId}
+                          value={prop.text}   // pass real value
                           isAdmin={isAdmin}
                           onEdit={handleEdit}
                         />
                       </Box>
 
                       <Typography
-                        sx={{ fontSize: "14px", color: "inherit", mt: 1 }}
+                        sx={{ ...typography.bodyBase, fontFamily: 'Fira Sans', fontSize: "18px", color: "inherit", mt: 1 }}
                       >
-                        ∅ diameter_mm mm
+                        {prop.desc}
+                        <EditIconButton
+                          id={prop.descId}
+                          value={prop.desc}   // pass real value
+                          isAdmin={isAdmin}
+                          onEdit={handleEdit}
+                        />
                       </Typography>
                     </Box>
                   </Grid>

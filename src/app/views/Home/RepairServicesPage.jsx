@@ -152,21 +152,6 @@ const RepairServicesPage = () => {
     },
   ];
 
-  //ROI Calcultor
-  const roiData = [
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-    {
-      title: "Repair vs Replace",
-      description:
-        "Estimate the cheapest path. We also compare renting during lead time vs paying downtime.",
-      image: ROIimage,
-    },
-  ];
 
   const partnerData = [
     {
@@ -1258,173 +1243,42 @@ const RepairServicesPage = () => {
         </Box>
       </Box>
 
-      {/* ROI Calculator */}
-      <Box sx={{ p: 5 }}>
-        <Box sx={{ mt: 8 }}>
-          <Typography
-            gutterBottom
-            sx={{ ...typography.displayL, color: "#1C2D4B", ml: 2 }}
-          >
-            ROI Calculator
-          </Typography>
 
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 3,
-              color: "#99A0AE",
-              ml: 2,
-              // maxWidth: "900px",
-              ...typography.h4,
-            }}
-          >
-            Get powerful lifting magnets when you need them — without the
-            upfront cost. Flexible rental plans, quick installation, and
-            reliable performance for every project!
-          </Typography>
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              mr: 2,
-              mb: 4,
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                ...typography.h3,
-                color: "#2F6FBA",
-                textDecoration: "underline",
-              }}
-            >
-              View All ROI Calculators
-              <ArrowRightAltIcon sx={{ ml: 1, fontSize: "2.5rem" }} />
-            </Typography>
-          </Box>
-
-          <Grid container spacing={4}>
-            {roiData.map((item, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <Card
-                  sx={{
-                    position: "relative",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 3,
-                    height: "400px",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    image={item.image}
-                    alt={item.title}
-                    sx={{
-                      height: "100%",
-                      width: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      backgroundColor: "white",
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      px: 2,
-                      py: 1.5,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 0.5,
-                      transition: "0.3s ease-in-out",
-                      "&:hover": {
-                        bgcolor: "#0b2d55",
-                        color: "white",
-                        "& .MuiTypography-root": { color: "white" },
-                        "& .MuiIconButton-root": {
-                          backgroundColor: "#4487ebff",
-                          color: "white",
-                        },
-                      },
-                    }}
-                  >
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Typography
-                        sx={{
-                          ...typography.h4,
-                          fontWeight: 700,
-                          fontSize: "24px",
-                          color: "#0B121E",
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        sx={{
-                          backgroundColor: "#f0f0f0",
-                          width: "40px",
-                          height: "40px",
-                        }}
-                      >
-                        <ArrowForwardIosIcon fontSize="small" />
-                      </IconButton>
-                    </Box>
-                    <Typography
-                      sx={{
-                        ...typography.bodyBase,
-                        fontWeight: 400,
-                        fontSize: "18px",
-                        color: "#99A0AE",
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      </Box>
 
       {/* Resale Refurbished Section */}
 
       <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
         <ResalerefurbishedCard />
-        <Box sx={{ mt: 2, textAlign: "right" }}>
-          <Typography
-            component="a"
-            href="#"
-            sx={{
-              ...typography.h3,
-              color: "#2F6FBA",
-              fontWeight: 600,
-              fontSize: "28px",
-              textDecoration: "underline",
-              textUnderlineOffset: "4px",
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            }}
-            onClick={() => navigate("/home/SellMagnet")}
-          >
-            View All Magnets for sale &rarr;
-          </Typography>
-        </Box>
+       <Box sx={{ mt: 2, textAlign: "right" }}>
+  <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+    
+    {/* Clickable text */}
+    <Typography
+      component="a"
+      onClick={() => navigate("/home/SellMagnet")}
+      sx={{
+        ...typography.h3,
+        color: "#2F6FBA",
+        fontWeight: 600,
+        fontSize: "28px",
+        textDecoration: "underline",
+        textUnderlineOffset: "4px",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "6px",
+        cursor: "pointer",
+      }}
+    >
+      {content.CON140099}
+      <ArrowRightAltIcon sx={{ fontSize: "2rem" }} />
+    </Typography>
+
+    {/* Edit icon — separate click */}
+    <EditIconButton id="CON140099" />
+
+  </Box>
+</Box>
+
       </Box>
 
       {/* FAQs Section */}
@@ -1464,9 +1318,9 @@ const RepairServicesPage = () => {
             ml: 8,
             // mt: 5
           }}
-          //   variant="h3"
-          //   fontWeight="bold"
-          //   gutterBottom
+        //   variant="h3"
+        //   fontWeight="bold"
+        //   gutterBottom
         >
           {content.CON140013}
           {isAdmin && <EditIconButton id="CON140013" />}
@@ -1515,7 +1369,7 @@ const RepairServicesPage = () => {
                     ...typography.h3B1,
                     fontWeight: 400,
                   }}
-                  //  fontWeight="bold"
+                //  fontWeight="bold"
                 >
                   {item.question}
                   {isAdmin && (
