@@ -14,7 +14,6 @@ import {
   Divider,
   IconButton,
   Grid,
-
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,7 +30,6 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-
 import Approach1 from "../../../assets/Approach1.png";
 import Approach2 from "../../../assets/Approach2.png";
 import Approach3 from "../../../assets/Approach3.png";
@@ -41,15 +39,14 @@ import Roi1 from "../../../assets/Roi1.png";
 import Roi2 from "../../../assets/Roi2.png";
 
 import { typography } from "app/utils/constant";
-import Footer from 'app/components/Card/Footer';
+import Footer from "app/components/Card/Footer";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import { useNavigate } from "react-router-dom";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 import EditIcon from "@mui/icons-material/Edit";
 
-
 const SellMagnet = () => {
-
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const navigate = useNavigate();
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
@@ -137,8 +134,6 @@ const SellMagnet = () => {
     },
   ];
 
-
-
   const items = [
     {
       img: Approach1,
@@ -186,8 +181,7 @@ const SellMagnet = () => {
 
   //  Load content
   useEffect(() => {
-    const apiUrl =
-      `${process.env.REACT_APP_CMS_URL}?contentId=C019`;
+    const apiUrl = `${process.env.REACT_APP_CMS_URL}?contentId=C019`;
     fetch(apiUrl)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
@@ -203,14 +197,29 @@ const SellMagnet = () => {
     setIsAdmin(role === "admin");
   }, []);
 
+  useEffect(() => {
+    const targetId = localStorage.getItem("scrollToSMFaq");
+    if (!targetId) return;
+
+    const timer = setTimeout(() => {
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B"; // highlight
+        setTimeout(() => (el.style.outline = ""), 1800);
+      }
+      localStorage.removeItem("scrollToSMFaq");
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, [content]);
+
   //  Edit function
   const handleEdit = (contentTextID, type = "T") => {
     navigate(
       `/CmsEditor?contentId=C019&contentTextID=${contentTextID}&contentType=${type}`
     );
   };
-
-
 
   //  Edit icon button
   const EditIconButton = ({ id, type = "T" }) =>
@@ -239,7 +248,6 @@ const SellMagnet = () => {
 
   if (!content) return null;
 
-
   //Sell or exchange
   const servicesnew = [
     {
@@ -258,7 +266,6 @@ const SellMagnet = () => {
     },
   ];
 
-
   //ROI Calculator
 
   const roiData = [
@@ -273,7 +280,6 @@ const SellMagnet = () => {
       desc: { id: "SM1043", value: content.SM1043 },
     },
   ];
-
 
   //Blogs
 
@@ -303,6 +309,153 @@ const SellMagnet = () => {
       image: `https://cmsreflux.bexatm.com${content.SM1075}`,
     },
   ];
+
+  const smFaqData = (() => {
+    if (!content) return [];
+
+    const list = [];
+
+    // 1️⃣ Fixed FAQ IDs (safe block)
+    for (let i = 1047; i <= 1056; i += 2) {
+      const qId = `SM${i}`;
+      const aId = `SM${i + 1}`;
+
+      if (content[qId] && content[aId]) {
+        list.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    }
+
+    // 2️⃣ Allow only admin-added FAQs AFTER blogs (safe range)
+    const allSM = Object.keys(content)
+      .filter((k) => /^SM\d+$/.test(k))
+      .map((k) => parseInt(k.replace("SM", ""), 10))
+      .sort((a, b) => a - b);
+
+    // 2️⃣ Allow admin-added FAQs AFTER the last fixed FAQ (1056)
+    for (const id of allSM) {
+      if (id <= 1056) continue; // old FAQs end at SM1056
+      if (id >= 1057 && id < 1070) continue; // 🚫 skip blog section
+
+      if (id % 2 === 0) continue; // odd = question
+
+      const qId = `SM${id}`;
+      const aId = `SM${id + 1}`;
+
+      const q = content[qId];
+      const a = content[aId];
+
+      if (!q || !a) continue;
+
+      if (!q.includes("?")) continue; // must look like question
+
+      list.push({
+        qId,
+        aId,
+        question: q,
+        answer: a,
+      });
+    }
+
+    return list;
+  })();
+
+  const handleAddSMFAQ = async () => {
+    const allIds = Object.keys(content)
+      .filter((k) => /^SM\d+$/.test(k))
+      .map((k) => parseInt(k.replace("SM", ""), 10));
+
+    let nextQ = Math.max(...allIds) + 1;
+
+    if (nextQ % 2 === 0) nextQ++; // ensure Q is odd
+
+    const nextA = nextQ + 1;
+
+    const newContent = {
+      [`SM${nextQ}`]: "New FAQ Question?",
+      [`SM${nextA}`]: "New FAQ Answer.",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "C019",
+          newContent,
+        }),
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem("scrollToSMFaq", `SM${nextQ}`);
+      setTimeout(() => window.location.reload(), 600);
+    } else {
+      alert("Failed to add FAQ");
+    }
+  };
+
+  const handleDeleteSMFAQ = async (qId, aId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C019",
+            keys: [qId, aId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been successfully removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <Box
@@ -435,9 +588,6 @@ const SellMagnet = () => {
           <EditIconButton id="SM1008" />
         </Typography>
       </Box>
-
-
-
       {/* Sell or exchange your used magnet images section */}
       <Box sx={{ backgroundColor: "#f9fafb", py: 4 }}>
         <Box
@@ -472,10 +622,14 @@ const SellMagnet = () => {
               }}
             >
               {/* Image */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1, pl: 2 }}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, pl: 2 }}
+              >
                 <Box
                   component="img"
-                  src={`https://cmsreflux.bexatm.com${content?.[service.imgId] || ""}`}
+                  src={`https://cmsreflux.bexatm.com${
+                    content?.[service.imgId] || ""
+                  }`}
                   alt={content?.[service.titleId] || ""}
                   sx={{
                     width: "45px",
@@ -564,14 +718,7 @@ const SellMagnet = () => {
           ))}
         </Box>
       </Box>
-
-
-
-
-
-
       {/* Left - Features with vertical timeline */}
-
       <Box
         sx={{
           display: "flex",
@@ -678,10 +825,7 @@ const SellMagnet = () => {
             </Box>
           </Box>
         </Box>
-
       </Box>
-
-
       {/* ROI Calculator */}
       <Box
         sx={{
@@ -705,7 +849,11 @@ const SellMagnet = () => {
           }}
         >
           <Typography
-            sx={{ ...typography.displayL, color: "#1C2D4B", fontSize: { xs: "2rem", sm: typography.displayL.fontSize } }}
+            sx={{
+              ...typography.displayL,
+              color: "#1C2D4B",
+              fontSize: { xs: "2rem", sm: typography.displayL.fontSize },
+            }}
             gutterBottom
           >
             {content.SM1035}
@@ -725,7 +873,12 @@ const SellMagnet = () => {
         </Box>
 
         {/* View All Link */}
-        <Box display="flex" justifyContent="flex-end" alignItems="center" sx={{ mb: { xs: 2, sm: 3 } }}>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          sx={{ mb: { xs: 2, sm: 3 } }}
+        >
           <Typography
             component={Link}
             to="/repair-replace/roi-cal"
@@ -741,7 +894,9 @@ const SellMagnet = () => {
           >
             {content.SM1037}
 
-            <ArrowRightAltIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }, ml: 1 }} />
+            <ArrowRightAltIcon
+              sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }, ml: 1 }}
+            />
           </Typography>
           <EditIconButton id="SM1037" />
         </Box>
@@ -825,7 +980,11 @@ const SellMagnet = () => {
                   },
                 }}
               >
-                <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
                   <Typography sx={{ ...typography.h4, color: "#0B121E" }}>
                     {item.name.value}
                     <EditIconButton id={item.name.id} />
@@ -849,15 +1008,8 @@ const SellMagnet = () => {
               </Box>
             </Card>
           ))}
-
-
-
         </Box>
       </Box>
-
-
-
-
       {/* FAQs Section */}
       <Box sx={{ mt: 5 }}>
         {/* FAQs Button */}
@@ -914,15 +1066,10 @@ const SellMagnet = () => {
 
         {/* FAQ Accordion Section */}
         <Box sx={{ px: 8, py: 6 }}>
-          {[
-            { q: "SM1047", a: "SM1048" },
-            { q: "SM1049", a: "SM1050" },
-            { q: "SM1051", a: "SM1052" },
-            { q: "SM1053", a: "SM1054" },
-            { q: "SM1055", a: "SM1056" },
-          ].map((item, index) => (
+          {smFaqData.map((item, index) => (
             <Accordion
               key={index}
+              id={item.qId}
               expanded={expanded === index}
               onChange={() => handleChange(index)}
               disableGutters
@@ -946,8 +1093,17 @@ const SellMagnet = () => {
                 }
               >
                 <Typography sx={{ ...typography.h3B1, fontWeight: 400 }}>
-                  {content[item.q]}
-                  <EditIconButton id={item.q} type="T" />
+                  {item.question}
+                  <EditIconButton id={item.qId} type="T" />
+                  {isAdmin && (
+                    <IconButton
+                      size="small"
+                      onClick={() => handleDeleteSMFAQ(item.qId, item.aId)}
+                      sx={{ ml: 1, color: "#B71C1C" }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  )}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
@@ -955,16 +1111,31 @@ const SellMagnet = () => {
                   sx={{ ...typography.bodyBase, fontWeight: 400 }}
                   color="text.secondary"
                 >
-                  {content[item.a]}
-                  <EditIconButton id={item.a} type="T" />
+                  {item.answer}
+                  <EditIconButton id={item.aId} type="T" />
                 </Typography>
               </AccordionDetails>
             </Accordion>
           ))}
+          {isAdmin && (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleAddSMFAQ}
+                sx={{
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                  borderRadius: 2,
+                  px: 3,
+                  py: 1,
+                }}
+              >
+                <AddIcon /> Add New FAQ
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
-
-
       {/* Blogs Section */}
       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
         {/* Section Header */}
@@ -1039,7 +1210,6 @@ const SellMagnet = () => {
                 bgcolor: "#fafafa",
                 cursor: "pointer",
               }}
-
             >
               <Box sx={{ position: "relative" }}>
                 <CardMedia
@@ -1126,7 +1296,6 @@ const SellMagnet = () => {
                         boxShadow: 0,
                         cursor: "pointer",
                       }}
-
                     >
                       <Box sx={{ position: "relative" }}>
                         <CardMedia
@@ -1172,8 +1341,8 @@ const SellMagnet = () => {
                             gap: 1,
                           }}
                         >
-                          {item.author} <EditIconButton id={`SM${base + 1}`} /> •{" "}
-                          {item.date} <EditIconButton id={`SM${base + 2}`} />
+                          {item.author} <EditIconButton id={`SM${base + 1}`} />{" "}
+                          • {item.date} <EditIconButton id={`SM${base + 2}`} />
                         </Typography>
 
                         <Link
@@ -1191,7 +1360,11 @@ const SellMagnet = () => {
                         >
                           Discover More{" "}
                           <ArrowForwardIosIcon
-                            sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }}
+                            sx={{
+                              ml: 0.5,
+                              color: "#1F77D6",
+                              fontSize: "0.8rem",
+                            }}
                           />
                         </Link>
                       </Box>
@@ -1202,18 +1375,15 @@ const SellMagnet = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>;
-
-      {/* Rent Services instaed */}
+      </Box>
+      ;{/* Rent Services instaed */}
       <Box>
         <SellRentServicesCard services={services} />
       </Box>
       {/* Footer Section */}
-      <Box >
+      <Box>
         <Footer />
       </Box>
-
-
     </Box>
   );
 };

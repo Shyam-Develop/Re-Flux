@@ -29,6 +29,9 @@ import Rentinstead from "../../../assets/Rentinstaed.jpg";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import Swal from "sweetalert2";
 
 const services = [
   {
@@ -113,9 +116,7 @@ const RoiCalculator = () => {
 
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_CMS_URL}?contentId=C014`
-    )
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C014`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -129,6 +130,21 @@ const RoiCalculator = () => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
+
+  useEffect(() => {
+    const id = localStorage.getItem("scrollToRoi");
+    if (!id) return;
+    const t = setTimeout(() => {
+      const el = document.getElementById(`ROI_${id}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1500);
+      }
+      localStorage.removeItem("scrollToRoi");
+    }, 700);
+    return () => clearTimeout(t);
+  }, [content]);
 
   // ✅ Navigate to CMS editor
   const handleEdit = (contentTextID, type = "T") => {
@@ -163,44 +179,171 @@ const RoiCalculator = () => {
 
   if (!content) return null;
 
-  const roiData = [
-    {
-      id: "CON170002",
-      title: content.CON170003,
-      description: content.CON170004,
-      image: content.CON170002,
-    },
-    {
-      id: "CON170005",
-      title: content.CON170006,
-      description: content.CON170007,
-      image: content.CON170005,
-    },
-    {
-      id: "CON170008",
-      title: content.CON170009,
-      description: content.CON170010,
-      image: content.CON170008,
-    },
-    {
-      id: "CON170011",
-      title: content.CON170012,
-      description: content.CON170013,
-      image: content.CON170011,
-    },
-    {
-      id: "CON170014",
-      title: content.CON170015,
-      description: content.CON170016,
-      image: content.CON170014,
-    },
-    {
-      id: "CON170017",
-      title: content.CON170018,
-      description: content.CON170019,
-      image: content.CON170017,
-    },
-  ];
+  // ---------- helpers ----------
+  const isImagePath = (s) =>
+    typeof s === "string" &&
+    (s.includes("/API/images") ||
+      s.includes("/ATM/images") ||
+      /\.(jpg|jpeg|png|gif|svg)$/i.test(s));
+
+  const looksLikeText = (s) =>
+    typeof s === "string" && s.trim().length > 2 && !isImagePath(s);
+
+  // ---------- robust roiData builder ----------
+  const roiData = (() => {
+    if (!content) return [];
+
+    // get sorted numeric CON170xxx numbers
+    const nums = Object.keys(content)
+      .filter((k) => /^CON170\d+$/.test(k))
+      .map((k) => parseInt(k.replace("CON", ""), 10))
+      .sort((a, b) => a - b);
+
+    const out = [];
+    // scan and look for image key then next two keys that are text
+    for (let i = 0; i < nums.length; i++) {
+      const n = nums[i];
+      const keyImg = `CON${String(n).padStart(6, "0")}`;
+      const valImg = content[keyImg];
+
+      if (!isImagePath(valImg)) continue; // only start at image
+
+      // try to find next two numeric keys in the sorted nums array
+      const nextIndex = nums.indexOf(n) + 1;
+      const n1 = nums[nextIndex];
+      const n2 = nums[nextIndex + 1];
+
+      if (!n1 || !n2) continue; // not enough keys after image
+
+      const keyTitle = `CON${String(n1).padStart(6, "0")}`;
+      const keyDesc = `CON${String(n2).padStart(6, "0")}`;
+      const titleVal = content[keyTitle];
+      const descVal = content[keyDesc];
+
+      if (looksLikeText(titleVal) && looksLikeText(descVal)) {
+        out.push({
+          imageId: keyImg,
+          titleId: keyTitle,
+          descId: keyDesc,
+          image: valImg,
+          title: titleVal,
+          description: descVal,
+        });
+
+        // skip those two keys so we don't re-use them
+        i = i + 2;
+      }
+    }
+
+    // good to sanity-check in console during dev:
+    // console.log("roiData built:", out);
+    return out;
+  })();
+
+  const handleAddRoiCard = async () => {
+    if (!content) return alert("content not loaded");
+    // collect existing CON170xxx numbers
+    const existing = new Set(
+      Object.keys(content)
+        .filter((k) => /^CON170\d+$/.test(k))
+        .map((k) => parseInt(k.replace("CON", ""), 10))
+    );
+
+    // start searching after the current max
+    const maxExisting = Math.max(...Array.from(existing), 170000);
+    let candidate = maxExisting + 1;
+
+    // find first block where none of the three keys exist
+    while (
+      existing.has(candidate) ||
+      existing.has(candidate + 1) ||
+      existing.has(candidate + 2)
+    ) {
+      candidate += 1;
+    }
+
+    const imageId = `CON${String(candidate).padStart(6, "0")}`;
+    const titleId = `CON${String(candidate + 1).padStart(6, "0")}`;
+    const descId = `CON${String(candidate + 2).padStart(6, "0")}`;
+
+    const newCard = {
+      [imageId]: "/API/images/ROICalculator.jpg",
+      [titleId]: "New ROI Card Title",
+      [descId]: "New ROI Card Description.",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contentId: "C014", newContent: newCard }),
+      }
+    );
+
+    const result = await res.json();
+    if (result.success) {
+      localStorage.setItem("scrollToRoi", candidate); // store numeric id
+      setTimeout(() => window.location.reload(), 600);
+    } else {
+      alert("Failed to add ROI card");
+    }
+  };
+
+  const handleDeleteRoiCard = async (item) => {
+    const confirm = await Swal.fire({
+      title: "Delete this card?",
+      text: "Are you sure you want to delete this ROI card?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C014",
+            keys: [item.imageId, item.titleId, item.descId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "ROI card has been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "❌ Failed to delete card.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong while deleting.",
+        icon: "error",
+      });
+      console.error("Delete error:", err);
+    }
+  };
 
   return (
     <Box
@@ -270,6 +413,7 @@ const RoiCalculator = () => {
                   md="auto"
                 >
                   <Card
+                    id={`ROI_${parseInt(item.imageId.replace("CON", ""))}`}
                     sx={{
                       position: "relative",
                       borderRadius: 3,
@@ -279,6 +423,21 @@ const RoiCalculator = () => {
                       width: { xs: "100%", md: 558 }, // full width mobile
                     }}
                   >
+                    {/* delete button */}
+                    {isAdmin && (
+                      <IconButton
+                        onClick={() => handleDeleteRoiCard(item)}
+                        sx={{
+                          position: "absolute",
+                          top: 12,
+                          left: 12,
+                          bgcolor: "white",
+                          color: "red",
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
                     {/* Background Image */}
                     <CardMedia
                       component="img"
@@ -293,7 +452,7 @@ const RoiCalculator = () => {
                     {/* ✅ Edit Icon visible only for admin */}
                     {isAdmin && (
                       <IconButton
-                        onClick={() => handleEdit(item.id, "I")}
+                        onClick={() => handleEdit(item.imageId, "I")}
                         sx={{
                           position: "absolute",
                           top: 12,
@@ -388,6 +547,25 @@ const RoiCalculator = () => {
                 </Grid>
               ))}
             </Grid>
+
+            {isAdmin && (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#1C2D4B",
+                    color: "#fff",
+                    px: 3,
+                    py: 1,
+                    borderRadius: "10px",
+                    "&:hover": { backgroundColor: "#16233B" },
+                  }}
+                  onClick={handleAddRoiCard}
+                >
+                  <AddIcon /> Add New ROI Card
+                </Button>
+              </Box>
+            )}
           </Box>
 
           {/* Rent Calculator Section */}
