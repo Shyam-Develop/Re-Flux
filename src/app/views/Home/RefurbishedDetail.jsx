@@ -26,52 +26,27 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import ind1 from "../../../assets/industry1.png";
-import ind2 from "../../../assets/industry2.png";
-import ind3 from "../../../assets/industry3.png";
+
 import Footer from 'app/components/Card/Footer';
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import handshake1 from "../../../assets/handshake3.jpg";
 import Rentinstead from "../../../assets/Rentinstaed.jpg";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
-import WhatsApp from "../../../assets/whatsappimg.jpg";
-import RepairsectionCard from "app/components/Card/RepairsectionCard";
+
 // import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import serviceimg from "../../../assets/Repairservice.png";
-import before from "../../../assets/beforecstudy.png";
-import after from "../../../assets/aftercstudy.png";
-import Electromagnetrepair from "../../../assets/EletromagnetRepair.png";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import RentServicesCard from "app/components/Card/RentServicesCard";
-import RentingMagnet from "../../../assets/RentingMagnet.png";
-import ResaleServices from "app/components/Card/ResaleServices";
+
 import useCase2 from "../../../assets/useCase2.png";
 import useCase1 from "../../../assets/useCase1.png";
-import Brand1 from "../../../assets/Brand1.png";
-import Brand2crea from "../../../assets/Brand2crea.png";
+
 import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
-import casestudy from "../../../assets/Case Study1.png";
-import RepairServicesPageCard from "app/components/Card/RepairServicesPageCard";
-import ProcessCards from "app/components/Card/HowweworkCard";
-import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
-import realisticillustration from "../../../assets/Realisticillustration.png";
-import Approach1 from "../../../assets/Approach1.png";
-import Approach2 from "../../../assets/Approach2.png";
-import Approach3 from "../../../assets/Approach3.png";
-import Approach4 from "../../../assets/Approach4.png";
-import Approach5 from "../../../assets/Approach5.jpg";
+
 import Roi1 from "../../../assets/Roi1.png";
 import Roi2 from "../../../assets/Roi2.png";
-import Whyitworkcard from "app/components/Card/Whyitworkcard";
-import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
+
 import { typography } from "app/utils/constant";
 import { grey } from "@mui/material/colors";
 import SellRentServicesCard from "app/components/Card/SellRentServicesCard";
