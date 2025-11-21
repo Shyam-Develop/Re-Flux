@@ -212,6 +212,26 @@ const CheckAvailabilty = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
+  const AddIconButton = ({ onAdd }) => {
+    return (
+      <IconButton
+        onClick={onAdd}
+        sx={{
+          width: "32px",
+          height: "32px",
+          backgroundColor: "#1C2D4B",
+          color: "#fff",
+          borderRadius: "6px",
+          "&:hover": {
+            backgroundColor: "#142033",
+          },
+        }}
+      >
+        <AddIcon />
+      </IconButton>
+    );
+  };
+
   // ✅ Fetch content from API
 
   const navigate = useNavigate();
@@ -246,6 +266,36 @@ const CheckAvailabilty = () => {
       }, 1000);
     }
   }, []);
+
+  // --- Scroll to Group OR Spec after reload ---
+  // --- Scroll to Group OR Spec after reload ---
+  useEffect(() => {
+    const groupKey = localStorage.getItem("scrollToSpecGroup");
+    const itemKey = localStorage.getItem("scrollToSpecItem");
+
+    // WAIT for DOM (Accordion animation)
+    setTimeout(() => {
+      if (groupKey) {
+        const el = document.getElementById(`SPEC_GROUP_${groupKey}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.style.outline = "3px solid #1C2D4B";
+          setTimeout(() => (el.style.outline = ""), 1500);
+        }
+        localStorage.removeItem("scrollToSpecGroup");
+      }
+
+      if (itemKey) {
+        const el = document.getElementById(`SPEC_ITEM_${itemKey}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.style.outline = "3px solid #1C2D4B";
+          setTimeout(() => (el.style.outline = ""), 1500);
+        }
+        localStorage.removeItem("scrollToSpecItem");
+      }
+    }, 1000); // <- **delay so DOM mounts + accordion expands**
+  }, [content]);
 
   const handleDeleteFAQ = async (qId, aId) => {
     const confirm = await Swal.fire({
@@ -337,42 +387,60 @@ const CheckAvailabilty = () => {
 
   if (!content) return null;
 
-  //specs
-  const specData = [
-    {
-      label: content.CON130001, // Mechanical
-      id: "CON130001",
-      properties: [
-        { texId: "CON130002", text: content.CON130002, descId: "CON130003", desc: content.CON130003 },
-        { texId: "CON130004", text: content.CON130004, descId: "CON130005", desc: content.CON130005 },
-        { texId: "CON130006", text: content.CON130006, descId: "CON130007", desc: content.CON130007 },
-        { texId: "CON130008", text: content.CON130008, descId: "CON130009", desc: content.CON130009 },
-        { texId: "CON130010", text: content.CON130010, descId: "CON130011", desc: content.CON130011 },
-      ],
-    },
-    {
-      label: content.CON130012, // Electrical
-      id: "CON130012",
-      properties: [
-        { texId: "CON130013", text: content.CON130013, descId: "CON130014", desc: content.CON130014 },
-        { texId: "CON130015", text: content.CON130015, descId: "CON130016", desc: content.CON130016 },
-        { texId: "CON130017", text: content.CON130017, descId: "CON130018", desc: content.CON130018 },
-        { texId: "CON130019", text: content.CON130019, descId: "CON130020", desc: content.CON130020 },
-        { texId: "CON130021", text: content.CON130021, descId: "CON130022", desc: content.CON130022 },
-      ],
-    },
-    {
-      label: content.CON130023, // Performance
-      id: "CON130023",
-      properties: [
-        { texId: "CON130024", text: content.CON130024, descId: "CON130025", desc: content.CON130025 },
-        { texId: "CON130026", text: content.CON130026, descId: "CON130027", desc: content.CON130027 },
-        { texId: "CON130028", text: content.CON130028, descId: "CON130029", desc: content.CON130029 },
-        { texId: "CON130030", text: content.CON130030, descId: "CON130031", desc: content.CON130031 },
-        { texId: "CON130032", text: content.CON130032, descId: "CON130033", desc: content.CON130033 },
-      ],
-    },
-  ];
+  // ---------------- DYNAMIC specData BUILDER ----------------
+  const specData = (() => {
+    if (!content) return [];
+
+    const keys = Object.keys(content)
+      .filter((k) => /^CON130\d{3}$/.test(k))
+      .sort(
+        (a, b) =>
+          parseInt(a.replace("CON", ""), 10) -
+          parseInt(b.replace("CON", ""), 10)
+      );
+
+    const base = 130001;
+    const step = 11;
+    const groups = [];
+
+    for (const key of keys) {
+      const num = parseInt(key.replace("CON", ""), 10);
+
+      // Detect group label (130001, 130012, 130023, ...)
+      if ((num - base) % step !== 0) continue;
+
+      const group = {
+        id: key, // full key, ex: "CON130034"
+        label: content[key],
+        properties: [],
+      };
+
+      // Collect specs under this group
+      let n = num + 1;
+      while (true) {
+        const titleKey = `CON${String(n).padStart(6, "0")}`;
+        const descKey = `CON${String(n + 1).padStart(6, "0")}`;
+
+        if (!content[titleKey] || !content[descKey]) break;
+
+        // Stop if next is another group
+        if ((n - base) % step === 0) break;
+
+        group.properties.push({
+          texId: titleKey,
+          text: content[titleKey],
+          descId: descKey,
+          desc: content[descKey],
+        });
+
+        n += 2;
+      }
+
+      groups.push(group);
+    }
+
+    return groups;
+  })();
 
   const features = [
     {
@@ -429,6 +497,238 @@ const CheckAvailabilty = () => {
     { id: "CON160004", src: content.CON160004 },
     { id: "CON160005", src: content.CON160005 },
   ];
+
+  // -------- Utilities --------
+  const contentIdForSpecs = "C012"; // your JSON file id for specs
+
+  // find highest CON130xxx numeric key
+  const getMaxSpecNum = () => {
+    const nums = Object.keys(content)
+      .filter((k) => /^CON130\d{3}$/.test(k))
+      .map((k) => parseInt(k.replace("CON", ""), 10));
+    return nums.length ? Math.max(...nums) : 130000;
+  };
+
+  // -------- Add new group (label + one default spec) --------
+  const handleAddGroup = async () => {
+    const base = 130001;
+    const step = 11;
+
+    const allNums = Object.keys(content)
+      .filter((k) => /^CON130\d{3}$/.test(k))
+      .map((k) => parseInt(k.replace("CON", ""), 10));
+
+    const maxNum = Math.max(...allNums);
+
+    const nextGroupNum = base + Math.ceil((maxNum - base + 1) / step) * step;
+
+    const titleNum = nextGroupNum + 1;
+    const descNum = nextGroupNum + 2;
+
+    const newBlock = {
+      [`CON${String(nextGroupNum).padStart(6, "0")}`]: "New Group Title",
+      [`CON${String(titleNum).padStart(6, "0")}`]: "New Spec Title",
+      [`CON${String(descNum).padStart(6, "0")}`]: "New Spec Description",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: contentIdForSpecs,
+          newContent: newBlock,
+        }),
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem(
+        "scrollToSpecGroup",
+        `CON${String(nextGroupNum).padStart(6, "0")}`
+      );
+      setTimeout(() => window.location.reload(), 500);
+    } else {
+      alert("Failed to add group");
+    }
+  };
+
+  const handleAddSpec = async (sectionId) => {
+    const sectionNum = parseInt(sectionId.replace("CON", ""), 10);
+
+    const nums = Object.keys(content)
+      .filter((k) => /^CON130\d{3}$/.test(k))
+      .map((k) => parseInt(k.replace("CON", ""), 10))
+      .sort((a, b) => a - b);
+
+    // Find next group
+    const nextGroupNum =
+      nums.find((n) => n > sectionNum && (n - 130001) % 11 === 0) || Infinity;
+
+    // Insert after last existing spec
+    let insertNum = sectionNum + 1;
+
+    while (insertNum + 1 < nextGroupNum) {
+      const t = `CON${String(insertNum).padStart(6, "0")}`;
+      const d = `CON${String(insertNum + 1).padStart(6, "0")}`;
+      if (!content[t] || !content[d]) break;
+
+      insertNum += 2;
+    }
+
+    const newTitleNum = insertNum;
+    const newDescNum = insertNum + 1;
+
+    const newBlock = {
+      [`CON${String(newTitleNum).padStart(6, "0")}`]: "New Spec Title",
+      [`CON${String(newDescNum).padStart(6, "0")}`]: "New Spec Description",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: contentIdForSpecs,
+          newContent: newBlock,
+        }),
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem("scrollToSpecGroup", sectionId);
+      localStorage.setItem(
+        "scrollToSpecItem",
+        `CON${String(newTitleNum).padStart(6, "0")}`
+      );
+      setTimeout(() => window.location.reload(), 500);
+    } else {
+      alert("Failed to add spec");
+    }
+  };
+
+  // -------- Delete single spec (prop object from specData) --------
+  const handleDeleteSpec = async (prop) => {
+    const confirm = await Swal.fire({
+      title: "Delete this specification?",
+      text: "Are you sure you want to delete this spec?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const keys = [prop.texId, prop.descId];
+
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: contentIdForSpecs,
+            keys,
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Specification has been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => window.location.reload());
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete spec.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong.",
+        icon: "error",
+      });
+      console.error("Delete spec error:", err);
+    }
+  };
+
+  // -------- Delete entire group (label + all its properties) --------
+  const handleDeleteGroup = async (group) => {
+    const confirm = await Swal.fire({
+      title: "Delete this group?",
+      text: "This will delete the entire group and all its specifications. Continue?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      // Collect all keys
+      const keysToDelete = [group.id];
+      group.properties.forEach((p) => {
+        keysToDelete.push(p.texId, p.descId);
+      });
+
+      // Backend call
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: contentIdForSpecs,
+            keys: keysToDelete,
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Group and all its specifications have been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => window.location.reload());
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete group.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong.",
+        icon: "error",
+      });
+      console.error("Delete group error:", err);
+    }
+  };
 
   const baseNumber = 150000;
 
@@ -934,7 +1234,7 @@ const CheckAvailabilty = () => {
                   p: 1.4,
                   backgroundColor: "#18294C",
                   textTransform: "none",
-                  borderRadius: '10px',
+                  borderRadius: "10px",
                   ...typography.buttonSBold,
                   fontWeight: 600,
                   "&:hover": {
@@ -966,10 +1266,13 @@ const CheckAvailabilty = () => {
             isAdmin={isAdmin}
             onEdit={handleEdit}
           />
+          {/* New Add Icon */}
+          {isAdmin && <AddIconButton onAdd={handleAddGroup} />}
         </Box>
 
         {specData.map((section, index) => (
           <Accordion
+            id={`SPEC_GROUP_${section.id}`}
             key={index}
             defaultExpanded={index === 0}
             sx={{
@@ -992,6 +1295,19 @@ const CheckAvailabilty = () => {
                   isAdmin={isAdmin}
                   onEdit={handleEdit}
                 />
+                {/* DELETE GROUP as an ICON beside edit */}
+                {isAdmin && (
+                  <IconButton
+                    onClick={() => handleDeleteGroup(section)}
+                    sx={{
+                      color: "red",
+                      width: "32px",
+                      height: "32px",
+                    }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                )}
               </Box>
             </AccordionSummary>
 
@@ -1000,6 +1316,7 @@ const CheckAvailabilty = () => {
                 {section.properties.map((prop, i) => (
                   <Grid item xs={6} sm={4} md={3} key={i}>
                     <Box
+                      id={`SPEC_ITEM_${prop.texId}`}
                       sx={{
                         borderRadius: "12px",
                         p: 2,
@@ -1020,24 +1337,44 @@ const CheckAvailabilty = () => {
                       }}
                     >
                       <Box display="flex" alignItems="center" gap={1}>
-                        <Typography sx={{ ...typography.h4, fontSize: "24px", fontWeight: 400 }}>
+                        <Typography
+                          sx={{
+                            ...typography.h4,
+                            fontSize: "24px",
+                            fontWeight: 400,
+                          }}
+                        >
                           {prop.text}
                         </Typography>
                         <EditIconButton
                           id={prop.texId}
-                          value={prop.text}   // pass real value
+                          value={prop.text} // pass real value
                           isAdmin={isAdmin}
                           onEdit={handleEdit}
                         />
+                        {isAdmin && (
+                          <IconButton
+                            onClick={() => handleDeleteSpec(prop)}
+                            sx={{ color: "red", mt: 1 }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        )}
                       </Box>
 
                       <Typography
-                        sx={{ ...typography.bodyBase, fontFamily: 'Fira Sans', fontSize: "18px", color: "inherit", mt: 1 }}
+                        sx={{
+                          ...typography.bodyBase,
+                          fontFamily: "Fira Sans",
+                          fontSize: "18px",
+                          color: "inherit",
+                          mt: 1,
+                        }}
                       >
                         {prop.desc}
                         <EditIconButton
                           id={prop.descId}
-                          value={prop.desc}   // pass real value
+                          value={prop.desc} // pass real value
                           isAdmin={isAdmin}
                           onEdit={handleEdit}
                         />
@@ -1046,6 +1383,23 @@ const CheckAvailabilty = () => {
                   </Grid>
                 ))}
               </Grid>
+              {isAdmin && (
+                <Box display="flex" justifyContent="end" mt={3}>
+                  <IconButton
+                    onClick={() => handleAddSpec(section.id)}
+                    sx={{
+                      width: "38px",
+                      height: "38px",
+                      backgroundColor: "#1C2D4B",
+                      color: "#fff",
+                      borderRadius: "6px",
+                      "&:hover": { backgroundColor: "#142033" },
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Box>
+              )}
             </AccordionDetails>
           </Accordion>
         ))}

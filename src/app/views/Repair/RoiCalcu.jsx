@@ -32,6 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const services = [
   {
@@ -113,6 +114,7 @@ const RoiCalculator = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   // ✅ Fetch content from API
   useEffect(() => {
@@ -148,7 +150,9 @@ const RoiCalculator = () => {
 
   // ✅ Navigate to CMS editor
   const handleEdit = (contentTextID, type = "T") => {
-    window.location.href = `/CmsEditor?contentId=C014&contentTextID=${contentTextID}&contentType=${type}`;
+    navigate(
+      `/CmsEditor?contentId=C014&contentTextID=${contentTextID}&contentType=${type}`
+    );
   };
 
   // ✅ Reusable Edit button
@@ -433,6 +437,7 @@ const RoiCalculator = () => {
                           left: 12,
                           bgcolor: "white",
                           color: "red",
+                          "&:hover": { bgcolor: "#ffe5e5" },
                         }}
                       >
                         <DeleteIcon />
