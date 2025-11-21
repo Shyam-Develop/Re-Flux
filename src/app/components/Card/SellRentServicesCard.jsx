@@ -332,6 +332,7 @@ export default function SellRentServicesCard({ services }) {
         spaceBetween={16}
         slidesPerView={1.1}
         grabCursor
+        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         breakpoints={{ 768: { slidesPerView: 3, spaceBetween: 0 } }}
       >
         {rentData.map((item, index) => (
@@ -542,6 +543,7 @@ export default function SellRentServicesCard({ services }) {
               </CardContent>
 
               {/* BUTTON — NOW PER CARD */}
+              {/* BUTTON — NOW PER CARD */}
               <Box sx={{ p: 2, pt: 3 }}>
                 <Button
                   onClick={() => navigate("/home/CheckAvailabilty")}
@@ -557,7 +559,27 @@ export default function SellRentServicesCard({ services }) {
                   }}
                 >
                   {item.button?.value || "View Details"}
-                  {isAdmin && <EditIconButton id={item.button.id} type="T" />}
+
+                  {isAdmin && (
+                    <IconButton
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation(); // ⛔ stop button navigation
+                        handleEdit(item.button.id, "T"); // ✔ open CMS editor only
+                      }}
+                      sx={{
+                        ml: 1,
+                        p: 0.5,
+                        borderRadius: "50%",
+                        backgroundColor: "#f0f0f0",
+                        color: "#1C2D4B",
+                        border: "1px solid #ccc",
+                        "&:hover": { backgroundColor: "#e0e0e0" },
+                      }}
+                    >
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                  )}
                 </Button>
               </Box>
 
@@ -597,7 +619,7 @@ export default function SellRentServicesCard({ services }) {
 
       {/* Pagination Dots */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3, px: 2 }}>
-        {services.map((_, index) => (
+        {rentData.map((_, index) => (
           <Box
             key={index}
             sx={{
