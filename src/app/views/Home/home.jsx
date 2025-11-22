@@ -232,10 +232,6 @@ const HomePage = () => {
   ];
 
 
-
-
-
-
   const [expanded, setExpanded] = useState(null);
 
   const handleChange = (index) => {
@@ -454,13 +450,15 @@ const HomePage = () => {
           }}
         >
           <HomeVideoCard
-            videoFile={videoFile}
+            videoFile={`https://cmsreflux.bexatm.com/${content.HV1001}`}
             items={items}
             WhatsApp={WhatsApp}
           />
         </Box>
 
 
+
+        {/* Mobile VIew */}
         <Box
           sx={{
             display: { xs: "flex", md: "none" }, // 👈 mobile only
@@ -489,8 +487,10 @@ const HomePage = () => {
                 borderRadius: "16px",
               }}
             >
-              <source src={videoFile} type="video/mp4" />
+              <source src={`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`} type="video/mp4" />
             </video>
+
+         
 
             {/* Overlay */}
             <Box
@@ -1951,7 +1951,7 @@ const HomePage = () => {
 
 
 
-      
+
       {/* Blogs Section */}
 
       <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
@@ -2080,7 +2080,7 @@ const HomePage = () => {
                 </Typography>
 
                 <Link
-                  href="#"
+                  href="/home/BlogDetails" // optional fallback
                   underline="none"
                   sx={{
                     color: "#1F77D6",
@@ -2089,11 +2089,15 @@ const HomePage = () => {
                     display: "inline-flex",
                     alignItems: "center",
                   }}
-                  onClick={() => navigate("/home/BlogDetails")}
+                  onClick={(e) => {
+                    e.preventDefault(); // prevent default navigation
+                    navigate("/home/BlogDetails");
+                  }}
                 >
                   Discover More{" "}
                   <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }} />
                 </Link>
+
               </CardContent>
             </Card>
           </Grid>
@@ -2170,7 +2174,6 @@ const HomePage = () => {
                       </Typography>
 
                       <Link
-                        href="#"
                         underline="none"
                         sx={{
                           color: "#1F77D6",
@@ -2180,7 +2183,10 @@ const HomePage = () => {
                           display: "inline-flex",
                           alignItems: "center",
                         }}
-                        onClick={() => navigate("/home/Blogpost")}
+                        onClick={(e) => {
+                          e.preventDefault(); // prevent default anchor behavior
+                          navigate("/home/Blogpost");
+                        }}
                       >
                         Discover More{" "}
                         <ArrowForwardIosIcon sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.8rem" }} />

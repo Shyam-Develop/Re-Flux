@@ -19,6 +19,7 @@ import { typography } from "app/utils/constant";
 import { useNavigate } from "react-router-dom";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import EditIcon from "@mui/icons-material/Edit";
 
 
 const HomeVideoCard = ({
@@ -125,21 +126,172 @@ const HomeVideoCard = ({
     setLoadingId(id); // clicked card loads infinitely
   };
 
+
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Home`)
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  // ✅ Check admin role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  // ✅ Navigate to CMS editor
+  // Put this in your component (uses your existing content state)
+  const handleEdit = (contentTextID, type = "T") => {
+    if (type === "V") {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "video/*";
+
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+        // your FTP folder (you said you store under /API/images/)
+        formData.append("filePath", "/API/images/");
+
+        try {
+          // 1) Upload file
+          const uploadRes = await fetch(
+            "https://cmsreflux.bexatm.com/API/VideoUpload.php",
+            { method: "POST", body: formData }
+          );
+          const uploadData = await uploadRes.json();
+          console.log("upload response:", uploadData);
+
+          if (!uploadData || !uploadData.filePath) {
+            alert("Upload failed: no filePath returned");
+            return;
+          }
+
+          const returnedPath = uploadData.filePath; // e.g. "/API/images/myvid.mp4" or "/images/myvid.mp4"
+          // decide whether CMS currently stores full path or only filename
+          const currentValue = content?.[contentTextID];
+
+          // if currentValue exists and contains a slash -> CMS stores paths -> save the returnedPath
+          // otherwise save only filename (basename)
+          const shouldSaveFullPath = typeof currentValue === "string" && currentValue.includes("/");
+
+          const valueToSave = shouldSaveFullPath
+            ? returnedPath
+            : returnedPath.split("/").pop(); // filename only
+
+          console.log("valueToSave for JSON:", valueToSave);
+
+          // 2) Update JSON using your actual CMS endpoint
+          const updateRes = await fetch(
+            `https://cmsreflux.bexatm.com/API/ContentManageSysV1.php?contentId=Home`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                cmsTextID: contentTextID,
+                cmsText: valueToSave,
+              }),
+            }
+          );
+
+          const updateData = await updateRes.json();
+          console.log("update response:", updateData);
+
+          if (updateRes.ok) {
+            alert("Video uploaded and content updated!");
+            // update local content so UI reflects change instantly without reload
+            setContent((prev) => ({ ...(prev || {}), [contentTextID]: valueToSave }));
+          } else {
+            alert("Upload succeeded but updating content failed.");
+          }
+        } catch (err) {
+          console.error("upload error:", err);
+          alert("Video upload failed");
+        }
+      };
+
+      input.click();
+      return;
+    }
+
+    // fallback: open CMS editor for text/image
+    navigate(`/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`);
+  };
+
+
+
+  // ✅ Admin edit icon button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
   return (
     <Box sx={{ position: "relative", width: "100%", height: "908px" }}>
       {/* 🔹 Background Video */}
-      <video
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          position: "absolute",
-        }}
-        src={videoFile}
-        autoPlay
-        muted
-        loop
-      ></video>
+      <Box style={{ position: "absolute", width: "100%", height: "100%" }}>
+
+        <video
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 1,
+          }}
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source
+            src={`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`}
+            type="video/mp4"
+          />
+        </video>
+
+        {/* Edit button on top */}
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            zIndex: 2,
+          }}
+        >
+          <EditIconButton id="HV1001" type="V" />
+        </div>
+
+      </Box>
+
+
 
       {/* 🔹 Foreground Content */}
       <Box sx={{ position: "relative", width: "1280px", height: "448px", p: 5 }}>
@@ -160,7 +312,7 @@ const HomeVideoCard = ({
         >
           {/* Heading */}
           <Typography
-            sx={{ ...typography.displayXL, fontWeight:700, fontSize:'64px', color: "#FFFFFF", mb: 2, }}
+            sx={{ ...typography.displayXL, fontWeight: 700, fontSize: '64px', color: "#FFFFFF", mb: 2, }}
           >
             {activeItem?.head} {/* pick first item or static text */}
           </Typography>
@@ -316,7 +468,7 @@ const HomeVideoCard = ({
           }}
         >
           <CardContent>
-            <Box sx={{ ...typography.h5, fontWeight:500, fontSize:'20px', color:'#000000', mb: 2 }}>
+            <Box sx={{ ...typography.h5, fontWeight: 500, fontSize: '20px', color: '#000000', mb: 2 }}>
               Certified repairs, ready-to-rent magnets, and warranty-backed refurbished units—Re-flux is your one stop for dependable lifting performance.
             </Box>
 
@@ -330,19 +482,19 @@ const HomeVideoCard = ({
                 desc: "Rent circular, rectangular, or suspension magnets tested and ready in 48 h.",
               },
               {
-                  title: "Resale (Refurbished)",
-                   desc: "Buy or exchange refurbished, load-tested magnets with warranty included.",
+                title: "Resale (Refurbished)",
+                desc: "Buy or exchange refurbished, load-tested magnets with warranty included.",
               },
-            
+
             ].map((section, idx) => (
               <Box key={idx} sx={{ mb: 2 }}>
-                <Typography  sx={{ ...typography.uiLabel, fontFamily:"Fira Sans", fontWeight:500, fontSize:'13px' }}>
+                <Typography sx={{ ...typography.uiLabel, fontFamily: "Fira Sans", fontWeight: 500, fontSize: '13px' }}>
                   {section.title}
                 </Typography>
-                <Typography sx={{ ...typography.bodyBase, color:'#0E1626', fontFamily:"Fira Sans", fontWeight: 400, fontSize:'18px'  }}>
+                <Typography sx={{ ...typography.bodyBase, color: '#0E1626', fontFamily: "Fira Sans", fontWeight: 400, fontSize: '18px' }}>
                   {section.desc}
                 </Typography>
-                <Typography sx={{ fontFamily:"Fira Sans", color:'#2F6FBA', fontWeight: 600, fontSize:'14px' }}>
+                <Typography sx={{ fontFamily: "Fira Sans", color: '#2F6FBA', fontWeight: 600, fontSize: '14px' }}>
                   Request a Quote
                 </Typography>
                 {idx !== 2 && <Divider sx={{ mt: 2 }} />}

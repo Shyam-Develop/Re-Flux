@@ -20,6 +20,7 @@ import {
   Chip,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddIcon from '@mui/icons-material/Add';
 
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -366,7 +367,6 @@ const RefurbishedDetail = () => {
     setExpanded(expanded === index ? null : index);
   };
 
-  const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -423,12 +423,16 @@ const RefurbishedDetail = () => {
       </IconButton>
     ) : null;
 
-  if (!content) return null;
 
   const chipIds = ["CON120003", "CON120004", "CON120005"];
 
   // ✅ Dynamic industries data from JSON (C011)
-  const industries = [
+  const [industries, setIndustries] = useState([]);
+
+useEffect(() => {
+  if (!content) return;
+
+  setIndustries([
     {
       id: 1,
       title: content.CON110001,
@@ -453,11 +457,20 @@ const RefurbishedDetail = () => {
       description: content.CON110011,
       img: `https://cmsreflux.bexatm.com${content.CON110012}`,
     },
-  ];
+  ]);
+}, [content]);
 
-  const specData = [
+
+  const [open, setOpen] = useState(false);
+
+  const [specData, setSpecData] = useState([]);
+
+useEffect(() => {
+  if (!content) return;
+
+  setSpecData([
     {
-      label: content.CON130001, // Mechanical
+      label: content.CON130001,
       id: "CON130001",
       properties: [
         { id: "CON130002", text: content.CON130002 },
@@ -466,10 +479,11 @@ const RefurbishedDetail = () => {
         { id: "CON130005", text: content.CON130005 },
         { id: "CON130006", text: content.CON130006 },
         { id: "CON130007", text: content.CON130007 },
+        
       ],
     },
-    {
-      label: content.CON130008, // Electrical
+     {
+      label: content.CON130008,
       id: "CON130008",
       properties: [
         { id: "CON130009", text: content.CON130009 },
@@ -479,7 +493,7 @@ const RefurbishedDetail = () => {
       ],
     },
     {
-      label: content.CON130013, // Performance
+      label: content.CON130013,
       id: "CON130013",
       properties: [
         { id: "CON130014", text: content.CON130014 },
@@ -488,7 +502,49 @@ const RefurbishedDetail = () => {
         { id: "CON130017", text: content.CON130017 },
       ],
     },
-  ];
+  ]);
+}, [content]);
+
+
+  
+
+  // --------------------------------------------
+  // ADD NEW SECTION
+  // --------------------------------------------
+  const handleAddSection = () => {
+    const newIndex = specData.length + 1;
+    const newId = `CON130${100 + newIndex}`;
+
+    const newSection = {
+      label: `New Section ${newIndex}`,
+      id: newId,
+      properties: [],
+    };
+
+    setSpecData((prev) => [...prev, newSection]);
+  };
+
+  // --------------------------------------------
+  // ADD NEW CARD INSIDE A SECTION
+  // --------------------------------------------
+  const handleAddCard = (sectionIndex) => {
+    setSpecData((prev) => {
+      const updated = [...prev];
+      const newPropId = `CON130${200 + updated[sectionIndex].properties.length}`;
+
+      updated[sectionIndex].properties.push({
+        id: newPropId,
+        text: "New Property",
+      });
+
+      return updated;
+    });
+  };
+
+  if (!content) return null;
+
+
+
   return (
     <Box
       sx={{
@@ -572,7 +628,7 @@ const RefurbishedDetail = () => {
                   position: "absolute",
                   top: 8,
                   right: 8,
-                  
+
                   borderRadius: "50%",
                 }}
               >
@@ -641,11 +697,11 @@ const RefurbishedDetail = () => {
                         position: "absolute",
                         top: 6,
                         right: 6,
-                       
-                        borderRadius: "50%",                      
+
+                        borderRadius: "50%",
                       }}
                     >
-                      <EditIconButton id={thumb.id} isAdmin={isAdmin} onEdit={handleEdit} type="I"/>
+                      <EditIconButton id={thumb.id} isAdmin={isAdmin} onEdit={handleEdit} type="I" />
                     </Box>
                   )}
                 </Box>
@@ -908,15 +964,22 @@ const RefurbishedDetail = () => {
       {/* Specs section */}
       <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
         <Box display="flex" alignItems="center" gap={1}>
-          <Typography variant="h6" fontSize="48px" fontWeight="bold" gutterBottom>
+          <Typography variant="h6" fontSize="48px" fontWeight="bold">
             {content.CON130000}
           </Typography>
           <EditIconButton id="CON130000" isAdmin={isAdmin} onEdit={handleEdit} />
+
+          {/* ADD NEW LABEL SECTION */}
+          {isAdmin && (
+            <IconButton onClick={handleAddSection}>
+              <AddIcon />
+            </IconButton>
+          )}
         </Box>
 
         {specData.map((section, index) => (
           <Accordion
-            key={index}
+            key={section.id}
             defaultExpanded={index === 0}
             sx={{
               mb: 2,
@@ -925,39 +988,38 @@ const RefurbishedDetail = () => {
               boxShadow: "none",
             }}
           >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              sx={{ backgroundColor: "#fff" }}
-            >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box display="flex" alignItems="center" gap={1}>
                 <Typography fontWeight="bold" fontSize="20px">
                   {section.label}
                 </Typography>
+
                 <EditIconButton
                   id={section.id}
                   isAdmin={isAdmin}
                   onEdit={handleEdit}
                 />
+
+                {/* ADD NEW CARD INSIDE THIS LABEL */}
+                {isAdmin && (
+                  <IconButton onClick={() => handleAddCard(index)}>
+                    <AddIcon />
+                  </IconButton>
+                )}
               </Box>
             </AccordionSummary>
 
-            <AccordionDetails sx={{ p: 3, backgroundColor: "#fff" }}>
+            <AccordionDetails sx={{ p: 3 }}>
               <Grid container spacing={2}>
-                {section.properties.map((prop, i) => (
-                  <Grid item xs={6} sm={4} md={3} key={i}>
+                {section.properties.map((prop) => (
+                  <Grid item xs={6} sm={4} md={3} key={prop.id}>
                     <Box
                       sx={{
                         borderRadius: "12px",
                         p: 2,
                         height: "100px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        backgroundColor: "#fff",
                         border: "1px solid #e5e7eb",
-                        color: "#111827",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
+                        transition: "0.2s",
                         "&:hover": {
                           backgroundColor: "#1C2D4B",
                           color: "#fff",
@@ -976,9 +1038,7 @@ const RefurbishedDetail = () => {
                         />
                       </Box>
 
-                      <Typography
-                        sx={{ fontSize: "14px", color: "inherit", mt: 1 }}
-                      >
+                      <Typography sx={{ fontSize: "14px", mt: 1 }}>
                         ∅ diameter_mm mm
                       </Typography>
                     </Box>
@@ -989,6 +1049,7 @@ const RefurbishedDetail = () => {
           </Accordion>
         ))}
       </Box>
+
       {/* Section Heading */}
 
 
