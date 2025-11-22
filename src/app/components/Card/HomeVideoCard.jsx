@@ -206,6 +206,7 @@ const HomeVideoCard = ({
 
           if (updateRes.ok) {
             alert("Video uploaded and content updated!");
+            window.location.reload();
             // update local content so UI reflects change instantly without reload
             setContent((prev) => ({ ...(prev || {}), [contentTextID]: valueToSave }));
           } else {
