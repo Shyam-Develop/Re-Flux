@@ -314,7 +314,9 @@ export default function AboutUsRepairServicesPageCard() {
         }}
         onClick={handleClickOpen}
       >
-        Get a repair quote
+        {content.AU1113}
+        <EditIconButton id="AU1113" />
+        
       </Button>
 
 

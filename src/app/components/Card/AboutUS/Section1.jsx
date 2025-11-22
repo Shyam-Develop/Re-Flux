@@ -201,7 +201,7 @@ export default function ServicesSection() {
               sx={{
                 flex: { xs: "1 1 100%", sm: "1 1 45%", md: "1 1 30%" },
                 maxWidth: { xs: "100%", sm: "45%", md: "30%" },
-                height: { xs: "auto", md: 270 },
+                height: { xs: "auto", md: 300 },
                 pt: 3,
                 px: 3,
                 pb: 6,

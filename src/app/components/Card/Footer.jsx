@@ -55,9 +55,7 @@ export default function FooterAlt() {
 
   // ✅ Fetch content from API
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_CMS_URL}?contentId=Footer`
-    )
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Footer`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -314,7 +312,8 @@ export default function FooterAlt() {
                     {content.CON200013}
                     {isAdmin && <EditIconButton id="CON200013" />}
                     <Box component="span" sx={{ color: "red", ml: 0.5 }}>
-                      ❤️
+                      {content.CON200016}
+                      {isAdmin && <EditIconButton id="CON200016" />}
                     </Box>
                   </Typography>
 

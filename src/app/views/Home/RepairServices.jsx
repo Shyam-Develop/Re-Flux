@@ -51,6 +51,8 @@ const ServiceCard = ({
   imageLeft = true,
   onAdd,
   onDelete,
+  viewDetails,
+  viewDetailsId,
 }) => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -534,6 +536,7 @@ const ServiceCard = ({
           </Typography>
 
           {/* Button */}
+          {/* Button */}
           <Button
             onClick={() => navigate("/home/RepairServicesPage")}
             variant="contained"
@@ -558,7 +561,30 @@ const ServiceCard = ({
               },
             }}
           >
-            View Details
+            {viewDetails}
+
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation(); // ❗ PREVENT button navigation
+                  handleEdit(viewDetailsId, "T"); // ✔ go only to edit page
+                }}
+                sx={{
+                  ml: 1,
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                  },
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
           </Button>
         </Grid>
       </Grid>
@@ -1136,6 +1162,8 @@ const RepairServices = () => {
       <Box sx={{ padding: "0 10px 10px" }}>
         {cards.map((card, index) => (
           <ServiceCard
+            viewDetails={content.RS1118}
+            viewDetailsId="RS1118" // <-- REQUIRED
             key={index}
             index={index}
             {...card}
