@@ -651,7 +651,7 @@ export default function SellRentServicesCard({ services }) {
             fontWeight: 600,
             textDecoration: "underline",
             cursor: "pointer",
-            fontSize: { xs: "1.2rem", md: "1.5rem" },
+            fontSize: { xs: "1rem", md: "1.2rem" },
             display: "flex",
             alignItems: "center",
             gap: 1,
