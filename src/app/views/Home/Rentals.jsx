@@ -374,6 +374,7 @@ const Rentals = () => {
                 lift: content.RE1006,
                 power: content.RE1007,
                 details: content.RE1008,
+                button:content.REBTN1,
                 ids: [
                   "RE1002",
                   "RE1003",
@@ -382,6 +383,7 @@ const Rentals = () => {
                   "RE1006",
                   "RE1007",
                   "RE1008",
+                  "REBTN1",
                 ],
               },
               {
@@ -392,6 +394,7 @@ const Rentals = () => {
                 lift: content.RE1013,
                 power: content.RE1014,
                 details: content.RE1015,
+                button:content.REBTN2,
                 ids: [
                   "RE1009",
                   "RE1010",
@@ -400,6 +403,7 @@ const Rentals = () => {
                   "RE1013",
                   "RE1014",
                   "RE1015",
+                  "REBTN2",
                 ],
               },
               {
@@ -410,6 +414,7 @@ const Rentals = () => {
                 lift: content.RE1020,
                 power: content.RE1021,
                 details: content.RE1022,
+                button:content.REBTN3,
                 ids: [
                   "RE1016",
                   "RE1017",
@@ -418,6 +423,7 @@ const Rentals = () => {
                   "RE1020",
                   "RE1021",
                   "RE1022",
+                  "REBTN3",
                 ],
               },
             ].map((p, idx) => (
@@ -658,7 +664,8 @@ const Rentals = () => {
                         "&:hover": { backgroundColor: "#103766" },
                       }}
                     >
-                      Check Availability
+                      {p.button}
+                      <EditIconButton id={p.ids[7]} />
                     </Button>
                   </CardContent>
                 </Card>

@@ -17,62 +17,62 @@ import EditIcon from "@mui/icons-material/Edit";
 
 export default function AboutUsCard() {
 
-    const navigate = useNavigate();
-    const [content, setContent] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+  const [content, setContent] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-   useEffect(() => {
-      const apiUrl =
-        `${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`
-      fetch(apiUrl)
-        .then((res) => {
-          if (!res.ok) throw new Error("Network response was not ok");
-          return res.json();
-        })
-        .then((data) => setContent(data))
-        .catch((err) => console.error("Error loading content:", err));
-    }, []);
-  
-    //  Check admin role
-    useEffect(() => {
-      const role = localStorage.getItem("role");
-      setIsAdmin(role === "admin");
-    }, []);
-  
-    //  Edit function
-    const handleEdit = (contentTextID, type = "T") => {
-      navigate(
-        `/CmsEditor?contentId=Aboutus&contentTextID=${contentTextID}&contentType=${type}`
-      );
-    };  
-  
-  
-    //  Edit icon button
-    const EditIconButton = ({ id, type = "T" }) =>
-      isAdmin ? (
-        <IconButton
-          size="small"
-          onClick={() => handleEdit(id, type)}
-          sx={{
-            ml: 1,
-            p: 0.5,
-            borderRadius: "50%",
-            backgroundColor: "#f0f0f0",
-            color: "#1C2D4B",
-            border: "1px solid #ccc",
-            transition: "all 0.2s ease",
-            "&:hover": {
-              backgroundColor: "#e0e0e0",
-              color: "#070808ff",
-            },
-            verticalAlign: "middle",
-          }}
-        >
-          <EditIcon fontSize="small" />
-        </IconButton>
-      ) : null;
-  
-    if (!content) return null;
+  useEffect(() => {
+    const apiUrl =
+      `${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => setContent(data))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  //  Check admin role
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  //  Edit function
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(
+      `/CmsEditor?contentId=Aboutus&contentTextID=${contentTextID}&contentType=${type}`
+    );
+  };
+
+
+  //  Edit icon button
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#f0f0f0",
+          color: "#1C2D4B",
+          border: "1px solid #ccc",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: "#e0e0e0",
+            color: "#070808ff",
+          },
+          verticalAlign: "middle",
+        }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
 
   return (
 
@@ -96,41 +96,49 @@ export default function AboutUsCard() {
           sx={{
             ...typography.displayXL,
             color: "#061D47",
-            textAlign: "center", // ✅ left align
+            textAlign: "center",
           }}
         >
           {content.AU1001}
           <EditIconButton id="AU1001" />
         </Typography>
 
-        {/* Image */}
-        <CardMedia
-          component="img"
-          image={`https://cmsreflux.bexatm.com${content.AU1002}`} 
-          alt="About Us"
-          sx={{
-            width: "100%",
-            height: 400,
-            opacity: 1,
-            objectFit: "cover",
-            borderRadius: 2,
-          }}
-        />
-         <Box sx={{ position: "absolute",top: '150px', right: '120px', zIndex: 2 }}>
-                  <EditIconButton id="AU1002" type="I" />
-                </Box>
+        {/* Image Wrapper → FIXED POSITIONING */}
+        <Box sx={{ position: "relative", width: "100%" }}>
+          <CardMedia
+            component="img"
+            image={`https://cmsreflux.bexatm.com${content.AU1002}`}
+            alt="About Us"
+            sx={{
+              width: "100%",
+              height: 400,
+              objectFit: "cover",
+              borderRadius: 2,
+            }}
+          />
+
+          {/* Edit Icon — Locked to top-right of the image */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              zIndex: 2,
+            }}
+          >
+            <EditIconButton id="AU1002" type="I" />
+          </Box>
+        </Box>
 
         {/* Text Section */}
         <CardContent
           sx={{
             width: "100%",
             maxWidth: 1200,
-            opacity: 1,
             gap: 2.5,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start",
-            px: 0, // ✅ remove side padding so it aligns with title & image
+            px: 0,
           }}
         >
           <Typography
@@ -140,7 +148,7 @@ export default function AboutUsCard() {
             sx={{
               ...typography.h2,
               color: "#061D47",
-              textAlign: "left", // ✅ consistent left align
+              textAlign: "left",
             }}
           >
             {content.AU1003}
@@ -156,16 +164,14 @@ export default function AboutUsCard() {
               fontWeight: 500,
               fontSize: "18px",
               lineHeight: "200%",
-              letterSpacing: "0px",
-              verticalAlign: "middle",
             }}
           >
             {content.AU1004}
             <EditIconButton id="AU1004" />
           </Typography>
-
         </CardContent>
       </Box>
+
     </Card>
 
   );

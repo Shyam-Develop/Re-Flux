@@ -236,7 +236,7 @@ export default function ContactUs() {
                     </Typography>
                     <TextField
                       fullWidth
-                      label="Your Name"
+                      label="Your name"
                       name="name"
                       placeholder="Enter your name"
                       value={values.name}
@@ -252,7 +252,7 @@ export default function ContactUs() {
                     <TextField
                       fullWidth
                       type="email"
-                      label="Your Email"
+                      label="Your email"
                       name="email"
                       placeholder="example@mail.com"
                       value={values.email}
@@ -268,7 +268,7 @@ export default function ContactUs() {
                     <TextField
                       fullWidth
                       select
-                      label="Inquiry Subject"
+                      label="Inquiry subject"
                       name="subject"
                       value={values.subject}
                       onChange={handleChange}
@@ -290,7 +290,7 @@ export default function ContactUs() {
                       fullWidth
                       multiline
                       rows={4}
-                      label="Your Message"
+                      label="Your message"
                       name="message"
                       placeholder="Type your message here..."
                       value={values.message}

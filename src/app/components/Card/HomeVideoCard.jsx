@@ -143,8 +143,7 @@ const HomeVideoCard = ({
     setIsAdmin(role === "admin");
   }, []);
 
-  // ✅ Navigate to CMS editor
-  // Put this in your component (uses your existing content state)
+
   const handleEdit = (contentTextID, type = "T") => {
     if (type === "V") {
       const input = document.createElement("input");
@@ -158,7 +157,7 @@ const HomeVideoCard = ({
         const formData = new FormData();
         formData.append("file", file);
         // your FTP folder (you said you store under /API/images/)
-        formData.append("filePath", "/API/images/");
+        formData.append("filePath", "/images");
 
         try {
           // 1) Upload file
@@ -307,20 +306,40 @@ const HomeVideoCard = ({
             color: "white",
             textAlign: "left",
             maxWidth: "828px",
-            // pl: 8,
-            mt: 30
+            mt: 30,
           }}
         >
           {/* Heading */}
           <Typography
-            sx={{ ...typography.displayXL, fontWeight: 700, fontSize: '64px', color: "#FFFFFF", mb: 2, }}
+            sx={{
+              ...typography.displayXL,
+              fontWeight: 700,
+              fontSize: "64px",
+              color: "#FFFFFF",
+              mb: 2,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
           >
-            {activeItem?.head} {/* pick first item or static text */}
+            {content[activeItem?.head]}
+            <EditIconButton id={activeItem?.head} />
           </Typography>
 
           {/* Subtext */}
-          <Typography sx={{ ...typography.h4, color: "#FFFFFF", mb: 3, opacity: 0.9 }}>
-            {activeItem?.text}
+          <Typography
+            sx={{
+              ...typography.h4,
+              color: "#FFFFFF",
+              mb: 3,
+              opacity: 0.9,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            {content[activeItem?.text]}
+            <EditIconButton id={activeItem?.text} />
           </Typography>
 
           {/* Buttons Row */}
@@ -328,12 +347,19 @@ const HomeVideoCard = ({
             <Button
               onClick={handleClickOpen}
               variant="contained"
-              width="120px"
-              height="20px"
               color="warning"
-              sx={{ ...typography.buttonLink, color: "#FFFFFF", borderRadius: "25px", px: 3, }}
+              sx={{
+                ...typography.buttonLink,
+                color: "#FFFFFF",
+                borderRadius: "25px",
+                px: 3,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
             >
-              {activeItem?.button}
+              {content[activeItem?.button]}
+              <EditIconButton id={activeItem?.button} />
             </Button>
 
             {/* WhatsApp Button */}
@@ -344,17 +370,22 @@ const HomeVideoCard = ({
                 alt="WhatsApp"
                 sx={{ width: 32, height: 32 }}
               />
+
               <Link
-                onClick={() => navigate("/home/RepairServicesPage")}
+                // onClick={() => navigate("/home/RepairServicesPage")}
                 sx={{
                   px: 1,
                   color: "white",
                   textDecoration: "none",
                   fontWeight: 500,
                   "&:hover": { textDecoration: "underline" },
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
                 }}
               >
-                WhatsApp an Engineer
+                {content["HM2041"]}
+                <EditIconButton id="HM2041" />
               </Link>
             </Box>
           </Box>
@@ -366,15 +397,20 @@ const HomeVideoCard = ({
               textDecoration: "underline",
               cursor: "pointer",
               display: "inline-block",
+              alignItems: "center",
+              gap: 1,
             }}
+          // onClick={() => navigate("/home/RefurbishedMeaning")}
           >
-            What “Refurbished” Means? →
+            {content["HM2042"]}
+            <EditIconButton id="HM2042" />
           </Typography>
 
           {/* Small Cards Row */}
           <Box sx={{ display: "flex", gap: 2, mb: 3, mt: 3 }}>
             {items.map((item) => {
-              const isAutoLoading = loadingId === item.id && selected !== item.id;
+              const isAutoLoading =
+                loadingId === item.id && selected !== item.id;
               const isSelected = selected === item.id;
               const active = isAutoLoading || isSelected;
 
@@ -383,7 +419,7 @@ const HomeVideoCard = ({
                   key={item.id}
                   onClick={() => handleClick(item.id)}
                   sx={{
-                    width: "120px",
+                    width: "140px",
                     height: "76px",
                     borderRadius: "16px",
                     borderWidth: "1px",
@@ -394,12 +430,10 @@ const HomeVideoCard = ({
                     cursor: "pointer",
                     backgroundColor: "white",
                     transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "#f5f5f5",
-                    },
+                    "&:hover": { backgroundColor: "#f5f5f5" },
                   }}
                 >
-                  {/* Normal content */}
+                  {/* Card Normal Display */}
                   <Box
                     display="flex"
                     flexDirection="column"
@@ -410,23 +444,40 @@ const HomeVideoCard = ({
                   >
                     <Typography
                       variant="caption"
-                      sx={{ color: "text.secondary", fontWeight: 600 }}
+                      sx={{
+                        color: "text.secondary",
+                        fontWeight: 600,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                      }}
                     >
-                      {item.id}
+                      {content[item.no]}
+                      {/* <EditIconButton id={item.no} /> */}
                     </Typography>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                      {item.title}
+
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        fontWeight: 600,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                      }}
+                    >
+                      {content[item.title]}
+                      <EditIconButton id={item.title} />
                     </Typography>
                   </Box>
 
-                  {/* Overlay loader */}
+                  {/* Overlay Active */}
                   {active && (
                     <Box
                       sx={{
                         position: "absolute",
                         inset: 0,
-                        width: "120%",        // ⬅️ Increase overlay width
-                        left: "-10%",          // ⬅️ Center it again
+                        width: "120%",
+                        left: "-10%",
                         bgcolor: "#1C2D4B",
                         color: "white",
                         display: "flex",
@@ -436,23 +487,23 @@ const HomeVideoCard = ({
                         gap: 1,
                       }}
                     >
-                      {/* Row for loader + id */}
                       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <CircularProgress size={18} sx={{ color: "white" }} />
-                        <Typography variant="caption">{item.id}</Typography>
+                        <Typography variant="caption">
+                          {content[item.no]}
+                        </Typography>
                       </Box>
 
-                      {/* Title below */}
-                      <Typography variant="subtitle2">{item.title}</Typography>
+                      <Typography variant="subtitle2">
+                        {content[item.title]}
+                      </Typography>
                     </Box>
                   )}
-
                 </Card>
               );
             })}
           </Box>
         </Box>
-
 
         {/* 🔹 Right Side Card */}
         <Card
@@ -469,40 +520,82 @@ const HomeVideoCard = ({
           }}
         >
           <CardContent>
-            <Box sx={{ ...typography.h5, fontWeight: 500, fontSize: '20px', color: '#000000', mb: 2 }}>
-              Certified repairs, ready-to-rent magnets, and warranty-backed refurbished units—Re-flux is your one stop for dependable lifting performance.
+            {/* MAIN TEXT */}
+            <Box
+              sx={{
+                ...typography.h5,
+                fontWeight: 500,
+                fontSize: "20px",
+                color: "#000000",
+                mb: 2
+              }}
+            >
+              {content.HM2043}
+              <EditIconButton id="HM2043" />
             </Box>
 
+            {/* SECTIONS */}
             {[
               {
-                title: "Repair",
-                desc: "Quick, certified repairs with load-test reports and warranty coverage.",
+                title: "HM2044",
+                desc: "HM2045",
+                link: "HM2046"
               },
               {
-                title: "Rent",
-                desc: "Rent circular, rectangular, or suspension magnets tested and ready in 48 h.",
+                title: "HM2047",
+                desc: "HM2048",
+                link: "HM2049"
               },
               {
-                title: "Resale (Refurbished)",
-                desc: "Buy or exchange refurbished, load-tested magnets with warranty included.",
-              },
-
+                title: "HM2050",
+                desc: "HM2051",
+                link: "HM2052"
+              }
             ].map((section, idx) => (
               <Box key={idx} sx={{ mb: 2 }}>
-                <Typography sx={{ ...typography.uiLabel, fontFamily: "Fira Sans", fontWeight: 500, fontSize: '13px' }}>
-                  {section.title}
+                <Typography
+                  sx={{
+                    ...typography.uiLabel,
+                    fontFamily: "Fira Sans",
+                    fontWeight: 500,
+                    fontSize: "13px"
+                  }}
+                >
+                  {content[section.title]}
+                  <EditIconButton id={section.title} />
                 </Typography>
-                <Typography sx={{ ...typography.bodyBase, color: '#0E1626', fontFamily: "Fira Sans", fontWeight: 400, fontSize: '18px' }}>
-                  {section.desc}
+
+                <Typography
+                  sx={{
+                    ...typography.bodyBase,
+                    color: "#0E1626",
+                    fontFamily: "Fira Sans",
+                    fontWeight: 400,
+                    fontSize: "18px"
+                  }}
+                >
+                  {content[section.desc]}
+                  <EditIconButton id={section.desc} />
                 </Typography>
-                <Typography sx={{ fontFamily: "Fira Sans", color: '#2F6FBA', fontWeight: 600, fontSize: '14px' }}>
-                  Request a Quote
+
+                <Typography
+                  sx={{
+                    fontFamily: "Fira Sans",
+                    color: "#2F6FBA",
+                    fontWeight: 600,
+                    fontSize: "14px"
+                  }}
+                >
+                  {content[section.link]}
+                  <EditIconButton id={section.link} />
                 </Typography>
+
                 {idx !== 2 && <Divider sx={{ mt: 2 }} />}
               </Box>
             ))}
           </CardContent>
         </Card>
+
       </Box>
 
       {/* Dialog */}

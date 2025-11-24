@@ -1008,7 +1008,8 @@ const RepairServicesPage = () => {
               src={`https://cmsreflux.bexatm.com${features[hoveredIndex].image}`}
               alt="ElectroMagnet Repair"
               sx={{
-                width: "100%",
+                width: "570px",
+                height: "530px",
                 maxWidth: isMobile ? "100%" : 600,
                 objectFit: "cover",
                 borderRadius: 3,
@@ -1020,17 +1021,8 @@ const RepairServicesPage = () => {
                 sx={{
                   position: "absolute",
                   top: 10,
-                  right: 10,
+                  right: 30,
                   borderRadius: "50%",
-                  backgroundColor: "#f0f0f0",
-                  color: "#1C2D4B",
-                  border: "1px solid #ccc",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#e0e0e0",
-                    color: "#070808ff",
-                    //borderColor: "#214870",
-                  },
                 }}
               >
                 <EditIconButton
@@ -1249,35 +1241,35 @@ const RepairServicesPage = () => {
 
       <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
         <ResalerefurbishedCard />
-       <Box sx={{ mt: 2, textAlign: "right" }}>
-  <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
-    
-    {/* Clickable text */}
-    <Typography
-      component="a"
-      onClick={() => navigate("/home/SellMagnet")}
-      sx={{
-        ...typography.h3,
-        color: "#2F6FBA",
-        fontWeight: 600,
-        fontSize: "28px",
-        textDecoration: "underline",
-        textUnderlineOffset: "4px",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "6px",
-        cursor: "pointer",
-      }}
-    >
-      {content.CON140099}
-      <ArrowRightAltIcon sx={{ fontSize: "2rem" }} />
-    </Typography>
+        <Box sx={{ mt: 2, textAlign: "right" }}>
+          <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
 
-    {/* Edit icon — separate click */}
-    <EditIconButton id="CON140099" />
+            {/* Clickable text */}
+            <Typography
+              component="a"
+              onClick={() => navigate("/home/SellMagnet")}
+              sx={{
+                ...typography.h3,
+                color: "#2F6FBA",
+                fontWeight: 600,
+                fontSize: "28px",
+                textDecoration: "underline",
+                textUnderlineOffset: "4px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                cursor: "pointer",
+              }}
+            >
+              {content.CON140099}
+              <ArrowRightAltIcon sx={{ fontSize: "2rem" }} />
+            </Typography>
 
-  </Box>
-</Box>
+            {/* Edit icon — separate click */}
+            <EditIconButton id="CON140099" />
+
+          </Box>
+        </Box>
 
       </Box>
 

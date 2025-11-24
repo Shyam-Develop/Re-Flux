@@ -140,12 +140,14 @@ const HomePage = () => {
   //=================VIDEO-Loading===============================//
   const [selected, setSelected] = useState(null);
   const [loadingId, setLoadingId] = useState(null);
+
   const items = [
-    { id: "01", title: "Repair", head: "Magnet down? We’ll get your lift back fast.", text: " Coil rewinds (Class F/H), terminals/leads, junction boxes & controllers—returned to spec with a load-test certificate. Clear Turn Around Time bands and Pan-India pickup/install.", button: "Request a Repair Quote" },
-    { id: "02", title: "Rent", head: "Rent electro-lifting magnets, ready when you are", text: "Circular, rectangular, and suspension (oil/air-cooled) magnets with controllers and cables. Pan-India logistics, load-tested before dispatch.", button: "Check Availability" },
-    { id: "03", title: "Buy", head: "Certified refurbished magnets—ready to work, warranty included.", text: "Each unit is tested, load-certified and documented. Warranty 3–12 months. Pan-India dispatch and install support.", button: "Browse Inventory" },
-    { id: "04", title: "Sell/exchange", head: "Sell or exchange your magnet—quick valuation, easy logistics.", text: "Share a few photos and specs. We’ll reply with a buyback range or exchange offer and arrange Pan-India pickup.", button: "Start Sell / Exchange" },
+    { id: "01", no: "HM2001", title: "HM2002", head: "HM2003", text: "HM2004", button: "HM2005" },
+    { id: "02", no: "HM2011", title: "HM2012", head: "HM2013", text: "HM2014", button: "HM2015" },
+    { id: "03", no: "HM2021", title: "HM2022", head: "HM2023", text: "HM2024", button: "HM2025" },
+    { id: "04", no: "HM2031", title: "HM2032", head: "HM20333", text: "HM2034", button: "HM2035" },
   ];
+
 
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
@@ -490,15 +492,14 @@ const HomePage = () => {
               <source src={`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`} type="video/mp4" />
             </video>
 
-         
+
 
             {/* Overlay */}
             <Box
               sx={{
                 position: "absolute",
                 inset: 0,
-                background:
-                  "linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85))",
+                background: "linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85))",
                 color: "white",
                 display: "flex",
                 flexDirection: "column",
@@ -506,78 +507,120 @@ const HomePage = () => {
                 p: 3,
               }}
             >
-              {/* Dynamic heading */}
-              <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                {activeItem.head}
-              </Typography>
 
-              {/* Dynamic text */}
+              {/* Heading */}
               <Typography
-                variant="body2"
-                sx={{ opacity: 0.85, lineHeight: 1.5, mb: 2 }}
-              >
-                {activeItem.text}
-              </Typography>
-
-              {/* Dynamic button */}
-              <Button
-                variant="contained"
                 sx={{
-                  bgcolor: "orange",
+                  fontSize: "28px",
+                  fontWeight: 700,
+                  lineHeight: 1.2,
                   mb: 2,
-                  "&:hover": { bgcolor: "#e69500" },
                 }}
               >
-                {activeItem.button}
-              </Button>
+                {content[activeItem?.head]}
+                  <EditIconButton id={activeItem?.head} />
+              </Typography>
+            
 
-              {/* Tabs for switching items */}
+              {/* Sub text */}
+              <Typography
+                sx={{
+                  opacity: 0.9,
+                  fontSize: "14px",
+                  lineHeight: 1.5,
+                  mb: 3,
+                }}
+              >
+                {content[activeItem?.text]}
+                 <EditIconButton id={activeItem?.text} />
+              </Typography>
+             
+
+              {/* CTA Button */}
+              <Button
+                onClick={handleClickOpen}
+                variant="contained"
+                sx={{
+                  backgroundColor: "orange",
+                  color: "#fff",
+                  borderRadius: "25px",
+                  px: 3,
+                  py: 1.2,
+                  fontWeight: 600,
+                  mb: 3,
+                  "&:hover": { backgroundColor: "#e69500" },
+                }}
+              >
+                {content[activeItem?.button]}
+                <EditIconButton id={activeItem?.button} />
+              </Button>
+              
+
+              {/* Selector Row */}
               <Stack
                 direction="row"
                 spacing={2}
                 justifyContent="space-between"
                 sx={{
-                  bgcolor: "rgba(0,0,0,0.4)",
-                  borderRadius: 2,
+                  bgcolor: "rgba(0,0,0,0.45)",
+                  borderRadius: 3,
                   p: 1,
                 }}
               >
-                {items.map((item) => (
-                  <Box
-                    key={item.id}
-                    onClick={() => setActive(item.id)}
-                    sx={{
-                      cursor: "pointer",
-                      flex: 1,
-                      textAlign: "center",
-                      py: 1,
-                      borderRadius: 2,
-                      bgcolor:
-                        active === item.id
-                          ? "rgba(255,255,255,0.15)"
-                          : "transparent",
-                      transition: "0.3s",
-                    }}
-                  >
-                    <Typography
-                      variant="caption"
-                      sx={{ display: "block", opacity: 0.8 }}
-                    >
-                      {item.id}
-                    </Typography>
-                    <Typography
-                      variant="body2"
+                {items.map((item) => {
+                  const isActive = active === item.id;
+
+                  return (
+                    <Box
+                      key={item.id}
+                      onClick={() => setActive(item.id)}
                       sx={{
-                        color: active === item.id ? "orange" : "white",
-                        fontWeight: active === item.id ? 600 : 400,
+                        flex: 1,
+                        textAlign: "center",
+                        cursor: "pointer",
+                        borderRadius: "16px",
+                        py: 1.5,
+                        border: isActive ? "2px solid orange" : "2px solid transparent",
+                        transition: "0.3s",
                       }}
                     >
-                      {item.title}
-                    </Typography>
-                  </Box>
-                ))}
+                      {/* Number */}
+                      <Typography
+                        variant="caption"
+                        sx={{ display: "block", opacity: 0.9, fontWeight: 600 }}
+                      >
+                        {content[item.no]}
+                      </Typography>
+                      {/* <EditIconButton id={item.no} /> */}
+
+                      {/* Title */}
+                      <Typography
+                        sx={{
+                          fontSize: "14px",
+                          color: isActive ? "orange" : "white",
+                          fontWeight: isActive ? 700 : 500,
+                        }}
+                      >
+                        {content[item.title]}
+                        <EditIconButton id={item.title} />
+                      </Typography>
+                      
+
+                      {/* Loader only for active one */}
+                      {isActive && (
+                        <CircularProgress
+                          size={20}
+                          sx={{ color: "white", mt: 1 }}
+                        />
+                      )}
+                    </Box>
+                  );
+                })}
               </Stack>
             </Box>
+
+
+
           </Box>
         </Box>
 
@@ -623,6 +666,8 @@ const HomePage = () => {
           {content.HM1002}
           <EditIconButton id="HM1002" />
         </Typography>
+
+        
 
         <Typography
           sx={{

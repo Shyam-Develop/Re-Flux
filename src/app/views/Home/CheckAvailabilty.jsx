@@ -1234,7 +1234,7 @@ const CheckAvailabilty = () => {
                   p: 1.4,
                   backgroundColor: "#18294C",
                   textTransform: "none",
-                  borderRadius: "10px",
+                  borderRadius: "14px",
                   ...typography.buttonSBold,
                   fontWeight: 600,
                   "&:hover": {
