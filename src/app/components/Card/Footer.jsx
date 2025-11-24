@@ -38,14 +38,17 @@ const styles = {
 export default function FooterAlt() {
   // 🔑 Scroll-to-top handler
   const handleScrollTop = () => {
-    const container =
-      document.querySelector("main") || document.documentElement;
+    // scroll window
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-    console.log("Scrolling container:", container);
+    // scroll all scrollable containers
+    document.querySelectorAll("*").forEach((el) => {
+      const hasScroll =
+        el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth;
 
-    container.scrollTo({
-      top: 0,
-      behavior: "smooth",
+      if (hasScroll) {
+        el.scrollTo?.({ top: 0, behavior: "smooth" });
+      }
     });
   };
 
