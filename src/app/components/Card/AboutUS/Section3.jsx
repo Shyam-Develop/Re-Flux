@@ -24,6 +24,9 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import { typography } from "app/utils/constant";
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import Swal from "sweetalert2";
 
 export default function AboutUsRepairServicesPageCard() {
   const navigate = useNavigate();
@@ -31,11 +34,61 @@ export default function AboutUsRepairServicesPageCard() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
 
+  const services = (() => {
+    if (!content) return [];
+
+    const keys = Object.keys(content).sort(
+      (a, b) => parseInt(a.replace("AU", "")) - parseInt(b.replace("AU", ""))
+    );
+
+    const serviceList = [];
+
+    // --- FIXED SERVICES (AU1048 → AU1065) ---
+    for (let base = 1048; base <= 1065; base += 3) {
+      const t = content[`AU${base}`];
+      const d = content[`AU${base + 1}`];
+      const i = content[`AU${base + 2}`];
+
+      if (!t || !d || !i) continue;
+
+      serviceList.push({
+        id: base,
+        title: t,
+        type: d,
+        img: `https://cmsreflux.bexatm.com${i}`,
+      });
+    }
+
+    // --- NEW SERVICES (AFTER AU1113) ---
+    const lastFixed = 1113;
+
+    const maxAU = Math.max(
+      ...keys
+        .filter((k) => /^AU\d+$/.test(k))
+        .map((k) => parseInt(k.replace("AU", ""), 10))
+    );
+
+    for (let base = lastFixed + 1; base <= maxAU; base += 3) {
+      const tKey = `AU${base}`;
+      const dKey = `AU${base + 1}`;
+      const iKey = `AU${base + 2}`;
+
+      if (!content[tKey] || !content[dKey] || !content[iKey]) continue;
+
+      serviceList.push({
+        id: base,
+        title: content[tKey],
+        type: content[dKey],
+        img: `https://cmsreflux.bexatm.com${content[iKey]}`,
+      });
+    }
+
+    return serviceList;
+  })();
+
   // ✅ Fetch content from CMS
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`
-    )
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Aboutus`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Error loading content:", err));
@@ -46,6 +99,32 @@ export default function AboutUsRepairServicesPageCard() {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
+
+  useEffect(() => {
+    const sid = localStorage.getItem("scrollToService");
+    if (!sid) return;
+
+    const tryScroll = () => {
+      const el = document.getElementById(`SERVICE_${sid}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1500);
+        localStorage.removeItem("scrollToService");
+        return true;
+      }
+      return false;
+    };
+
+    // Retry until Swiper fully mounts (max 20 tries)
+    let attempts = 0;
+    const timer = setInterval(() => {
+      attempts++;
+      if (tryScroll() || attempts > 20) clearInterval(timer);
+    }, 200);
+
+    return () => clearInterval(timer);
+  }, [services]);
 
   // ✅ Handle edit click
   const handleEdit = (contentTextID, type = "T") => {
@@ -79,45 +158,103 @@ export default function AboutUsRepairServicesPageCard() {
 
   if (!content) return null;
 
-  // ✅ Replace static array with dynamic JSON data
-  const services = [
-    {
-      id: 1,
-      title: content.AU1048,
-      type: content.AU1049,
-      img: `https://cmsreflux.bexatm.com${content.AU1050}`,
-    },
-    {
-      id: 2,
-      title: content.AU1051,
-      type: content.AU1052,
-      img: `https://cmsreflux.bexatm.com${content.AU1053}`,
-    },
-    {
-      id: 3,
-      title: content.AU1054,
-      type: content.AU1055,
-      img: `https://cmsreflux.bexatm.com${content.AU1056}`,
-    },
-    {
-      id: 4,
-      title: content.AU1057,
-      type: content.AU1058,
-      img: `https://cmsreflux.bexatm.com${content.AU1059}`,
-    },
-    {
-      id: 5,
-      title: content.AU1060,
-      type: content.AU1061,
-      img: `https://cmsreflux.bexatm.com${content.AU1062}`,
-    },
-    {
-      id: 6,
-      title: content.AU1063,
-      type: content.AU1064,
-      img: `https://cmsreflux.bexatm.com${content.AU1065}`,
-    },
-  ];
+  // ADD NEW SERVICE (always after AU1113)
+  const handleAddService = async () => {
+    // find max AU number
+    const keys = Object.keys(content)
+      .filter((k) => /^AU\d+$/.test(k))
+      .map((k) => parseInt(k.replace("AU", ""), 10));
+
+    const maxAU = Math.max(...keys);
+
+    // next triplet
+    const t = maxAU + 1;
+    const d = maxAU + 2;
+    const i = maxAU + 3;
+
+    const block = {
+      [`AU${t}`]: "New Service Title",
+      [`AU${d}`]: "New Service Subtitle",
+      [`AU${i}`]: "/API/images/aboutus.png",
+    };
+
+    const res = await fetch(
+      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentId: "Aboutus", // <-- replace if needed
+          newContent: block,
+        }),
+      }
+    );
+
+    const result = await res.json();
+    if (result.success) {
+      localStorage.setItem("scrollToService", t);
+      setTimeout(() => window.location.reload(), 500);
+    } else {
+      alert("Failed to add service");
+    }
+  };
+
+  const handleDeleteService = async (baseId) => {
+    const confirm = await Swal.fire({
+      title: "Delete this service?",
+      text: "This will permanently remove this service item.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const tKey = `AU${baseId}`;
+      const dKey = `AU${baseId + 1}`;
+      const iKey = `AU${baseId + 2}`;
+
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "Aboutus", // <-- use correct About us contentId
+            keys: [tKey, dKey, iKey],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Service has been removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => window.location.reload());
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete service.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong.",
+        icon: "error",
+      });
+      console.error("Delete service error:", err);
+    }
+  };
 
   // ✅ File upload box
   const UploadBox = ({ label }) => (
@@ -188,6 +325,7 @@ export default function AboutUsRepairServicesPageCard() {
         {(services || []).map((service, index) => (
           <SwiperSlide key={service.id}>
             <Card
+              id={`SERVICE_${service.id}`}
               sx={{
                 position: "relative",
                 borderRadius: 3,
@@ -229,20 +367,28 @@ export default function AboutUsRepairServicesPageCard() {
                     borderRadius: 2,
                   }}
                 />
-                <Box sx={{position:'absolute', left:"87%", bottom:'90%'}}>
-                  <EditIconButton id={`AU10${50 + index * 3}`} type="I" />
+                <Box sx={{ position: "absolute", left: "87%", bottom: "90%" }}>
+                  <EditIconButton id={`AU${service.id + 2}`} type="I" />
                 </Box>
               </Box>
               <CardContent sx={{ flexGrow: 1 }}>
-                <Typography sx={{ ...typography.h4, fontWeight:700, color: "#1C2D4B" }}>
+                <Typography
+                  sx={{ ...typography.h4, fontWeight: 700, color: "#1C2D4B" }}
+                >
                   {service.title}
-                  <EditIconButton id={`AU10${48 + index * 3}`} />
+                  <EditIconButton id={`AU${service.id}`} />
                 </Typography>
                 <Typography
-                  sx={{ ...typography.bodyBase, fontFamily:'Fira Sans', fontWeight:400, color: "#49576F", mb: 2 }}
+                  sx={{
+                    ...typography.bodyBase,
+                    fontFamily: "Fira Sans",
+                    fontWeight: 400,
+                    color: "#49576F",
+                    mb: 2,
+                  }}
                 >
                   {service.type}
-                  <EditIconButton id={`AU10${49 + index * 3}`} />
+                  <EditIconButton id={`AU${service.id + 1}`} />
                 </Typography>
               </CardContent>
 
@@ -275,9 +421,35 @@ export default function AboutUsRepairServicesPageCard() {
                 <ArrowRightAltIcon sx={{ fontSize: 22 }} />
               </Button>
             </Card>
+            {isAdmin && (
+              <IconButton
+                onClick={() => handleDeleteService(service.id)}
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  left: 10,
+                  backgroundColor: "white",
+                  boxShadow: 1,
+                  "&:hover": { backgroundColor: "#ffebee" },
+                }}
+              >
+                <DeleteIcon sx={{ color: "red" }} />
+              </IconButton>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
+      {isAdmin && (
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "#1C2D4B" }}
+            onClick={handleAddService}
+          >
+            Add Service
+          </Button>
+        </Box>
+      )}
 
       {/* ✅ Custom pagination styling */}
       <style>
@@ -316,9 +488,7 @@ export default function AboutUsRepairServicesPageCard() {
       >
         {content.AU1113}
         <EditIconButton id="AU1113" />
-        
       </Button>
-
 
       {/* ✅ Dialog (same design) */}
       <Dialog
@@ -346,15 +516,27 @@ export default function AboutUsRepairServicesPageCard() {
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
               Contact Person *
             </Typography>
-            <TextField placeholder="example@gmail.com" fullWidth variant="outlined" />
+            <TextField
+              placeholder="example@gmail.com"
+              fullWidth
+              variant="outlined"
+            />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
               Phone *
             </Typography>
-            <TextField placeholder="example@gmail.com" fullWidth variant="outlined" />
+            <TextField
+              placeholder="example@gmail.com"
+              fullWidth
+              variant="outlined"
+            />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
               Email *
             </Typography>
-            <TextField placeholder="example@gmail.com" fullWidth variant="outlined" />
+            <TextField
+              placeholder="example@gmail.com"
+              fullWidth
+              variant="outlined"
+            />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
               Enquiry for *
             </Typography>
@@ -400,7 +582,6 @@ export default function AboutUsRepairServicesPageCard() {
           </Box>
         </DialogContent>
       </Dialog>
-
     </Box>
   );
 }
