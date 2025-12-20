@@ -115,11 +115,12 @@ export default function TopbarWithMegaMenu() {
     setActiveMenu(menu);
   };
 
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClose = () => {
     setAnchorEl(null);
     setActiveMenu(null);
+    setMobileMenuOpen(false); // mobile safe
   };
   const open = Boolean(anchorEl);
   const topBarHeight = 64;
@@ -172,7 +173,7 @@ export default function TopbarWithMegaMenu() {
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            height={80}
+            height='100%'
             width="100%"
             px={5}
           >
@@ -296,11 +297,15 @@ export default function TopbarWithMegaMenu() {
                           sx={{ borderTop: "3px solid #112B49", width: "100%" }}
                         />
                         <Box sx={{ p: 2 }}>
-                          {menu === "Services" && <ServicesPopoverContent />}
-                          {menu === "Rental" && <RentalPopoverContent />}
-                          {menu === "Resale" && <ResalePopoverContent />}
-                          {menu === "Contact" && <ContactPopoverContent />}
-                          {menu === "More" && <MorePopoverContent />}
+                          {menu === "Services" && (
+                            <ServicesPopoverContent onClose={handleClose} />
+                          )}
+                          {menu === "Rental" && (
+                            <RentalPopoverContent onClose={handleClose} />
+                          )}
+                          {menu === "Resale" && <ResalePopoverContent  onClose={handleClose}/>}
+                          {menu === "Contact" && <ContactPopoverContent onClose={handleClose}/>}
+                          {menu === "More" && <MorePopoverContent onClose={handleClose}/>}
                         </Box>
                       </Popover>
                     </React.Fragment>
@@ -359,8 +364,20 @@ export default function TopbarWithMegaMenu() {
     );
   }
 
+  const mobileNavigate = (path) => {
+  setMobileMenuOpen(false);   // close whole menu
+  setOpenRental(false);       // close Rental section
+  setOpenServices(false);
+  setOpenResale(false);
+  setOpenContact(false);
+  setOpenMore(false);
+
+  navigate(path);
+};
+
   // ===== MOBILE VIEW =====
   return (
+    
     <TopbarRoot
       sx={{
         position: "sticky",
@@ -629,6 +646,7 @@ export default function TopbarWithMegaMenu() {
                   color: "#00334E",
                   py: 1.2,
                 }}
+                 
               >
                 Rental
                 <ArrowForwardIosIcon
@@ -649,7 +667,9 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 700,
                       fontSize: "18px",
                       mb: 1,
+                      cursor:"pointer",
                     }}
+                     onClick={()=> mobileNavigate('./home/CheckAvailabilty')}
                   >
                     Circular Magnet
                   </Typography>
@@ -722,7 +742,7 @@ export default function TopbarWithMegaMenu() {
                       cursor: "pointer",
                       ...typography.h4,
                     }}
-                    onClick={() => navigate("/home/rentals")}
+                    onClick={() => mobileNavigate("/home/rentals")}
                   >
                     Browse All Rentals →
                   </Typography>
@@ -817,7 +837,9 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 700,
                       fontSize: "18px",
                       mb: 1,
+                      cursor:'pointer'
                     }}
+                    onClick={()=>mobileNavigate('./home/RefurbishedElectromagnet')}
                   >
                     Browse Refurbished Inventory
                   </Typography>
@@ -1326,6 +1348,7 @@ export default function TopbarWithMegaMenu() {
 const ServicesPopoverContent = () => {
   const navigate = useNavigate();
 
+
   return (
     <Box sx={{ position: "relative" }}>
       {/* Blue line before Grid */}
@@ -1531,8 +1554,13 @@ const ServicesPopoverContent = () => {
   );
 };
 
-const RentalPopoverContent = () => {
+const RentalPopoverContent = ({onClose}) => {
   const navigate = useNavigate();
+
+  const goTo = (path) => {
+    onClose();        
+    navigate(path);  
+  };
 
   return (
     <Grid container spacing={4} alignItems="flex-start">
@@ -1540,10 +1568,10 @@ const RentalPopoverContent = () => {
       <Grid item xs={3}>
         <Box display="flex" flexDirection="column" gap={4}>
           {/* Circular Magnet */}
-          <Box display="flex" flexDirection="column" gap={1}>
+          <Box display="flex" flexDirection="column" gap={1}>   
             <Typography
               sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => navigate("./home/CheckAvailabilty")}
+              onClick={() => goTo("./home/CheckAvailabilty")}
             >
               Circular Magnet
             </Typography>
@@ -1567,7 +1595,7 @@ const RentalPopoverContent = () => {
               Electro-Lifting Magnet
             </Typography>
 
-            <BrowseRentals />
+            <BrowseRentals onClose={onClose}/>
           </Box>
         </Box>
       </Grid>
@@ -1625,7 +1653,7 @@ const RentalPopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-            onClick={() => navigate("./repair-replace/roi-cal")}
+            onClick={() => goTo("./repair-replace/roi-cal")}
           >
             ROI Calculators
           </Typography>
@@ -1653,8 +1681,14 @@ const RentalPopoverContent = () => {
   );
 };
 
-const ResalePopoverContent = () => {
+const ResalePopoverContent = ({onClose}) => {
   const navigate = useNavigate();
+
+  const goTo = (path) => {
+    onClose();      
+    navigate(path); 
+  };
+
   return (
     <Grid container spacing={4} alignItems="flex-start">
       {/* Single Column */}
@@ -1685,7 +1719,7 @@ const ResalePopoverContent = () => {
           >
             <Typography
               sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => navigate("/home/RefurbishedElectromagnet")}
+              onClick={() => goTo("/home/RefurbishedElectromagnet")}
             >
               Browse Refurbished
               <br /> Inventory
@@ -1819,13 +1853,14 @@ const ResalePopoverContent = () => {
           <Typography
             sx={{
               color: "#AE5609",
+              cursor:'pointer',
               fontFamily: "Space Grotesk",
               fontWeight: 400,
               fontSize: "24px",
               lineHeight: "130%",
               mb: 2,
             }}
-            onClick={() => navigate("./repair-replace/roi-cal")}
+            onClick={() => goTo("./repair-replace/roi-cal")}
           >
             ROI Calculators
           </Typography>
@@ -1871,8 +1906,14 @@ const ResalePopoverContent = () => {
   );
 };
 
-const ContactPopoverContent = () => {
+const ContactPopoverContent = ({onClose}) => {
   const navigate = useNavigate();
+
+   const goTo = (path) => {
+    onClose();        
+    navigate(path);  
+  };
+
 
   return (
     <Grid container spacing={1} sx={{ px: 1, py: 2 }}>
@@ -1898,8 +1939,8 @@ const ContactPopoverContent = () => {
           </Typography>
 
           <Typography
-            component={Link}
-            to="/contact-us"
+            // component={Link}
+            // to="/contact-us"
             sx={{
               color: "#AE5609",
               fontFamily: "Space Grotesk",
@@ -1910,6 +1951,7 @@ const ContactPopoverContent = () => {
               "&:hover": { textDecoration: "underline" },
               ...typography.h4,
             }}
+            onClick={()=> goTo('/contact-us')}
           >
             Book a Site Visit
           </Typography>
@@ -1987,7 +2029,7 @@ const ContactPopoverContent = () => {
                 mb: 0.5,
                 ...typography.h4,
               }}
-              onClick={() => navigate("./repair-replace/roi-cal")}
+              onClick={() => goTo("./repair-replace/roi-cal")}
             >
               ROI Calculators
             </Typography>
@@ -2016,8 +2058,15 @@ const ContactPopoverContent = () => {
   );
 };
 
-const MorePopoverContent = () => {
+const MorePopoverContent = ({onClose}) => {
+
   const navigate = useNavigate();
+
+  const goTo = (path) => {
+    onClose();      
+    navigate(path); 
+  };
+
   return (
     <Grid container spacing={0}>
       {/* Column 1 */}
@@ -2091,13 +2140,13 @@ const MorePopoverContent = () => {
             </Typography>
             <Typography
               sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => navigate("/about-us")}
+              onClick={() => goTo("/about-us")}
             >
               About Us
             </Typography>
             <Typography
               sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => navigate("/legal")}
+              onClick={() => goTo("/legal")}
             >
               {" "}
               Legal
@@ -2134,7 +2183,7 @@ const MorePopoverContent = () => {
               lineHeight: "130%",
               mb: 2,
             }}
-            onClick={() => navigate("./repair-replace/roi-cal")}
+            onClick={() => goTo("./repair-replace/roi-cal")}
           >
             ROI Calculators
           </Typography>
@@ -2180,15 +2229,20 @@ const MorePopoverContent = () => {
   );
 };
 
-const BrowseRentals = () => {
+const BrowseRentals = ({onClose}) => {
   const navigate = useNavigate();
-
+    const goTo = (path) => {
+    if (typeof onClose === "function") {
+      onClose(); // ✅ safe call
+    }
+    navigate(path);
+  };
   return (
     <Box
       display="flex"
       alignItems="center"
       sx={{ mt: 2, cursor: "pointer" }}
-      onClick={() => navigate("./home/Rentals")} // replace with your route
+      onClick={() => goTo("./home/Rentals")} // replace with your route
     >
       <Typography
         sx={{

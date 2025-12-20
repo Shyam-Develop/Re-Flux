@@ -69,6 +69,12 @@ import Footer from 'app/components/Card/Footer';
 import EditIcon from "@mui/icons-material/Edit";
 import TopbarWithMegaMenu from "app/components/appLayout/Layout1/Layout1Topbar";
 import { DisplayL, displayL, H4 } from "app/components/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 
 
@@ -153,6 +159,7 @@ const HomePage = () => {
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
 
+
   const handleClickOpen = () => {
     setBrowseDialogOpen(true);
   };
@@ -206,7 +213,6 @@ const HomePage = () => {
     setAutoPlay(false); // stop auto rotation when clicked
     clearInterval(intervalRef.current);
   };
-  //----------------------------------------------------------------------------------------//
 
   //ROI Calcultor
 
@@ -248,30 +254,82 @@ const HomePage = () => {
   const [active, setActive] = useState("01");
   const activeItem = items.find((item) => item.id === active);
 
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState({});
   const [isAdmin, setIsAdmin] = useState(false);
+  const [refreshCounter, setRefreshCounter] = useState(0);
+  const [newCards, setNewCards] = useState([]);
 
-  // ✅ Fetch content JSON
+  const imagePairs = [
+    {
+      before: content.HM1030,
+      after: content.HM1031,
+      beforeKey: "HM1030",
+      afterKey: "HM1031"
+    },
+    {
+      before: content.HI3001,
+      after: content.HI3002,
+      beforeKey: "HI3001",
+      afterKey: "HI3002"
+    },
+    {
+      before: content.HI3003,
+      after: content.HI3004,
+      beforeKey: "HI3003",
+      afterKey: "H3004"
+    }
+  ];
+
+
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % imagePairs.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? imagePairs.length - 1 : prev - 1
+    );
+  };
+
+
+  useEffect(() => {
+    const id = localStorage.getItem("scrollToFaqIdRE");
+    if (!id) return;
+
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.style.outline = "3px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1500);
+      }
+      localStorage.removeItem("scrollToFaqIdRE");
+    }, 700);
+  }, [content]);
+
+
+  // Fetch content
   useEffect(() => {
     fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Home`)
       .then((res) => res.json())
-      .then((data) => setContent(data))
+      .then((data) => setContent(data || {}))
       .catch((err) => console.error("Error loading content:", err));
   }, []);
 
-  // ✅ Check admin role
   useEffect(() => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
 
-  // ✅ Navigate to CMS editor
   const handleEdit = (contentTextID, type = "T") => {
-
-    navigate(`/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`);
+    navigate(
+      `/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`
+    );
   };
 
-  // ✅ Admin edit icon button
   const EditIconButton = ({ id, type = "T" }) =>
     isAdmin ? (
       <IconButton
@@ -286,7 +344,6 @@ const HomePage = () => {
           border: "1px solid #ccc",
           transition: "all 0.2s ease",
           "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
-          verticalAlign: "middle",
         }}
       >
         <EditIcon fontSize="small" />
@@ -294,6 +351,81 @@ const HomePage = () => {
     ) : null;
 
   if (!content) return null;
+
+
+  // --- SAVE TO BACKEND ---
+  const saveAllContentToAPI = async (newValues) => {
+    try {
+      const payload = {
+        contentId: "Home",
+        newContent: newValues, // ✅ MATCH BACKEND
+      };
+
+      console.log("ADD CARD PAYLOAD 👉", payload);
+
+      const res = await fetch("https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await res.text();
+      console.log("RAW RESPONSE 👉", text);
+
+      return JSON.parse(text);
+    } catch (err) {
+      console.error("saveAllContentToAPI error:", err);
+      throw err;
+    }
+  };
+
+  // --- GET NEXT HM KEY ---
+  const getNextHMKey = (content) => {
+    const ids = Object.keys(content || {})
+      .filter((k) => /^HM\d{4}$/.test(k))
+      .map((k) => parseInt(k.replace("HM", ""), 10));
+
+    const next = ids.length ? Math.max(...ids) + 1 : 1004;
+    return next;
+  };
+
+  // --- ADD NEW CARD ---
+  const handleAddCard = async () => {
+    const nextId = getNextHMKey(content);
+
+    const newCard = {
+      title: `HM${nextId}`,
+      desc: `HM${nextId + 1}`,
+      duration: `HM${nextId + 2}`,
+      image: `HM${nextId + 3}`,
+    };
+
+    // 🔥 BACKEND-SAFE VALUES
+    const newValues = {
+      [newCard.title]: "New Repair Service",
+      [newCard.desc]: "Description for new repair service.",
+      [newCard.duration]: ["3–5d / 5–7d / 10–12d"], // ✅ STRING
+      [newCard.image]: "/API/images/bdimg1.jpg",
+    };
+
+    try {
+      // 1️⃣ SAVE TO BACKEND FIRST
+      const result = await saveAllContentToAPI(newValues);
+
+      if (!result?.success) {
+        Swal.fire("Error", result?.error || "Failed to add card", "error");
+        return;
+      }
+
+      // 2️⃣ UPDATE UI AFTER SUCCESS
+      setContent((prev) => ({ ...prev, ...newValues }));
+      setNewCards((old) => [...old, newCard]);
+
+      Swal.fire("Success", "New card added successfully", "success");
+    } catch {
+      Swal.fire("Error", "Something went wrong", "error");
+    }
+  };
 
 
   const cards = [
@@ -370,6 +502,155 @@ const HomePage = () => {
   ];
 
   //Faq Data
+
+
+  // Build FAQ list: fixed 1122-1131 + only valid new FAQs created after HM1146
+  const faqPairs = [];
+  for (let num = 1122; num <= 1131; num += 2) {
+    const qId = `HM${num}`;
+    const aId = `HM${num + 1}`;
+    if (content[qId] && content[aId]) {
+      faqPairs.push({
+        qId,
+        aId,
+        question: content[qId],
+        answer: content[aId],
+      });
+    }
+  }
+
+  // New FAQs: include only pairs with numeric id > 1146 but EXCLUDE HM2000+ (other-component block)
+  const newFaq = [];
+
+  Object.keys(content)
+    .filter(k => /^HGA\d+$/.test(k))
+    .map(k => parseInt(k.replace("HGA", ""), 10))
+    .sort((a, b) => a - b)
+    .forEach(num => {
+      // only odd = question
+      if (num % 2 === 0) return;
+
+      const qId = `HGA${num}`;
+      const aId = `HGA${num + 1}`;
+
+      if (content[qId] && content[aId]) {
+        newFaq.push({
+          qId,
+          aId,
+          question: content[qId],
+          answer: content[aId],
+        });
+      }
+    });
+
+
+  const allfaq = [...faqPairs, ...newFaq];
+
+
+  const handleAddREFaq = async () => {
+    if (!content) return alert("Content not loaded");
+
+    const existing = Object.keys(content)
+      .filter(k => /^HGA\d+$/.test(k))
+      .map(k => parseInt(k.replace("HGA", ""), 10));
+
+    const base = 4001;
+    let nextQ = existing.length ? Math.max(...existing) + 1 : base;
+
+    // ensure odd
+    if (nextQ % 2 === 0) nextQ += 1;
+    const nextA = nextQ + 1;
+
+    const newFAQ = {
+      [`HGA${nextQ}`]: "New FAQ Question?",
+      [`HGA${nextA}`]: "New FAQ Answer.",
+    };
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "Home",
+            newContent: newFAQ,
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        localStorage.setItem("scrollToFaqIdRE", `HGA${nextQ}`);
+        setTimeout(() => window.location.reload(), 500);
+      } else {
+        alert("Failed to add FAQ");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error adding FAQ");
+    }
+  };
+
+
+
+
+  const handleDeleteREFaq = async (qId, aId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this FAQ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "Home",
+            keys: [qId, aId],
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "FAQ has been successfully removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete FAQ.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+      });
+    }
+  };
+
   const faqData = [
     { qKey: "HM1122", aKey: "HM1123" },
     { qKey: "HM1124", aKey: "HM1125" },
@@ -413,6 +694,7 @@ const HomePage = () => {
 
 
 
+
   return (
 
     <Box
@@ -452,182 +734,184 @@ const HomePage = () => {
           }}
         >
           <HomeVideoCard
-            videoFile={`https://cmsreflux.bexatm.com/${content.HV1001}`}
+            // videoFile={`https://cmsreflux.bexatm.com/${content.HV1001}`}
             items={items}
             WhatsApp={WhatsApp}
           />
         </Box>
 
+        {/* console.log({`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`}); */}
 
+        {/* Mobile View */}
 
-        {/* Mobile VIew */}
-        <Box
-          sx={{
-            display: { xs: "flex", md: "none" }, // 👈 mobile only
-            flexDirection: "column",
-            gap: 2,
-            px: 2,
-            py: 3,
-          }}
-        >
+        {content?.HV1001 && (
           <Box
             sx={{
-              position: "relative",
-              borderRadius: 3,
-              overflow: "hidden",
+              display: { xs: "flex", md: "none" },
+              flexDirection: "column",
+              gap: 2,
+              px: 2,
+              py: 3,
             }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "75vh",
-                objectFit: "cover",
-                borderRadius: "16px",
-              }}
-            >
-              <source src={`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`} type="video/mp4" />
-            </video>
-
-
-
-            {/* Overlay */}
             <Box
               sx={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.85))",
-                color: "white",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                p: 3,
+                position: "relative",
+                borderRadius: 3,
+                height: "75vh",
+                overflow: "hidden",
               }}
             >
 
-              {/* Heading */}
-              <Typography
-                sx={{
-                  fontSize: "28px",
-                  fontWeight: 700,
-                  lineHeight: 1.2,
-                  mb: 2,
+
+              {/* Background Video */}
+              <video
+                key={content.HV1001}
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
                 }}
               >
-                {content[activeItem?.head]}
+
+                <source
+                  src={`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`}
+                  type="video/mp4"
+                />
+              </video>
+
+              {/* Dark Overlay */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.85))",
+                  color: "white",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  p: 3,
+                }}
+              >
+                {/* Heading */}
+                <Typography
+                  sx={{
+                    fontSize: "28px",
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                    mb: 2,
+                  }}
+                >
+                  {content[activeItem?.head]}
                   <EditIconButton id={activeItem?.head} />
-              </Typography>
-            
+                </Typography>
 
-              {/* Sub text */}
-              <Typography
-                sx={{
-                  opacity: 0.9,
-                  fontSize: "14px",
-                  lineHeight: 1.5,
-                  mb: 3,
-                }}
-              >
-                {content[activeItem?.text]}
-                 <EditIconButton id={activeItem?.text} />
-              </Typography>
-             
+                {/* Sub text */}
+                <Typography
+                  sx={{
+                    opacity: 0.9,
+                    fontSize: "14px",
+                    lineHeight: 1.5,
+                    mb: 3,
+                  }}
+                >
+                  {content[activeItem?.text]}
+                  <EditIconButton id={activeItem?.text} />
+                </Typography>
 
-              {/* CTA Button */}
-              <Button
-                onClick={handleClickOpen}
-                variant="contained"
-                sx={{
-                  backgroundColor: "orange",
-                  color: "#fff",
-                  borderRadius: "25px",
-                  px: 3,
-                  py: 1.2,
-                  fontWeight: 600,
-                  mb: 3,
-                  "&:hover": { backgroundColor: "#e69500" },
-                }}
-              >
-                {content[activeItem?.button]}
-                <EditIconButton id={activeItem?.button} />
-              </Button>
-              
+                {/* CTA Button */}
+                <Button
+                  onClick={handleClickOpen}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "orange",
+                    color: "#fff",
+                    borderRadius: "25px",
+                    px: 3,
+                    py: 1.2,
+                    fontWeight: 600,
+                    mb: 3,
+                    "&:hover": { backgroundColor: "#e69500" },
+                  }}
+                >
+                  {content[activeItem?.button]}
+                  <EditIconButton id={activeItem?.button} />
+                </Button>
 
-              {/* Selector Row */}
-              <Stack
-                direction="row"
-                spacing={2}
-                justifyContent="space-between"
-                sx={{
-                  bgcolor: "rgba(0,0,0,0.45)",
-                  borderRadius: 3,
-                  p: 1,
-                }}
-              >
-                {items.map((item) => {
-                  const isActive = active === item.id;
+                {/* Selector */}
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="space-between"
+                  sx={{
+                    bgcolor: "rgba(0,0,0,0.45)",
+                    borderRadius: 3,
+                    p: 1,
+                  }}
+                >
+                  {items.map((item) => {
+                    const isActive = active === item.id;
 
-                  return (
-                    <Box
-                      key={item.id}
-                      onClick={() => setActive(item.id)}
-                      sx={{
-                        flex: 1,
-                        textAlign: "center",
-                        cursor: "pointer",
-                        borderRadius: "16px",
-                        py: 1.5,
-                        border: isActive ? "2px solid orange" : "2px solid transparent",
-                        transition: "0.3s",
-                      }}
-                    >
-                      {/* Number */}
-                      <Typography
-                        variant="caption"
-                        sx={{ display: "block", opacity: 0.9, fontWeight: 600 }}
-                      >
-                        {content[item.no]}
-                      </Typography>
-                      {/* <EditIconButton id={item.no} /> */}
-
-                      {/* Title */}
-                      <Typography
+                    return (
+                      <Box
+                        key={item.id}
+                        onClick={() => setActive(item.id)}
                         sx={{
-                          fontSize: "14px",
-                          color: isActive ? "orange" : "white",
-                          fontWeight: isActive ? 700 : 500,
+                          flex: 1,
+                          textAlign: "center",
+                          cursor: "pointer",
+                          borderRadius: "16px",
+                          py: 1.5,
+                          border: isActive
+                            ? "2px solid orange"
+                            : "2px solid transparent",
+                          transition: "0.3s",
                         }}
                       >
-                        {content[item.title]}
-                        <EditIconButton id={item.title} />
-                      </Typography>
-                      
+                        <Typography
+                          variant="caption"
+                          sx={{ display: "block", opacity: 0.9, fontWeight: 600 }}
+                        >
+                          {content[item.no]}
+                        </Typography>
 
-                      {/* Loader only for active one */}
-                      {isActive && (
-                        <CircularProgress
-                          size={20}
-                          sx={{ color: "white", mt: 1 }}
-                        />
-                      )}
-                    </Box>
-                  );
-                })}
-              </Stack>
+                        <Typography
+                          sx={{
+                            fontSize: "14px",
+                            color: isActive ? "orange" : "white",
+                            fontWeight: isActive ? 700 : 500,
+                          }}
+                        >
+                          {content[item.title]}
+                          <EditIconButton id={item.title} />
+                        </Typography>
+
+                        {isActive && (
+                          <CircularProgress size={20} sx={{ color: "white", mt: 1 }} />
+                        )}
+                      </Box>
+                    );
+                  })}
+                </Stack>
+              </Box>
             </Box>
+          </Box>)}
 
-
-
-          </Box>
-        </Box>
 
       </Box>
 
 
+      {/* //Repairsection Card */}
       <Box sx={{ paddingLeft: { xs: 2, sm: "6%" }, paddingRight: 2, mt: 4 }}>
+        {/* Button above section */}
         <Button
           disableElevation
           disableRipple
@@ -653,39 +937,65 @@ const HomePage = () => {
           <EditIconButton id="HM1001" />
         </Button>
 
-        <Typography
-          sx={{
-            ...theme.typography.displayL,
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 700,
-            fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3rem" },
-            textAlign: "left",
-          }}
-          gutterBottom
-        >
-          {content.HM1002}
-          <EditIconButton id="HM1002" />
-        </Typography>
+        {/* Header with Add Button on the right */}
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+          <Typography
+            sx={{
+              ...theme.typography.displayL,
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 700,
+              fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3rem" },
+              //textAlign: "left",
+            }}
+            gutterBottom
+          >
+            {content.HM1002}
+            <EditIconButton id="HM1002" />
+          </Typography>
 
-        
+          {isAdmin && (
+            <Button
+              onClick={handleAddCard}
+              startIcon={<AddIcon />}
+              sx={{
+                textTransform: "none",
+                fontWeight: 500,
+                border: "1.5px solid #1a4dab",
+                color: "#1a4dab",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(26,77,171,0.06)",
+                  borderColor: "#163a82"
+                },
+                borderRadius: "12px",
+                paddingX: "18px"
+              }}
+            >
+              Add Card
+            </Button>
+
+          )}
+        </Box>
 
         <Typography
           sx={{
             mb: 4,
             ...theme.typography.h4,
             color: "#6B768A",
-            fontSize: '24px',
+            fontSize: "24px",
             textAlign: "left",
             fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 400
+            fontWeight: 400,
           }}
         >
           {content.HM1003}
           <EditIconButton id="HM1003" />
         </Typography>
 
-        <RepairsectionCard />
+        {/* pass content & a refresh key so RepairsectionCard can remount */}
+        <RepairsectionCard content={content} isAdmin={isAdmin} newCards={newCards} />
       </Box>
+
 
 
       <Box
@@ -799,19 +1109,20 @@ const HomePage = () => {
             justifyContent: "center",
             gap: 3,
             mt: 5,
-            flexWrap: "wrap",
+
           }}
         >
           {/* BEFORE IMAGE */}
           <Box
             sx={{
               position: "relative",
-              width: isMobile ? "100%" : "600px", // was 500px → increased width
-              mt: isMobile ? 2 : 8, // slightly reduced margin-top for balance
+              width: isMobile ? "100%" : "600px",
+              mt: isMobile ? 2 : 8,
               overflow: "visible",
             }}
           >
             <IconButton
+              onClick={handlePrev}
               sx={{
                 position: "absolute",
                 left: isMobile ? "-15px" : "-25px",
@@ -828,18 +1139,19 @@ const HomePage = () => {
 
             <Box
               component="img"
-              src={`https://cmsreflux.bexatm.com${content.HM1030}`}
+              src={`https://cmsreflux.bexatm.com${imagePairs[currentIndex].before}`}
               alt="Before"
               sx={{
                 width: "100%",
-                height: { xs: 250, md: 380 }, // fixed larger height while keeping ratio
+                height: { xs: 250, md: 380 },
                 borderRadius: "1px",
                 objectFit: "cover",
                 display: "block",
               }}
             />
-            <Box sx={{ position: 'absolute', top: 8, right: 8, zIndex: 3 }}>
-              <EditIconButton id="HM1030" type="I" />
+
+            <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 3 }}>
+              <EditIconButton id={imagePairs[currentIndex].beforeKey} type="I" />
             </Box>
           </Box>
 
@@ -847,12 +1159,13 @@ const HomePage = () => {
           <Box
             sx={{
               position: "relative",
-              width: isMobile ? "100%" : "600px", // was 500px
+              width: isMobile ? "100%" : "600px",
               mt: isMobile ? 2 : 0,
               overflow: "visible",
             }}
           >
             <IconButton
+              onClick={handleNext}
               sx={{
                 position: "absolute",
                 right: isMobile ? "-15px" : "-25px",
@@ -869,21 +1182,21 @@ const HomePage = () => {
 
             <Box
               component="img"
-              src={`https://cmsreflux.bexatm.com${content.HM1031}`}
+              src={`https://cmsreflux.bexatm.com${imagePairs[currentIndex].after}`}
               alt="After"
               sx={{
                 width: "100%",
-                height: { xs: 250, md: 380 }, // same height for visual balance
+                height: { xs: 250, md: 380 },
                 borderRadius: "1px",
                 objectFit: "cover",
                 display: "block",
               }}
             />
-            <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-              <EditIconButton id="HM1031" type="I" />
+
+            <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+              <EditIconButton id={imagePairs[currentIndex].afterKey} type="I" />
             </Box>
           </Box>
-
         </Box>
 
         {/* Button */}
@@ -1152,8 +1465,8 @@ const HomePage = () => {
                 flexDirection: "column",
                 alignItems: { xs: "center", md: "flex-start" },
                 textAlign: { xs: "center", md: "left" },
-                mt: { xs: 0, md: 18 },
-                ml: 23,
+                mt: { xs: 4, md: 18 },
+                ml: { xs: 0, md: 23 },          // 👈 FIXED: no left margin in mobile
               }}
             >
               {/* Title with Edit */}
@@ -1168,6 +1481,7 @@ const HomePage = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 1,
+                  justifyContent: { xs: "center", md: "flex-start" }, // 👈 center title mobile
                 }}
               >
                 {content.HM1047}
@@ -1181,19 +1495,27 @@ const HomePage = () => {
                   mb: 3,
                   fontSize: "16px",
                   fontWeight: 400,
-                  maxWidth: "320px",
+                  maxWidth: { xs: "100%", md: "320px" }, // 👈 full width on mobile
                   ...theme.typography.bodySmall,
                   display: "flex",
                   alignItems: "center",
                   gap: 1,
+                  justifyContent: { xs: "center", md: "flex-start" },
                 }}
               >
                 {content.HM1048}
                 <EditIconButton id="HM1048" type="T" />
               </Typography>
 
-              {/* Button with Edit */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              {/* Button */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  justifyContent: { xs: "center", md: "flex-start" }
+                }}
+              >
                 <Button
                   variant="contained"
                   sx={{
@@ -1214,12 +1536,18 @@ const HomePage = () => {
               {/* Arrow image */}
               <Box
                 sx={{
-                  ml: 30,
-                  right: { xs: "5%", md: "20%" },
-                  textAlign: "right",
+                  mt: 3,
+                  display: "flex",
+                  justifyContent: { xs: "center", md: "flex-start" }, // 👈 center on mobile
+                  width: "100%",
                 }}
               >
-                <Box component="img" src={about} alt="Arrow" sx={{ width: 140 }} />
+                <Box
+                  component="img"
+                  src={about}
+                  alt="Arrow"
+                  sx={{ width: { xs: 100, md: 140, }, ml: 20, borderRadius: 4, }} // 👈 smaller on mobile
+                />
               </Box>
             </Box>
           </Grid>
@@ -1347,8 +1675,7 @@ const HomePage = () => {
       <RentServicesCard />
 
       {/* View all magnets for rent Section*/}
-      <Box>
-        {/* ✅ View All Magnets (editable) */}
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Typography
           component={Link}
           to="/home/Rentals"
@@ -1356,126 +1683,122 @@ const HomePage = () => {
             ...typography.h3R,
             color: "#1a4dab",
             fontWeight: 600,
-            ml: 120,
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
           }}
         >
           {content.HM1072}
           <EditIconButton id="HM1072" />
-          <ArrowRightAltIcon
-            sx={{
-              color: "#1a4dab",
-              fontWeight: "bold",
-              verticalAlign: "middle",
-              ml: 1,
-              fontSize: "3rem",
-            }}
-          />
+          <ArrowRightAltIcon sx={{ fontSize: "3rem" }} />
         </Typography>
-
-        <Box sx={{ flexGrow: 1, padding: 4 }}>
-          <Grid container spacing={4} alignItems="center">
-            {/* Left Side Image */}
-            <Grid item xs={12} md={6}>
-              <Box sx={{ position: "relative", width: "100%" }}>
-
-                {/* Image */}
-                <Box
-                  component="img"
-                  src={`https://cmsreflux.bexatm.com${content.HM1071}`}
-                  alt="Magnet Excavator"
-                  sx={{
-                    width: "100%",
-                    borderRadius: 2,
-                    height: "584px",
-                    display: "block"
-                  }}
-                />
-
-                {/* Edit Icon - Top Right */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 8,
-                    right: 8,
-                  }}
-                >
-                  <EditIconButton id="HM1071" type="I" />
-                </Box>
-
-              </Box>
-            </Grid>
+      </Box>
 
 
-            {/* Right Side Text */}
-            <Grid item xs={12} md={6}>
-              <Typography
+      <Box sx={{ flexGrow: 1, padding: 4 }}>
+        <Grid container spacing={4} alignItems="center">
+          {/* Left Side Image */}
+          <Grid item xs={12} md={6}>
+            <Box sx={{ position: "relative", width: "100%" }}>
+
+              {/* Image */}
+              <Box
+                component="img"
+                src={`https://cmsreflux.bexatm.com${content.HM1071}`}
+                alt="Magnet Excavator"
                 sx={{
-                  ...typography.displayM,
-                  fontWeight: 600,
-                  color: "#33425D",
+                  width: "100%",
+                  borderRadius: 2,
+                  height: "584px",
+                  display: "block"
+                }}
+              />
+
+              {/* Edit Icon - Top Right */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 8,
+                  right: 8,
                 }}
               >
-                {content.HM1062}
-                <EditIconButton id="HM1062" />
-              </Typography>
+                <EditIconButton id="HM1071" type="I" />
+              </Box>
 
-              <List>
-                {benefits.map((item, index) => (
-                  <ListItem alignItems="flex-start" key={index} sx={{ pl: 0 }}>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
+            </Box>
+          </Grid>
+
+
+          {/* Right Side Text */}
+          <Grid item xs={12} md={6}>
+            <Typography
+              sx={{
+                ...typography.displayM,
+                fontWeight: 600,
+                color: "#33425D",
+              }}
+            >
+              {content.HM1062}
+              <EditIconButton id="HM1062" />
+            </Typography>
+
+            <List>
+              {benefits.map((item, index) => (
+                <ListItem alignItems="flex-start" key={index} sx={{ pl: 0 }}>
+                  <ListItemIcon sx={{ minWidth: 32 }}>
+                    <Typography
+                      sx={{
+                        width: 30,
+                        height: 30,
+                        bgcolor: "#1C2D4B",
+                        color: "white",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "SpaceGrotesk-Bold",
+                        fontWeight: 700,
+                        fontSize: "24px",
+                      }}
+                    >
+                      {index + 1}
+                    </Typography>
+                  </ListItemIcon>
+
+                  <ListItemText
+                    sx={{ ml: 2 }}
+                    primary={
                       <Typography
                         sx={{
-                          width: 30,
-                          height: 30,
-                          bgcolor: "#1C2D4B",
-                          color: "white",
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontFamily: "SpaceGrotesk-Bold",
+                          ...typography.h3B,
                           fontWeight: 700,
                           fontSize: "24px",
                         }}
                       >
-                        {index + 1}
+                        {item.title}
+                        <EditIconButton id={item.titleId} />
                       </Typography>
-                    </ListItemIcon>
-
-                    <ListItemText
-                      sx={{ ml: 2 }}
-                      primary={
-                        <Typography
-                          sx={{
-                            ...typography.h3B,
-                            fontWeight: 700,
-                            fontSize: "24px",
-                          }}
-                        >
-                          {item.title}
-                          <EditIconButton id={item.titleId} />
-                        </Typography>
-                      }
-                      secondary={
-                        <Typography
-                          sx={{
-                            ...typography.h3medium,
-                            fontWeight: 500,
-                          }}
-                          color="textSecondary"
-                        >
-                          {item.description}
-                          <EditIconButton id={item.descId} />
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
+                    }
+                    secondary={
+                      <Typography
+                        sx={{
+                          ...typography.h3medium,
+                          fontWeight: 500,
+                        }}
+                        color="textSecondary"
+                      >
+                        {item.description}
+                        <EditIconButton id={item.descId} />
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
           </Grid>
-        </Box>
+        </Grid>
       </Box>
+
 
       {/* Resale Services */}
       <Box>
@@ -1561,7 +1884,6 @@ const HomePage = () => {
         >
           {content.HM1099}
           <EditIconButton id="HM1099" />
-
           <ArrowRightAltIcon
             sx={{
               color: "#1a4dab",
@@ -1574,111 +1896,150 @@ const HomePage = () => {
 
         {/* Cards */}
         <Box sx={{ width: "100%", mx: "auto" }}>
-          <Grid container spacing={4} justifyContent="center">
-            {roiList.map((item, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card
-                  sx={{
-                    position: "relative",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 3,
-                    height: { xs: 280, sm: 300, md: 320 },
-                    cursor: "pointer",
-                    transition: "transform 0.3s ease",
-                    "&:hover": { transform: "scale(1.03)" },
-                  }}
-                >
-                  {/* Background Image */}
-                  <Box
+          {isMobile ? (
+            /* ---------------- MOBILE : SWIPER ---------------- */
+            <Swiper
+              modules={[Pagination]}
+              pagination={{ type: "progressbar" }}
+              spaceBetween={16}
+              slidesPerView={1.1}
+            >
+              {roiList.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <Card
                     sx={{
-                      width: "100%",
-                      height: { xs: 280, sm: 300, md: 320 },   // FIXED HEIGHT like design
+                      position: "relative",
+                      borderRadius: 3,
                       overflow: "hidden",
+                      boxShadow: 3,
+                      height: 280,
+                      cursor: "pointer",
+                      transition: "transform 0.3s ease",
                     }}
                   >
-                    <CardMedia
-                      component="img"
-                      image={item.image}
-                      alt={item.title}
-                      sx={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        objectPosition: "center",
-                      }}
-                    />
+                    {/* Background Image */}
+                    <Box sx={{ width: "100%", height: 280, overflow: "hidden" }}>
+                      <CardMedia
+                        component="img"
+                        image={item.image}
+                        alt={item.title}
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+                        <EditIconButton id={item.imageId} type="I" />
+                      </Box>
+                    </Box>
 
-
+                    {/* Overlay */}
                     <Box
                       sx={{
                         position: "absolute",
-                        top: 8,
-                        right: 8,
-                        zIndex: 10,
+                        bottom: 16,
+                        left: 16,
+                        right: 16,
+                        backgroundColor: "white",
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        px: 2,
+                        py: 1.5,
                       }}
                     >
-                      <EditIconButton id={item.imageId} type="I" />
+                      <Box display="flex" justifyContent="space-between">
+                        <Typography sx={{ fontWeight: 700, fontSize: "16px" }}>
+                          {item.title}
+                          <EditIconButton id={item.titleId} />
+                        </Typography>
+                        <IconButton size="small" sx={{ backgroundColor: "#f0f0f0" }}>
+                          <ArrowForwardIosIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+
+                      <Typography sx={{ fontSize: "14px", color: "text.secondary" }}>
+                        {item.description}
+                        <EditIconButton id={item.descriptionId} />
+                      </Typography>
                     </Box>
-                  </Box>
-
-
-                  {/* Overlay */}
-                  <Box
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            /* ---------------- DESKTOP : GRID (UNCHANGED) ---------------- */
+            <Grid container spacing={4} justifyContent="center">
+              {roiList.map((item, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Card
                     sx={{
-                      position: "absolute",
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      backgroundColor: "white",
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      px: 2,
-                      py: 1.5,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 0.5,
+                      position: "relative",
+                      borderRadius: 3,
+                      overflow: "hidden",
+                      boxShadow: 3,
+                      height: { xs: 280, sm: 300, md: 320 },
+                      cursor: "pointer",
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.03)" },
                     }}
                   >
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Typography
+                    {/* Background Image */}
+                    <Box sx={{ width: "100%", height: 320, overflow: "hidden" }}>
+                      <CardMedia
+                        component="img"
+                        image={item.image}
+                        alt={item.title}
                         sx={{
-                          ...theme.typography.h3B1,
-                          fontWeight: 700,
-                          fontSize: { xs: "16px", md: "18px" },
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
                         }}
-                      >
-                        {item.title}
-                        <EditIconButton id={item.titleId} />
-                      </Typography>
-
-                      <IconButton size="small" sx={{ backgroundColor: "#f0f0f0" }}>
-                        <ArrowForwardIosIcon fontSize="small" />
-                      </IconButton>
+                      />
+                      <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+                        <EditIconButton id={item.imageId} type="I" />
+                      </Box>
                     </Box>
 
-                    <Typography
+                    {/* Overlay */}
+                    <Box
                       sx={{
-                        ...theme.typography.bodyBase,
-                        fontWeight: 400,
-                        color: "text.secondary",
-                        fontSize: { xs: "14px", md: "16px" },
+                        position: "absolute",
+                        bottom: 16,
+                        left: 16,
+                        right: 16,
+                        backgroundColor: "white",
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        px: 2,
+                        py: 1.5,
                       }}
                     >
-                      {item.description}
-                      <EditIconButton id={item.descriptionId} />
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+                      <Box display="flex" justifyContent="space-between">
+                        <Typography sx={{ fontWeight: 700, fontSize: "16px" }}>
+                          {item.title}
+                          <EditIconButton id={item.titleId} />
+                        </Typography>
+                        <IconButton size="small" sx={{ backgroundColor: "#e5f2faff" }}
+                          onClick={() => navigate("/repair-replace")}
+                        >
+                          <ArrowForwardIosIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+
+                      <Typography sx={{ fontSize: "14px", color: "text.secondary" }}>
+                        {item.description}
+                        <EditIconButton id={item.descriptionId} />
+                      </Typography>
+                    </Box>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Box>
       </Box>
+
 
 
 
@@ -1886,19 +2247,20 @@ const HomePage = () => {
 
 
       {/* FAQs Section */}
-      <Box sx={{ display: "flex", alignItems: "center", ml: 9 }}>
+      <Box sx={{ px: 5, py: 1 }}>
+        {/* 🔹 Editable Tag Button */}
         <Button
           disableElevation
           disableRipple
           sx={{
             marginBottom: 2,
+            marginTop: "30px",
             textTransform: "none",
             fontSize: "0.8rem",
             fontWeight: 500,
             color: "#1a4dab",
             backgroundColor: "rgba(36,121,233,0.08)",
             borderRadius: "20px",
-            px: 2,
             py: 0.5,
             boxShadow: "none",
             "&:hover": {
@@ -1908,90 +2270,133 @@ const HomePage = () => {
           }}
         >
           {content.HM1119}
+          <EditIconButton id="HM1119" />
         </Button>
-        <EditIconButton id="HM1119" />
-      </Box>
 
-      {/* Heading */}
-      <Box sx={{ display: "flex", alignItems: "center", ml: 8 }}>
+        {/* 🔹 Section Title */}
         <Typography
-          sx={{ ...theme.typography.displayL, color: "#1C2D4B" }}
+          sx={{
+            ...typography.displayL,
+            color: "#1C2D4B",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
           variant="h3"
           fontWeight="bold"
           gutterBottom
         >
           {content.HM1120}
+          <EditIconButton id="HM1120" />
         </Typography>
-        <EditIconButton id="HM1120" />
-      </Box>
 
-      {/* Sub Content */}
-      <Box sx={{ display: "flex", alignItems: "center", ml: 8 }}>
+        {/* 🔹 Description Text */}
         <Typography
           variant="h5"
           sx={{
+            ...typography.h4,
+            color: "#99A0AE",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
             mb: 4,
-            color: "#1C2D4B",
-            ...theme.typography.h4,
           }}
         >
           {content.HM1121}
+          <EditIconButton id="HM1121" />
         </Typography>
-        <EditIconButton id="HM1121" />
+
+        {/* 🔹 FAQ Accordions */}
+        <Box>
+          {allfaq.map((item, index) => (
+            <Accordion
+              key={index}
+              id={item.qId}
+              expanded={expanded === index}
+              onChange={() => handleChange(index)}
+              disableGutters
+              elevation={0}
+              sx={{
+                backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
+                borderRadius: 2,
+                mb: 1,
+                px: 2,
+              }}
+            >
+              <AccordionSummary
+                expandIcon={
+                  <IconButton>
+                    {expanded === index ? (
+                      <RemoveIcon sx={{ color: "#1976d2" }} />
+                    ) : (
+                      <AddIcon sx={{ color: "#1976d2" }} />
+                    )}
+                  </IconButton>
+                }
+              >
+                <Typography
+                  sx={{
+                    ...typography.h4,
+                    color: "#0E1109",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  {content[item.qId]}
+                  <EditIconButton id={item.qId} />
+                  {isAdmin && (
+                    <IconButton
+                      size="small"
+                      onClick={() => handleDeleteREFaq(item.qId, item.aId)}
+                      sx={{ ml: 1, color: "#B71C1C" }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </Typography>
+              </AccordionSummary>
+
+              <AccordionDetails>
+                <Typography
+                  sx={{
+                    ...typography.bodyBase,
+                    color: "#0E1109",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  {content[item.aId]}
+                  <EditIconButton id={item.aId} />
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+          {/* ADD NEW FAQ BUTTON */}
+          {isAdmin && (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleAddREFaq}
+                sx={{
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                  borderRadius: 2,
+                  px: 3,
+                  py: 1,
+                }}
+              >
+                <AddIcon /> Add New FAQ
+              </Button>
+            </Box>
+          )}
+        </Box>
       </Box>
+
 
       {/* FAQ List */}
-      <Box sx={{ px: 8, py: 6 }}>
-        {faqData.map((item, index) => (
-          <Accordion
-            key={index}
-            expanded={expanded === index}
-            onChange={() => handleChange(index)}
-            disableGutters
-            elevation={0}
-            sx={{
-              backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-              borderRadius: 2,
-              mb: 1,
-              px: 2,
-            }}
-          >
-            <AccordionSummary
-              expandIcon={
-                <IconButton>
-                  {expanded === index ? (
-                    <RemoveIcon sx={{ color: "#1976d2" }} />
-                  ) : (
-                    <AddIcon sx={{ color: "#1976d2" }} />
-                  )}
-                </IconButton>
-              }
-            >
-              {/* Question + Edit */}
-              <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-                <Typography
-                  sx={{ ...theme.typography.h4, color: "#0E1109" }}
-                >
-                  {content[item.qKey]}
-                </Typography>
-                <EditIconButton id={item.qKey} />
-              </Box>
-            </AccordionSummary>
 
-            <AccordionDetails>
-              {/* Answer + Edit */}
-              <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-                <Typography
-                  sx={{ ...theme.typography.bodyBase, color: "#0E1109" }}
-                >
-                  {content[item.aKey]}
-                </Typography>
-                <EditIconButton id={item.aKey} />
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-        ))}
-      </Box>
 
 
 

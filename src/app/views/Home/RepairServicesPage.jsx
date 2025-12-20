@@ -479,18 +479,24 @@ const RepairServicesPage = () => {
       {/* Content Section */}
       <Box
         sx={{
-          padding: "60px 120px",
+          px: { xs: 2, sm: 4, md: 15 },   // ✅ responsive padding
+          py: { xs: 4, sm: 6, md: 7.5 },
           backgroundColor: "#fff",
           maxWidth: "100%",
         }}
       >
+        {/* Title */}
         <Typography
           sx={{
-            fontSize: "40px",
+            fontSize: { xs: "28px", sm: "32px", md: "40px" },
             fontWeight: 700,
-            lineHeight: "44px",
+            lineHeight: { xs: "36px", md: "44px" },
             color: "#1A2438",
             fontFamily: "Space Grotesk, Regular",
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 1,
             ...typography.h1,
           }}
         >
@@ -500,32 +506,29 @@ const RepairServicesPage = () => {
               size="small"
               onClick={() => handleEdit("CON190002")}
               sx={{
-                ml: 1,
                 p: 0.5,
                 borderRadius: "50%",
                 backgroundColor: "#f0f0f0",
                 color: "#1C2D4B",
                 border: "1px solid #ccc",
-                transition: "all 0.2s ease",
                 "&:hover": {
                   backgroundColor: "#e0e0e0",
                   color: "#070808ff",
-                  //borderColor: "#214870",
                 },
-                verticalAlign: "middle",
               }}
             >
               <EditIcon fontSize="small" />
             </IconButton>
           )}
         </Typography>
-        {/* Increase this width */}
+
+        {/* Description */}
         <Typography
           sx={{
-            fontSize: "18px",
+            fontSize: { xs: "16px", md: "18px" },
             lineHeight: "160%",
             color: "#99A0AE",
-            maxWidth: "100%",
+            mt: 2,
             fontFamily: "Fira Sans, Regular",
             ...typography.bodyBase,
           }}
@@ -542,11 +545,9 @@ const RepairServicesPage = () => {
                 backgroundColor: "#f0f0f0",
                 color: "#1C2D4B",
                 border: "1px solid #ccc",
-                transition: "all 0.2s ease",
                 "&:hover": {
                   backgroundColor: "#e0e0e0",
                   color: "#070808ff",
-                  //borderColor: "#214870",
                 },
                 verticalAlign: "middle",
               }}
@@ -555,44 +556,48 @@ const RepairServicesPage = () => {
             </IconButton>
           )}
         </Typography>
+
+        {/* Link */}
         <Typography
           sx={{
-            fontSize: "18px",
+            fontSize: { xs: "16px", md: "18px" },
             fontWeight: 600,
             color: "#2F6FBA",
             mt: 2,
             fontFamily: "Fira Sans",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            flexWrap: "wrap",
             ...typography.bodyStrong,
           }}
         >
-          <Link href="#" sx={{ textDecoration: "underline" }} underline="none">
+          <Link href="#" sx={{ textDecoration: "underline" }}>
             {content.CON190004}
-            {isAdmin && (
-              <IconButton
-                size="small"
-                onClick={() => handleEdit("CON190004")}
-                sx={{
-                  ml: 1,
-                  p: 0.5,
-                  borderRadius: "50%",
-                  backgroundColor: "#f0f0f0",
-                  color: "#1C2D4B",
-                  border: "1px solid #ccc",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#e0e0e0",
-                    color: "#070808ff",
-                    //borderColor: "#214870",
-                  },
-                  verticalAlign: "middle",
-                }}
-              >
-                <EditIcon fontSize="small" />
-              </IconButton>
-            )}
           </Link>
+
+          {isAdmin && (
+            <IconButton
+              size="small"
+              onClick={() => handleEdit("CON190004")}
+              sx={{
+                p: 0.5,
+                borderRadius: "50%",
+                backgroundColor: "#f0f0f0",
+                color: "#1C2D4B",
+                border: "1px solid #ccc",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0",
+                  color: "#070808ff",
+                },
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          )}
         </Typography>
       </Box>
+
 
       {/* Fault section */}
 

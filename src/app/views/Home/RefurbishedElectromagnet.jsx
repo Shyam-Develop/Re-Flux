@@ -36,13 +36,10 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import HandshakeIcon from "@mui/icons-material/Handshake";
-import handshake1 from "../../../assets/handshake3.jpg";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
@@ -51,10 +48,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ROIimage from "../../../assets/ROICalculator.jpg";
 import Brand1 from "../../../assets/Brand1.png";
 import Brand2crea from "../../../assets/Brand2crea.png";
-import Blogs1 from "../../../assets/Blogs1.jpg";
-import Blogs2 from "../../../assets/Blogs2.jpg";
-import Blogs3 from "../../../assets/Blogs3.jpg";
-import Blogs4 from "../../../assets/Blogs4.jpg";
+
 
 import Roi1 from "../../../assets/Roi1.png";
 import Roi2 from "../../../assets/Roi2.png";
@@ -71,10 +65,23 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { useTheme, useMediaQuery } from "@mui/material";
+
+
 const RefurbishedElectromagnet = () => {
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const [BrowseDialogopen, setBrowseDialogOpen] = useState(false);
+
+
 
   const handleClickOpen = () => {
     setBrowseDialogOpen(true);
@@ -389,6 +396,236 @@ const RefurbishedElectromagnet = () => {
       ],
     },
   ];
+
+  const ProductCard = ({ product, navigate }) => (
+    <Box
+      sx={{
+        borderRadius: 3,
+        border: "1px solid #dbdbdb",
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        maxWidth: "430px",
+        height: "100%",
+        backgroundColor: "#fff",
+      }}
+    >
+   
+        {/* Title & size */}
+        <Typography
+          sx={{
+            ...typography.h4,
+            fontWeight: 700,
+            fontSize: "24px",
+            color: "#0B121E",
+            mb: 0.5,
+          }}
+        >
+          {product.title}
+          <EditIconButton id={product.keys[0]} />
+        </Typography>
+
+        <Box sx={{ display: "flex" }}>
+          <Typography
+            sx={{
+              ...typography.h5,
+              fontWeight: 500,
+              fontSize: "20px",
+              color: "#00000099",
+              mb: 1,
+            }}
+          >
+            {product.size}
+            <EditIconButton id={product.keys[1]} />
+          </Typography>
+
+          <Typography
+            sx={{
+              ...typography.bodySmall,
+              fontFamily: "Fira Sans",
+              fontWeight: 400,
+              fontSize: "14px",
+              color: "#00000099",
+              // mb: 1,
+              marginLeft: "4%",
+              // marginTop: '5px',
+            }}
+          >
+            Certified: {product.certified}
+            <EditIconButton id={product.keys[2]} />
+          </Typography>
+        </Box>
+
+        {/* Image with badges */}
+        <Box
+          sx={{
+            position: "relative",
+            borderRadius: 2,
+            overflow: "hidden",
+            mb: 2,
+          }}
+        >
+          {/* IMAGE */}
+          <Box
+            component="img"
+            src={product.imgSrc}
+            alt={product.title}
+            sx={{
+              width: "100%",
+              height: "240px",
+              objectFit: "cover",
+              borderRadius: 2,
+              display: "block",
+              zIndex: 1,
+            }}
+          />
+
+          {/* EDIT ICON — now correctly visible + at top-right */}
+          <Box
+            sx={{ position: "absolute", bottom: "85%", left: "90%" }}
+          >
+            <EditIconButton
+              id={product.keys[6]}
+              type="I"
+              sx={{
+                position: "absolute",
+                top: 6, // moved slightly up
+                right: 6,
+                zIndex: 30, // higher than image + chip
+              }}
+            />
+          </Box>
+
+          {/* AVAILABLE FOR RENT — moved slightly UP */}
+          <Chip
+            label="🔧 Available for Rent"
+            size="small"
+            sx={{
+              position: "absolute",
+              top: 6, // moved up
+              left: 8,
+              bgcolor: "#1b5e20",
+              color: "white",
+              fontWeight: 400,
+              fontSize: "14px",
+              borderRadius: "2px",
+              zIndex: 25, // make sure it appears above the image
+            }}
+          />
+
+          {/* SAFETY TESTED CHIP */}
+          <Chip
+            label="🛡️ Safety Tested"
+            size="small"
+            color="info"
+            sx={{
+              position: "absolute",
+              bottom: 40,
+              left: 8,
+              fontWeight: 400,
+              fontSize: "14px",
+              borderRadius: "2px",
+              zIndex: 25,
+            }}
+          />
+        </Box>
+
+        {/* Specs */}
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={6}>
+            <Typography
+              sx={{
+                ...typography.h6,
+                fontWeight: 600,
+                color: "#0E1626",
+              }}
+            >
+              Lift Capacity
+            </Typography>
+            <Typography
+              sx={{
+                ...typography.bodySmall,
+                fontWeight: 400,
+                fontFamily: "Fira Sans",
+                fontSize: "18px",
+                color: "#677489",
+              }}
+            >
+              {product.liftCapacity}
+              <EditIconButton id={product.keys[3]} />
+            </Typography>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Typography
+              sx={{
+                ...typography.h6,
+                fontWeight: 600,
+                color: "#0E1626",
+              }}
+            >
+              Power Supply
+            </Typography>
+            <Typography
+              sx={{
+                ...typography.bodySmall,
+                fontWeight: 400,
+                fontFamily: "Fira Sans",
+                fontSize: "18px",
+                color: "#677489",
+              }}
+            >
+              {product.powerSupply}
+              <EditIconButton id={product.keys[4]} />
+            </Typography>
+          </Grid>
+        </Grid>
+
+        {/* Included */}
+        <Box sx={{ mb: 3, mt: 3 }}>
+          <Typography
+            sx={{
+              ...typography.h6,
+              fontWeight: 600,
+              color: "#0E1626",
+            }}
+          >
+            Included
+          </Typography>
+          <Typography
+            sx={{
+              ...typography.bodySmall,
+              fontWeight: 400,
+              fontFamily: "Fira Sans",
+              fontSize: "18px",
+              color: "#677489",
+            }}
+          >
+            {product.included}
+            <EditIconButton id={product.keys[5]} />
+          </Typography>
+        </Box>
+
+        {/* Buy Now Button */}
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            backgroundColor: "#1C2D4B",
+            height: "44px",
+            textTransform: "none",
+            borderRadius: 3,
+            ...typography.bodyStrong,
+          }}
+          onClick={() => navigate("/home/RefurbishedDetail")}
+        >
+          Buy now
+        </Button>
+      
+    </Box>
+  );
+
 
   //How it works
   const steps = [
@@ -760,247 +997,61 @@ const RefurbishedElectromagnet = () => {
         </Box>
 
         {/* Refurbished section */}
-        <Box sx={{ pb: 10, mt: "20px" }}>
-          <Grid container spacing={4}>
-            {refurbishedProducts.map((product, idx) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                key={idx}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center", // center cards on mobile
-                }}
-              >
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    border: "1px solid #dbdbdb",
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    width: { xs: "100%", sm: "100%", md: "430px" }, // 💡 Responsive width
-                    maxWidth: "430px",
-                    height: "100%",
-                  }}
+        <Box sx={{ pb: 5, mt: "40px" }}>
+          {isMobile ? (
+
+            <Swiper
+              modules={[Pagination]}
+              slidesPerView={1}
+              spaceBetween={16}
+              pagination={{
+                type: "progressbar",
+              }}
+            >
+              {refurbishedProducts.map((product, idx) => (
+                <SwiperSlide key={idx}>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <ProductCard product={product} navigate={navigate} />
+                  </Box>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+
+            <Grid container spacing={4}>
+              {refurbishedProducts.map((product, idx) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  key={idx}
+                  sx={{ display: "flex", justifyContent: "center" }}
                 >
-                  {/* Title & size */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      fontWeight: 700,
-                      fontSize: "24px",
-                      color: "#0B121E",
-                      mb: 0.5,
-                    }}
-                  >
-                    {product.title}
-                    <EditIconButton id={product.keys[0]} />
-                  </Typography>
+                  <ProductCard product={product} navigate={navigate} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+         <style>{`
+            .swiper {
+              padding-bottom: 25px;
+            }
 
-                  <Box sx={{ display: "flex" }}>
-                    <Typography
-                      sx={{
-                        ...typography.h5,
-                        fontWeight: 500,
-                        fontSize: "20px",
-                        color: "#00000099",
-                        mb: 1,
-                      }}
-                    >
-                      {product.size}
-                      <EditIconButton id={product.keys[1]} />
-                    </Typography>
+            .swiper-pagination-progressbar {
+              top: auto !important;
+              bottom: 0 !important;
+              height: 4px;
+              background: #e0e0e0;
+            }
 
-                    <Typography
-                      sx={{
-                        ...typography.bodySmall,
-                        fontFamily: "Fira Sans",
-                        fontWeight: 400,
-                        fontSize: "14px",
-                        color: "#00000099",
-                        // mb: 1,
-                        marginLeft: "4%",
-                        // marginTop: '5px',
-                      }}
-                    >
-                      Certified: {product.certified}
-                      <EditIconButton id={product.keys[2]} />
-                    </Typography>
-                  </Box>
-
-                  {/* Image with badges */}
-                  <Box
-                    sx={{
-                      position: "relative",
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      mb: 2,
-                    }}
-                  >
-                    {/* IMAGE */}
-                    <Box
-                      component="img"
-                      src={product.imgSrc}
-                      alt={product.title}
-                      sx={{
-                        width: "100%",
-                        height: "240px",
-                        objectFit: "cover",
-                        borderRadius: 2,
-                        display: "block",
-                        zIndex: 1,
-                      }}
-                    />
-
-                    {/* EDIT ICON — now correctly visible + at top-right */}
-                    <Box
-                      sx={{ position: "absolute", bottom: "85%", left: "90%" }}
-                    >
-                      <EditIconButton
-                        id={product.keys[6]}
-                        type="I"
-                        sx={{
-                          position: "absolute",
-                          top: 6, // moved slightly up
-                          right: 6,
-                          zIndex: 30, // higher than image + chip
-                        }}
-                      />
-                    </Box>
-
-                    {/* AVAILABLE FOR RENT — moved slightly UP */}
-                    <Chip
-                      label="🔧 Available for Rent"
-                      size="small"
-                      sx={{
-                        position: "absolute",
-                        top: 6, // moved up
-                        left: 8,
-                        bgcolor: "#1b5e20",
-                        color: "white",
-                        fontWeight: 400,
-                        fontSize: "14px",
-                        borderRadius: "2px",
-                        zIndex: 25, // make sure it appears above the image
-                      }}
-                    />
-
-                    {/* SAFETY TESTED CHIP */}
-                    <Chip
-                      label="🛡️ Safety Tested"
-                      size="small"
-                      color="info"
-                      sx={{
-                        position: "absolute",
-                        bottom: 40,
-                        left: 8,
-                        fontWeight: 400,
-                        fontSize: "14px",
-                        borderRadius: "2px",
-                        zIndex: 25,
-                      }}
-                    />
-                  </Box>
-
-                  {/* Specs */}
-                  <Grid container spacing={2} sx={{ mb: 2 }}>
-                    <Grid item xs={6}>
-                      <Typography
-                        sx={{
-                          ...typography.h6,
-                          fontWeight: 600,
-                          color: "#0E1626",
-                        }}
-                      >
-                        Lift Capacity
-                      </Typography>
-                      <Typography
-                        sx={{
-                          ...typography.bodySmall,
-                          fontWeight: 400,
-                          fontFamily: "Fira Sans",
-                          fontSize: "18px",
-                          color: "#677489",
-                        }}
-                      >
-                        {product.liftCapacity}
-                        <EditIconButton id={product.keys[3]} />
-                      </Typography>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                      <Typography
-                        sx={{
-                          ...typography.h6,
-                          fontWeight: 600,
-                          color: "#0E1626",
-                        }}
-                      >
-                        Power Supply
-                      </Typography>
-                      <Typography
-                        sx={{
-                          ...typography.bodySmall,
-                          fontWeight: 400,
-                          fontFamily: "Fira Sans",
-                          fontSize: "18px",
-                          color: "#677489",
-                        }}
-                      >
-                        {product.powerSupply}
-                        <EditIconButton id={product.keys[4]} />
-                      </Typography>
-                    </Grid>
-                  </Grid>
-
-                  {/* Included */}
-                  <Box sx={{ mb: 3, mt: 3 }}>
-                    <Typography
-                      sx={{
-                        ...typography.h6,
-                        fontWeight: 600,
-                        color: "#0E1626",
-                      }}
-                    >
-                      Included
-                    </Typography>
-                    <Typography
-                      sx={{
-                        ...typography.bodySmall,
-                        fontWeight: 400,
-                        fontFamily: "Fira Sans",
-                        fontSize: "18px",
-                        color: "#677489",
-                      }}
-                    >
-                      {product.included}
-                      <EditIconButton id={product.keys[5]} />
-                    </Typography>
-                  </Box>
-
-                  {/* Buy Now Button */}
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      backgroundColor: "#1C2D4B",
-                      height: "44px",
-                      textTransform: "none",
-                      borderRadius: 3,
-                      ...typography.bodyStrong,
-                    }}
-                    onClick={() => navigate("/home/RefurbishedDetail")}
-                  >
-                    Buy now
-                  </Button>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
+            .swiper-pagination-progressbar-fill {
+              background: #1C2D4B;
+            }
+          `}</style>
         </Box>
+
+
       </Box>
       {/* Left - Features with vertical timeline */}
       <Box
@@ -1170,9 +1221,8 @@ const RefurbishedElectromagnet = () => {
                 >
                   <Box
                     component="img"
-                    src={`https://cmsreflux.bexatm.com${
-                      content?.[service.imgId] || ""
-                    }`}
+                    src={`https://cmsreflux.bexatm.com${content?.[service.imgId] || ""
+                      }`}
                     alt={content?.[service.titleId] || ""}
                     sx={{
                       width: "45px",
@@ -1309,6 +1359,7 @@ const RefurbishedElectromagnet = () => {
               color: "#2F6FBA",
               textDecoration: "underline",
             }}
+            onClick={()=>navigate('/repair-replace/roi-cal')}
           >
             {content.RM1077}
             <EditIconButton id="RM1077" type="T" />

@@ -109,7 +109,7 @@ export default function FooterAlt() {
   if (!content) return null;
 
   return (
-    <Box sx={{ paddingLeft: "5px", paddingRight: "5px" }}>
+    <Box sx={{ px: { xs: 1, sm: 2, md: 5 } }}>
       <Box component="footer" sx={{ ...styles.footer }}>
         <Grid container spacing={6}>
           {/* 🟦 Left Section — Logo */}
@@ -118,7 +118,8 @@ export default function FooterAlt() {
               display="flex"
               alignItems="center"
               gap={2}
-              sx={{ paddingLeft: "10%", marginTop: "30px" }}
+              sx={{ pl: { xs: 1, sm: "5%", md: "10%" }, mt: "30px" }}
+              flexWrap="wrap" // ✅ allow wrapping on smaller screens
             >
               <RefluxSvg />
               <Box>
@@ -130,21 +131,23 @@ export default function FooterAlt() {
                     display: "flex",
                     alignItems: "center",
                     gap: "4px",
+                    flexWrap: "wrap", // ✅ responsive text
                   }}
                 >
                   {content.CON200001}
                   {isAdmin && <EditIconButton id="CON200001" />}
                 </Typography>
+
                 <Typography
                   variant="caption"
                   sx={{
-                    display: "block",
-                    fontWeight: "500",
+                    fontWeight: 500,
                     fontSize: "15px",
                     letterSpacing: "20px",
                     display: "flex",
                     alignItems: "center",
                     gap: "4px",
+                    flexWrap: "wrap", // ✅ responsive text
                   }}
                 >
                   {content.CON200002}
@@ -158,7 +161,8 @@ export default function FooterAlt() {
               display="flex"
               alignItems="center"
               gap={2}
-              sx={{ paddingLeft: "14%" }}
+              sx={{ pl: { xs: 1, sm: "7%", md: "14%" } }}
+              flexWrap="wrap"
             >
               <Typography
                 sx={{
@@ -167,6 +171,7 @@ export default function FooterAlt() {
                   display: "flex",
                   alignItems: "center",
                   gap: "4px",
+                  flexWrap: "wrap",
                 }}
                 variant="subtitle2"
               >
@@ -192,11 +197,7 @@ export default function FooterAlt() {
                     color: "#1C2D4B",
                     border: "1px solid #ccc",
                     transition: "all 0.2s ease",
-                    "&:hover": {
-                      backgroundColor: "#e0e0e0",
-                      color: "#070808ff",
-                      //borderColor: "#214870",
-                    },
+                    "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" },
                     verticalAlign: "middle",
                   }}
                 >
@@ -210,11 +211,8 @@ export default function FooterAlt() {
           <Grid item xs={12} md={6}>
             <Grid container spacing={6}>
               {/* Contact Section */}
-              <Grid item xs={12} sm={6}>
-                <Button
-                  variant="outlined"
-                  sx={{ ...styles.button, ...typography.h6 }}
-                >
+              <Grid item xs={12} sm={6} sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+                <Button variant="outlined" sx={{ ...styles.button, ...typography.h6 }}>
                   {content.CON200005}
                   {isAdmin && <EditIconButton id="CON200005" />}
                 </Button>
@@ -228,6 +226,7 @@ export default function FooterAlt() {
                     display: "flex",
                     alignItems: "center",
                     gap: "4px",
+                    flexWrap: "wrap",
                   }}
                 >
                   {content.CON200006}
@@ -241,8 +240,8 @@ export default function FooterAlt() {
                     mt: 5,
                     color: "#F1F2F4",
                     borderBottom: "2px solid #0081FE",
-                    width: "fit-content", // ✅ auto width instead of 60%
-                    whiteSpace: "nowrap", // ✅ keep text in one line
+                    width: "fit-content",
+                    whiteSpace: "nowrap",
                     display: "flex",
                     alignItems: "center",
                     gap: "4px",
@@ -271,21 +270,14 @@ export default function FooterAlt() {
               </Grid>
 
               {/* Links Section */}
-              <Grid item xs={12} sm={6}>
-                <Button
-                  variant="outlined"
-                  sx={{ ...styles.button, ...typography.h6 }}
-                >
+              <Grid item xs={12} sm={6} sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+                <Button variant="outlined" sx={{ ...styles.button, ...typography.h6 }}>
                   {content.CON200009}
                   {isAdmin && <EditIconButton id="CON200009" />}
                 </Button>
 
                 <Box display="flex" flexDirection="column" gap={1.5}>
-                  {[
-                    content.CON200010,
-                    content.CON200011,
-                    content.CON200012,
-                  ].map((linkText, i) => (
+                  {[content.CON200010, content.CON200011, content.CON200012].map((linkText, i) => (
                     <Link
                       key={i}
                       href="#"
@@ -295,10 +287,11 @@ export default function FooterAlt() {
                         display: "flex",
                         alignItems: "center",
                         gap: "4px",
+                        flexWrap: "wrap",
                       }}
                     >
                       {linkText}
-                      {isAdmin && <EditIconButton id={`CON20001${i + 0}`} />}
+                      {isAdmin && <EditIconButton id={`CON20001${i}`} />}
                     </Link>
                   ))}
 
@@ -310,27 +303,19 @@ export default function FooterAlt() {
                       display: "flex",
                       alignItems: "center",
                       gap: "4px",
+                      flexWrap: "wrap",
                     }}
                   >
                     {content.CON200013}
                     {isAdmin && <EditIconButton id="CON200013" />}
-                    <Box component="span" sx={{ color: "red", ml: 0.5 }}>
-                      {content.CON200016}
-                      {isAdmin && <EditIconButton id="CON200016" />}
-                    </Box>
+                    {/* <Box component="span" sx={{ color: "red", ml: 0.5 }}>
+                  {content.CON200016}
+                  {isAdmin && <EditIconButton id="CON200016" />}
+                </Box> */}
                   </Typography>
 
-                  <Box
-                    sx={{ borderBottom: "1px solid white", width: "20%" }}
-                  ></Box>
-                  <Box
-                    sx={{
-                      height: 1,
-                      backgroundColor: "#fff",
-                      width: 28,
-                      mt: 1,
-                    }}
-                  />
+                  <Box sx={{ borderBottom: "1px solid white", width: "20%" }}></Box>
+                  <Box sx={{ height: 1, backgroundColor: "#fff", width: 28, mt: 1 }} />
 
                   <Link
                     href="#"
@@ -341,6 +326,7 @@ export default function FooterAlt() {
                       display: "flex",
                       alignItems: "center",
                       gap: "4px",
+                      flexWrap: "wrap",
                     }}
                   >
                     {content.CON200014}
@@ -356,36 +342,45 @@ export default function FooterAlt() {
         <Box
           mt={4}
           display="flex"
-          justifyContent="space-between"
+          justifyContent="flex-end"   
           alignItems="center"
         >
-          <Typography
-            variant="caption"
-            sx={{
-              color: "#ccc",
-              paddingLeft: "74%",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-            }}
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={2}
+            flexWrap="wrap"           
           >
-            {content.CON200015}
-            {isAdmin && <EditIconButton id="CON200015" />}
-          </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "#ccc",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                whiteSpace: "nowrap", 
+              }}
+            >
+              {content.CON200015}
+              {isAdmin && <EditIconButton id="CON200015" />}
+            </Typography>
 
-          <IconButton
-            onClick={handleScrollTop}
-            sx={{
-              border: "1px solid white",
-              borderRadius: "50%",
-              color: "white",
-              "&:hover": { backgroundColor: "#1b3a6b" },
-            }}
-          >
-            <ArrowUpwardIcon />
-          </IconButton>
+            <IconButton
+              onClick={handleScrollTop}
+              sx={{
+                border: "1px solid white",
+                borderRadius: "50%",
+                color: "white",
+                "&:hover": { backgroundColor: "#1b3a6b" },
+              }}
+            >
+              <ArrowUpwardIcon />
+            </IconButton>
+          </Box>
         </Box>
+
       </Box>
     </Box>
+
   );
 }

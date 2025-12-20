@@ -429,84 +429,84 @@ const RefurbishedDetail = () => {
   // ✅ Dynamic industries data from JSON (C011)
   const [industries, setIndustries] = useState([]);
 
-useEffect(() => {
-  if (!content) return;
+  useEffect(() => {
+    if (!content) return;
 
-  setIndustries([
-    {
-      id: 1,
-      title: content.CON110001,
-      description: content.CON110002,
-      img: `https://cmsreflux.bexatm.com${content.CON110003}`,
-    },
-    {
-      id: 2,
-      title: content.CON110004,
-      description: content.CON110005,
-      img: `https://cmsreflux.bexatm.com${content.CON110006}`,
-    },
-    {
-      id: 3,
-      title: content.CON110007,
-      description: content.CON110008,
-      img: `https://cmsreflux.bexatm.com${content.CON110009}`,
-    },
-    {
-      id: 4,
-      title: content.CON110010,
-      description: content.CON110011,
-      img: `https://cmsreflux.bexatm.com${content.CON110012}`,
-    },
-  ]);
-}, [content]);
+    setIndustries([
+      {
+        id: 1,
+        title: content.CON110001,
+        description: content.CON110002,
+        img: `https://cmsreflux.bexatm.com${content.CON110003}`,
+      },
+      {
+        id: 2,
+        title: content.CON110004,
+        description: content.CON110005,
+        img: `https://cmsreflux.bexatm.com${content.CON110006}`,
+      },
+      {
+        id: 3,
+        title: content.CON110007,
+        description: content.CON110008,
+        img: `https://cmsreflux.bexatm.com${content.CON110009}`,
+      },
+      {
+        id: 4,
+        title: content.CON110010,
+        description: content.CON110011,
+        img: `https://cmsreflux.bexatm.com${content.CON110012}`,
+      },
+    ]);
+  }, [content]);
 
 
   const [open, setOpen] = useState(false);
 
   const [specData, setSpecData] = useState([]);
 
-useEffect(() => {
-  if (!content) return;
+  useEffect(() => {
+    if (!content) return;
 
-  setSpecData([
-    {
-      label: content.CON130001,
-      id: "CON130001",
-      properties: [
-        { id: "CON130002", text: content.CON130002 },
-        { id: "CON130003", text: content.CON130003 },
-        { id: "CON130004", text: content.CON130004 },
-        { id: "CON130005", text: content.CON130005 },
-        { id: "CON130006", text: content.CON130006 },
-        { id: "CON130007", text: content.CON130007 },
-        
-      ],
-    },
-     {
-      label: content.CON130008,
-      id: "CON130008",
-      properties: [
-        { id: "CON130009", text: content.CON130009 },
-        { id: "CON130010", text: content.CON130010 },
-        { id: "CON130011", text: content.CON130011 },
-        { id: "CON130012", text: content.CON130012 },
-      ],
-    },
-    {
-      label: content.CON130013,
-      id: "CON130013",
-      properties: [
-        { id: "CON130014", text: content.CON130014 },
-        { id: "CON130015", text: content.CON130015 },
-        { id: "CON130016", text: content.CON130016 },
-        { id: "CON130017", text: content.CON130017 },
-      ],
-    },
-  ]);
-}, [content]);
+    setSpecData([
+      {
+        label: content.CON130001,
+        id: "CON130001",
+        properties: [
+          { id: "CON130002", text: content.CON130002 },
+          { id: "CON130003", text: content.CON130003 },
+          { id: "CON130004", text: content.CON130004 },
+          { id: "CON130005", text: content.CON130005 },
+          { id: "CON130006", text: content.CON130006 },
+          { id: "CON130007", text: content.CON130007 },
+
+        ],
+      },
+      {
+        label: content.CON130008,
+        id: "CON130008",
+        properties: [
+          { id: "CON130009", text: content.CON130009 },
+          { id: "CON130010", text: content.CON130010 },
+          { id: "CON130011", text: content.CON130011 },
+          { id: "CON130012", text: content.CON130012 },
+        ],
+      },
+      {
+        label: content.CON130013,
+        id: "CON130013",
+        properties: [
+          { id: "CON130014", text: content.CON130014 },
+          { id: "CON130015", text: content.CON130015 },
+          { id: "CON130016", text: content.CON130016 },
+          { id: "CON130017", text: content.CON130017 },
+        ],
+      },
+    ]);
+  }, [content]);
 
 
-  
+
 
   // --------------------------------------------
   // ADD NEW SECTION
@@ -559,212 +559,127 @@ useEffect(() => {
         p: 4,
       }}
     >
+
+
       {/* image and forms */}
       <Box
         sx={{
-          padding: '40px 60px',
-          width: '1441px',
-          height: '796px',
-          '@media (max-width: 600px)': {
-            padding: '20px',
-            width: '100%',
-            height: 'auto',
-          },
+          px: { xs: 2, md: 8 },
+          py: { xs: 4, md: 7 },
+          width: "100%",
+          bgcolor: "#fff",
         }}
       >
-        {/* Image + Form Section */}
+        {/* Image + Content Section */}
         <Box
           sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             gap: 4,
-            justifyContent: 'space-between',
-            '@media (max-width: 600px)': {
-              flexDirection: 'column',
-            },
           }}
         >
-          {/* Left Side: Thumbnails + Main Image */}
+          {/* Left Side: Main Image + Thumbnails */}
           <Box
             sx={{
-              width: '50%',
-              display: 'flex',
-              flexDirection: 'column',
+              flex: { xs: "1 1 100%", md: "1 1 50%" },
+              display: "flex",
+              flexDirection: "column",
               gap: 2,
-              '@media (max-width: 600px)': {
-                width: '100%',
-              },
             }}
           >
             {/* Main Image */}
-            <Box
-              sx={{
-                position: "relative",
-                display: "inline-block",
-                borderRadius: "10px",
-                overflow: "hidden",
-              }}
-            >
-              {/* 🖼️ Image */}
+            <Box sx={{ position: "relative", borderRadius: 2, overflow: "hidden" }}>
               <Box
                 component="img"
                 src={`https://cmsreflux.bexatm.com${content.CON120019}`}
                 alt="Main Lifting Magnet"
                 sx={{
-                  width: "664px",
-                  height: "432px",
-                  borderRadius: "10px",
+                  width: "100%",
+                  height: { xs: "auto", md: 432 },
                   objectFit: "cover",
-                  "@media (max-width: 600px)": {
-                    width: "100%",
-                    height: "auto",
-                  },
+                  borderRadius: 2,
                 }}
               />
-
-              {/* ✏️ Edit Button Overlay */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 8,
-                  right: 8,
-
-                  borderRadius: "50%",
-                }}
-              >
-                <EditIconButton
-                  id="CON120019"
-                  type="I"
-                  isAdmin={isAdmin}
-                  onEdit={handleEdit}
-                />
-              </Box>
+              {isAdmin && (
+                <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+                  <EditIconButton id="CON120019" type="I" isAdmin={isAdmin} onEdit={handleEdit} />
+                </Box>
+              )}
             </Box>
 
-
-            {/* Thumbnails */}
+            {/* Thumbnails Row */}
             <Box
               sx={{
                 display: "flex",
                 gap: 2,
-                flexWrap: "wrap",
-                "@media (max-width: 600px)": {
-                  justifyContent: "center",
-                },
+                flexWrap: "nowrap",
+                overflowX: { xs: "auto", md: "visible" },
+                py: 1,
               }}
             >
-              {[
-                { id: "CON120020", src: content.CON120020 },
-                { id: "CON120021", src: content.CON120021 },
-                { id: "CON120022", src: content.CON120022 },
-                { id: "CON120023", src: content.CON120023 },
-              ].map((thumb, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    position: "relative",
-                    display: "inline-block",
-                    borderRadius: "6px",
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* 🖼️ Thumbnail Image */}
+              {[content.CON120020, content.CON120021, content.CON120022, content.CON120023].map(
+                (thumb, idx) => (
                   <Box
-                    component="img"
-                    src={`https://cmsreflux.bexatm.com${thumb.src}`}
-                    alt={`Thumbnail ${index + 1}`}
-                    onClick={() =>
-                      setMainImage(`https://cmsreflux.bexatm.com${thumb.src}`)
-                    }
+                    key={idx}
                     sx={{
-                      width: "148px",
-                      height: "124px",
-                      borderRadius: "6px",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                      transition: "border 0.2s ease",
-                      "@media (max-width: 600px)": {
-                        width: "30%",
-                        height: "auto",
-                      },
+                      flex: "0 0 auto",
+                      position: "relative",
+                      borderRadius: 1,
+                      overflow: "hidden",
                     }}
-                  />
-
-                  {/* ✏️ Edit Button for Admin */}
-                  {isAdmin && (
+                  >
                     <Box
+                      component="img"
+                      src={`https://cmsreflux.bexatm.com${thumb}`}
+                      alt={`Thumbnail ${idx + 1}`}
+                      onClick={() => setMainImage(`https://cmsreflux.bexatm.com${thumb}`)}
                       sx={{
-                        position: "absolute",
-                        top: 6,
-                        right: 6,
-
-                        borderRadius: "50%",
+                        width: { xs: 100, sm: 120, md: 148 },
+                        height: { xs: 80, sm: 100, md: 124 },
+                        objectFit: "cover",
+                        cursor: "pointer",
+                        borderRadius: 1,
                       }}
-                    >
-                      <EditIconButton id={thumb.id} isAdmin={isAdmin} onEdit={handleEdit} type="I" />
-                    </Box>
-                  )}
-                </Box>
-              ))}
+                    />
+                    {isAdmin && (
+                      <Box sx={{ position: "absolute", top: 4, right: 4 }}>
+                        <EditIconButton id={`CON1200${20 + idx}`} type="I" isAdmin={isAdmin} onEdit={handleEdit} />
+                      </Box>
+                    )}
+                  </Box>
+                )
+              )}
             </Box>
-
           </Box>
 
-          {/* Right Form */}
+          {/* Right Side: Form / Content */}
           <Box
             sx={{
-              width: '600px',
-              height: '394px',
-              display: 'flex',
-              flexDirection: 'column',
+              flex: { xs: "1 1 100%", md: "1 1 45%" },
+              display: "flex",
+              flexDirection: "column",
               gap: 2,
-              '@media (max-width: 600px)': {
-                width: '100%',
-                height: 'auto',
-              },
             }}
           >
-            {/* Title */}
-            <Box
-              sx={{
-                width: "619px",
-                height: "164px",
-                "@media (max-width: 600px)": {
-                  width: "100%",
-                  height: "auto",
-                },
-              }}
-            >
-              {/* --- Title + Edit button in same line --- */}
+            {/* Title + Subtitle */}
+            <Box>
               <Typography
                 variant="h4"
                 sx={{
-                  ...typography.displayL,
                   fontWeight: 700,
                   color: "#18294C",
-                  "@media (max-width: 600px)": {
-                    fontSize: "56px",
-                    width: "100%",
-                  },
+                  fontSize: { xs: "28px", sm: "36px", md: "48px" },
+                  lineHeight: 1.2,
                 }}
               >
                 {content.CON120006}
+                <EditIconButton id="CON120006" />
               </Typography>
-              <EditIconButton id="CON120006" />
-
-              {/* --- Subtitle / Description --- */}
               <Typography
                 sx={{
-                  width: "619px",
-                  height: "78px",
-                  ...typography.h5,
                   color: "#6B7280",
-                  maxWidth: "100%",
-                  marginTop: "20px",
-                  "@media (max-width: 600px)": {
-                    fontSize: "14px",
-                    width: "100%",
-                  },
+                  mt: 2,
+                  fontSize: { xs: "14px", sm: "16px", md: "18px" },
                 }}
               >
                 {content.CON120007}
@@ -772,191 +687,79 @@ useEffect(() => {
               </Typography>
             </Box>
 
-
-            {/* Spec Grid */}
+            {/* Specs Grid */}
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                '@media (max-width: 600px)': {
-                  flexDirection: 'column',
-                  gap: 2,
-                },
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: 2,
               }}
             >
-              {/* Column 1 */}
-              <Box>
-                <Typography
-                  sx={{
-                    color: '#9CA3AF',
-                    fontWeight: 500,
-                    ...typography.h5,
-                  }}
-                >
-                  {content.CON120008}
-                  <EditIconButton id="CON120008" />
-
-                </Typography>
-                <Typography
-                  sx={{
-                    color: '#9CA3AF',
-                    fontWeight: 500,
-                    ...typography.h5,
-                    mt: 1,
-                  }}
-                >
-                  {content.CON120009}
-                  <EditIconButton id="CON120009" />
-
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h4,
-                    color: '#596780',
-                  }}
-                >
-                  {content.CON120010}
-                  <EditIconButton id="CON120010" />
-
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h4,
-                    color: '#596780',
-                  }}
-                >
-                  {content.CON120011}
-                  <EditIconButton id="CON120011" />
-
-                </Typography>
-              </Box>
-
-              {/* Column 2 */}
-              <Box>
-                <Typography
-                  sx={{
-                    color: '#9CA3AF',
-                    fontWeight: 500,
-                    ...typography.h3medium,
-                  }}
-                >
-                  {content.CON120012}
-                  <EditIconButton id="CON120012" />
-
-                </Typography>
-                <Typography
-                  sx={{
-                    color: '#9CA3AF',
-                    fontWeight: 500,
-                    ...typography.h3medium,
-                    mt: 1,
-                  }}
-                >
-                  {content.CON120013}
-                  <EditIconButton id="CON120013" />
-
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h3B1,
-                    color: '#1F2937',
-                  }}
-                >
-                  {content.CON120014}
-                  <EditIconButton id="CON120014" />
-
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h3B1,
-                    color: '#1F2937',
-                  }}
-                >
-                  {content.CON120015}
-                  <EditIconButton id="CON120015" />
-
-                </Typography>
-              </Box>
+              {[content.CON120008, content.CON120010, content.CON120012, content.CON120014].map(
+                (item, idx) => (
+                  <Box key={idx} sx={{ flex: { xs: "1 1 45%", md: "1 1 auto" } }}>
+                    <Typography sx={{ color: "#9CA3AF", fontWeight: 500 }}>
+                      {item}
+                      <EditIconButton id={`CON1200${8 + idx * 2}`} />
+                    </Typography>
+                    <Typography sx={{ fontWeight: 700, mt: 1 }}>
+                      {[content.CON120009, content.CON120011, content.CON120013, content.CON120015][idx]}
+                      <EditIconButton id={`CON1200${9 + idx * 2}`} />
+                    </Typography>
+                  </Box>
+                )
+              )}
             </Box>
 
             {/* Price + Button */}
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
                 mt: 2,
-                '@media (max-width: 600px)': {
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: 2,
-                },
+                flexDirection: { xs: "column", md: "row" },
               }}
             >
-              <Box>
-                <Typography
-                  sx={{
-                    color: '#60A5FA',
-                    fontWeight: 500,
-                    ...typography.h3medium,
-                  }}
-                >
+              {/* Price */}
+              <Box sx={{ flex: { xs: "1 1 100%", md: "0 0 40%" } }}>
+                <Typography sx={{ color: "#60A5FA", fontWeight: 500 }}>
                   {content.CON120016}
                   <EditIconButton id="CON120016" />
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    ...typography.h3B1,
-                    color: '#1F2937',
-                  }}
-                >
+                <Typography sx={{ fontWeight: 700, mt: 1 }}>
                   {content.CON120017}
                   <EditIconButton id="CON120017" />
-
                 </Typography>
               </Box>
 
+              {/* Buy Now Button */}
               <Button
                 variant="contained"
                 sx={{
-                  fontFamily: 'Plus Jakarta Sans-Bold',
-                  backgroundColor: '#3373f3ff',
-                  color: '#ffffff',
-                  px: 15,
-                  ml: 15,
+                  backgroundColor: "#3373f3",
+                  color: "#fff",
+                  px: 6,
                   py: 1.5,
                   fontWeight: 700,
-                  textTransform: 'none',
-                  fontSize: '16px',
-                  boxShadow: '0 4px 14px rgba(51, 115, 243, 0.3)',
-                  '&:hover': {
-                    backgroundColor: '#2563eb',
-                  },
-                  '@media (max-width: 600px)': {
-                    width: '100%',
-                    ml: 0,
-                    px: 0,
-                    justifyContent: 'center',
-                  },
+                  textTransform: "none",
+                  fontSize: { xs: "14px", md: "16px" },
+                  width: { xs: "100%", md: "60%" }, // <-- match button width with price box
+                  justifyContent: "center",
+                  "&:hover": { backgroundColor: "#2563eb" },
                 }}
               >
                 {content.CON120018}
                 <EditIconButton id="CON120018" />
               </Button>
             </Box>
+
           </Box>
         </Box>
       </Box>
+
+
 
 
 

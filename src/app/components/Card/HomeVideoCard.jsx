@@ -294,7 +294,7 @@ const HomeVideoCard = ({
 
 
       {/* 🔹 Foreground Content */}
-      <Box sx={{ position: "relative", width: "1280px", height: "448px", p: 5 }}>
+      <Box sx={{ position: "relative", width: "100%", height: "448px", p: 5 }}>
         <Box
           sx={{
             position: "relative",
@@ -305,7 +305,7 @@ const HomeVideoCard = ({
             height: "479px",
             color: "white",
             textAlign: "left",
-            maxWidth: "828px",
+            maxWidth: "850px",
             mt: 30,
           }}
         >
@@ -512,7 +512,7 @@ const HomeVideoCard = ({
             top: "0%",
             right: "2%",
             width: "370px",
-            height: "570px",
+            height: "600px",
             borderRadius: 1,
             boxShadow: 3,
             zIndex: 2,

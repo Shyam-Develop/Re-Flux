@@ -33,6 +33,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+
+
+
 
 const services = [
   {
@@ -110,7 +118,12 @@ const services = [
 ];
 
 const RoiCalculator = () => {
+
+
+
   const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [content, setContent] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -194,6 +207,145 @@ const RoiCalculator = () => {
     typeof s === "string" && s.trim().length > 2 && !isImagePath(s);
 
   // ---------- robust roiData builder ----------
+
+  const RoiCard = ({ item }) => (
+    <Card
+      id={`ROI_${parseInt(item.imageId.replace("CON", ""))}`}
+      sx={{
+        position: "relative",
+        borderRadius: 3,
+        overflow: "hidden",
+        boxShadow: 3,
+        height: { xs: 300, md: 400 },
+        width: { xs: "100%", md: 558 }, // full width mobile
+      }}
+    >
+      {/* delete button */}
+      {isAdmin && (
+        <IconButton
+          onClick={() => handleDeleteRoiCard(item)}
+          sx={{
+            position: "absolute",
+            top: 12,
+            left: 12,
+            bgcolor: "white",
+            color: "red",
+            "&:hover": { bgcolor: "#ffe5e5" },
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      )}
+      {/* Background Image */}
+      <CardMedia
+        component="img"
+        image={`https://cmsreflux.bexatm.com${item.image}`}
+        alt={item.title}
+        sx={{
+          height: "100%",
+          width: "100%",
+          objectFit: "cover",
+        }}
+      />
+      {/* ✅ Edit Icon visible only for admin */}
+      {isAdmin && (
+        <IconButton
+          onClick={() => handleEdit(item.imageId, "I")}
+          sx={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            bgcolor: "white",
+            color: "black",
+            zIndex: 2, // ✅ ensures it appears above image
+            "&:hover": {
+              bgcolor: "primary.main",
+              color: "white",
+            },
+          }}
+        >
+          <EditIcon type="I" />
+        </IconButton>
+      )}
+
+      {/* Overlay White Card */}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 16,
+          left: 16,
+          right: 16,
+          bgcolor: "white",
+          borderRadius: 2,
+          boxShadow: 1,
+          px: 2,
+          py: 1.5,
+          display: "flex",
+          flexDirection: "column",
+          gap: 0.5,
+          transition: "all 0.3s ease",
+          "&:hover": {
+            bgcolor: "#0b2d55",
+            color: "white",
+            "& .MuiTypography-root": { color: "white" },
+            "& .MuiIconButton-root": {
+              bgcolor: "#4487ebff",
+              color: "white",
+            },
+          },
+        }}
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography
+            variant="subtitle1"
+            fontWeight="bold"
+            sx={{ fontSize: { xs: "18px", md: "24px" } }}
+          >
+            {item.title}
+            {isAdmin && (
+              <EditIconButton
+                id={Object.keys(content).find(
+                  (key) => content[key] === item.title
+                )}
+              />
+            )}
+          </Typography>
+          <IconButton
+            size="small"
+            sx={{
+              backgroundColor: "#f0f0f0",
+              width: { xs: 32, md: 40 },
+              height: { xs: 32, md: 40 },
+            }}
+          >
+            <ArrowForwardIosIcon fontSize="small" onClick={()=>navigate('/repair-replace')} />
+          </IconButton>
+        </Box>
+
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontSize: { xs: "14px", md: "18px" } }}
+        >
+          {item.description}
+          {isAdmin && (
+            <EditIconButton
+              id={Object.keys(content).find(
+                (key) => content[key] === item.description
+              )}
+            />
+          )}
+        </Typography>
+      </Box>
+    </Card>
+  );
+
+
+
   const roiData = (() => {
     if (!content) return [];
 
@@ -407,171 +559,51 @@ const RoiCalculator = () => {
 
           {/* Cards */}
           <Box sx={{ px: { xs: 1, md: 6 }, mb: "5%" }}>
-            <Grid container spacing={3} justifyContent="flex-start">
-              {roiData.map((item, index) => (
-                <Grid
-                  item
-                  key={index}
-                  xs={12} // full width on mobile
-                  sm={6}
-                  md="auto"
-                >
-                  <Card
-                    id={`ROI_${parseInt(item.imageId.replace("CON", ""))}`}
-                    sx={{
-                      position: "relative",
-                      borderRadius: 3,
-                      overflow: "hidden",
-                      boxShadow: 3,
-                      height: { xs: 300, md: 400 },
-                      width: { xs: "100%", md: 558 }, // full width mobile
-                    }}
-                  >
-                    {/* delete button */}
-                    {isAdmin && (
-                      <IconButton
-                        onClick={() => handleDeleteRoiCard(item)}
-                        sx={{
-                          position: "absolute",
-                          top: 12,
-                          left: 12,
-                          bgcolor: "white",
-                          color: "red",
-                          "&:hover": { bgcolor: "#ffe5e5" },
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    )}
-                    {/* Background Image */}
-                    <CardMedia
-                      component="img"
-                      image={`https://cmsreflux.bexatm.com${item.image}`}
-                      alt={item.title}
-                      sx={{
-                        height: "100%",
-                        width: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                    {/* ✅ Edit Icon visible only for admin */}
-                    {isAdmin && (
-                      <IconButton
-                        onClick={() => handleEdit(item.imageId, "I")}
-                        sx={{
-                          position: "absolute",
-                          top: 12,
-                          right: 12,
-                          bgcolor: "white",
-                          color: "black",
-                          zIndex: 2, // ✅ ensures it appears above image
-                          "&:hover": {
-                            bgcolor: "primary.main",
-                            color: "white",
-                          },
-                        }}
-                      >
-                        <EditIcon type="I" />
-                      </IconButton>
-                    )}
-
-                    {/* Overlay White Card */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 16,
-                        left: 16,
-                        right: 16,
-                        bgcolor: "white",
-                        borderRadius: 2,
-                        boxShadow: 1,
-                        px: 2,
-                        py: 1.5,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 0.5,
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          bgcolor: "#0b2d55",
-                          color: "white",
-                          "& .MuiTypography-root": { color: "white" },
-                          "& .MuiIconButton-root": {
-                            bgcolor: "#4487ebff",
-                            color: "white",
-                          },
-                        },
-                      }}
-                    >
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Typography
-                          variant="subtitle1"
-                          fontWeight="bold"
-                          sx={{ fontSize: { xs: "18px", md: "24px" } }}
-                        >
-                          {item.title}
-                          {isAdmin && (
-                            <EditIconButton
-                              id={Object.keys(content).find(
-                                (key) => content[key] === item.title
-                              )}
-                            />
-                          )}
-                        </Typography>
-                        <IconButton
-                          size="small"
-                          sx={{
-                            backgroundColor: "#f0f0f0",
-                            width: { xs: 32, md: 40 },
-                            height: { xs: 32, md: 40 },
-                          }}
-                        >
-                          <ArrowForwardIosIcon fontSize="small" />
-                        </IconButton>
-                      </Box>
-
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ fontSize: { xs: "14px", md: "18px" } }}
-                      >
-                        {item.description}
-                        {isAdmin && (
-                          <EditIconButton
-                            id={Object.keys(content).find(
-                              (key) => content[key] === item.description
-                            )}
-                          />
-                        )}
-                      </Typography>
-                    </Box>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-
-            {isAdmin && (
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#1C2D4B",
-                    color: "#fff",
-                    px: 3,
-                    py: 1,
-                    borderRadius: "10px",
-                    "&:hover": { backgroundColor: "#16233B" },
-                  }}
-                  onClick={handleAddRoiCard}
-                >
-                  <AddIcon /> Add New ROI Card
-                </Button>
-              </Box>
+            {isMobile ? (
+              // 🔵 MOBILE → Swiper
+              <Swiper
+                modules={[Pagination]}
+                slidesPerView={1}
+                spaceBetween={16}
+                pagination={{ type: "progressbar" }}
+              >
+                {roiData.map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <RoiCard item={item} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              // 🟢 DESKTOP → Grid
+              <Grid container spacing={3}>
+                {roiData.map((item, index) => (
+                  <Grid item key={index} xs={12} sm={6} md="auto">
+                    <RoiCard item={item} />
+                  </Grid>
+                ))}
+              </Grid>
             )}
+            <style>
+             {
+               `.swiper {
+                  padding-bottom: 16px;
+                }
+
+                .swiper-pagination-progressbar {
+                  top: auto !important;
+                  bottom: 0 !important;
+                  height: 4px;
+                  background: #e0e0e0;
+                }
+
+                .swiper-pagination-progressbar-fill {
+                  background: #1C2D4B;
+                }
+              `
+             }
+            </style>
           </Box>
+
 
           {/* Rent Calculator Section */}
           <Box>

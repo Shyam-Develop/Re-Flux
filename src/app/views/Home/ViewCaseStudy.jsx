@@ -38,27 +38,14 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import videoFile from "../../../assets/MicrosoftTeams-video.mp4"; // ✅ put your video file here
-import WhatsApp from "../../../assets/whatsappimg.jpg";
-import RepairsectionCard from "app/components/Card/RepairsectionCard";
+
 // import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import serviceimg from "../../../assets/Repairservice.png";
-import before from "../../../assets/beforecstudy.png";
-import after from "../../../assets/aftercstudy.png";
-import Electromagnetrepair from "../../../assets/EletromagnetRepair.png";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import RentServicesCard from "app/components/Card/RentServicesCard";
-import RentingMagnet from "../../../assets/RentingMagnet.png";
-import ResaleServices from "app/components/Card/ResaleServices";
+
 import ROIimage from "../../../assets/ROICalculator.jpg";
 import Brand1 from "../../../assets/Brand1.png";
 import Brand2crea from "../../../assets/Brand2crea.png";
@@ -66,18 +53,7 @@ import Blogs1 from "../../../assets/Blogs1.jpg";
 import Blogs2 from "../../../assets/Blogs2.jpg";
 import Blogs3 from "../../../assets/Blogs3.jpg";
 import Blogs4 from "../../../assets/Blogs4.jpg";
-import casestudy from "../../../assets/Case Study1.png";
-import RepairServicesPageCard from "app/components/Card/RepairServicesPageCard";
-import ProcessCards from "app/components/Card/HowweworkCard";
-import ResalerefurbishedCard from "app/components/Card/Resalerefurbished";
-import realisticillustration from "../../../assets/Realisticillustration.png";
-import Approach1 from "../../../assets/Approach1.png";
-import Approach2 from "../../../assets/Approach2.png";
-import Approach3 from "../../../assets/Approach3.png";
-import Approach4 from "../../../assets/Approach4.png";
-import Approach5 from "../../../assets/Approach5.jpg";
-import Roi1 from "../../../assets/Roi1.png";
-import Roi2 from "../../../assets/Roi2.png";
+
 import Whyitworkcard from "app/components/Card/Whyitworkcard";
 import Whyitworkimg from "../../../assets/whyitworkimg.jpg";
 import Footer from "app/components/Card/Footer";
@@ -1987,86 +1963,7 @@ const ViewCaseStudy = () => {
         <Footer />
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingLeft: "1px",
-          px: { xs: 1, md: 7 },
-          py: { xs: 4, md: 6 },
-          flexDirection: { xs: "column", md: "row" },
-        }}
-      >
-        {/* Left Content */}
-        <Box sx={{ width: 1000, textAlign: { xs: "center", md: "left" } }}>
-          <Typography
-            sx={{
-              fontWeight: 500,
-              fontSize: "20px",
-              color: "#111827",
-              fontFamily: "Space Grotesk, Regular",
-              mb: 1,
-            }}
-          >
-            {content.CON2400009}
-            {isAdmin && <EditIconButton id="CON2400009" type="T" />}
-          </Typography>
-          <Typography
-            sx={{
-              color: "#6b7280",
-              mb: 2,
-              fontWeight: 400,
-              fontSize: "18px",
-              fontFamily: "Fira Sans, Regular",
-            }}
-          >
-            {content.CON2400010}
-            {isAdmin && <EditIconButton id="CON2400010" type="T" />}
-          </Typography>
-          <Link
-            href="#"
-            underline="none"
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              fontWeight: 600,
-              color: "#1d4ed8",
-              fontSize: "18px",
-              fontFamily: "Fira Sans, Semibold",
-              textDecoration: "underline",
-              "&:hover": { textDecoration: "underline" },
-            }}
-          >
-            {content.CON2400011}
-            {isAdmin && <EditIconButton id="CON2400011" type="T" />}
-            <ArrowForwardIcon sx={{ fontSize: 18, ml: 0.5 }} />
-          </Link>
-        </Box>
-
-        {/* Right Button */}
-        <Button
-          variant="contained"
-          sx={{
-            fontFamily: "Space Grotesk, Regular",
-            mt: { xs: 3, md: 0 },
-            backgroundColor: "#a45514",
-            borderRadius: "999px",
-            width: "30%",
-            //   px: 4,
-            //   py: 1.5,
-            fontWeight: 500,
-            fontSize: "20px",
-            textTransform: "none",
-            "&:hover": {
-              backgroundColor: "#6b3b10",
-            },
-          }}
-        >
-          {content.CON2400012}
-          {isAdmin && <EditIconButton id="CON2400012" type="T" />}
-        </Button>
-      </Box>
+    
     </Box>
   );
 };

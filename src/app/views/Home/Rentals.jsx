@@ -17,6 +17,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  InputBase,
   InputAdornment,
   Link,
   AppBar,
@@ -136,6 +137,390 @@ const Rentals = () => {
 
   if (!content) return null;
 
+  function buildRentCards(content) {
+    if (!content) return [];
+
+    const out = [];
+
+    const CARD_MIN = 2000;
+    const CARD_MAX = 2999; // <-- Rent Cards ONLY from 2000–2999
+
+    const allKeys = Object.keys(content)
+      .filter((k) => /^RE\d+$/.test(k))
+      .map((k) => parseInt(k.replace("RE", ""), 10))
+      .sort((a, b) => a - b);
+
+    for (let id of allKeys) {
+      // IGNORE FAQ KEYS
+      if (id < CARD_MIN || id > CARD_MAX) continue;
+
+      // first item of each card (image) must end with 1 e.g. 2001,2011...
+      if (id % 10 !== 1) continue;
+
+      const base = id;
+      const card = {
+        img: content[`RE${base}`],
+        title: content[`RE${base + 1}`],
+        subtitle: content[`RE${base + 2}`],
+        price: content[`RE${base + 3}`],
+        lift: content[`RE${base + 4}`],
+        power: content[`RE${base + 5}`],
+        details: content[`RE${base + 6}`],
+        button: content[`RE${base + 7}`],
+        ids: [
+          `RE${base}`,
+          `RE${base + 1}`,
+          `RE${base + 2}`,
+          `RE${base + 3}`,
+          `RE${base + 4}`,
+          `RE${base + 5}`,
+          `RE${base + 6}`,
+          `RE${base + 7}`,
+        ],
+      };
+
+      out.push(card);
+    }
+
+    return out;
+  }
+
+  const getNextReNumber = () => {
+    const keys = Object.keys(content)
+      .filter((k) => /^RE\d+$/.test(k))
+      .map((k) => Number(k.replace("RE", "")))
+      .filter(num => num >= 2001 && num <= 2999);
+
+    if (!keys.length) return 2001;
+
+    const maxKey = Math.max(...keys);
+    return maxKey - (maxKey % 10) + 11; // next card start ending in 1
+  };
+
+
+
+  const createNewRentCardPayload = () => {
+    const start = getNextReNumber(); // now always 2001, 2009, 2017, etc.
+
+    return {
+      contentId: "C016",
+      newContent: {
+        [`RE${start}`]: "/API/images/RentService.png",
+        [`RE${start + 1}`]: "New Rent Title",
+        [`RE${start + 2}`]: "New Subtitle",
+        [`RE${start + 3}`]: "Price/m*",
+        [`RE${start + 4}`]: "0.0 Tons",
+        [`RE${start + 5}`]: "220V",
+        [`RE${start + 6}`]: "Dimensions",
+        [`RE${start + 7}`]: "Check Availability",
+      },
+    };
+  };
+
+
+  const handleAddRent = async () => {
+    const payload = createNewRentCardPayload();
+
+    try {
+      const response = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        setContent((prev) => ({ ...prev, ...payload.newContent }));
+
+        // scroll to card after reload
+        const newId = Object.keys(payload.newContent)[0];
+        localStorage.setItem("scrollToRent", newId);
+      } else {
+        console.error("FAILED:", result);
+      }
+    } catch (err) {
+      console.error("ERROR:", err);
+    }
+  };
+
+  const renderCard = (p, key) => (
+    <Grid item xs={12} sm={6} md={4} display="flex" key={key} id={`card-${key}`}>
+      <Card
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: 3,
+        }}
+      >
+
+        {/* Image */}
+        <Box sx={{ position: "relative", borderRadius: 2, overflow: "hidden", mb: 2 }}>
+          <CardMedia
+            component="img"
+            image={`https://cmsreflux.bexatm.com${p.img}`}
+            alt={p.title}
+            sx={{
+              height: 220,          // 🔥 FIXED HEIGHT
+              objectFit: "cover",
+            }}
+          />
+
+
+          {/* Chips */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 8,
+              left: 8,
+              display: "flex",
+              gap: 1,
+            }}
+          >
+            <Chip
+              label="🔧 Available for Rent"
+              size="small"
+              sx={{
+                bgcolor: "#1b5e20",
+                color: "white",
+                fontSize: "13px",
+                borderRadius: "1px",
+                height: "24px",
+              }}
+            />
+            <Chip
+              label="🛡️ Safety Tested"
+              size="small"
+              sx={{
+                padding: "10px",
+                bgcolor: "#1976d2",
+                marginLeft: "70px",
+                color: "white",
+                fontSize: "13px",
+                borderRadius: "1px",
+                height: "24px",
+              }}
+            />
+          </Box>
+
+          {/* Edit Icon */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              borderRadius: "50%",
+            }}
+          >
+            <EditIconButton id={p.ids[0]} type="I" />
+            <DeleteIconButton ids={p.ids} />
+          </Box>
+        </Box>
+
+        {/* Card Content */}
+        <CardContent
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            p: 3,
+          }}
+        >
+
+          {/* Top Content */}
+          <Box>
+            {/* Title + Price */}
+            <Box display="flex" justifyContent="space-between" gap={2}>
+              <Box sx={{ flex: 1 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h4,
+                      fontWeight: 700,
+                      lineHeight: 1.2,
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {p.title}
+                  </Typography>
+                  <EditIconButton id={p.ids[1]} />
+                </Box>
+
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h6,
+                      fontWeight: 600,
+                      color: "#00000099",
+                    }}
+                  >
+                    {p.subtitle}
+                  </Typography>
+                  <EditIconButton id={p.ids[2]} />
+                </Box>
+              </Box>
+
+              <Box sx={{ alignItems: "flex-end" }}>
+                <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
+                  Start at
+                </Typography>
+
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <Typography
+                    sx={{
+                      ...typography.h5,
+                      fontWeight: 700,
+                      color: "#1A7B3F",
+                    }}
+                  >
+                    {p.price}
+                  </Typography>
+                  <EditIconButton id={p.ids[3]} />
+                </Box>
+              </Box>
+            </Box>
+
+            {/* Lift + Power */}
+            <Box display="flex" justifyContent="space-between" mt={3}>
+              <Box>
+                <Typography sx={{ color: "#677489" }}>Lift Capacity</Typography>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <Typography sx={{ ...typography.h5, fontWeight: 500 }}>
+                    {p.lift}
+                  </Typography>
+                  <EditIconButton id={p.ids[4]} />
+                </Box>
+              </Box>
+
+              <Box>
+                <Typography sx={{ color: "#677489" }}>Power Supply</Typography>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <Typography sx={{ ...typography.h5, fontWeight: 500 }}>
+                    {p.power}
+                  </Typography>
+                  <EditIconButton id={p.ids[5]} />
+                </Box>
+              </Box>
+            </Box>
+
+            {/* Details */}
+            <Box mt={3}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                <Typography sx={{ color: "#677489" }}>Size Options</Typography>
+                <EditIconButton id={p.ids[6]} />
+              </Box>
+
+              <Typography sx={{ ...typography.h5, fontWeight: 500 }}>
+                {p.details}
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Button sticks to bottom */}
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              mt: "auto",
+              backgroundColor: "#1C2D4B",
+              textTransform: "none",
+              fontWeight: 600,
+              borderRadius: 2,
+              py: 1,
+              "&:hover": { backgroundColor: "#103766" },
+            }}
+          >
+            {p.button}
+            <EditIconButton id={p.ids[7]} />
+          </Button>
+        </CardContent>
+
+      </Card>
+    </Grid>
+  );
+
+
+  // --- Delete button
+  const DeleteIconButton = ({ ids }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleDeleteCard(ids)}   // <-- triggers async deletion
+        sx={{
+          ml: 1,
+          p: 0.5,
+          borderRadius: "50%",
+          backgroundColor: "#ffebee",
+          color: "#c62828",
+          // border: "1px solid #c62828",
+          "&:hover": { backgroundColor: "#ffcdd2" }
+        }}
+      >
+        <DeleteIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+
+  const handleDeleteCard = async (ids) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this Rent's card?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contentId: "C016",
+            keys: ids,
+          }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Rent's Card has been successfully removed.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to delete card.",
+          icon: "error",
+        });
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+      });
+    }
+  };
+
+
   //Blog data
   const blogData = [
     {
@@ -170,10 +555,11 @@ const Rentals = () => {
 
     const out = [];
 
-    // RE FAQs start at RE1026 and end at RE1035
+    // 1. BUILT-IN DEFAULT FAQs (RE1026–RE1035)
     for (let i = 1026; i <= 1035; i += 2) {
       const qId = `RE${i}`;
       const aId = `RE${i + 1}`;
+
       if (content[qId] && content[aId]) {
         out.push({
           qId,
@@ -184,18 +570,21 @@ const Rentals = () => {
       }
     }
 
-    // BLOG ends at RE1054
-    const blogEnd = 1054;
+    // 2. ONLY USER-ADDED FAQ RANGE
+    const FAQ_MIN = 1600;   // 👈 User-added FAQ IDs start here
+    const FAQ_MAX = 1999;   // 👈 End before Rent Cards
 
-    // find additional FAQs added later
     const allKeys = Object.keys(content)
       .filter((k) => /^RE\d+$/.test(k))
       .map((k) => parseInt(k.replace("RE", ""), 10))
       .sort((a, b) => a - b);
 
     for (let i of allKeys) {
-      if (i <= blogEnd) continue; // ignore blogs
-      if (i % 2 === 0) continue; // questions are odd numbered
+      // Keep only valid FAQ range
+      if (i < FAQ_MIN || i > FAQ_MAX) continue;
+
+      // Question must be an odd number
+      if (i % 2 === 0) continue;
 
       const qId = `RE${i}`;
       const aId = `RE${i + 1}`;
@@ -213,25 +602,25 @@ const Rentals = () => {
     return out;
   })();
 
+
+
+
   const handleAddREFaq = async () => {
     if (!content) return alert("Content not loaded");
 
     const existing = Object.keys(content)
-      .filter((k) => /^RE\d+$/.test(k))
-      .map((k) => parseInt(k.replace("RE", ""), 10));
+      .filter((k) => /^RE(1[6-9]\d{2})$/.test(k)) // only 1600–1999
+      .map((k) => Number(k.replace("RE", "")));
 
-    const maxId = Math.max(...existing);
+    const nextQ = existing.length
+      ? Math.max(...existing) + 2
+      : 1601;  // first user FAQ
 
-    let nextQ = maxId + 1;
-    if (nextQ % 2 === 0) nextQ += 1; // ensure odd id for question
     const nextA = nextQ + 1;
 
-    const nextQId = `RE${nextQ}`;
-    const nextAId = `RE${nextA}`;
-
     const newFAQ = {
-      [nextQId]: "New FAQ Question?",
-      [nextAId]: "New FAQ Answer.",
+      [`RE${nextQ}`]: "New FAQ Question?",
+      [`RE${nextA}`]: "New FAQ Answer.",
     };
 
     const res = await fetch(
@@ -249,8 +638,8 @@ const Rentals = () => {
     const result = await res.json();
 
     if (result.success) {
-      localStorage.setItem("scrollToFaqIdRE", nextQId);
-      setTimeout(() => window.location.reload(), 500);
+      localStorage.setItem("scrollToFaqIdRE", `RE${nextQ}`);
+      window.location.reload();
     } else {
       alert("Failed to add RE FAQ.");
     }
@@ -318,53 +707,105 @@ const Rentals = () => {
       {/* AppBar with Diagonal Right Cut */}
       <Box
         sx={{
-          position: "relative",
-          backgroundColor: "#112B55",
-          height: "100px",
-          clipPath: "polygon(0 0, 100% 0, 100% 35%, 95% 100%, 0% 104%)",
-          color: "white",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#18294C", // Dark navy blue
+          padding: "30px 60px",
+          color: "#fff",
+          borderBottomRightRadius: "40px",
+          clipPath: "polygon(0 0, 100% 0, 100% 0%, 95% 100%, 0% 100%)",
         }}
       >
-        <Toolbar sx={{ height: "100%", justifyContent: "space-between" }}>
-          <Typography
-            variant="h5"
+        {/* Left Text */}
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 600,
+            ...typography.h3RBold,
+          }}
+        >
+          {content.RE1001}
+          <EditIconButton id="RE1001" />
+        </Typography>
+
+        {/* Right Search Box */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            borderBottom: "1px solid #ccc",
+            maxWidth: "300px",
+            width: "100%",
+            marginRight: "60px",
+          }}
+        >
+          <InputBase
+            placeholder="Search for a product"
             sx={{
-              ...typography.displayM,
-              color: "#FFFFFF",
-              paddingLeft: "70px",
+              color: "#fff",
+              flex: 1,
+              px: 1,
+              fontSize: "20px",
+              fontWeight: 500,
+              fontFamily: "Space Grotesk, Regular",
+              lineHeight: "1.30",
+              "&::placeholder": {
+                color: "#ccc",
+              },
             }}
+            inputProps={{ "aria-label": "search" }}
+          />
+          <IconButton
+            type="submit"
+            sx={{ color: "#fff", p: "5px" }}
+            aria-label="search"
           >
-            {content.RE1001}
-            <EditIconButton id="RE1001" />
-          </Typography>
-          <Box sx={{ paddingRight: "10%" }}>
-            <TextField
-              variant="standard"
-              placeholder="Search for a product"
-              sx={{ width: 250 }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon sx={{ color: "white" }} />
-                  </InputAdornment>
-                ),
-                disableUnderline: true,
-                sx: {
-                  color: "white",
-                  borderBottom: "1px solid white",
-                },
+            <SearchIcon
+              sx={{
+                width: "40px",
+                height: "40px",
               }}
             />
-          </Box>
-        </Toolbar>
+          </IconButton>
+        </Box>
       </Box>
 
+
+      {/* Rental Card Box */}
       {/* <Box sx={{ maxWidth: '1296px', mx: 'auto' }}> */}
       <Box sx={{}}>
+
         {/* Product grid */}
         <Box sx={{ px: "5%", px: 5, py: 7 }}>
-          {/* Product Cards */}
+
+          {/* Add Button */}
+          {isAdmin && (
+            <Button
+              onClick={handleAddRent}
+              startIcon={<AddIcon />}
+              sx={{
+                float: "right",
+                textTransform: "none",
+                fontWeight: 500,
+                border: "1.5px solid #1a4dab",
+                color: "#1a4dab",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "rgba(26,77,171,0.06)",
+                  borderColor: "#163a82",
+                },
+                borderRadius: "12px",
+                paddingX: "18px",
+              }}
+            >
+              Add New Rent Card
+            </Button>
+          )}
+
           <Grid container spacing={4}>
+
+            {/* First 3 ORIGINAL CARDS */}
             {[
               {
                 img: content.RE1002,
@@ -374,17 +815,8 @@ const Rentals = () => {
                 lift: content.RE1006,
                 power: content.RE1007,
                 details: content.RE1008,
-                button:content.REBTN1,
-                ids: [
-                  "RE1002",
-                  "RE1003",
-                  "RE1004",
-                  "RE1005",
-                  "RE1006",
-                  "RE1007",
-                  "RE1008",
-                  "REBTN1",
-                ],
+                button: content.REBTN1,
+                ids: ["RE1002", "RE1003", "RE1004", "RE1005", "RE1006", "RE1007", "RE1008", "REBTN1"],
               },
               {
                 img: content.RE1009,
@@ -394,17 +826,8 @@ const Rentals = () => {
                 lift: content.RE1013,
                 power: content.RE1014,
                 details: content.RE1015,
-                button:content.REBTN2,
-                ids: [
-                  "RE1009",
-                  "RE1010",
-                  "RE1011",
-                  "RE1012",
-                  "RE1013",
-                  "RE1014",
-                  "RE1015",
-                  "REBTN2",
-                ],
+                button: content.REBTN2,
+                ids: ["RE1009", "RE1010", "RE1011", "RE1012", "RE1013", "RE1014", "RE1015", "REBTN2"],
               },
               {
                 img: content.RE1016,
@@ -414,265 +837,20 @@ const Rentals = () => {
                 lift: content.RE1020,
                 power: content.RE1021,
                 details: content.RE1022,
-                button:content.REBTN3,
-                ids: [
-                  "RE1016",
-                  "RE1017",
-                  "RE1018",
-                  "RE1019",
-                  "RE1020",
-                  "RE1021",
-                  "RE1022",
-                  "REBTN3",
-                ],
+                button: content.REBTN3,
+                ids: ["RE1016", "RE1017", "RE1018", "RE1019", "RE1020", "RE1021", "RE1022", "REBTN3"],
               },
-            ].map((p, idx) => (
-              <Grid item xs={12} sm={6} md={4} key={idx}>
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 2,
-                    position: "relative",
-                    p: 2, // outer padding around card
-                    bgcolor: "#fff",
-                    transition: "all 0.6s ease",
+            ].map((p, idx) => renderCard(p, idx))}
 
-                    // "&:hover": {
-                    //   bgcolor: "#1C2D4B", // or "#1976d2"
-                    //   color: "#fff",
-                    //   cursor: "pointer",
-                    // },
-                  }}
-                >
-                  {/* Image Section */}
-                  <Box
-                    sx={{
-                      position: "relative",
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      mb: 2,
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={`https://cmsreflux.bexatm.com${p.img}`}
-                      alt={p.title}
-                      sx={{
-                        width: "100%",
-                        height: 220,
-                        objectFit: "cover",
-                        borderRadius: 2,
-                        display: "block",
-                      }}
-                    />
+            {/*    DYNAMIC EXTRA RE CARDS (ADDED FROM JSON)*/}
+            {buildRentCards(content).map((p, idx) =>
+              renderCard(p, `extra-${idx}`)
+            )}
 
-                    {/* 🔹 Top-left Chips */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: 8,
-                        left: 8,
-                        display: "flex",
-                        gap: 1,
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <Chip
-                        label="🔧 Available for Rent"
-                        size="small"
-                        sx={{
-                          bgcolor: "#1b5e20",
-                          color: "white",
-                          fontSize: "13px",
-                          borderRadius: "1px",
-                          height: "24px",
-                        }}
-                      />
-                      <Chip
-                        label="🛡️ Safety Tested"
-                        size="small"
-                        sx={{
-                          padding: "10px",
-                          bgcolor: "#1976d2",
-                          marginLeft: "70px",
-                          color: "white",
-                          fontSize: "13px",
-                          borderRadius: "1px",
-                          height: "24px",
-                        }}
-                      />
-                    </Box>
-
-                    {/* 🔹 Edit Icon - bottom right corner of image */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 8,
-                        right: 8,
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <EditIconButton id={p.ids[0]} type="I" />
-                    </Box>
-                  </Box>
-
-                  {/* Card Content */}
-                  <CardContent sx={{ p: 0 }}>
-                    {/* Title & Price */}
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                    >
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.h4,
-                            height: "62px",
-                            fontWeight: 400,
-                            color: "#0B121E",
-                          }}
-                        >
-                          {p.title} <EditIconButton id={p.ids[1]} />
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h6,
-                            fontWeight: 600,
-                            color: "#00000099",
-                          }}
-                        >
-                          {p.subtitle} <EditIconButton id={p.ids[2]} />
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-end",
-                        }}
-                      >
-                        <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
-                          Start at
-                        </Typography>
-
-                        <Typography
-                          sx={{
-                            ...typography.h5,
-                            fontWeight: 700,
-                            color: "#1A7B3F",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 0.5, // spacing between price and edit icon
-                          }}
-                        >
-                          {p.price}
-                          <EditIconButton id={p.ids[3]} />
-                        </Typography>
-                      </Box>
-                      {/* <span style={{color:'red'}}>*</span> */}
-                    </Box>
-
-                    {/* Lift Capacity & Power */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: 3,
-                      }}
-                    >
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.bodyBase,
-                            fontFamily: "Fira Sans",
-                            fontWeight: 400,
-                            color: "#677489",
-                          }}
-                        >
-                          Lift Capacity
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h5,
-                            fontWeight: 500,
-                            color: "#0E1626",
-                          }}
-                        >
-                          {p.lift} <EditIconButton id={p.ids[4]} />
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.bodyBase,
-                            fontFamily: "Fira Sans",
-                            fontWeight: 400,
-                            color: "#677489",
-                          }}
-                        >
-                          Power Supply
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h5,
-                            fontWeight: 500,
-                            color: "#0E1626",
-                          }}
-                        >
-                          {p.power} <EditIconButton id={p.ids[5]} />
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    {/* Details */}
-                    <Box sx={{ mt: 3 }}>
-                      <Typography
-                        sx={{
-                          ...typography.bodyBase,
-                          fontFamily: "Fira Sans",
-                          fontWeight: 400,
-                          color: "#677489",
-                        }}
-                      >
-                        Size Options <EditIconButton id={p.ids[6]} />
-                      </Typography>
-                      <Typography
-                        sx={{
-                          ...typography.h5,
-                          fontWeight: 500,
-                          color: "#0E1626",
-                        }}
-                      >
-                        {p.details}
-                      </Typography>
-                    </Box>
-
-                    {/* Button */}
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      sx={{
-                        mt: 3,
-                        backgroundColor: "#1C2D4B",
-                        color: "white",
-                        textTransform: "none",
-                        fontWeight: 600,
-                        borderRadius: 2,
-                        py: 1,
-                        "&:hover": { backgroundColor: "#103766" },
-                      }}
-                    >
-                      {p.button}
-                      <EditIconButton id={p.ids[7]} />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
           </Grid>
         </Box>
+
+
 
         {/* FAQs Section */}
         <Box sx={{ px: 5, py: 1 }}>

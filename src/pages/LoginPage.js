@@ -25,7 +25,8 @@ export default function LoginPage() {
     return Object.values(temp).every((x) => x === "");
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault(); //IMPORTANT: prevent page reload
     setLoginError("");
 
     if (!validate()) return;
@@ -40,21 +41,6 @@ export default function LoginPage() {
       navigate("/");
     } else {
       setLoginError("Invalid username or password.");
-    }
-  };
-
-  // 🔥 Clear error while typing
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    if (errors.username) {
-      setErrors((prev) => ({ ...prev, username: "" }));
-    }
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    if (errors.password) {
-      setErrors((prev) => ({ ...prev, password: "" }));
     }
   };
 
@@ -85,39 +71,43 @@ export default function LoginPage() {
           </Alert>
         )}
 
-        <TextField
-          fullWidth
-          label="Username"
-          margin="normal"
-          value={username}
-          onChange={handleUsernameChange}
-          error={Boolean(errors.username)}
-          helperText={errors.username}
-        />
+        {/*  FORM START */}
+        <Box component="form" onSubmit={handleLogin}>
+          <TextField
+            fullWidth
+            label="Username"
+            margin="normal"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={Boolean(errors.username)}
+            helperText={errors.username}
+          />
 
-        <TextField
-          fullWidth
-          type="password"
-          label="Password"
-          margin="normal"
-          value={password}
-          onChange={handlePasswordChange}
-          error={Boolean(errors.password)}
-          helperText={errors.password}
-        />
+          <TextField
+            fullWidth
+            type="password"
+            label="Password"
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={Boolean(errors.password)}
+            helperText={errors.password}
+          />
 
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{
-            marginTop: 2,
-            backgroundColor: "#00334E",
-            "&:hover": { backgroundColor: "#001F33" },
-          }}
-          onClick={handleLogin}
-        >
-          Login
-        </Button>
+          <Button
+            type="submit" 
+            variant="contained"
+            fullWidth
+            sx={{
+              marginTop: 2,
+              backgroundColor: "#00334E",
+              "&:hover": { backgroundColor: "#001F33" },
+            }}
+          >
+            Login
+          </Button>
+        </Box>
+        {/* ✅ FORM END */}
       </Paper>
     </Box>
   );
