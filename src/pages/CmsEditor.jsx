@@ -41,6 +41,8 @@ const CmsEditor = () => {
     message: "",
   });
 
+  const [altText, setAltText] = useState("");
+
   // --- Load content from API ---
   const loadContent = async () => {
     try {
@@ -80,7 +82,11 @@ const CmsEditor = () => {
         }
       } else if (contentType === "I") {
         const imagePath = data[contentTextID] || "";
-        if (imagePath) setPreview(`https://cmsreflux.bexatm.com${imagePath}`);
+        if (imagePath) setPreview(`https://refluxmagnets.com${imagePath}`);
+
+        if (data[`${contentTextID}_ALT`]) {
+          setAltText(data[`${contentTextID}_ALT`]);
+        }
       }
     } catch (err) {
       console.error("Error loading content:", err);
@@ -102,12 +108,17 @@ const CmsEditor = () => {
   //const handleChange = (e) => setText(e.target.value);
 
   const handleChange = (e) => {
-    setText(e.target.value);
+    const value = e.target.value;
+
+    // force proper newline format
+    const formatted = value.replace(/\r\n/g, "\n");
+
+    setText(formatted);
 
     if (contentType === "A") {
       setcontentArray((prevData) => {
         const updatedArray = [...prevData[contentArrayID]];
-        updatedArray[contentArrayIndex] = e.target.value;
+        updatedArray[contentArrayIndex] = formatted;
         return {
           ...prevData,
           [contentArrayID]: updatedArray,
@@ -123,6 +134,10 @@ const CmsEditor = () => {
       setImage(file);
       setPreview(URL.createObjectURL(file));
       setText(`/API/images/${file.name}`);
+
+      const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+      const generatedAlt = nameWithoutExt.replace(/[-_]/g, " ");
+      setAltText(generatedAlt);
     }
   };
 
@@ -132,11 +147,22 @@ const CmsEditor = () => {
     setLoading(true);
 
     try {
-      const updatedText =
-        contentType === "A" ? contentArray[contentArrayID] : text;
-      console.log("updatedText", updatedText);
+      let updatedText = text.replace(/\r?\n/g, "\n");
+
+      // ⚠️ If image type and no new image selected, keep existing path
+      if (contentType === "I" && !image) {
+        updatedText = pageData[contentTextID];
+      }
+
+      if (contentType === "A") {
+        updatedText = contentArray[contentArrayID];
+      }
+
+      console.log("Saving main content:", updatedText);
+
+      // 1️⃣ Save text or image path
       const res = await fetch(
-        `https://cmsreflux.bexatm.com/API/ContentManageSysV1.php?contentId=${contentId}`,
+        `https://refluxmagnets.com/API/ContentManageSysV1.php?contentId=${contentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -145,8 +171,8 @@ const CmsEditor = () => {
               contentType === "A"
                 ? contentArrayID
                 : contentType === "S"
-                ? contentArrayID
-                : contentTextID,
+                  ? contentArrayID
+                  : contentTextID,
             cmsText: updatedText,
           }),
         }
@@ -154,15 +180,38 @@ const CmsEditor = () => {
 
       if (!res.ok) throw new Error("Failed to save content");
 
-      // Upload image if needed
+      // 2️⃣ Upload image if selected
       if (contentType === "I" && image) {
         const formData = new FormData();
         formData.append("file", image);
         formData.append("filePath", "/images/");
-        await fetch("https://cmsreflux.bexatm.com/API/ImageUpload.php", {
-          method: "POST",
-          body: formData,
-        });
+
+        await fetch(
+          "https://refluxmagnets.com/API/ImageUpload.php",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+      }
+
+      // 3️⃣ Save ALT text
+      if (contentType === "I") {
+        const altKey = `${contentTextID}_ALT`;
+
+        console.log("Saving ALT:", altKey, altText);
+
+        await fetch(
+          `https://refluxmagnets.com/API/ContentManageSysV1.php?contentId=${contentId}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              cmsTextID: altKey,
+              cmsText: altText || "",
+            }),
+          }
+        );
       }
 
       setAlert({
@@ -170,9 +219,11 @@ const CmsEditor = () => {
         type: "success",
         message: "Content saved successfully!",
       });
+
       setTimeout(() => navigate(-1), 1000);
     } catch (err) {
       console.error("Error saving content:", err);
+
       setAlert({
         open: true,
         type: "error",
@@ -249,31 +300,31 @@ const CmsEditor = () => {
               {(contentType === "T" ||
                 contentType == "A" ||
                 contentType === "S") && (
-                <Fragment>
-                  <Typography
-                    variant="subtitle1"
-                    mb={1}
-                    fontWeight="600"
-                    color="text.secondary"
-                  >
-                    Caption / Text
-                  </Typography>
-                  <TextField
-                    multiline
-                    rows={6}
-                    value={text}
-                    onChange={handleChange}
-                    fullWidth
-                    variant="outlined"
-                    placeholder="Enter your content..."
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: 2,
-                      mb: 3,
-                    }}
-                  />
-                </Fragment>
-              )}
+                  <Fragment>
+                    <Typography
+                      variant="subtitle1"
+                      mb={1}
+                      fontWeight="600"
+                      color="text.secondary"
+                    >
+                      Caption / Text
+                    </Typography>
+                    <TextField
+                      multiline
+                      rows={6}
+                      value={text}
+                      onChange={handleChange}
+                      fullWidth
+                      variant="outlined"
+                      placeholder="Enter your content..."
+                      sx={{
+                        backgroundColor: "#fff",
+                        borderRadius: 2,
+                        mb: 3,
+                      }}
+                    />
+                  </Fragment>
+                )}
 
               {/* --- Image Editor --- */}
               {contentType === "I" && (
@@ -324,6 +375,25 @@ const CmsEditor = () => {
                       onChange={handleImageChange}
                     />
                   </Button>
+                  <Typography>ALT</Typography>
+
+                  <TextField
+                    label="Image Alt Text (SEO)"
+                    value={altText}
+                    onChange={(e) => setAltText(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Enter SEO description for this image"
+                    InputLabelProps={{
+                      sx: { fontSize: "14px" }   // reduce label size
+                    }}
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: 2,
+                      mb: 1,
+                      mt: 2
+                    }}
+                  />
                 </Fragment>
               )}
             </form>

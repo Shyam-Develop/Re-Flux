@@ -82,51 +82,52 @@ export default function ProcessCards() {
   const steps = [
     {
       id: 1,
-      img: `https://cmsreflux.bexatm.com${content.CON190016}`,
+      img: `https://refluxmagnets.com${content.CON190016}`,
       step: content.CON190017,
       title: content.CON190018,
       desc: content.CON190019,
     },
     {
       id: 2,
-      img: `https://cmsreflux.bexatm.com${content.CON190020}`,
+      img: `https://refluxmagnets.com${content.CON190020}`,
       step: content.CON190021,
       title: content.CON190022,
       desc: content.CON190023,
     },
     {
       id: 3,
-      img: `https://cmsreflux.bexatm.com${content.CON190024}`,
+      img: `https://refluxmagnets.com${content.CON190024}`,
       step: content.CON190025,
       title: content.CON190026,
       desc: content.CON190027,
     },
     {
       id: 4,
-      img: `https://cmsreflux.bexatm.com${content.CON190028}`,
+      img: `https://refluxmagnets.com${content.CON190028}`,
       step: content.CON190029,
       title: content.CON190030,
       desc: content.CON190031,
     },
-    {
-      id: 6,
-      img: `https://cmsreflux.bexatm.com${content.CON190036}`,
-      step: content.CON190037,
-      title: content.CON190038,
-      desc: content.CON190039,
-    },
+    
     {
       id: 5,
-      img: `https://cmsreflux.bexatm.com${content.CON190032}`,
+      img: `https://refluxmagnets.com${content.CON190032}`,
       step: content.CON190033,
       title: content.CON190034,
       desc: content.CON190035,
+    },
+    {
+      id: 6,
+      img: `https://refluxmagnets.com${content.CON190036}`,
+      step: content.CON190037,
+      title: content.CON190038,
+      desc: content.CON190039,
     },
   ];
   return (
     <Box
       sx={{
-        width: { xs: "100%", md: "1440px" },
+        width: { xs: "100%", md: "1200px" },
         height: { xs: "auto", md: "750px" },
         mx: "auto",
         p: { xs: 2, md: 0 },
@@ -166,7 +167,7 @@ export default function ProcessCards() {
                 <CardMedia
                   component="img"
                   image={item.img}
-                  alt={item.title}
+                  alt={content?.[`CON1900${16 + index * 4}_ALT`] || item.title}
                   sx={{
                     width: "100%",
                     height: { xs: 200, md: 400 },
@@ -196,7 +197,7 @@ export default function ProcessCards() {
               <CardContent
                 sx={{
                   width: "100%",
-                  height: { xs: "auto", md: 154 },
+                  height: { xs: "auto", md: "auto" },
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",

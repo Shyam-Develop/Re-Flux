@@ -80,7 +80,7 @@ export default function ResalerefurbishedCard() {
       title: content.CON190060,
       size: content.CON190061,
       certified: content.CON190062,
-      imgSrc: `https://cmsreflux.bexatm.com${content.CON190063}`,
+      imgSrc: `https://refluxmagnets.com${content.CON190063}`,
       liftCapacity: content.CON190064,
       powerSupply: content.CON190065,
       included: content.CON190066,
@@ -90,7 +90,7 @@ export default function ResalerefurbishedCard() {
       title: content.CON190067,
       size: content.CON190068,
       certified: content.CON190069,
-      imgSrc: `https://cmsreflux.bexatm.com${content.CON190070}`,
+      imgSrc: `https://refluxmagnets.com${content.CON190070}`,
       liftCapacity: content.CON190071,
       powerSupply: content.CON190072,
       included: content.CON190073,
@@ -100,7 +100,7 @@ export default function ResalerefurbishedCard() {
       title: content.CON190074,
       size: content.CON190075,
       certified: content.CON190076,
-      imgSrc: `https://cmsreflux.bexatm.com${content.CON190077}`,
+      imgSrc: `https://refluxmagnets.com${content.CON190077}`,
       liftCapacity: content.CON190078,
       powerSupply: content.CON190079,
       included: content.CON190080,
@@ -139,8 +139,9 @@ export default function ResalerefurbishedCard() {
         <Typography
           sx={{
             ...typography.displayL,
+            fontWeight:700,
             color: "#1A2438",
-            fontSize: { xs: "20px", md: "32px" },
+            fontSize: { xs: "20px", md: "56px" },
             display: "flex",
             alignItems: "center",
             gap: "4px",
@@ -153,8 +154,9 @@ export default function ResalerefurbishedCard() {
         <Typography
           sx={{
             ...typography.h4,
+            fontWeight:400,
             color: "#99A0AE",
-            fontSize: { xs: "14px", md: "18px" },
+            fontSize: { xs: "14px", md: "24px" },
             display: "flex",
             alignItems: "center",
             gap: "4px",
@@ -241,7 +243,7 @@ export default function ResalerefurbishedCard() {
                 <Box
                   component="img"
                   src={product.imgSrc}
-                  alt={product.title}
+                  alt={content?.[`CON1900${63 + idx * 7}_ALT`] || product.title}
                   sx={{
                     width: "100%",
                     height: { xs: "200px", md: "240px" },

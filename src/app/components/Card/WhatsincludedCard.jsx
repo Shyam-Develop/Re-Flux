@@ -31,20 +31,20 @@ export default function WhatsincludedCard() {
       .catch((err) => console.error("Error loading content:", err));
   }, []);
 
-  // ✅ Detect admin login (for showing Edit icons)
+  // Detect admin login (for showing Edit icons)
   useEffect(() => {
     const role = localStorage.getItem("role");
     setIsAdmin(role === "admin");
   }, []);
 
-  // ✅ Navigate to CMS editor when clicking Edit
+  // Navigate to CMS editor when clicking Edit
   const handleEdit = (contentTextID, type = "T") => {
     navigate(
       `/CmsEditor?contentId=C006&contentTextID=${contentTextID}&contentType=${type}`
     );
   };
 
-  // ✅ Small reusable Edit button
+  // Small reusable Edit button
   const EditIconButton = ({ id, type = "T" }) =>
     isAdmin ? (
       <IconButton
@@ -72,168 +72,109 @@ export default function WhatsincludedCard() {
 
   if (!content) return null;
 
-  // ✅ Build card list from API JSON fields (example keys)
+  // Build card list from API JSON fields (example keys)
   const includedItems = [
-    {
-      title: content.CON600001,
-      desc: content.CON600002,
-      button: content.CON600003,
-      image: content.CON600004,
-    },
-    {
-      title: content.CON600005,
-      desc: content.CON600006,
-      button: content.CON600007,
-      image: content.CON600008,
-    },
-    {
-      title: content.CON600009,
-      desc: content.CON600010,
-      button: content.CON600011,
-      image: content.CON600012,
-    },
-  ];
+  {
+    title: content.CON600001,
+    titleId: "CON600001",
+    desc: content.CON600002,
+    descId: "CON600002",
+    image: content.CON600004,
+    imageId: "CON600004",
+  },
+  {
+    title: content.CON600005,
+    titleId: "CON600005",
+    desc: content.CON600006,
+    descId: "CON600006",
+    image: content.CON600008,
+    imageId: "CON600008",
+  },
+  {
+    title: content.CON600009,
+    titleId: "CON600009",
+    desc: content.CON600010,
+    descId: "CON600010",
+    image: content.CON600012,
+    imageId: "CON600012",
+  },
+];
 
-  return (
-    <Grid container spacing={3}>
-      {includedItems.map((item, index) => {
-        const titleId = `CON60000${index * 4 + 1}`;
-        const descId = `CON60000${index * 4 + 2}`;
-        const buttonId = `CON60000${index * 4 + 3}`;
-        const imageId = `CON60000${index * 4 + 4}`;
-
-        return (
-          <Grid item key={index}>
-            <Card
-              sx={{
-                position: "relative",
-                width: "350px",
-                height: "224px",
-                borderRadius: 3,
-                overflow: "hidden",
-                backgroundColor: "#fff",
-                color: "#1C2D4B",
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                transition: "all 0.35s ease",
-                "&:hover": {
-                  height: "254px",
-                  backgroundColor: "#0b2d55",
-                  color: "#fff",
-                },
-                "&:hover .view-more-btn": {
-                  opacity: 1,
-                  transform: "translateY(0)",
-                },
-                "&:hover .MuiTypography-root": {
-                  color: "#fff !important",
-                },
-              }}
-            >
-              {/* Image or placeholder */}
+return (
+  <Grid container spacing={3}>
+    {includedItems.map((item, index) => (
+      <Grid item key={index}>
+        <Card
+          sx={{
+            position: "relative",
+            width: "350px",
+            height:'100%',
+            borderRadius: 3,
+            backgroundColor: "#fff",
+            color: "#1C2D4B",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            transition: "all 0.35s ease",
+            "&:hover": {
+              backgroundColor: "#0b2d55",
+              color: "#fff",
+            },
+            "&:hover .MuiTypography-root": {
+              color: "#fff !important",
+            },
+          }}
+        >
+          {/* Image */}
+          <Box
+            sx={{
+              width: 48,
+              height: 48,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 4,
+              ml: "30px",
+              mt: "20px",
+            }}
+          >
+            {item.image ? (
               <Box
+                component="img"
+                src={`https://refluxmagnets.com${item.image}`}
+                alt={item.title}
                 sx={{
-                  width: 48,
-                  height: 48,
+                  width: 45,
+                  height: 45,
+                  border: "1px solid gray",
+                  padding: "5px",
+                  objectFit: "cover",
                   borderRadius: "50%",
-                 
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mb: 4,
-                  marginLeft: "20px",
-                  marginTop: "10px",
                 }}
-              >
-                {item.image ? (
-                  <Box
-                    component="img"
-                    src={`https://cmsreflux.bexatm.com${item.image}`}
-                    alt={item.title}
-                    sx={{
-                      width: "45px",
-                      height: "45px",
-                      border: "1px solid gray",
-                      padding: "5px",
-                      objectFit: "cover",
-                      borderRadius: "50%",
-                    }}
-                  />
-                ) : (
-                  <Typography variant="body2">No Img</Typography>
-                )}
-                <EditIconButton id={imageId} type="I" />
-              </Box>
+              />
+            ) : (
+              <Typography variant="body2">No Img</Typography>
+            )}
+            <EditIconButton id={item.imageId} type="I" />
+          </Box>
 
-              {/* Title & Description */}
-              <CardContent sx={{ pt: 0 }}>
-                <Typography
-                  sx={{ ...typography.h3, fontWeight: 600, fontSize: "28px" }}
-                >
-                  {item.title}
-                  <EditIconButton id={titleId} />
-                </Typography>
-                <Typography sx={{ ...typography.bodyBase }} variant="body2">
-                  {item.desc}
-                  <EditIconButton id={descId} />
-                </Typography>
-              </CardContent>
+          {/* Title & Description */}
+          <CardContent sx={{ pt: 0 }}>
+            <Typography
+              sx={{ ...typography.h3, fontWeight: 600, fontSize: "28px" }}
+            >
+              {item.title}
+              <EditIconButton id={item.titleId} />
+            </Typography>
 
-              {/* Button inside layout */}
-              <Box
-                className="view-more-btn"
-                sx={{
-                  px: 3,
-                  pb: 2,
-                  opacity: 0,
-                  transform: "translateY(10px)",
-                  transition: "all 0.35s ease",
-                  paddingLeft: "50px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{
-                    borderRadius: "24px",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    bgcolor: "#C97833",
-                    width: "90%",
-                    padding: "10px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 1,
-                    transition: "background-color 0.3s ease",
-                    "&:hover": {
-                      bgcolor: "#b2652a",
-                      "& .arrow-icon": {
-                        opacity: 1,
-                        transform: "translateX(4px)",
-                      },
-                    },
-                  }}
-                >
-                  {item.button || "View More"}
-                  <EditIconButton id={buttonId} />
-                  <ArrowRightAltIcon
-                    className="arrow-icon"
-                    sx={{
-                      fontSize: 22,
-                      opacity: 0,
-                      transform: "translateX(0)",
-                      transition: "all 0.3s ease",
-                    }}
-                  />
-                </Button>
-              </Box>
-            </Card>
-          </Grid>
-        );
-      })}
-    </Grid>
-  );
+            <Typography sx={{ ...typography.bodyBase }} variant="body2">
+              {item.desc}
+              <EditIconButton id={item.descId} />
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    ))}
+  </Grid>
+);
+
 }

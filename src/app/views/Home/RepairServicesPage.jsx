@@ -286,7 +286,7 @@ const RepairServicesPage = () => {
 
     try {
       const res = await fetch(
-        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        "https://refluxmagnets.com/API/data/DeleteContentV1.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -411,48 +411,231 @@ const RepairServicesPage = () => {
   const baseNumber = 150000;
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100vh",
-        // position: "relative",
-        // overflow: "hidden",
-      }}
-    >
-      {/* Background Image */}
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 1200,
+          mx: "auto",
+          //height: "100vh",
+          // position: "relative",
+          // overflow: "hidden",
+        }}
+      >
+        {/* Background Image */}
 
-      <Box sx={topImageStyle}>
-        <img
-          src={`https://cmsreflux.bexatm.com${content.CON190000}`}
-          alt="Top Banner"
-          style={imageStyle}
-        />
-        {isAdmin && (
-          <IconButton
-            size="small"
-            onClick={() => handleEdit("CON190000", "I")}
+        <Box sx={topImageStyle}>
+          <img
+            src={`https://refluxmagnets.com${content.CON190000}`}
+            alt={content.CON190000_ALT}
+            style={imageStyle}
+          />
+          {isAdmin && (
+            <IconButton
+              size="small"
+              onClick={() => handleEdit("CON190000", "I")}
+              sx={{
+                position: "absolute",
+                bottom: 8,
+                right: 8,
+                bgcolor: "white",
+                color: "black",
+                "&:hover": { bgcolor: "primary.main", color: "white" },
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          )}
+
+          <Box sx={overlayBoxStyle}>
+            <Typography
+              sx={{ ...typography.h3, color: "#000000", fontWeight: 600 }}
+            >
+              {content.CON190001}
+              {isAdmin && (
+                <IconButton
+                  size="small"
+                  onClick={() => handleEdit("CON190001")}
+                  sx={{
+                    ml: 1,
+                    p: 0.5,
+                    borderRadius: "50%",
+                    backgroundColor: "#f0f0f0",
+                    color: "#1C2D4B",
+                    border: "1px solid #ccc",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                      color: "#070808ff",
+                      //borderColor: "#214870",
+                    },
+                    verticalAlign: "middle",
+                  }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              )}
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Content Section */}
+        <Box
+          sx={{
+            px: { xs: 2, sm: 4, md: 15 },   // ✅ responsive padding
+            py: { xs: 4, sm: 6, md: 7.5 },
+            backgroundColor: "#fff",
+            maxWidth: "100%",
+          }}
+        >
+          {/* Title */}
+          <Typography
             sx={{
-              position: "absolute",
-              bottom: 8,
-              right: 8,
-              bgcolor: "white",
-              color: "black",
-              "&:hover": { bgcolor: "primary.main", color: "white" },
+              fontSize: { xs: "28px", sm: "32px", md: "40px" },
+              fontWeight: 700,
+              lineHeight: { xs: "36px", md: "44px" },
+              color: "#1A2438",
+              fontFamily: "Space Grotesk, Regular",
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 1,
+              ...typography.h1,
             }}
           >
-            <EditIcon fontSize="small" />
-          </IconButton>
-        )}
-
-        <Box sx={overlayBoxStyle}>
-          <Typography
-            sx={{ ...typography.h3, color: "#000000", fontWeight: 600 }}
-          >
-            {content.CON190001}
+            {content.CON190002}
             {isAdmin && (
               <IconButton
                 size="small"
-                onClick={() => handleEdit("CON190001")}
+                onClick={() => handleEdit("CON190002")}
+                sx={{
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                  },
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Typography>
+
+          {/* Description */}
+          <Typography
+            sx={{
+              fontSize: { xs: "16px", md: "18px" },
+              lineHeight: "160%",
+              color: "#99A0AE",
+              mt: 2,
+              fontFamily: "Fira Sans, Regular",
+              ...typography.bodyBase,
+            }}
+          >
+            {content.CON190003}
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190003")}
+                sx={{
+                  ml: 1,
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                  },
+                  verticalAlign: "middle",
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Typography>
+
+          {/* Link */}
+          <Typography
+            sx={{
+              fontSize: { xs: "16px", md: "18px" },
+              fontWeight: 600,
+              color: "#2F6FBA",
+              mt: 2,
+              fontFamily: "Fira Sans",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              flexWrap: "wrap",
+              ...typography.bodyStrong,
+            }}
+          >
+            <Link href="#" sx={{ textDecoration: "underline" }}>
+              {content.CON190004}
+            </Link>
+
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190004")}
+                sx={{
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  "&:hover": {
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                  },
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Typography>
+        </Box>
+
+
+        {/* Fault section */}
+
+        <Box
+          sx={{
+            bgcolor: "white",
+            p: 4,
+            ml: 4,
+
+            // ✅ Mobile adjustments
+            "@media (max-width: 900px)": {
+              p: 2,
+              ml: 0,
+              textAlign: "center",
+            },
+          }}
+        >
+          {/* Section Heading */}
+          <Typography
+            sx={{
+              ...typography.displayM,
+              color: "#0E1109",
+              fontWeight: 600,
+              fontFamily: "Space Grotesk, Regular",
+
+              "@media (max-width: 900px)": {
+                fontSize: "1.5rem",
+              },
+            }}
+          >
+            {content.CON190005}
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190005")}
                 sx={{
                   ml: 1,
                   p: 0.5,
@@ -473,360 +656,139 @@ const RepairServicesPage = () => {
               </IconButton>
             )}
           </Typography>
-        </Box>
-      </Box>
 
-      {/* Content Section */}
-      <Box
-        sx={{
-          px: { xs: 2, sm: 4, md: 15 },   // ✅ responsive padding
-          py: { xs: 4, sm: 6, md: 7.5 },
-          backgroundColor: "#fff",
-          maxWidth: "100%",
-        }}
-      >
-        {/* Title */}
-        <Typography
-          sx={{
-            fontSize: { xs: "28px", sm: "32px", md: "40px" },
-            fontWeight: 700,
-            lineHeight: { xs: "36px", md: "44px" },
-            color: "#1A2438",
-            fontFamily: "Space Grotesk, Regular",
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 1,
-            ...typography.h1,
-          }}
-        >
-          {content.CON190002}
-          {isAdmin && (
-            <IconButton
-              size="small"
-              onClick={() => handleEdit("CON190002")}
-              sx={{
-                p: 0.5,
-                borderRadius: "50%",
-                backgroundColor: "#f0f0f0",
-                color: "#1C2D4B",
-                border: "1px solid #ccc",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0",
-                  color: "#070808ff",
-                },
-              }}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          )}
-        </Typography>
+          {/* Sub Text */}
+          <Typography
+            sx={{
+              ...typography.h4,
+              mb: 2,
+              color: "#677489",
+              fontSize: "24px",
 
-        {/* Description */}
-        <Typography
-          sx={{
-            fontSize: { xs: "16px", md: "18px" },
-            lineHeight: "160%",
-            color: "#99A0AE",
-            mt: 2,
-            fontFamily: "Fira Sans, Regular",
-            ...typography.bodyBase,
-          }}
-        >
-          {content.CON190003}
-          {isAdmin && (
-            <IconButton
-              size="small"
-              onClick={() => handleEdit("CON190003")}
-              sx={{
-                ml: 1,
-                p: 0.5,
-                borderRadius: "50%",
-                backgroundColor: "#f0f0f0",
-                color: "#1C2D4B",
-                border: "1px solid #ccc",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0",
-                  color: "#070808ff",
-                },
-                verticalAlign: "middle",
-              }}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          )}
-        </Typography>
-
-        {/* Link */}
-        <Typography
-          sx={{
-            fontSize: { xs: "16px", md: "18px" },
-            fontWeight: 600,
-            color: "#2F6FBA",
-            mt: 2,
-            fontFamily: "Fira Sans",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            flexWrap: "wrap",
-            ...typography.bodyStrong,
-          }}
-        >
-          <Link href="#" sx={{ textDecoration: "underline" }}>
-            {content.CON190004}
-          </Link>
-
-          {isAdmin && (
-            <IconButton
-              size="small"
-              onClick={() => handleEdit("CON190004")}
-              sx={{
-                p: 0.5,
-                borderRadius: "50%",
-                backgroundColor: "#f0f0f0",
-                color: "#1C2D4B",
-                border: "1px solid #ccc",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0",
-                  color: "#070808ff",
-                },
-              }}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          )}
-        </Typography>
-      </Box>
-
-
-      {/* Fault section */}
-
-      <Box
-        sx={{
-          bgcolor: "white",
-          p: 4,
-          ml: 4,
-
-          // ✅ Mobile adjustments
-          "@media (max-width: 900px)": {
-            p: 2,
-            ml: 0,
-            textAlign: "center",
-          },
-        }}
-      >
-        {/* Section Heading */}
-        <Typography
-          sx={{
-            ...typography.displayM,
-            color: "#0E1109",
-            fontWeight: 600,
-            fontFamily: "Space Grotesk, Regular",
-
-            "@media (max-width: 900px)": {
-              fontSize: "1.5rem",
-            },
-          }}
-        >
-          {content.CON190005}
-          {isAdmin && (
-            <IconButton
-              size="small"
-              onClick={() => handleEdit("CON190005")}
-              sx={{
-                ml: 1,
-                p: 0.5,
-                borderRadius: "50%",
-                backgroundColor: "#f0f0f0",
-                color: "#1C2D4B",
-                border: "1px solid #ccc",
-                transition: "all 0.2s ease",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0",
-                  color: "#070808ff",
-                  //borderColor: "#214870",
-                },
-                verticalAlign: "middle",
-              }}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          )}
-        </Typography>
-
-        {/* Sub Text */}
-        <Typography
-          sx={{
-            ...typography.h4,
-            mb: 2,
-            color: "#677489",
-            fontSize: "24px",
-
-            "@media (max-width: 900px)": {
-              fontSize: "16px",
-              px: 1,
-            },
-          }}
-        >
-          {content.CON190006}
-          {isAdmin && (
-            <IconButton
-              size="small"
-              onClick={() => handleEdit("CON190006")}
-              sx={{
-                ml: 1,
-                p: 0.5,
-                borderRadius: "50%",
-                backgroundColor: "#f0f0f0",
-                color: "#1C2D4B",
-                border: "1px solid #ccc",
-                transition: "all 0.2s ease",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0",
-                  color: "#070808ff",
-                  //borderColor: "#214870",
-                },
-                verticalAlign: "middle",
-              }}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-          )}
-        </Typography>
-
-        {/* Chips Section */}
-        <Stack
-          direction="row"
-          flexWrap="wrap"
-          gap={2}
-          sx={{
-            mb: 3,
-            width: "1280px",
-            height: "100px",
-
-            "@media (max-width: 900px)": {
-              width: "100%",
-              height: "auto",
-              justifyContent: "center",
-              gap: 1.5,
-            },
-          }}
-        >
-          {content.CON190007.map((item, index) => (
-            <Box key={index} position="relative">
-              <Chip
-                label={item}
-                variant="outlined"
+              "@media (max-width: 900px)": {
+                fontSize: "16px",
+                px: 1,
+              },
+            }}
+          >
+            {content.CON190006}
+            {isAdmin && (
+              <IconButton
+                size="small"
+                onClick={() => handleEdit("CON190006")}
                 sx={{
-                  fontSize: "20px",
-                  fontWeight: 500,
-                  fontFamily: "Space Grotesk, Regular",
-                  borderRadius: "20px",
-                  px: 1.5,
-                  py: 0.5,
+                  ml: 1,
+                  p: 0.5,
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  color: "#1C2D4B",
+                  border: "1px solid #ccc",
+                  transition: "all 0.2s ease",
                   "&:hover": {
-                    bgcolor: "#1c2434",
-                    color: "white",
+                    backgroundColor: "#e0e0e0",
+                    color: "#070808ff",
+                    //borderColor: "#214870",
                   },
-                  "@media (max-width: 900px)": {
-                    fontSize: "14px",
-                    px: 1,
-                    py: 0.3,
-                  },
+                  verticalAlign: "middle",
                 }}
-              />
-              {isAdmin && (
-                <IconButton
-                  size="small"
-                  onClick={() => handleEdit(`CON190007[${index}]`, "A")}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Typography>
+
+          {/* Chips Section */}
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            gap={2}
+            sx={{
+              mb: 3,
+              //width: "1200px",
+              height: "auto",
+
+              "@media (max-width: 900px)": {
+                width: "100%",
+                height: "auto",
+                justifyContent: "center",
+                gap: 1.5,
+              },
+            }}
+          >
+            {content.CON190007.map((item, index) => (
+              <Box key={index} position="relative">
+                <Chip
+                  label={item}
+                  variant="outlined"
                   sx={{
-                    position: "absolute",
-                    top: -8,
-                    right: -8,
-                    color: "black",
-                    bgcolor: "white",
-                    "&:hover": { bgcolor: "#eee" },
+                    height: '42px',
+                    ...typography.h5,
+                    color: '#6B768A',
+                    fontSize: "20px",
+                    fontWeight: 500,
+                    fontFamily: "Space Grotesk, Regular",
+                    borderRadius: "20px",
+                    px: 1.5,
+                    py: 0.5,
+                    "&:hover": {
+                      bgcolor: "#1c2434",
+                      color: "white",
+                    },
+                    "@media (max-width: 900px)": {
+                      fontSize: "14px",
+                      px: 1,
+                      py: 0.3,
+                    },
                   }}
-                >
-                  <EditIcon fontSize="inherit" />
-                </IconButton>
-              )}
-            </Box>
-          ))}
-        </Stack>
-        {/* Highlight Button */}
-        <Button
-          variant="contained"
-          sx={{
-            bgcolor: "#b45309",
-            "&:hover": { bgcolor: "#92400e" },
-            borderRadius: "20px",
-            fontFamily: "Fira Sans, Regular",
-            fontSize: "18px",
-            fontWeight: 600,
-            textTransform: "none",
+                />
+                {isAdmin && (
+                  <IconButton
+                    size="small"
+                    onClick={() => handleEdit(`CON190007[${index}]`, "A")}
+                    sx={{
+                      position: "absolute",
+                      top: -8,
+                      right: -8,
+                      color: "black",
+                      bgcolor: "white",
+                      "&:hover": { bgcolor: "#eee" },
+                    }}
+                  >
+                    <EditIcon fontSize="inherit" />
+                  </IconButton>
+                )}
+              </Box>
+            ))}
+          </Stack>
+          {/* Highlight Button */}
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#b45309",
+              "&:hover": { bgcolor: "#92400e" },
+              borderRadius: "20px",
+              fontFamily: "Fira Sans, Regular",
+              fontSize: "18px",
+              fontWeight: 600,
+              textTransform: "none",
 
-            "@media (max-width: 900px)": {
-              width: "100%",
-              fontSize: "10px",
-              paddingTop: "10px",
-              paddingBottom: "10px",
-            },
-          }}
-          onClick={() => handleClickOpen()}
-        >
-          <span style={{ textDecoration: "underline" }}>
-            {content.CON190008}
-            <EditIconButton id="CON190008" />
-          </span>{" "}
-          {content.CON190009}
-          <EditIconButton id="CON190009" />
-        </Button>
-      </Box>
-
-      <Divider
-        sx={{
-          borderColor: "#131414ff",
-          bgcolor: "#131414ff",
-        }}
-      />
-
-      {/* Scope Of Work */}
-      <Box
-        sx={{
-          p: 4,
-          ml: 2,
-        }}
-      >
-        {/* Section Heading */}
-        <Typography
-          sx={{
-            color: "#1c2434",
-            fontWeight: 600,
-            fontFamily: "Space Grotesk, Regular",
-            fontSize: "48px",
-            // lineHeight: "110px"
-          }}
-        >
-          {content.CON190010}
-          <EditIconButton id="CON190010" />
-        </Typography>
-
-        {/* Sub Text */}
-        <Typography
-          sx={{
-            fontFamily: "Space Grotesk Regular",
-            fontWeight: 400,
-            mb: 2,
-            color: "text.secondary",
-            fontSize: "24px",
-          }}
-        >
-          {content.CON190011}
-          <EditIconButton id="CON190011" />
-        </Typography>
-
-        <RepairServicesPageCard />
+              "@media (max-width: 900px)": {
+                width: "100%",
+                fontSize: "10px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+              },
+            }}
+            onClick={() => handleClickOpen()}
+          >
+            <span style={{ textDecoration: "underline" }}>
+              {content.CON190008}
+              <EditIconButton id="CON190008" />
+            </span>{" "}
+            {content.CON190009}
+            <EditIconButton id="CON190009" />
+          </Button>
+        </Box>
 
         <Divider
           sx={{
@@ -834,876 +796,917 @@ const RepairServicesPage = () => {
             bgcolor: "#131414ff",
           }}
         />
-      </Box>
 
-      {/* How We Work section*/}
-      <Box>
-        <Typography
-          // variant="h5"
-          // fontWeight="bold"
-          sx={{
-            ml: 6,
-            color: "#1c2434",
-            fontWeight: 600,
-            fontFamily: "Space Grotesk, Regular",
-            fontSize: "48px",
-
-            // lineHeight: "110px"
-          }}
-        >
-          {content.CON190013}
-          <EditIconButton id="CON190013" />
-        </Typography>
-
-        {/* Sub Text */}
-        <Typography
-          sx={{
-            ml: 6,
-            fontFamily: "Space Grotesk Regular",
-            fontWeight: 400,
-            // lineHeight: "130px",
-            mb: 2,
-            color: "text.secondary",
-            fontSize: "24px",
-          }}
-        >
-          {content.CON190014}
-          <EditIconButton id="CON190014" />
-        </Typography>
-        <ProcessCards />
-      </Box>
-
-      {/*ElectroMagnet Repair Section */}
-
-      <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            color: "#1c2434",
-            ml: { xs: 2, md: 5 },
-            fontWeight: 600,
-            fontFamily: "Space Grotesk, Regular",
-            fontSize: { xs: "28px", md: "48px" },
-            mt: { xs: 3, md: 0 },
-          }}
-        >
-          {content.CON140000}
-          {isAdmin && <EditIconButton id="CON140000" />}
-        </Typography>
-
-        {/* Main Container */}
+        {/* Scope Of Work */}
         <Box
           sx={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            border: "1px solid #ddd",
-            borderRadius: 3,
-            px: isMobile ? 2 : 4,
-            py: isMobile ? 3 : 4,
-            gap: 6,
-            width: "100%",
-            bgcolor: "white",
+            p: 4,
+            ml: 2,
           }}
         >
-          {/* Left - Timeline */}
-          <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
-            {/* Vertical Line */}
-            {!isMobile && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  bottom: 0,
-                  left: "10px",
-                  width: "2px",
-                  bgcolor: "#ccc",
-                  borderRadius: 1,
-                }}
-              />
-            )}
-
-            {features.map((item, index) => {
-              const isActive = hoveredIndex === index;
-
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    mb: 4,
-                    cursor: "pointer",
-                    position: "relative",
-                  }}
-                  onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
-                  onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
-                >
-                  {/* Active Line */}
-                  {!isMobile && isActive && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        left: "10px",
-                        width: "2px",
-                        bgcolor: "#1976d2",
-                        height: "100%",
-                        borderRadius: 1,
-                      }}
-                    />
-                  )}
-
-                  {/* Icon + Text */}
-                  <Box sx={{ ml: 4 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                      <CalendarMonthIcon
-                        sx={{
-                          fontSize: 20,
-                          color: isActive ? "#1976d2" : "#666",
-                          mr: 1,
-                          transition: "0.3s",
-                        }}
-                      />
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          ...typography.h3B1,
-                          fontWeight: 400,
-                          color: isActive ? "#1976d2" : "#1c2434",
-                          transition: "0.3s",
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      {isAdmin && <EditIconButton id={item.ids.title} />}
-                    </Box>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        ...typography.bodyBasemedium,
-                        fontWeight: 400,
-                        transition: "0.3s",
-                        ml: 4,
-                      }}
-                    >
-                      {item.desc}
-                      {isAdmin && <EditIconButton id={item.ids.desc} />}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-
-          {/* Right - Image */}
-          <Box
+          {/* Section Heading */}
+          <Typography
             sx={{
-              flex: 1,
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              mt: isMobile ? 2 : 0,
-              position: "relative",
+              color: "#1c2434",
+              fontWeight: 600,
+              fontFamily: "Space Grotesk, Regular",
+              fontSize: "48px",
+              // lineHeight: "110px"
             }}
           >
-            <Box
-              component="img"
-              src={`https://cmsreflux.bexatm.com${features[hoveredIndex].image}`}
-              alt="ElectroMagnet Repair"
-              sx={{
-                width: "570px",
-                height: "530px",
-                maxWidth: isMobile ? "100%" : 600,
-                objectFit: "cover",
-                borderRadius: 3,
-                transition: "0.5s",
-              }}
-            />
-            {isAdmin && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 10,
-                  right: 30,
-                  borderRadius: "50%",
-                }}
-              >
-                <EditIconButton
-                  id={features[hoveredIndex].ids.image}
-                  type="I"
+            {content.CON190010}
+            <EditIconButton id="CON190010" />
+          </Typography>
+
+          {/* Sub Text */}
+          <Typography
+            sx={{
+              fontFamily: "Space Grotesk Regular",
+              fontWeight: 400,
+              mb: 2,
+              color: "text.secondary",
+              fontSize: "24px",
+            }}
+          >
+            {content.CON190011}
+            <EditIconButton id="CON190011" />
+          </Typography>
+
+          <RepairServicesPageCard />
+
+          <Divider
+            sx={{
+              borderColor: "#131414ff",
+              bgcolor: "#131414ff",
+            }}
+          />
+        </Box>
+
+        {/* How We Work section*/}
+        <Box>
+          <Typography
+            // variant="h5"
+            // fontWeight="bold"
+            sx={{
+              ml: 6,
+              color: "#1c2434",
+              fontWeight: 600,
+              fontFamily: "Space Grotesk, Regular",
+              fontSize: "48px",
+
+              // lineHeight: "110px"
+            }}
+          >
+            {content.CON190013}
+            <EditIconButton id="CON190013" />
+          </Typography>
+
+          {/* Sub Text */}
+          <Typography
+            sx={{
+              ml: 6,
+              fontFamily: "Space Grotesk Regular",
+              fontWeight: 400,
+              // lineHeight: "130px",
+              mb: 2,
+              color: "text.secondary",
+              fontSize: "24px",
+            }}
+          >
+            {content.CON190014}
+            <EditIconButton id="CON190014" />
+          </Typography>
+          <ProcessCards />
+        </Box>
+
+        {/*ElectroMagnet Repair Section */}
+
+        <Box sx={{ px: isMobile ? 2 : 5, py: isMobile ? 4 : 8 }}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "#1c2434",
+              ml: { xs: 2, md: 5 },
+              fontWeight: 600,
+              fontFamily: "Space Grotesk, Regular",
+              fontSize: { xs: "28px", md: "48px" },
+              mt: { xs: 3, md: 0 },
+            }}
+          >
+            {content.CON140000}
+            {isAdmin && <EditIconButton id="CON140000" />}
+          </Typography>
+
+          {/* Main Container */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              border: "1px solid #ddd",
+              borderRadius: 3,
+              px: isMobile ? 2 : 4,
+              py: isMobile ? 3 : 4,
+              gap: 6,
+              width: "100%",
+              bgcolor: "white",
+            }}
+          >
+            {/* Left - Timeline */}
+            <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+              {/* Vertical Line */}
+              {!isMobile && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    left: "10px",
+                    width: "2px",
+                    bgcolor: "#ccc",
+                    borderRadius: 1,
+                  }}
                 />
-              </Box>
-            )}
+              )}
+
+              {features.map((item, index) => {
+                const isActive = hoveredIndex === index;
+
+                return (
+                  <Box
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      mb: 4,
+                      cursor: "pointer",
+                      position: "relative",
+                    }}
+                    onMouseEnter={() => !isMobile && setHoveredIndex(index)} // only hover on desktop
+                    onClick={() => isMobile && setHoveredIndex(index)} // click on mobile
+                  >
+                    {/* Active Line */}
+                    {!isMobile && isActive && (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          left: "10px",
+                          width: "2px",
+                          bgcolor: "#1976d2",
+                          height: "100%",
+                          borderRadius: 1,
+                        }}
+                      />
+                    )}
+
+                    {/* Icon + Text */}
+                    <Box sx={{ ml: 4 }}>
+                      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                        <CalendarMonthIcon
+                          sx={{
+                            fontSize: 20,
+                            color: isActive ? "#1976d2" : "#666",
+                            mr: 1,
+                            transition: "0.3s",
+                          }}
+                        />
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            ...typography.h3B1,
+                            fontWeight: 400,
+                            color: isActive ? "#1976d2" : "#1c2434",
+                            transition: "0.3s",
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        {isAdmin && <EditIconButton id={item.ids.title} />}
+                      </Box>
+
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          ...typography.bodyBasemedium,
+                          fontWeight: 400,
+                          transition: "0.3s",
+                          ml: 4,
+                        }}
+                      >
+                        {item.desc}
+                        {isAdmin && <EditIconButton id={item.ids.desc} />}
+                      </Typography>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
+
+            {/* Right - Image */}
+            <Box
+              sx={{
+                flex: 1,
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                mt: isMobile ? 2 : 0,
+                position: "relative",
+              }}
+            >
+              <Box
+                component="img"
+                src={`https://refluxmagnets.com${features[hoveredIndex].image}`}
+                alt={content?.[`${features[hoveredIndex].ids.image}_ALT`] || features[hoveredIndex].title}
+                sx={{
+                  width: "570px",
+                  height: "530px",
+                  maxWidth: isMobile ? "100%" : 600,
+                  objectFit: "cover",
+                  borderRadius: 3,
+                  transition: "0.5s",
+                }}
+              />
+              {isAdmin && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    right: 30,
+                    borderRadius: "50%",
+                  }}
+                >
+                  <EditIconButton
+                    id={features[hoveredIndex].ids.image}
+                    type="I"
+                  />
+                </Box>
+              )}
+            </Box>
           </Box>
         </Box>
-      </Box>
 
-      {/* Before and After Case Studies */}
-      <Box
-        sx={{
-          px: { xs: 2, md: 8 },
-          py: { xs: 4, md: 8 },
-          backgroundColor: "#fff",
-        }}
-      >
-        {/* Title Section */}
-        <Typography
-          variant="h4"
+        {/* Before and After Case Studies */}
+        <Box
           sx={{
-            ...typography.displayM,
-            fontWeight: 600,
-            fontSize: { xs: "1.5rem", md: "2rem" },
-            color: "#1c2434",
-            mb: 1,
+            px: { xs: 2, md: 8 },
+            py: { xs: 4, md: 8 },
+            backgroundColor: "#fff",
           }}
         >
-          {content.CON190015}
-          <EditIconButton id="CON190015" />
-        </Typography>
-
-        <Box sx={{ ml: 15, mt: 4 }}>
+          {/* Title Section */}
           <Typography
-            variant="h6"
+            variant="h4"
             sx={{
-              ...typography.h2,
+              ...typography.displayM,
               fontWeight: 600,
-              fontSize: { xs: "1.2rem", md: "1.5rem" },
+              fontSize: { xs: "1.5rem", md: "48px" },
               color: "#1c2434",
               mb: 1,
             }}
           >
-            {content.CON190016}
-            <EditIconButton id="CON190016" />
+            {content.CON190015}
+            <EditIconButton id="CON190015" />
           </Typography>
 
-          <Typography
-            variant="body2"
-            sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
-          >
-            {content.CON190017}
-            <EditIconButton id="CON190017" />
-          </Typography>
-        </Box>
-
-        {/* Images and Arrows */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            gap: 3,
-            mt: 5,
-            flexWrap: "wrap",
-          }}
-        >
-          {/* BEFORE IMAGE (Lower) + LEFT ARROW (Outside border) */}
-          <Box
-            sx={{
-              position: "relative",
-              width: isMobile ? "100%" : "500px",
-              mt: isMobile ? 2 : 8,
-              overflow: "visible",
-            }}
-          >
-            <IconButton
-              sx={{
-                position: "absolute",
-                left: isMobile ? "-15px" : "-25px", // Push arrow outside
-                top: "50%",
-                transform: "translateY(-50%)",
-                bgcolor: "#1c2434",
-                color: "#fff",
-                zIndex: 2,
-                "&:hover": { bgcolor: "#344050" },
-              }}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-            <Box
-              component="img"
-              src={`https://cmsreflux.bexatm.com${content.CON190019}`}
-              alt="Before"
-              sx={{
-                width: "100%",
-                height: "auto",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
-            {isAdmin && (
-              <IconButton
-                size="small"
-                onClick={() => handleEdit("CON190019", "I")}
-                sx={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  backgroundColor: "#f0f0f0",
-                  color: "#1C2D4B",
-                  border: "1px solid #ccc",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#e0e0e0",
-                    color: "#070808ff",
-                    //borderColor: "#214870",
-                  },
-                }}
-              >
-                <EditIcon fontSize="small" />
-              </IconButton>
-            )}
-          </Box>
-
-          {/* AFTER IMAGE (Higher) + RIGHT ARROW (Outside border) */}
-          <Box
-            sx={{
-              position: "relative",
-              width: isMobile ? "100%" : "500px",
-              mt: isMobile ? 2 : 0,
-              overflow: "visible",
-            }}
-          >
-            <IconButton
-              sx={{
-                position: "absolute",
-                right: isMobile ? "-15px" : "-25px", // Push arrow outside
-                top: "50%",
-                transform: "translateY(-50%)",
-                bgcolor: "#1c2434",
-                color: "#fff",
-                zIndex: 2,
-                "&:hover": { bgcolor: "#344050" },
-              }}
-            >
-              <ArrowForwardIcon />
-            </IconButton>
-            <Box
-              component="img"
-              src={`https://cmsreflux.bexatm.com${content.CON190018}`}
-              alt="After"
-              sx={{
-                width: "100%",
-                height: "auto",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
-            {isAdmin && (
-              <IconButton
-                size="small"
-                onClick={() => handleEdit("CON190018", "I")}
-                sx={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  backgroundColor: "#f0f0f0",
-                  color: "#1C2D4B",
-                  border: "1px solid #ccc",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#e0e0e0",
-                    color: "#070808ff",
-                    //borderColor: "#214870",
-                  },
-                }}
-              >
-                <EditIcon fontSize="small" />
-              </IconButton>
-            )}
-          </Box>
-        </Box>
-
-        {/* Button */}
-        <Box sx={{ textAlign: "center", mt: 4 }}>
-          <Button
-            onClick={() => navigate("/home/ViewCaseStudy")}
-            variant="contained"
-            sx={{
-              backgroundColor: "#b3570d",
-              borderRadius: "24px",
-              textTransform: "none",
-              fontWeight: 500,
-              px: 3,
-              py: 1,
-              fontSize: "14px",
-              "&:hover": {
-                backgroundColor: "#944708",
-              },
-            }}
-          >
-            {content.CON190020}
-            <EditIconButton id="CON190020" />
-          </Button>
-        </Box>
-      </Box>
-
-
-
-      {/* Resale Refurbished Section */}
-
-      <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
-        <ResalerefurbishedCard />
-        <Box sx={{ mt: 2, textAlign: "right" }}>
-          <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
-
-            {/* Clickable text */}
+          <Box sx={{ ml: 15, mt: 4 }}>
             <Typography
-              component="a"
-              onClick={() => navigate("/home/SellMagnet")}
-              sx={{
-                ...typography.h3,
-                color: "#2F6FBA",
-                fontWeight: 600,
-                fontSize: "28px",
-                textDecoration: "underline",
-                textUnderlineOffset: "4px",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                cursor: "pointer",
-              }}
-            >
-              {content.CON140099}
-              <ArrowRightAltIcon sx={{ fontSize: "2rem" }} />
-            </Typography>
-
-            {/* Edit icon — separate click */}
-            <EditIconButton id="CON140099" />
-
-          </Box>
-        </Box>
-
-      </Box>
-
-      {/* FAQs Section */}
-      <Box
-        sx={{
-          mt: 3,
-        }}
-      >
-        <Button
-          disableElevation
-          disableRipple
-          sx={{
-            ...typography.bodySmall,
-            marginBottom: 2,
-            ml: 8,
-            textTransform: "none",
-            fontWeight: 400,
-            color: "#1a4dab",
-            backgroundColor: "rgba(36,121,233,0.08)",
-            borderRadius: "20px",
-            px: 2,
-            py: 0.5,
-            boxShadow: "none",
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)",
-              boxShadow: "none",
-            },
-          }}
-        >
-          {content.CON150000}
-          {isAdmin && <EditIconButton id="CON150000" />}
-        </Button>
-        <Typography
-          sx={{
-            ...typography.h3RB,
-            fontWeight: 700,
-            ml: 8,
-            // mt: 5
-          }}
-        //   variant="h3"
-        //   fontWeight="bold"
-        //   gutterBottom
-        >
-          {content.CON140013}
-          {isAdmin && <EditIconButton id="CON140013" />}
-        </Typography>
-        <Typography
-          //   variant="h5"
-          sx={{
-            ...typography.h3B1,
-            fontWeight: 400,
-            color: "text.secondary",
-            ml: 8,
-          }}
-        >
-          {content.CON140014}
-          {isAdmin && <EditIconButton id="CON140014" />}
-        </Typography>
-        <Box sx={{ px: 8, py: 3 }}>
-          {faqData.map((item, index) => (
-            <Accordion
-              key={index}
-              id={item.qId} // ← REQUIRED for scrolling!
-              expanded={expanded === index}
-              onChange={() => handleChange(index)}
-              disableGutters
-              elevation={0}
-              sx={{
-                backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-                borderRadius: 2,
-                mb: 1,
-                px: 2,
-              }}
-            >
-              <AccordionSummary
-                expandIcon={
-                  <IconButton>
-                    {expanded === index ? (
-                      <RemoveIcon sx={{ color: "#1976d2" }} />
-                    ) : (
-                      <AddIcon sx={{ color: "#1976d2" }} />
-                    )}
-                  </IconButton>
-                }
-              >
-                <Typography
-                  sx={{
-                    ...typography.h3B1,
-                    fontWeight: 400,
-                  }}
-                //  fontWeight="bold"
-                >
-                  {item.question}
-                  {isAdmin && (
-                    <>
-                      <EditIconButton id={item.qId} />
-
-                      {/* Delete BOTH question + answer */}
-                      <IconButton
-                        size="small"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteFAQ(item.qId, item.aId);
-                        }}
-                        sx={{
-                          color: "#B71C1C",
-                          "&:hover": { backgroundColor: "#fbe9e7" },
-                        }}
-                      >
-                        <DeleteIcon fontSize="small" />
-                      </IconButton>
-                    </>
-                  )}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography
-                  sx={{
-                    ...typography.bodyBase,
-                    fontWeight: 400,
-                  }}
-                  color="text.secondary"
-                >
-                  {item.answer}
-                  {isAdmin && (
-                    <>
-                      <EditIconButton id={item.aId} />
-                    </>
-                  )}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-          {/* ✅ Add New FAQ Button (Admin only) */}
-          {isAdmin && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mt: 3,
-              }}
-            >
-              <Button
-                onClick={async () => {
-                  try {
-                    // 1️⃣ Get the current maximum CON ID in FAQ section
-                    const existingIds = Object.keys(content)
-                      .filter((k) => k.startsWith("CON150"))
-                      .map((k) => parseInt(k.replace("CON", ""), 10));
-
-                    const maxId = Math.max(...existingIds);
-                    const nextQId = `CON${String(maxId + 1).padStart(6, "0")}`;
-                    const nextAId = `CON${String(maxId + 2).padStart(6, "0")}`;
-
-                    // 2️⃣ Prepare new FAQ entries
-                    const newFAQ = {
-                      [nextQId]: "New FAQ Question?",
-                      [nextAId]: "New FAQ Answer.",
-                    };
-
-                    // 3️⃣ Save to backend
-                    const res = await fetch(
-                      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
-                      {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          contentId: "RepairServicesPage", // ✅ your JSON file
-                          newContent: newFAQ,
-                        }),
-                      }
-                    );
-
-                    const result = await res.json();
-                    console.log("Add FAQ result:", result);
-
-                    if (result.success) {
-                      // 4️⃣ Store target for smooth scroll after reload
-                      localStorage.setItem("scrollToFaqId", nextQId);
-
-                      // Reload after small delay
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 800);
-                    } else {
-                      alert(
-                        "❌ Failed to add FAQ. Check permissions or backend path."
-                      );
-                    }
-                  } catch (err) {
-                    console.error("Error adding FAQ:", err);
-                  }
-                }}
-                variant="contained"
-                sx={{
-                  backgroundColor: "#1C2D4B",
-                  color: "#fff",
-                  px: 3,
-                  py: 1,
-                  borderRadius: "10px",
-                  fontSize: "15px",
-                  textTransform: "none",
-                  fontWeight: 500,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  "&:hover": { backgroundColor: "#16233B" },
-                }}
-              >
-                <AddIcon />
-                Add New FAQ
-              </Button>
-            </Box>
-          )}
-        </Box>
-      </Box>
-
-      {/* Footer Section */}
-      <Box>
-        <Footer />
-      </Box>
-
-      <BrowseDialog open={open} onClose={() => setOpen(false)} />
-
-      <Dialog
-        open={BrowseDialogopen}
-        onClose={handledialogClose}
-        maxWidth="sm"
-        fullWidth
-        sx={{
-          "& .MuiDialog-paper": {
-            borderRadius: "16px",
-            height: "100vh", // 👈 fixed height
-            maxHeight: "100vh", // 👈 prevent overflow beyond screen
-          },
-        }}
-      >
-        <DialogContent>
-          {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-          <CardContent>
-            <Typography
-              sx={{
-                textAlign: "left",
-              }}
               variant="h6"
-              gutterBottom
-            >
-              Tell us what you need
-            </Typography>
-            <Typography
-              //  variant="h6"
               sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                color: "#111",
+                ...typography.h2,
+                fontWeight: 600,
+                fontSize: { xs: "1.2rem", md: "32px" },
+                color: "#1c2434",
+                mb: 1,
               }}
             >
-              Company Name *
+              {content.CON190016}
+              <EditIconButton id="CON190016" />
             </Typography>
-            <TextField
-              placeholder="Ex: John"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-            />
 
             <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                marginTop: 2,
-              }}
+              variant="body2"
+              sx={{ color: "#99A0AE", mb: 4, ...typography.bodyBase }}
             >
-              Contact Person *
+              {content.CON190017}
+              <EditIconButton id="CON190017" />
             </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-            />
+          </Box>
 
-            <Typography
+          {/* Images and Arrows */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              gap: 3,
+              mt: 5,
+              flexWrap: "wrap",
+            }}
+          >
+            {/* BEFORE IMAGE (Lower) + LEFT ARROW (Outside border) */}
+            <Box
               sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                marginTop: 2,
+                position: "relative",
+                width: isMobile ? "100%" : "500px",
+                mt: isMobile ? 2 : 8,
+                overflow: "visible",
               }}
             >
-              Phone *
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-            />
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-
-                color: "#111",
-                marginTop: 2,
-              }}
-            >
-              Email *
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              name="name"
-              id="name"
-            />
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                marginTop: 2,
-              }}
-            >
-              Enquiry for *
-            </Typography>
-            <FormControl fullWidth>
-              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  left: isMobile ? "-15px" : "-25px", // Push arrow outside
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  bgcolor: "#1c2434",
+                  color: "#fff",
+                  zIndex: 2,
+                  "&:hover": { bgcolor: "#344050" },
+                }}
               >
-                <MenuItem value={10}>1-5</MenuItem>
-                <MenuItem value={20}>6-10</MenuItem>
-                <MenuItem value={30}>10-20</MenuItem>
-                <MenuItem
-                  //  sx={{
-                  //   color: theme.palette.primary.contrastText
-                  // }}
-                  value={30}
+                <ArrowBackIcon />
+              </IconButton>
+              <Box
+                component="img"
+                src={`https://refluxmagnets.com${content.CON190019}`}
+                alt={content.CON190019_ALT}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+              {isAdmin && (
+                <IconButton
+                  size="small"
+                  onClick={() => handleEdit("CON190019", "I")}
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    backgroundColor: "#f0f0f0",
+                    color: "#1C2D4B",
+                    border: "1px solid #ccc",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                      color: "#070808ff",
+                      //borderColor: "#214870",
+                    },
+                  }}
                 >
-                  20+
-                </MenuItem>
-              </Select>
-            </FormControl>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              )}
+            </Box>
 
-            <Typography
+            {/* AFTER IMAGE (Higher) + RIGHT ARROW (Outside border) */}
+            <Box
               sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                // marginTop: 5,
+                position: "relative",
+                width: isMobile ? "100%" : "500px",
+                mt: isMobile ? 2 : 0,
+                overflow: "visible",
               }}
             >
-              Message
-            </Typography>
-            <TextField
-              placeholder="example@gmail.com"
-              variant="outlined"
-              fullWidth
-              multiline
-              minRows={3}
-              name="name"
-              id="name"
-            />
-            <Typography
-              sx={{
-                textAlign: "left",
-                fontSize: "15px",
-                // ...typography.h6,
-                // fontWeight: 500,
-                color: "#111",
-                // color: theme.palette.primary.contrastText
-                // marginTop: 5,
-              }}
-            >
-              Photos/Videos
-            </Typography>
-            <UploadBox />
-          </CardContent>
-          {/* Buttons */}
-          <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  right: isMobile ? "-15px" : "-25px", // Push arrow outside
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  bgcolor: "#1c2434",
+                  color: "#fff",
+                  zIndex: 2,
+                  "&:hover": { bgcolor: "#344050" },
+                }}
+              >
+                <ArrowForwardIcon />
+              </IconButton>
+              <Box
+                component="img"
+                src={`https://refluxmagnets.com${content.CON190018}`}
+                alt={content.CON190018_ALT}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+              {isAdmin && (
+                <IconButton
+                  size="small"
+                  onClick={() => handleEdit("CON190018", "I")}
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    backgroundColor: "#f0f0f0",
+                    color: "#1C2D4B",
+                    border: "1px solid #ccc",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                      color: "#070808ff",
+                      //borderColor: "#214870",
+                    },
+                  }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              )}
+            </Box>
+          </Box>
+
+          {/* Button */}
+          <Box sx={{ textAlign: "center", mt: 4 }}>
             <Button
-              variant="text"
-              startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+              onClick={() => navigate("/home/ViewCaseStudy")}
+              variant="contained"
               sx={{
-                color: "black", // text color
-                textTransform: "none", // keep normal text
+                backgroundColor: "#b3570d",
+                borderRadius: "24px",
+                textTransform: "none",
                 fontWeight: 500,
+                px: 3,
+                py: 1,
                 fontSize: "14px",
                 "&:hover": {
-                  backgroundColor: "transparent", // no hover background
+                  backgroundColor: "#944708",
                 },
               }}
             >
-              Send on WhatsApp
-            </Button>
-            <Button fullWidth variant="contained" color="primary">
-              Submit Message
+              {content.CON190020}
+              <EditIconButton id="CON190020" />
             </Button>
           </Box>
+        </Box>
 
-          <Box mt={2}>
-            <Button fullWidth variant="outlined">
-              Continue to details
-            </Button>
+
+
+        {/* Resale Refurbished Section */}
+
+        <Box sx={{ px: { xs: 2, md: 0 }, mt: 4 }}>
+          <ResalerefurbishedCard />
+          <Box sx={{ mt: 2, textAlign: "right" }}>
+            <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+
+              {/* Clickable text */}
+              <Typography
+                component="a"
+                onClick={() => navigate("/home/SellMagnet")}
+                sx={{
+                  ...typography.h3,
+                  color: "#2F6FBA",
+                  fontWeight: 600,
+                  fontSize: "28px",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "4px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  cursor: "pointer",
+                }}
+              >
+                {content.CON140099}
+                <ArrowRightAltIcon sx={{ fontSize: "2rem" }} />
+              </Typography>
+
+              {/* Edit icon — separate click */}
+              <EditIconButton id="CON140099" />
+
+            </Box>
           </Box>
-          {/* </Card> */}
-        </DialogContent>
-      </Dialog>
 
-      {/* <Dialog
+        </Box>
+
+        {/* FAQs Section */}
+        <Box
+          sx={{
+            mt: 3,
+          }}
+        >
+          <Button
+            disableElevation
+            disableRipple
+            sx={{
+              ...typography.bodySmall,
+              marginBottom: 2,
+              ml: 8,
+              textTransform: "none",
+              fontWeight: 400,
+              color: "#1a4dab",
+              backgroundColor: "rgba(36,121,233,0.08)",
+              borderRadius: "20px",
+              px: 2,
+              py: 0.5,
+              boxShadow: "none",
+              "&:hover": {
+                backgroundColor: "rgba(36,121,233,0.15)",
+                boxShadow: "none",
+              },
+            }}
+          >
+            {content.CON150000}
+            {isAdmin && <EditIconButton id="CON150000" />}
+          </Button>
+          <Typography
+            sx={{
+              ...typography.h3RB,
+              fontWeight: 700,
+              ml: 8,
+              // mt: 5
+            }}
+          //   variant="h3"
+          //   fontWeight="bold"
+          //   gutterBottom
+          >
+            {content.CON140013}
+            {isAdmin && <EditIconButton id="CON140013" />}
+          </Typography>
+          <Typography
+            //   variant="h5"
+            sx={{
+              ...typography.h3B1,
+              fontWeight: 400,
+              color: "text.secondary",
+              ml: 8,
+            }}
+          >
+            {content.CON140014}
+            {isAdmin && <EditIconButton id="CON140014" />}
+          </Typography>
+          <Box sx={{ px: 8, py: 3 }}>
+            {faqData.map((item, index) => (
+              <Accordion
+                key={index}
+                id={item.qId} // ← REQUIRED for scrolling!
+                expanded={expanded === index}
+                onChange={() => handleChange(index)}
+                disableGutters
+                elevation={0}
+                sx={{
+                  backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
+                  borderRadius: 2,
+                  mb: 1,
+                  px: 2,
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={
+                    <IconButton>
+                      {expanded === index ? (
+                        <RemoveIcon sx={{ color: "#1976d2" }} />
+                      ) : (
+                        <AddIcon sx={{ color: "#1976d2" }} />
+                      )}
+                    </IconButton>
+                  }
+                >
+                  <Typography
+                    sx={{
+                      ...typography.h3B1,
+                      fontWeight: 400,
+                    }}
+                  //  fontWeight="bold"
+                  >
+                    {item.question}
+                    {isAdmin && (
+                      <>
+                        <EditIconButton id={item.qId} />
+
+                        {/* Delete BOTH question + answer */}
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteFAQ(item.qId, item.aId);
+                          }}
+                          sx={{
+                            color: "#B71C1C",
+                            "&:hover": { backgroundColor: "#fbe9e7" },
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </>
+                    )}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    sx={{
+                      ...typography.bodyBase,
+                      fontWeight: 400,
+                    }}
+                    color="text.secondary"
+                  >
+                    {item.answer}
+                    {isAdmin && (
+                      <>
+                        <EditIconButton id={item.aId} />
+                      </>
+                    )}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+            {/* ✅ Add New FAQ Button (Admin only) */}
+            {isAdmin && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: 3,
+                }}
+              >
+                <Button
+                  onClick={async () => {
+                    try {
+                      // 1️⃣ Get the current maximum CON ID in FAQ section
+                      const existingIds = Object.keys(content)
+                        .filter((k) => k.startsWith("CON150"))
+                        .map((k) => parseInt(k.replace("CON", ""), 10));
+
+                      const maxId = Math.max(...existingIds);
+                      const nextQId = `CON${String(maxId + 1).padStart(6, "0")}`;
+                      const nextAId = `CON${String(maxId + 2).padStart(6, "0")}`;
+
+                      // 2️⃣ Prepare new FAQ entries
+                      const newFAQ = {
+                        [nextQId]: "New FAQ Question?",
+                        [nextAId]: "New FAQ Answer.",
+                      };
+
+                      // 3️⃣ Save to backend
+                      const res = await fetch(
+                        "https://refluxmagnets.com/API/data/UpdateContentV1.php",
+                        {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            contentId: "RepairServicesPage", // ✅ your JSON file
+                            newContent: newFAQ,
+                          }),
+                        }
+                      );
+
+                      const result = await res.json();
+                      console.log("Add FAQ result:", result);
+
+                      if (result.success) {
+                        // 4️⃣ Store target for smooth scroll after reload
+                        localStorage.setItem("scrollToFaqId", nextQId);
+
+                        // Reload after small delay
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 800);
+                      } else {
+                        alert(
+                          "❌ Failed to add FAQ. Check permissions or backend path."
+                        );
+                      }
+                    } catch (err) {
+                      console.error("Error adding FAQ:", err);
+                    }
+                  }}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#1C2D4B",
+                    color: "#fff",
+                    px: 3,
+                    py: 1,
+                    borderRadius: "10px",
+                    fontSize: "15px",
+                    textTransform: "none",
+                    fontWeight: 500,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    "&:hover": { backgroundColor: "#16233B" },
+                  }}
+                >
+                  <AddIcon />
+                  Add New FAQ
+                </Button>
+              </Box>
+            )}
+          </Box>
+        </Box>
+
+
+
+        <BrowseDialog open={open} onClose={() => setOpen(false)} />
+
+        <Dialog
+          open={BrowseDialogopen}
+          onClose={handledialogClose}
+          maxWidth="sm"
+          fullWidth
+          sx={{
+            "& .MuiDialog-paper": {
+              borderRadius: "16px",
+              height: "100vh", // 👈 fixed height
+              maxHeight: "100vh", // 👈 prevent overflow beyond screen
+            },
+          }}
+        >
+          <DialogContent>
+            {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
+            <CardContent>
+              <Typography
+                sx={{
+                  textAlign: "left",
+                }}
+                variant="h6"
+                gutterBottom
+              >
+                Tell us what you need
+              </Typography>
+              <Typography
+                //  variant="h6"
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  color: "#111",
+                }}
+              >
+                Company Name
+              </Typography>
+              <TextField
+                placeholder="Ex: John"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+              />
+
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  marginTop: 2,
+                }}
+              >
+                Contact Person
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+              />
+
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  marginTop: 2,
+                }}
+              >
+                Phone
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+              />
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+
+                  color: "#111",
+                  marginTop: 2,
+                }}
+              >
+                Email
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                name="name"
+                id="name"
+              />
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  marginTop: 2,
+                }}
+              >
+                Enquiry for
+              </Typography>
+              <FormControl fullWidth>
+                {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                >
+                  <MenuItem value={10}>1-5</MenuItem>
+                  <MenuItem value={20}>6-10</MenuItem>
+                  <MenuItem value={30}>10-20</MenuItem>
+                  <MenuItem
+                    //  sx={{
+                    //   color: theme.palette.primary.contrastText
+                    // }}
+                    value={30}
+                  >
+                    20+
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  // marginTop: 5,
+                }}
+              >
+                Message
+              </Typography>
+              <TextField
+                placeholder="example@gmail.com"
+                variant="outlined"
+                fullWidth
+                multiline
+                minRows={3}
+                name="name"
+                id="name"
+              />
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  fontSize: "15px",
+                  // ...typography.h6,
+                  // fontWeight: 500,
+                  color: "#111",
+                  // color: theme.palette.primary.contrastText
+                  // marginTop: 5,
+                }}
+              >
+                Photos/Videos
+              </Typography>
+              <UploadBox />
+            </CardContent>
+            {/* Buttons */}
+            <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+              <Button
+                variant="text"
+                startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
+                sx={{
+                  color: "black", // text color
+                  textTransform: "none", // keep normal text
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  "&:hover": {
+                    backgroundColor: "transparent", // no hover background
+                  },
+                }}
+              >
+                Send on WhatsApp
+              </Button>
+              <Button fullWidth variant="contained" color="primary">
+                Submit Message
+              </Button>
+            </Box>
+
+            <Box mt={2}>
+              <Button fullWidth variant="outlined">
+                Continue to details
+              </Button>
+            </Box>
+            {/* </Card> */}
+          </DialogContent>
+        </Dialog>
+
+        {/* <Dialog
         open={BrowseDialogopen}
         onClose={handledialogClose}
         maxWidth="sm" 
@@ -1718,7 +1721,7 @@ const RepairServicesPage = () => {
       >
         <DialogContent>
           {/* <Card sx={{ textAlign: "center", p: 3 }}> */}
-      {/* <CardContent>
+        {/* <CardContent>
             <Typography
               sx={{
                 textAlign: "left",
@@ -1823,8 +1826,8 @@ const RepairServicesPage = () => {
               Enquiry for *
             </Typography>
             <FormControl fullWidth> */}
-      {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-      {/* <Select
+        {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+        {/* <Select
 
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -1895,8 +1898,8 @@ const RepairServicesPage = () => {
             <UploadBox />
 
           </CardContent> */}
-      {/* Buttons */}
-      {/* <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
+        {/* Buttons */}
+        {/* <Box mt={3} display="flex" flexDirection={"column"} gap={2}>
             <Button
               variant="text"
               startIcon={<WhatsAppIcon sx={{ color: "#25D366" }} />}
@@ -1926,10 +1929,15 @@ const RepairServicesPage = () => {
               Continue to details
             </Button>
           </Box> */}
-      {/* </Card> 
+        {/* </Card> 
         </DialogContent>
       </Dialog> */}
-    </Box>
+      </Box>
+      {/* Footer Section */}
+      <Box>
+        <Footer />
+      </Box>
+    </>
   );
 };
 

@@ -192,619 +192,623 @@ const RepairReplace = () => {
 
 
   return (
-    <Box
-      display="grid"
-      gap="20px"
-      gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-      sx={{
-        "& > div": {
-          gridColumn: isNonMobile ? undefined : "span 4",
-        },
-        padding: "10px",
-      }}
-    >
+    <>
+      <Box
+        display="grid"
+        gap="20px"
+        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+        sx={{
+          "& > div": {
+            gridColumn: isNonMobile ? undefined : "span 4",
+          },
+          padding: "10px",
+          width: "100%",
+          maxWidth: 1200,
+          mx: "auto",
+        }}
+      >
 
-      <Box sx={{ gridColumn: "span 4", p: 2 }}>
-        <Box
-          sx={{
-            width: "1360px",
-            height: "auto",
-            gap: "21px",
-            transform: "rotate(0deg)",
-            opacity: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            boxSizing: "border-box",
-            "@media (max-width: 1200px)": {
-              width: "100%",
-              padding: "0 40px",
-            },
-            "@media (max-width: 900px)": {
-              alignItems: "center",
-              textAlign: "center",
-              padding: "0 20px",
-              height: "auto",
-              gap: "16px",
-            },
-          }}
-        >
-          {/* --- Title --- */}
-          <Typography
-            sx={{
-              ...typography.displayL,
-              fontWeight: 700,
-              fontSize: "56px",
-              color: "#1C2D4B",
-              textAlign: "left",
-              "@media (max-width: 900px)": {
-                fontSize: "32px",
-                lineHeight: "40px",
-                textAlign: "center",
-              },
-            }}
-          >
-            {content.RR1001}
-            <EditIconButton id="RR1001" />
-          </Typography>
-
-          {/* --- Subtitle --- */}
-          <Typography
-            sx={{
-              ...typography.h5,
-              color: "#49576F",
-              textAlign: "left",
-              mb: 3,
-              "@media (max-width: 900px)": {
-                fontSize: "16px",
-                lineHeight: "24px",
-                textAlign: "center",
-                mb: 2,
-              },
-            }}
-          >
-            {content.RR1002}
-            <EditIconButton id="RR1002" />
-          </Typography>
-        </Box>
-
-        {/* //====================SECTION-2(FORM)=================================// */}
-        <Paper
-          elevation={3}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "32px",
-            borderRadius: "16px",
-            p: 4, // ✅ equal padding on all sides (theme.spacing(4) ~ 32px)
-            backgroundColor: "#0a2141",
-            color: "white",
-            opacity: 1,
-          }}
-        >
-          <Typography sx={{
-            ...typography.displayL,
-            color: "#F1F2F4"
-          }}>
-            {content.RR2001}
-            <EditIconButton id="RR2001" />
-          </Typography>
-
-          <Formik
-            initialValues={{
-              project1: "",
-              project2: "",
-              status1: "",
-              status2: "",
-              project3: "",
-              project4: "",
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log("Form Values:", values);
-            }}
-          >
-            {({ values, handleChange, touched, errors }) => (
-              <Form>
-                <Grid container spacing={2}>
-                  {/* Row 1 */}
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      //   label="Project title"
-                      name="project1"
-                      placeholder="Ex: John"
-                      value={values.project1}
-                      onChange={handleChange}
-                      error={touched.project1 && Boolean(errors.project1)}
-                      helperText={touched.project1 && errors.project1}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      //   label="Project title"
-                      name="project2"
-                      placeholder="Ex: John"
-                      value={values.project2}
-                      onChange={handleChange}
-                      error={touched.project2 && Boolean(errors.project2)}
-                      helperText={touched.project2 && errors.project2}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Grid>
-
-                  {/* Row 2 */}
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
-                    </Typography>
-                    <TextField
-                      select
-                      fullWidth
-                      //   label="Production status"
-                      name="status1"
-                      value={values.status1}
-                      onChange={handleChange}
-                      error={touched.status1 && Boolean(errors.status1)}
-                      helperText={touched.status1 && errors.status1}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    >
-                      {productionStatusOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2003}
-                      <EditIconButton id="RR2003" />
-                    </Typography>
-                    <TextField
-                      select
-                      fullWidth
-                      //   label="Production status"
-                      name="status2"
-                      value={values.status2}
-                      onChange={handleChange}
-                      error={touched.status2 && Boolean(errors.status2)}
-                      helperText={touched.status2 && errors.status2}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    >
-                      {productionStatusOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-
-                  {/* Row 3 */}
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2003}
-                      <EditIconButton id="RR2003" />
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      //   label="Project title"
-                      name="project3"
-                      placeholder="Ex: John"
-                      value={values.project3}
-                      onChange={handleChange}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2003}
-                      <EditIconButton id="RR2003" />
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      //   label="Project title"
-                      name="project4"
-                      placeholder="Ex: John"
-                      value={values.project4}
-                      onChange={handleChange}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      //   label="Project title"
-                      name="project4"
-                      placeholder="Ex: John"
-                      value={values.project4}
-                      onChange={handleChange}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                      width: 636,
-                      height: 90,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1, // 8px gap
-                      opacity: 1,
-                    }}
-                  >
-                    <Typography sx={{
-                      ...typography.h5,
-                      color: "#F1F2F4"
-                    }}>
-                      {content.RR2002}
-                      <EditIconButton id="RR2002" />
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      //   label="Project title"
-                      name="project4"
-                      placeholder="Ex: John"
-                      value={values.project4}
-                      onChange={handleChange}
-                      InputLabelProps={{ style: { color: "white" } }}
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Grid>
-
-                  {/* Submit Button */}
-                  <Grid item xs={12}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{
-                        ...typography.bodyStrong,
-                        width: "100%",
-                        height: 65,
-                        backgroundColor: "#FAE255",
-                        color: "#1B2F43",
-                        borderRadius: "30px", // ✅ matches design
-                        // px: "30px",           // padding-left + padding-right
-                        // py: "18px",           // padding-top + padding-bottom
-                        // gap: "10px",
-                        opacity: 1,
-                        "&:hover": {
-                          backgroundColor: "#FAE255", // slightly darker gold on hover
-                        },
-                      }}
-                    >
-                      {content.RR2004}
-                      <EditIconButton id="RR2004" />
-                    </Button>
-
-                  </Grid>
-                </Grid>
-              </Form>
-            )}
-          </Formik>
-        </Paper>
-        {/* //====================SECTION-3(RESULTS)=================================// */}
-
-        <Paper
-          elevation={3}
-          sx={{
-            mt: 2,
-            display: "flex",
-            flexDirection: "column",
-            // gap: "32px",
-            borderRadius: "16px",
-            p: 2, // ✅ equal padding on all sides (theme.spacing(4) ~ 32px)
-            backgroundColor: "#0a2141",
-            color: "white",
-            opacity: 1,
-          }}
-        >
-          {/* Title Section */}
-          <Typography sx={{
-            ...typography.displayL,
-            color: "#F1F2F4"
-          }} gutterBottom>
-            {content.RR3001}
-            <EditIconButton id="RR3001" />
-          </Typography>
-          <Typography sx={{
-            ...typography.h4,
-            color: "#F1F2F4"
-          }} gutterBottom>
-            {content.RR3002}
-            <EditIconButton id="RR3002" />
-          </Typography>
-          <Typography sx={{
-            ...typography.h3,
-            color: "#F1F2F4"
-          }} gutterBottom>
-            {content.RR3003}
-            <EditIconButton id="RR3003" />
-          </Typography>
-
-          <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
-
-          {/* Estimated Savings */}
-          <Typography sx={{
-            ...typography.h4,
-            color: "#F1F2F4"
-          }} gutterBottom>
-            {content.RR3004}
-            <EditIconButton id="RR3004" />
-          </Typography>
-          <Typography sx={{
-            ...typography.h3,
-            color: "#F1F2F4"
-          }} gutterBottom>
-            {content.RR3005}
-            <EditIconButton id="RR3005" />
-          </Typography>
-          <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
-          {/* Table-like layout */}
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            <Grid item xs={4}>
-              <Typography sx={{
-                ...typography.h4,
-                color: "#F1F2F4"
-              }}>
-                {content.RR3006}
-                <EditIconButton id="RR3006" />
-              </Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR3007}
-                <EditIconButton id="RR3007" /></Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR3008}
-                <EditIconButton id="RR3008" /></Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR3009}
-                <EditIconButton id="RR3009" /></Typography>
-            </Grid>
-
-            <Grid item xs={4}>
-              <Typography sx={{
-                ...typography.h4,
-                color: "#F1F2F4"
-              }}>
-                {content.RR30010}
-                <EditIconButton id="RR30010" />
-              </Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR30011}
-                <EditIconButton id="RR30011" /></Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR30012}
-                <EditIconButton id="RR30012" /></Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR30013}
-                <EditIconButton id="RR30013" /></Typography>
-            </Grid>
-
-            <Grid item xs={4}>
-              <Typography sx={{
-                ...typography.h4,
-                color: "#F1F2F4"
-              }}>
-                {content.RR30014}
-                <EditIconButton id="RR30014" />
-              </Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR30015}
-                <EditIconButton id="RR30015" /></Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR30016}
-                <EditIconButton id="RR30016" /></Typography>
-              <Typography mt={2} sx={{
-                ...typography.h5,
-                color: "#F1F2F4"
-              }}>{content.RR30017}
-                <EditIconButton id="RR30017" /></Typography>
-            </Grid>
-          </Grid>
-
-          {/* Footer Links */}
+        <Box sx={{ gridColumn: "span 4", p: 2 }}>
           <Box
             sx={{
+              width: "1200px",
+              height: "auto",
+              gap: "21px",
+              transform: "rotate(0deg)",
+              opacity: 1,
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mt: 6,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              boxSizing: "border-box",
+              "@media (max-width: 1200px)": {
+                width: "100%",
+                padding: "0 40px",
+              },
+              "@media (max-width: 900px)": {
+                alignItems: "center",
+                textAlign: "center",
+                padding: "0 20px",
+                height: "auto",
+                gap: "16px",
+              },
             }}
           >
-            <Link href="#" underline="hover" color="inherit" sx={{
-              ...typography.h4,
-              color: "#F1F2F4"
-            }}>
-              {content.RR30018}
-              <EditIconButton id="RR30018" />
-            </Link>
-            <Button variant="text" sx={{
-              ...typography.h4,
-              color: "#F1F2F4"
-            }}>
-              {content.RR30019}
-              <EditIconButton id="RR30019" />
-            </Button>
+            {/* --- Title --- */}
+            <Typography
+              sx={{
+                ...typography.displayL,
+                fontWeight: 700,
+                fontSize: "56px",
+                color: "#1C2D4B",
+                textAlign: "left",
+                "@media (max-width: 900px)": {
+                  fontSize: "32px",
+                  lineHeight: "40px",
+                  textAlign: "center",
+                },
+              }}
+            >
+              {content.RR1001}
+              <EditIconButton id="RR1001" />
+            </Typography>
+
+            {/* --- Subtitle --- */}
+            <Typography
+              sx={{
+                ...typography.h5,
+                color: "#49576F",
+                textAlign: "left",
+                mb: 3,
+                "@media (max-width: 900px)": {
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                  textAlign: "center",
+                  mb: 2,
+                },
+              }}
+            >
+              {content.RR1002}
+              <EditIconButton id="RR1002" />
+            </Typography>
           </Box>
-        </Paper>
 
-        {/* //====================SECTION-4(ROI-CALCULATOR)=================================// */}
+          {/* //====================SECTION-2(FORM)=================================// */}
+          <Paper
+            elevation={3}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "32px",
+              borderRadius: "16px",
+              p: 4, // ✅ equal padding on all sides (theme.spacing(4) ~ 32px)
+              backgroundColor: "#0a2141",
+              color: "white",
+              opacity: 1,
+            }}
+          >
+            <Typography sx={{
+              ...typography.displayL,
+              color: "#F1F2F4"
+            }}>
+              {content.RR2001}
+              <EditIconButton id="RR2001" />
+            </Typography>
 
-        <Box
+            <Formik
+              initialValues={{
+                project1: "",
+                project2: "",
+                status1: "",
+                status2: "",
+                project3: "",
+                project4: "",
+              }}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                console.log("Form Values:", values);
+              }}
+            >
+              {({ values, handleChange, touched, errors }) => (
+                <Form>
+                  <Grid container spacing={2}>
+                    {/* Row 1 */}
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2002}
+                        <EditIconButton id="RR2002" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        //   label="Project title"
+                        name="project1"
+                        placeholder="Ex: John"
+                        value={values.project1}
+                        onChange={handleChange}
+                        error={touched.project1 && Boolean(errors.project1)}
+                        helperText={touched.project1 && errors.project1}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2002}
+                        <EditIconButton id="RR2002" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        //   label="Project title"
+                        name="project2"
+                        placeholder="Ex: John"
+                        value={values.project2}
+                        onChange={handleChange}
+                        error={touched.project2 && Boolean(errors.project2)}
+                        helperText={touched.project2 && errors.project2}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Grid>
+
+                    {/* Row 2 */}
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2002}
+                        <EditIconButton id="RR2002" />
+                      </Typography>
+                      <TextField
+                        select
+                        fullWidth
+                        //   label="Production status"
+                        name="status1"
+                        value={values.status1}
+                        onChange={handleChange}
+                        error={touched.status1 && Boolean(errors.status1)}
+                        helperText={touched.status1 && errors.status1}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      >
+                        {productionStatusOptions.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2003}
+                        <EditIconButton id="RR2003" />
+                      </Typography>
+                      <TextField
+                        select
+                        fullWidth
+                        //   label="Production status"
+                        name="status2"
+                        value={values.status2}
+                        onChange={handleChange}
+                        error={touched.status2 && Boolean(errors.status2)}
+                        helperText={touched.status2 && errors.status2}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      >
+                        {productionStatusOptions.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+
+                    {/* Row 3 */}
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2003}
+                        <EditIconButton id="RR2003" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        //   label="Project title"
+                        name="project3"
+                        placeholder="Ex: John"
+                        value={values.project3}
+                        onChange={handleChange}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2003}
+                        <EditIconButton id="RR2003" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        //   label="Project title"
+                        name="project4"
+                        placeholder="Ex: John"
+                        value={values.project4}
+                        onChange={handleChange}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2002}
+                        <EditIconButton id="RR2002" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        //   label="Project title"
+                        name="project4"
+                        placeholder="Ex: John"
+                        value={values.project4}
+                        onChange={handleChange}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={6}
+                      sx={{
+                        width: 636,
+                        height: 90,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1, // 8px gap
+                        opacity: 1,
+                      }}
+                    >
+                      <Typography sx={{
+                        ...typography.h5,
+                        color: "#F1F2F4"
+                      }}>
+                        {content.RR2002}
+                        <EditIconButton id="RR2002" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        //   label="Project title"
+                        name="project4"
+                        placeholder="Ex: John"
+                        value={values.project4}
+                        onChange={handleChange}
+                        InputLabelProps={{ style: { color: "white" } }}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Grid>
+
+                    {/* Submit Button */}
+                    <Grid item xs={12}>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{
+                          ...typography.bodyStrong,
+                          width: "100%",
+                          height: 65,
+                          backgroundColor: "#FAE255",
+                          color: "#1B2F43",
+                          borderRadius: "30px", // ✅ matches design
+                          // px: "30px",           // padding-left + padding-right
+                          // py: "18px",           // padding-top + padding-bottom
+                          // gap: "10px",
+                          opacity: 1,
+                          "&:hover": {
+                            backgroundColor: "#FAE255", // slightly darker gold on hover
+                          },
+                        }}
+                      >
+                        {content.RR2004}
+                        <EditIconButton id="RR2004" />
+                      </Button>
+
+                    </Grid>
+                  </Grid>
+                </Form>
+              )}
+            </Formik>
+          </Paper>
+          {/* //====================SECTION-3(RESULTS)=================================// */}
+
+          <Paper
+            elevation={3}
+            sx={{
+              mt: 2,
+              display: "flex",
+              flexDirection: "column",
+              // gap: "32px",
+              borderRadius: "16px",
+              p: 2, // ✅ equal padding on all sides (theme.spacing(4) ~ 32px)
+              backgroundColor: "#0a2141",
+              color: "white",
+              opacity: 1,
+            }}
+          >
+            {/* Title Section */}
+            <Typography sx={{
+              ...typography.displayL,
+              color: "#F1F2F4"
+            }} gutterBottom>
+              {content.RR3001}
+              <EditIconButton id="RR3001" />
+            </Typography>
+            <Typography sx={{
+              ...typography.h4,
+              color: "#F1F2F4"
+            }} gutterBottom>
+              {content.RR3002}
+              <EditIconButton id="RR3002" />
+            </Typography>
+            <Typography sx={{
+              ...typography.h3,
+              color: "#F1F2F4"
+            }} gutterBottom>
+              {content.RR3003}
+              <EditIconButton id="RR3003" />
+            </Typography>
+
+            <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
+
+            {/* Estimated Savings */}
+            <Typography sx={{
+              ...typography.h4,
+              color: "#F1F2F4"
+            }} gutterBottom>
+              {content.RR3004}
+              <EditIconButton id="RR3004" />
+            </Typography>
+            <Typography sx={{
+              ...typography.h3,
+              color: "#F1F2F4"
+            }} gutterBottom>
+              {content.RR3005}
+              <EditIconButton id="RR3005" />
+            </Typography>
+            <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.2)" }} />
+            {/* Table-like layout */}
+            <Grid container spacing={2} sx={{ mt: 2 }}>
+              <Grid item xs={4}>
+                <Typography sx={{
+                  ...typography.h4,
+                  color: "#F1F2F4"
+                }}>
+                  {content.RR3006}
+                  <EditIconButton id="RR3006" />
+                </Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR3007}
+                  <EditIconButton id="RR3007" /></Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR3008}
+                  <EditIconButton id="RR3008" /></Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR3009}
+                  <EditIconButton id="RR3009" /></Typography>
+              </Grid>
+
+              <Grid item xs={4}>
+                <Typography sx={{
+                  ...typography.h4,
+                  color: "#F1F2F4"
+                }}>
+                  {content.RR30010}
+                  <EditIconButton id="RR30010" />
+                </Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR30011}
+                  <EditIconButton id="RR30011" /></Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR30012}
+                  <EditIconButton id="RR30012" /></Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR30013}
+                  <EditIconButton id="RR30013" /></Typography>
+              </Grid>
+
+              <Grid item xs={4}>
+                <Typography sx={{
+                  ...typography.h4,
+                  color: "#F1F2F4"
+                }}>
+                  {content.RR30014}
+                  <EditIconButton id="RR30014" />
+                </Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR30015}
+                  <EditIconButton id="RR30015" /></Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR30016}
+                  <EditIconButton id="RR30016" /></Typography>
+                <Typography mt={2} sx={{
+                  ...typography.h5,
+                  color: "#F1F2F4"
+                }}>{content.RR30017}
+                  <EditIconButton id="RR30017" /></Typography>
+              </Grid>
+            </Grid>
+
+            {/* Footer Links */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mt: 6,
+              }}
+            >
+              <Link href="#" underline="hover" color="inherit" sx={{
+                ...typography.h4,
+                color: "#F1F2F4"
+              }}>
+                {content.RR30018}
+                <EditIconButton id="RR30018" />
+              </Link>
+              <Button variant="text" sx={{
+                ...typography.h4,
+                color: "#F1F2F4"
+              }}>
+                {content.RR30019}
+                <EditIconButton id="RR30019" />
+              </Button>
+            </Box>
+          </Paper>
+
+          {/* //====================SECTION-4(ROI-CALCULATOR)=================================// */}
+
+          {/* <Box
           sx={{
             width: "100%",
             maxWidth: 1280,
@@ -812,7 +816,7 @@ const RepairReplace = () => {
             py: { xs: 3, sm: 5 }, // less padding on mobile
           }}
         >
-          {/* Title & Description */}
+         
           <Box
             sx={{
               display: "flex",
@@ -845,7 +849,7 @@ const RepairReplace = () => {
             </Typography>
           </Box>
 
-          {/* View All Link */}
+         
           <Box display="flex" justifyContent="flex-end" alignItems="center" sx={{ mb: { xs: 2, sm: 3 } }}>
             <Typography
               component={Link}
@@ -867,7 +871,7 @@ const RepairReplace = () => {
             <EditIconButton id="RR4003" />
           </Box>
 
-          {/* Cards */}
+         
           <Box
             sx={{
               display: "flex",
@@ -891,11 +895,11 @@ const RepairReplace = () => {
                   flex: "0 1 auto",
                 }}
               >
-                {/* Background Image */}
+               
                 <Box sx={{ position: "relative", height: "100%" }}>
                   <CardMedia
                     component="img"
-                    image={`https://cmsreflux.bexatm.com${item.image.value}`}
+                    image={`https://refluxmagnets.com${item.image.value}`}
                     alt={item.name.value}
                     sx={{
                       height: "100%",
@@ -904,7 +908,7 @@ const RepairReplace = () => {
                     }}
                   />
 
-                  {/* Edit Icon on Image */}
+                 
                   {item.image.value && (
                     <Box
                       sx={{
@@ -919,7 +923,7 @@ const RepairReplace = () => {
                   )}
                 </Box>
 
-                {/* Overlay White Card */}
+                
                 <Box
                   sx={{
                     position: "absolute",
@@ -971,24 +975,24 @@ const RepairReplace = () => {
               </Card>
             ))}
 
-
-
           </Box>
-        </Box>
+        </Box> */}
 
 
-        {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
-        <Box>
-          <SellRentServicesCard services={services} />
-        </Box>
+          {/* //====================SECTION-5(RENT-CALCULATOR)=================================// */}
+          <Box sx={{ mt: 7 }}>
+            <SellRentServicesCard services={services} />
+          </Box>
 
-        {/* Footer Section */}
-        <Box >
-          <Footer />
+
         </Box>
       </Box>
-    </Box>
+      {/* Footer Section */}
 
+      <Box >
+        <Footer />
+      </Box>
+    </>
 
   );
 };

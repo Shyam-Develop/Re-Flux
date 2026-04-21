@@ -107,8 +107,8 @@ export default function AboutUsCard() {
         <Box sx={{ position: "relative", width: "100%" }}>
           <CardMedia
             component="img"
-            image={`https://cmsreflux.bexatm.com${content.AU1002}`}
-            alt="About Us"
+            image={`https://refluxmagnets.com${content.AU1002}`}
+            alt={content.AU1002_ALT}
             sx={{
               width: "100%",
               height: 400,

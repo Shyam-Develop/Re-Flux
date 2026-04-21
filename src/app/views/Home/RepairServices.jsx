@@ -36,11 +36,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import Divider from "@mui/material/Divider";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useLocation } from "react-router-dom";
 
 
 
 const ServiceCard = ({
   index,
+  content,
   contentId = "C013",
   image,
   imageId,
@@ -68,6 +70,7 @@ const ServiceCard = ({
 
   const isMobile = useMediaQuery("(max-width:900px)");
 
+const location = useLocation();
 
   // ✅ Check admin role
   useEffect(() => {
@@ -76,23 +79,46 @@ const ServiceCard = ({
   }, []);
 
   // ✅ Scroll to newly added fault chip after reload
+  // useEffect(() => {
+  //   const targetId = localStorage.getItem("scrollToFaultId");
+  //   if (targetId) {
+  //     setTimeout(() => {
+  //       const el = document.getElementById(targetId);
+  //       if (el) {
+  //         el.scrollIntoView({ behavior: "smooth", block: "center" });
+  //         el.style.outline = "2px solid #1C2D4B";
+  //         setTimeout(() => (el.style.outline = ""), 1500);
+  //       }
+  //       localStorage.removeItem("scrollToFaultId");
+  //     }, 700);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const targetId = localStorage.getItem("scrollToFaultId");
-    if (targetId) {
-      setTimeout(() => {
-        const el = document.getElementById(targetId);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-          el.style.outline = "2px solid #1C2D4B";
-          setTimeout(() => (el.style.outline = ""), 1500);
-        }
-        localStorage.removeItem("scrollToFaultId");
-      }, 700);
-    }
-  }, []);
+    if (!location.state?.scrollTo) return;
+
+    const timer = setTimeout(() => {
+      const el = document.getElementById(location.state.scrollTo);
+
+      if (el) {
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+        // optional highlight
+        el.style.outline = "2px solid #1C2D4B";
+        setTimeout(() => (el.style.outline = ""), 1500);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [location.state]); // ✅ IMPORTANT
+
 
   // ✅ Edit navigation (correctly uses passed ID)
   const handleEdit = (contentTextID, type = "T") => {
+    sessionStorage.setItem("scrollToSection", "common-fault-section");
     navigate(
       `/CmsEditor?contentId=${contentId}&contentTextID=${contentTextID}&contentType=${type}`
     );
@@ -125,6 +151,26 @@ const ServiceCard = ({
         <EditIcon fontSize="small" />
       </IconButton>
     ) : null;
+
+  useEffect(() => {
+    const sectionId = sessionStorage.getItem("scrollToSection");
+
+    if (!sectionId) return;
+
+    const timer = setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      sessionStorage.removeItem("scrollToSection");
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   return (
     <Paper
@@ -203,7 +249,7 @@ const ServiceCard = ({
             <Box
               component="img"
               src={image}
-              alt={title}
+              alt={content[`${imageId}_ALT`] || title}
               sx={{
                 width: "100%",
                 height: "100%",
@@ -245,7 +291,9 @@ const ServiceCard = ({
                 }}
               >
                 {overlayTitle}
-                <EditIconButton id={overlayId} />
+                <Box sx={{ marginTop: 5 }}>
+                  <EditIconButton id={overlayId} />
+                </Box>
               </Typography>
             </Box>
           </Box>
@@ -293,6 +341,7 @@ const ServiceCard = ({
 
           {/* Common Fault */}
           <Typography
+            id="common-fault-section"
             sx={{
               ...typography.h4,
               fontWeight: 700,
@@ -417,6 +466,7 @@ const ServiceCard = ({
                                 timer: 1500,
                                 showConfirmButton: false,
                               }).then(() => {
+                                sessionStorage.setItem("scrollToSection", "common-fault-section");
                                 window.location.reload();
                               });
                             } else {
@@ -427,11 +477,8 @@ const ServiceCard = ({
                               });
                             }
                           } catch (err) {
-                            Swal.fire({
-                              title: "Error!",
-                              text: "Something went wrong.",
-                              icon: "error",
-                            });
+                            sessionStorage.setItem("scrollToSection", "common-fault-section");
+
                             console.error("Delete error:", err);
                           }
                         }}
@@ -495,10 +542,11 @@ const ServiceCard = ({
                   const result = await res.json();
                   if (result.success) {
                     // Save scroll target and reload
-                    localStorage.setItem(
-                      "scrollToFaultId",
-                      `${faultsId}-${newIndex}`
-                    );
+                    // localStorage.setItem(
+                    //   "scrollToFaultId",
+                    //   `${faultsId}-${newIndex}`
+                    // );
+                    sessionStorage.setItem("scrollToSection", "common-fault-section");
                     window.location.reload();
                   } else alert("❌ Failed to add new fault.");
                 }}
@@ -604,14 +652,7 @@ const ServiceCard = ({
               </IconButton>
             )}
           </Button>
-          {isMobile && (
-            <Divider
-              sx={{
-                mt: 4,
-                borderColor: "#ddd",
-              }}
-            />
-          )}
+
         </Grid>
       </Grid>
     </Paper>
@@ -931,38 +972,38 @@ const RepairServices = () => {
   if (!content) return null;
 
 
-  const products = [
-    {
-      img: content.RS1062,
-      title: content.RS1063,
-      subtitle: content.RS1064,
-      price: content.RS1065,
-      lift: content.RS1066,
-      power: content.RS1067,
-      details: content.RS1068,
-      ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"],
-    },
-    {
-      img: content.RS1069,
-      title: content.RS1070,
-      subtitle: content.RS1071,
-      price: content.RS1072,
-      lift: content.RS1073,
-      power: content.RS1074,
-      details: content.RS1075,
-      ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"],
-    },
-    {
-      img: content.RS1076,
-      title: content.RS1077,
-      subtitle: content.RS1078,
-      price: content.RS1079,
-      lift: content.RS1080,
-      power: content.RS1081,
-      details: content.RS1082,
-      ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"],
-    },
-  ];
+  // const products = [
+  //   {
+  //     img: content.RS1062,
+  //     title: content.RS1063,
+  //     subtitle: content.RS1064,
+  //     price: content.RS1065,
+  //     lift: content.RS1066,
+  //     power: content.RS1067,
+  //     details: content.RS1068,
+  //     ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"],
+  //   },
+  //   {
+  //     img: content.RS1069,
+  //     title: content.RS1070,
+  //     subtitle: content.RS1071,
+  //     price: content.RS1072,
+  //     lift: content.RS1073,
+  //     power: content.RS1074,
+  //     details: content.RS1075,
+  //     ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"],
+  //   },
+  //   {
+  //     img: content.RS1076,
+  //     title: content.RS1077,
+  //     subtitle: content.RS1078,
+  //     price: content.RS1079,
+  //     lift: content.RS1080,
+  //     power: content.RS1081,
+  //     details: content.RS1082,
+  //     ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"],
+  //   },
+  // ];
 
 
   //ROI Calculator
@@ -1167,125 +1208,135 @@ const RepairServices = () => {
 
   return (
     <>
-      {/* Top Image */}
-      <Box sx={topImageStyle}>
-        <Box
-          component="img"
-          src={`https://cmsreflux.bexatm.com${content.RS1002}`}
-          style={imageStyle}
-        />
-        <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 2 }}>
-          <EditIconButton id="RS1002" type="I" />
-        </Box>
-
-        <Box sx={overlayBoxStyle}>
-          <Typography sx={{ ...typography.h3, color: "#000000" }}>
-            {content.RS1001} <EditIconButton id="RS1001" />
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Top Text Section */}
       <Box
         sx={{
-          px: { xs: 2, sm: 4, md: 12, lg: 18 }, // responsive horizontal padding
-          py: { xs: 3, md: 4 },
+          width: "100%",
+          maxWidth: 1200,
+          mx: "auto",
         }}
       >
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12}>
-            <Typography
-              sx={{
-                ...typography.h1,
-                fontWeight: 600,
-                color: "#1A2438",
-                width: "100%",
-                fontSize: {
-                  xs: "24px",   // mobile
-                  sm: "32px",   // tablet
-                  md: "40px",   // desktop
-                },
-                lineHeight: 1.2,
-              }}
-            >
-              {content.RS1003}
-              <EditIconButton id="RS1003" />
-            </Typography>
-          </Grid>
 
-          <Grid item xs={12}>
-            <Typography
-              sx={{
-                ...theme.typography.bodyBase,
-                fontFamily: "Fira Sans",
-                fontWeight: 400,
-                color: "#99A0AE",
-                width: "100%",
-                fontSize: {
-                  xs: "14px",
-                  sm: "15px",
-                  md: "18px",
-                },
-                lineHeight: 1.6,
-              }}
-            >
-              {content.RS1004}
-              <EditIconButton id="RS1004" />
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-
-
-      {/* Service Cards Section */}
-      <Box sx={{ padding: "0 10px 10px" }}>
-        {cards.map((card, index) => (
-          <ServiceCard
-            viewDetails="Book Service"
-            viewDetailsId="RS1118" // <-- REQUIRED
-            key={index}
-            index={index}
-            {...card}
-            onDelete={() => handleDeleteCard(card)}
-          />
-        ))}
-        {isAdmin && (
+        {/* Top Image */}
+        <Box sx={topImageStyle}>
           <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              mt: 4,
-            }}
-          >
-            <Button
-              onClick={() => handleAddCard(cards.length - 1)}
-              variant="contained"
+            component="img"
+            src={`https://cmsreflux.bexatm.com${content.RS1002}`}
+            alt={content.RS1002_ALT}
+            style={imageStyle}
+          />
+          <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 2 }}>
+            <EditIconButton id="RS1002" type="I" />
+          </Box>
+
+          <Box sx={overlayBoxStyle}>
+            <Typography sx={{ ...typography.h3, fontWeight: 600, color: "#000000" }}>
+              {content.RS1001} <EditIconButton id="RS1001" />
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Top Text Section */}
+        <Box
+          sx={{
+            px: { xs: 2, sm: 4, md: 12, lg: 18 }, // responsive horizontal padding
+            py: { xs: 3, md: 4 },
+          }}
+        >
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12}>
+              <Typography
+                sx={{
+                  ...typography.h1,
+                  fontWeight: 600,
+                  color: "#1A2438",
+                  width: "100%",
+                  fontSize: {
+                    xs: "24px",   // mobile
+                    sm: "32px",   // tablet
+                    md: "40px",   // desktop
+                  },
+                  lineHeight: 1.2,
+                }}
+              >
+                {content.RS1003}
+                <EditIconButton id="RS1003" />
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography
+                sx={{
+                  ...theme.typography.bodyBase,
+                  fontFamily: "Fira Sans",
+                  fontWeight: 400,
+                  color: "#99A0AE",
+                  width: "100%",
+                  fontSize: {
+                    xs: "14px",
+                    sm: "15px",
+                    md: "18px",
+                  },
+                  lineHeight: 1.6,
+                }}
+              >
+                {content.RS1004}
+                <EditIconButton id="RS1004" />
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+
+
+        {/* Service Cards Section */}
+        <Box sx={{ padding: "0 10px 10px" }}>
+          {cards.map((card, index) => (
+            <ServiceCard
+              viewDetails="Book Service"
+              viewDetailsId="RS1118" // <-- REQUIRED
+              key={index}
+              index={index}
+              content={content}
+              {...card}
+              onDelete={() => handleDeleteCard(card)}
+            />
+          ))}
+          {isAdmin && (
+            <Box
               sx={{
-                backgroundColor: "#1C2D4B",
-                color: "#fff",
-                px: 4,
-                py: 1.5,
-                borderRadius: "10px",
-                fontSize: "16px",
-                textTransform: "none",
-                fontWeight: 500,
                 display: "flex",
-                alignItems: "center",
-                gap: 1,
-                "&:hover": { backgroundColor: "#16233B" },
+                justifyContent: "center",
+                mt: 4,
               }}
             >
-              <AddIcon />
-              Add New Section
-            </Button>
-          </Box>
-        )}
-      </Box>
+              <Button
+                onClick={() => handleAddCard(cards.length - 1)}
+                variant="contained"
+                sx={{
+                  backgroundColor: "#1C2D4B",
+                  color: "#fff",
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: "10px",
+                  fontSize: "16px",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  "&:hover": { backgroundColor: "#16233B" },
+                }}
+              >
+                <AddIcon />
+                Add New Section
+              </Button>
+            </Box>
+          )}
+        </Box>
 
-      {/* //ROI Calculator */}
-      <Box sx={{ p: 5 }}>
+        {/* //ROI Calculator */}
+        {/* <Box sx={{ p: 5 }}>
         <Box sx={{ mt: 8 }}>
-          {/* Section Title */}
+         
           <Typography
             gutterBottom
             sx={{
@@ -1302,7 +1353,7 @@ const RepairServices = () => {
             <EditIconButton id="RS1050" />
           </Typography>
 
-          {/* Section Description */}
+         
           <Typography
             variant="h5"
             sx={{
@@ -1318,7 +1369,7 @@ const RepairServices = () => {
             <EditIconButton id="RS1051" />
           </Typography>
 
-          {/* View All Button */}
+         
           <Box
             sx={{
               display: "flex",
@@ -1345,7 +1396,7 @@ const RepairServices = () => {
             </Typography>
           </Box>
 
-          {/* ROI Cards */}
+         
           <Grid container spacing={4}>
             {roiData.map((item, index) => (
               <Grid item xs={12} md={6} key={index}>
@@ -1448,221 +1499,266 @@ const RepairServices = () => {
             ))}
           </Grid>
         </Box>
-      </Box>
+      </Box> */}
 
-      {/* Resale Service */}
-      <Box sx={{ px: "5%", pb: 10 }}>
-        {/* Heading */}
-        <Box sx={{ mb: 4 }}>
-          <Button
-            disableElevation
-            disableRipple
-            sx={{
-              ...typography.bodySmall,
-              mb: 2,
-              textTransform: "none",
-              fontWeight: 400,
-              color: "#1a4dab",
-              backgroundColor: "rgba(36,121,233,0.08)",
-              borderRadius: "20px",
-              px: 2,
-              py: 0.5,
-              boxShadow: "none",
-              "&:hover": {
-                backgroundColor: "rgba(36,121,233,0.15)",
+        {/* Resale Service */}
+        <Box sx={{ px: "5%", pb: 10 }}>
+          {/* Heading */}
+          <Box sx={{ mb: 4 }}>
+            <Button
+              disableElevation
+              disableRipple
+              sx={{
+                ...typography.bodySmall,
+                mb: 2,
+                textTransform: "none",
+                fontWeight: 400,
+                color: "#1a4dab",
+                backgroundColor: "rgba(36,121,233,0.08)",
+                borderRadius: "20px",
+                px: 2,
+                py: 0.5,
                 boxShadow: "none",
-              },
-              fontSize: { xs: "12px", md: "14px" },
-            }}
-          >
-            {content.RS1059} <EditIconButton id="RS1059" />
-          </Button>
+                "&:hover": {
+                  backgroundColor: "rgba(36,121,233,0.15)",
+                  boxShadow: "none",
+                },
+                fontSize: { xs: "12px", md: "14px" },
+              }}
+            >
+              {content.RS1059} <EditIconButton id="RS1059" />
+            </Button>
 
-          <Typography
-            sx={{ ...typography.displayL, fontWeight: 700, color: "#1A2438" }}
-          >
-            {content.RS1060} <EditIconButton id="RS1060" />
-          </Typography>
+            <Typography
+              sx={{ ...typography.displayL, fontWeight: 700, color: "#1A2438" }}
+            >
+              {content.RS1060} <EditIconButton id="RS1060" />
+            </Typography>
 
-          <Typography sx={{ ...typography.h4, color: "#99A0AE" }}>
-            {content.RS1061} <EditIconButton id="RS1061" />
-          </Typography>
-        </Box>
+            <Typography sx={{ ...typography.h4, color: "#99A0AE" }}>
+              {content.RS1061} <EditIconButton id="RS1061" />
+            </Typography>
+          </Box>
 
-        {/* 🔹 MOBILE SWIPER */}
-        <Box sx={{ display: { xs: "block", md: "none" }, overflow: "hidden", pb: 5 }}>
-          <Swiper
-            modules={[Pagination]}               // Add this
-            spaceBetween={16}
-            slidesPerView={1.1}
-            pagination={{ clickable: true }}
-          // Enable dots
-          >
-            {[
-              {
-                img: content.RS1062,
-                title: content.RS1063,
-                subtitle: content.RS1064,
-                price: content.RS1065,
-                lift: content.RS1066,
-                power: content.RS1067,
-                details: content.RS1068,
-                ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"],
-              },
-              {
-                img: content.RS1069,
-                title: content.RS1070,
-                subtitle: content.RS1071,
-                price: content.RS1072,
-                lift: content.RS1073,
-                power: content.RS1074,
-                details: content.RS1075,
-                ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"],
-              },
-              {
-                img: content.RS1076,
-                title: content.RS1077,
-                subtitle: content.RS1078,
-                price: content.RS1079,
-                lift: content.RS1080,
-                power: content.RS1081,
-                details: content.RS1082,
-                ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"],
-              },
-            ].map((p, idx) => (
-              <SwiperSlide key={idx} style={{ height: "auto" }}>
-                {/* ⬇️ SAME CARD JSX ⬇️ */}
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 2,
-                    position: "relative",
-                    p: 2,
-                    bgcolor: "#fff",
-                  }}
-                >
-                  {/* Image Section */}
-                  <Box
+          {/* 🔹 MOBILE SWIPER */}
+          <Box sx={{ display: { xs: "block", md: "none" }, overflow: "hidden", pb: 5 }}>
+            <Swiper
+              modules={[Pagination]}               // Add this
+              spaceBetween={16}
+              slidesPerView={1.1}
+              pagination={{ clickable: true }}
+            // Enable dots
+            >
+              {[
+                {
+                  img: content.RS1062,
+                  title: content.RS1063,
+                  subtitle: content.RS1064,
+                  price: content.RS1065,
+                  lift: content.RS1066,
+                  power: content.RS1067,
+                  details: content.RS1068,
+                  ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"],
+                },
+                {
+                  img: content.RS1069,
+                  title: content.RS1070,
+                  subtitle: content.RS1071,
+                  price: content.RS1072,
+                  lift: content.RS1073,
+                  power: content.RS1074,
+                  details: content.RS1075,
+                  ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"],
+                },
+                {
+                  img: content.RS1076,
+                  title: content.RS1077,
+                  subtitle: content.RS1078,
+                  price: content.RS1079,
+                  lift: content.RS1080,
+                  power: content.RS1081,
+                  details: content.RS1082,
+                  ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"],
+                },
+              ].map((p, idx) => (
+                <SwiperSlide key={idx} style={{ height: "auto" }}>
+                  {/* ⬇️ SAME CARD JSX ⬇️ */}
+                  <Card
                     sx={{
-                      position: "relative",
-                      borderRadius: 2,
+                      borderRadius: 3,
                       overflow: "hidden",
-                      mb: 2,
+                      boxShadow: 2,
+                      position: "relative",
+                      p: 2,
+                      bgcolor: "#fff",
                     }}
                   >
+                    {/* Image Section */}
                     <Box
-                      component="img"
-                      src={`https://cmsreflux.bexatm.com${p.img}`}
-                      alt={p.title}
                       sx={{
-                        width: "100%",
-                        height: 220,
-                        objectFit: "cover",
+                        position: "relative",
                         borderRadius: 2,
-                        display: "block",
-                      }}
-                    />
-
-                    {/* 🔹 Top-left Chips */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: 8,
-                        left: 8,
-                        display: "flex",
-                        gap: 1,
-                        flexWrap: "wrap",
+                        overflow: "hidden",
+                        mb: 2,
                       }}
                     >
-                      <Chip
-                        label="🔧 Available for Rent"
-                        size="small"
+                      <Box
+                        component="img"
+                        src={`https://cmsreflux.bexatm.com${p.img}`}
+                        alt={content?.[`${p.ids[0]}_ALT`] || p.title}
                         sx={{
-                          bgcolor: "#1b5e20",
-                          color: "white",
-                          fontSize: "13px",
-                          borderRadius: "1px",
-                          height: "24px",
+                          width: "100%",
+                          height: 220,
+                          objectFit: "cover",
+                          borderRadius: 2,
+                          display: "block",
                         }}
                       />
-                      <Chip
-                        label="🛡️ Safety Tested"
-                        size="small"
-                        sx={{
-                          padding: "10px",
-                          bgcolor: "#1976d2",
-                          marginLeft: "70px",
-                          color: "white",
-                          fontSize: "13px",
-                          borderRadius: "1px",
-                          height: "24px",
-                        }}
-                      />
-                    </Box>
 
-                    {/* 🔹 Edit Icon - bottom right corner of image */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 8,
-                        right: 8,
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <EditIconButton id={p.ids[0]} type="I" />
-                    </Box>
-                  </Box>
-
-                  {/* Card Content */}
-                  <CardContent sx={{ p: 0 }}>
-                    {/* Title & Price */}
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                    >
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.h4,
-                            height: "62px",
-                            fontWeight: 400,
-                            color: "#0B121E",
-                          }}
-                        >
-                          {p.title} <EditIconButton id={p.ids[1]} />
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h6,
-                            fontWeight: 600,
-                            color: "#00000099",
-                          }}
-                        >
-                          {p.subtitle} <EditIconButton id={p.ids[2]} />
-                        </Typography>
-                      </Box>
-                      <Typography
+                      {/* 🔹 Top-left Chips */}
+                      <Box
                         sx={{
-                          ...typography.h5,
-                          fontWeight: 700,
-                          color: "#1A7B3F",
+                          position: "absolute",
+                          top: 8,
+                          left: 8,
+                          display: "flex",
+                          gap: 1,
+                          flexWrap: "wrap",
                         }}
                       >
-                        {p.price} <EditIconButton id={p.ids[3]} />
-                      </Typography>
+                        <Chip
+                          label="🔧 Available for Rent"
+                          size="small"
+                          sx={{
+                            bgcolor: "#1b5e20",
+                            color: "white",
+                            fontSize: "13px",
+                            borderRadius: "1px",
+                            height: "24px",
+                          }}
+                        />
+                        <Chip
+                          label="🛡️ Safety Tested"
+                          size="small"
+                          sx={{
+                            padding: "10px",
+                            bgcolor: "#1976d2",
+                            marginLeft: "70px",
+                            color: "white",
+                            fontSize: "13px",
+                            borderRadius: "1px",
+                            height: "24px",
+                          }}
+                        />
+                      </Box>
+
+                      {/* 🔹 Edit Icon - bottom right corner of image */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          bottom: 8,
+                          right: 8,
+                          borderRadius: "50%",
+                        }}
+                      >
+                        <EditIconButton id={p.ids[0]} type="I" />
+                      </Box>
                     </Box>
 
-                    {/* Lift Capacity & Power */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: 2,
-                      }}
-                    >
-                      <Box>
+                    {/* Card Content */}
+                    <CardContent sx={{ p: 0 }}>
+                      {/* Title & Price */}
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                      >
+                        <Box>
+                          <Typography
+                            sx={{
+                              ...typography.h4,
+                              height: "62px",
+                              fontWeight: 400,
+                              color: "#0B121E",
+                            }}
+                          >
+                            {p.title} <EditIconButton id={p.ids[1]} />
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ...typography.h6,
+                              fontWeight: 600,
+                              color: "#00000099",
+                            }}
+                          >
+                            {p.subtitle} <EditIconButton id={p.ids[2]} />
+                          </Typography>
+                        </Box>
+                        <Typography
+                          sx={{
+                            ...typography.h5,
+                            fontWeight: 700,
+                            color: "#1A7B3F",
+                          }}
+                        >
+                          {p.price} <EditIconButton id={p.ids[3]} />
+                        </Typography>
+                      </Box>
+
+                      {/* Lift Capacity & Power */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          mt: 2,
+                        }}
+                      >
+                        <Box>
+                          <Typography
+                            sx={{
+                              ...typography.bodyBase,
+                              fontFamily: "Fira Sans",
+                              fontWeight: 400,
+                              color: "#677489",
+                            }}
+                          >
+                            {p.lift} <EditIconButton id={p.ids[4]} />
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ...typography.h5,
+                              fontWeight: 500,
+                              color: "#0E1626",
+                            }}
+                          >
+                            Lift Capacity
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Typography
+                            sx={{
+                              ...typography.bodyBase,
+                              fontFamily: "Fira Sans",
+                              fontWeight: 400,
+                              color: "#677489",
+                            }}
+                          >
+                            {p.power} <EditIconButton id={p.ids[5]} />
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ...typography.h5,
+                              fontWeight: 500,
+                              color: "#0E1626",
+                            }}
+                          >
+                            Power Supply
+                          </Typography>
+                        </Box>
+                      </Box>
+
+                      {/* Details */}
+                      <Box sx={{ mt: 2 }}>
                         <Typography
                           sx={{
                             ...typography.bodyBase,
@@ -1671,88 +1767,43 @@ const RepairServices = () => {
                             color: "#677489",
                           }}
                         >
-                          {p.lift} <EditIconButton id={p.ids[4]} />
+                          View Details <EditIconButton id={p.ids[6]} />
                         </Typography>
                         <Typography
                           sx={{
                             ...typography.h5,
                             fontWeight: 500,
-                            color: "#0E1626",
-                          }}
-                        >
-                          Lift Capacity
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.bodyBase,
-                            fontFamily: "Fira Sans",
-                            fontWeight: 400,
                             color: "#677489",
                           }}
                         >
-                          {p.power} <EditIconButton id={p.ids[5]} />
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h5,
-                            fontWeight: 500,
-                            color: "#0E1626",
-                          }}
-                        >
-                          Power Supply
+                          {p.details}
                         </Typography>
                       </Box>
-                    </Box>
 
-                    {/* Details */}
-                    <Box sx={{ mt: 2 }}>
-                      <Typography
+                      {/* Button */}
+                      <Button
+                        variant="contained"
+                        fullWidth
                         sx={{
-                          ...typography.bodyBase,
-                          fontFamily: "Fira Sans",
-                          fontWeight: 400,
-                          color: "#677489",
+                          mt: 3,
+                          backgroundColor: "#0b2d55",
+                          color: "white",
+                          textTransform: "none",
+                          fontWeight: 600,
+                          borderRadius: 2,
+                          py: 1,
+                          "&:hover": { backgroundColor: "#103766" },
                         }}
                       >
-                        View Details <EditIconButton id={p.ids[6]} />
-                      </Typography>
-                      <Typography
-                        sx={{
-                          ...typography.h5,
-                          fontWeight: 500,
-                          color: "#677489",
-                        }}
-                      >
-                        {p.details}
-                      </Typography>
-                    </Box>
-
-                    {/* Button */}
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      sx={{
-                        mt: 3,
-                        backgroundColor: "#0b2d55",
-                        color: "white",
-                        textTransform: "none",
-                        fontWeight: 600,
-                        borderRadius: 2,
-                        py: 1,
-                        "&:hover": { backgroundColor: "#103766" },
-                      }}
-                    >
-                      Check Availability
-                    </Button>
-                  </CardContent>
-                </Card>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <style>
-            {`
+                        Check Availability
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <style>
+              {`
               .swiper {
                 padding-bottom: 32px; /* space for dots */
               }
@@ -1770,684 +1821,687 @@ const RepairServices = () => {
                 background: #1a4dab;
               }
             `}
-          </style>
+            </style>
 
-        </Box>
+          </Box>
 
-        {/* 🔹 DESKTOP GRID */}
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
-          <Grid container spacing={4}>
-            {[
-              {
-                img: content.RS1062,
-                title: content.RS1063,
-                subtitle: content.RS1064,
-                price: content.RS1065,
-                lift: content.RS1066,
-                power: content.RS1067,
-                details: content.RS1068,
-                ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"],
-              },
-              {
-                img: content.RS1069,
-                title: content.RS1070,
-                subtitle: content.RS1071,
-                price: content.RS1072,
-                lift: content.RS1073,
-                power: content.RS1074,
-                details: content.RS1075,
-                ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"],
-              },
-              {
-                img: content.RS1076,
-                title: content.RS1077,
-                subtitle: content.RS1078,
-                price: content.RS1079,
-                lift: content.RS1080,
-                power: content.RS1081,
-                details: content.RS1082,
-                ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"],
-              },
-            ].map((p, idx) => (
-              <Grid item xs={12} sm={6} md={4} key={idx}>
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    boxShadow: 2,
-                    position: "relative",
-                    p: 2,
-                    bgcolor: "#fff",
-                  }}
-                >
-                  {/* Image Section */}
-                  <Box
+          {/* 🔹 DESKTOP GRID */}
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <Grid container spacing={4}>
+              {[
+                {
+                  img: content.RS1062,
+                  title: content.RS1063,
+                  subtitle: content.RS1064,
+                  price: content.RS1065,
+                  lift: content.RS1066,
+                  power: content.RS1067,
+                  details: content.RS1068,
+                  ids: ["RS1062", "RS1063", "RS1064", "RS1065", "RS1066", "RS1067", "RS1068"],
+                },
+                {
+                  img: content.RS1069,
+                  title: content.RS1070,
+                  subtitle: content.RS1071,
+                  price: content.RS1072,
+                  lift: content.RS1073,
+                  power: content.RS1074,
+                  details: content.RS1075,
+                  ids: ["RS1069", "RS1070", "RS1071", "RS1072", "RS1073", "RS1074", "RS1075"],
+                },
+                {
+                  img: content.RS1076,
+                  title: content.RS1077,
+                  subtitle: content.RS1078,
+                  price: content.RS1079,
+                  lift: content.RS1080,
+                  power: content.RS1081,
+                  details: content.RS1082,
+                  ids: ["RS1076", "RS1077", "RS1078", "RS1079", "RS1080", "RS1081", "RS1082"],
+                },
+              ].map((p, idx) => (
+                <Grid item xs={12} sm={6} md={4} key={idx}>
+                  <Card
                     sx={{
-                      position: "relative",
-                      borderRadius: 2,
+                      borderRadius: 3,
                       overflow: "hidden",
-                      mb: 2,
+                      height: '100%',
+                      boxShadow: 2,
+                      position: "relative",
+                      p: 2,
+                      bgcolor: "#fff",
                     }}
                   >
+                    {/* Image Section */}
                     <Box
-                      component="img"
-                      src={`https://cmsreflux.bexatm.com${p.img}`}
-                      alt={p.title}
                       sx={{
-                        width: "100%",
-                        height: 220,
-                        objectFit: "cover",
+                        position: "relative",
                         borderRadius: 2,
-                        display: "block",
-                      }}
-                    />
-
-                    {/* 🔹 Top-left Chips */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: 8,
-                        left: 8,
-                        display: "flex",
-                        gap: 1,
-                        flexWrap: "wrap",
+                        overflow: "hidden",
+                        mb: 2,
                       }}
                     >
-                      <Chip
-                        label="🔧 Available for Rent"
-                        size="small"
+                      <Box
+                        component="img"
+                        src={`https://cmsreflux.bexatm.com${p.img}`}
+                        alt={content?.[`${p.ids[0]}_ALT`] || p.title}
                         sx={{
-                          bgcolor: "#1b5e20",
-                          color: "white",
-                          fontSize: "13px",
-                          borderRadius: "1px",
-                          height: "24px",
+                          width: "100%",
+                          height: 220,
+                          objectFit: "cover",
+                          borderRadius: 2,
+                          display: "block",
                         }}
                       />
-                      <Chip
-                        label="🛡️ Safety Tested"
-                        size="small"
-                        sx={{
-                          padding: "10px",
-                          bgcolor: "#1976d2",
-                          marginLeft: "70px",
-                          color: "white",
-                          fontSize: "13px",
-                          borderRadius: "1px",
-                          height: "24px",
-                        }}
-                      />
-                    </Box>
 
-                    {/* 🔹 Edit Icon - bottom right corner of image */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        bottom: 8,
-                        right: 8,
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <EditIconButton id={p.ids[0]} type="I" />
-                    </Box>
-                  </Box>
-
-                  {/* Card Content */}
-                  <CardContent sx={{ p: 0 }}>
-                    {/* Title & Price */}
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                    >
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.h4,
-                            height: "62px",
-                            fontWeight: 400,
-                            color: "#0B121E",
-                          }}
-                        >
-                          {p.title} <EditIconButton id={p.ids[1]} />
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h6,
-                            fontWeight: 600,
-                            color: "#00000099",
-                          }}
-                        >
-                          {p.subtitle} <EditIconButton id={p.ids[2]} />
-                        </Typography>
-                      </Box>
-                      <Typography
+                      {/* 🔹 Top-left Chips */}
+                      <Box
                         sx={{
-                          ...typography.h5,
-                          fontWeight: 700,
-                          color: "#1A7B3F",
+                          position: "absolute",
+                          top: 8,
+                          left: 8,
+                          display: "flex",
+                          gap: 1,
+                          flexWrap: "wrap",
                         }}
                       >
-                        {p.price} <EditIconButton id={p.ids[3]} />
-                      </Typography>
-                    </Box>
-
-                    {/* Lift Capacity & Power */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: 2,
-                      }}
-                    >
-                      <Box>
-                        <Typography
+                        <Chip
+                          label="🔧 Available for Rent"
+                          size="small"
                           sx={{
-                            ...typography.bodyBase,
-                            fontFamily: "Fira Sans",
-                            fontWeight: 400,
-                            color: "#677489",
-                          }}
-                        >
-                          {p.lift} <EditIconButton id={p.ids[4]} />
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h5,
-                            fontWeight: 500,
-                            color: "#0E1626",
-                          }}
-                        >
-                          Lift Capacity
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography
-                          sx={{
-                            ...typography.bodyBase,
-                            fontFamily: "Fira Sans",
-                            fontWeight: 400,
-                            color: "#677489",
-                          }}
-                        >
-                          {p.power} <EditIconButton id={p.ids[5]} />
-                        </Typography>
-                        <Typography
-                          sx={{
-                            ...typography.h5,
-                            fontWeight: 500,
-                            color: "#0E1626",
-                          }}
-                        >
-                          Power Supply
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    {/* Details */}
-                    <Box sx={{ mt: 2 }}>
-                      <Typography
-                        sx={{
-                          ...typography.bodyBase,
-                          fontFamily: "Fira Sans",
-                          fontWeight: 400,
-                          color: "#677489",
-                        }}
-                      >
-                        View Details <EditIconButton id={p.ids[6]} />
-                      </Typography>
-                      <Typography
-                        sx={{
-                          ...typography.h5,
-                          fontWeight: 500,
-                          color: "#677489",
-                        }}
-                      >
-                        {p.details}
-                      </Typography>
-                    </Box>
-
-                    {/* Button */}
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      sx={{
-                        mt: 3,
-                        backgroundColor: "#0b2d55",
-                        color: "white",
-                        textTransform: "none",
-                        fontWeight: 600,
-                        borderRadius: 2,
-                        py: 1,
-                        "&:hover": { backgroundColor: "#103766" },
-                      }}
-                    >
-                      Check Availability
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-
-        {/* View All Link */}
-        <Box
-          sx={{
-            mt: 6,
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          <Typography
-            sx={{
-              ...typography.h3,
-              color: "#2F6FBA",
-              fontWeight: 600,
-              fontSize: "22px",
-              textDecoration: "underline",
-              cursor: "pointer",
-              "&:hover": {
-                color: "#174a99",
-              },
-            }}
-            onClick={() => navigate("/home/SellMagnet")}
-          >
-            {content.RS1083}
-          </Typography>
-          <EditIconButton id="RS1083" />
-        </Box>
-      </Box>
-
-
-      {/* FAQs Section */}
-      <Box sx={{ px: 2, py: 2 }}>
-        {/* Section Header */}
-        <Button
-          disableElevation
-          disableRipple
-          sx={{
-            color: "#2F6FBA",
-            backgroundColor: "#EAF3FC",
-            borderRadius: "20px",
-            height: "33px",
-            ml: 8,
-            boxShadow: "none",
-            px: 2,
-            display: "flex",
-            alignItems: "center",
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)",
-              boxShadow: "none",
-            },
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-            <Typography
-              sx={{
-                ...typography.bodySmall,
-                fontSize: "14px",
-                fontWeight: 400,
-                lineHeight: "150%",
-                letterSpacing: "0.14%",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {content.RS1084}
-            </Typography>
-            <EditIconButton id="RS1084" />
-          </Box>
-        </Button>
-
-        <Typography
-          sx={{
-            ml: 8,
-            ...typography.displayL,
-            color: "#1C2D4B",
-            fontWeight: "bold",
-          }}
-          variant="h3"
-          gutterBottom
-        >
-          {content.RS1085} <EditIconButton id="RS1085" />
-        </Typography>
-
-        <Typography
-          variant="h5"
-          sx={{
-            color: "#1C2D4B",
-            ...typography.h4,
-            ml: 8,
-            mb: 3,
-          }}
-        >
-          {content.RS1086} <EditIconButton id="RS1086" />
-        </Typography>
-
-        {/* Accordion Section */}
-        <Box sx={{ px: 8, py: 3 }}>
-          {rsFaqData.map((item, index) => (
-            <Accordion
-              key={index}
-              id={item.qId} // ⭐ required for scroll
-              expanded={expanded === index}
-              onChange={() => handleChange(index)}
-              disableGutters
-              elevation={0}
-              sx={{
-                backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
-                borderRadius: 2,
-                mb: 1,
-                px: 2,
-              }}
-            >
-              <AccordionSummary
-                expandIcon={
-                  <IconButton>
-                    {expanded === index ? (
-                      <RemoveIcon sx={{ color: "#1976d2" }} />
-                    ) : (
-                      <AddIcon sx={{ color: "#1976d2" }} />
-                    )}
-                  </IconButton>
-                }
-              >
-                <Typography sx={{ ...typography.h4, color: "#0E1109" }}>
-                  {item.question}
-                  <EditIconButton id={item.qId} />
-
-                  {/* DELETE FAQ */}
-                  {isAdmin &&
-                    <IconButton
-                      size="small"
-                      onClick={() => handleDeleteFAQ(item.qId, item.aId)}
-                      sx={{
-                        ml: 1,
-                        color: "#B71C1C",
-                        "&:hover": { backgroundColor: "#fbe9e7" },
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>}
-                </Typography>
-              </AccordionSummary>
-
-              <AccordionDetails>
-                <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }}>
-                  {item.answer}
-                  <EditIconButton id={item.aId} />
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-
-          {/* Add New FAQ Button */}
-          {isAdmin && (
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-              <Button
-                variant="contained"
-                onClick={handleAddRSFAQ}
-                sx={{
-                  backgroundColor: "#1C2D4B",
-                  color: "#fff",
-                  px: 3,
-                  py: 1,
-                  borderRadius: "8px",
-                  textTransform: "none",
-                  "&:hover": { backgroundColor: "#16233B" },
-                }}
-              >
-                <AddIcon /> Add New FAQ
-              </Button>
-            </Box>
-          )}
-        </Box>
-      </Box>
-
-      {/* Blogs Section */}
-      <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
-        {/* Section Header */}
-        <Button
-          disableElevation
-          disableRipple
-          sx={{
-            marginBottom: 2,
-            textTransform: "none",
-            fontSize: "0.8rem",
-            fontWeight: 500,
-            color: "#1a4dab",
-            backgroundColor: "rgba(36,121,233,0.08)",
-            borderRadius: "20px",
-            px: 2,
-            py: 0.5,
-            boxShadow: "none",
-            "&:hover": {
-              backgroundColor: "rgba(36,121,233,0.15)",
-              boxShadow: "none",
-            },
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 0.5,
-          }}
-        >
-          {content.RS1097}
-          <EditIconButton id="RS1097" />
-        </Button>
-
-        <Typography
-          sx={{
-            ...typography.displayL,
-            color: "#1C2D4B",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-          variant="h3"
-          fontWeight="bold"
-          gutterBottom
-        >
-          {content.RS1098}
-          <EditIconButton id="RS1098" />
-        </Typography>
-
-        <Typography
-          variant="h5"
-          sx={{
-            mb: 4,
-            color: "#1C2D4B",
-            ...typography.h4,
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          {content.RS1099}
-          <EditIconButton id="RS1099" />
-        </Typography>
-
-        {/* Blog Section */}
-        <Grid container spacing={3}>
-          {/* Featured Post */}
-          <Grid item xs={12} md={6}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: 3,
-                boxShadow: 0,
-                bgcolor: "#fafafa",
-                cursor: "pointer",
-              }}
-            >
-              <Box sx={{ position: "relative" }}>
-                <CardMedia
-                  component="img"
-                  image={blogData[0].image}
-                  alt={blogData[0].title}
-                  sx={{
-                    borderRadius: 3,
-                    width: "100%",
-                    height: { xs: 240, sm: 280, md: 300 },
-                    objectFit: "cover",
-                  }}
-                />
-                <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
-                  <EditIconButton id="RS1104" type="I" />
-                </Box>
-              </Box>
-
-              <CardContent>
-                <Typography
-                  sx={{
-                    ...typography?.h5,
-                    color: "#0E1109",
-                    fontSize: { xs: "1.2rem", md: "1.5rem" },
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                  }}
-                  gutterBottom
-                >
-                  {blogData[0].title}
-                  <EditIconButton id="RS1101" />
-                </Typography>
-                <Typography
-                  sx={{
-                    ...typography?.bodyBase,
-                    color: "#677489",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                  }}
-                >
-                  {blogData[0].author} <EditIconButton id="RS1102" /> •{" "}
-                  {blogData[0].date} <EditIconButton id="RS1103" />
-                </Typography>
-
-                <Link
-                  href="#"
-                  underline="none"
-                  sx={{
-                    color: "#1F77D6",
-                    ...typography?.bodyBasemedium,
-                    mt: 1,
-                    display: "inline-flex",
-                    alignItems: "center",
-                  }}
-                  onClick={() => navigate("/home/BlogDetails")}
-                >
-                  Discover More{" "}
-                  <ArrowForwardIosIcon
-                    sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
-                  />
-                </Link>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Other Posts */}
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} direction="column">
-              {blogData.slice(1).map((item, idx) => {
-                const base = 1106 + idx * 4; // auto increment RS keys per card
-                return (
-                  <Grid item key={idx}>
-                    <Card
-                      sx={{
-                        display: "flex",
-                        flexDirection: { xs: "row", sm: "row" },
-                        alignItems: "center",
-                        borderRadius: 3,
-                        px: { xs: 1, md: 2 },
-                        py: { xs: 1, md: 1.5 },
-                        bgcolor: "#fdfdfd",
-                        boxShadow: 0,
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Box sx={{ position: "relative" }}>
-                        <CardMedia
-                          component="img"
-                          image={item.image}
-                          alt={item.title}
-                          sx={{
-                            width: { xs: 100, sm: 120, md: 130 },
-                            height: { xs: 100, sm: 120, md: 141 },
-                            borderRadius: 2,
-                            objectFit: "cover",
-                            mr: 2,
+                            bgcolor: "#1b5e20",
+                            color: "white",
+                            fontSize: "13px",
+                            borderRadius: "1px",
+                            height: "24px",
                           }}
                         />
-                        <Box sx={{ position: "absolute", bottom: 6, right: 6 }}>
-                          <EditIconButton id={`RS${base + 3}`} type="I" />
+                        <Chip
+                          label="🛡️ Safety Tested"
+                          size="small"
+                          sx={{
+                            padding: "10px",
+                            bgcolor: "#1976d2",
+                            marginLeft: "70px",
+                            color: "white",
+                            fontSize: "13px",
+                            borderRadius: "1px",
+                            height: "24px",
+                          }}
+                        />
+                      </Box>
+
+                      {/* 🔹 Edit Icon - bottom right corner of image */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          bottom: 8,
+                          right: 8,
+                          borderRadius: "50%",
+                        }}
+                      >
+                        <EditIconButton id={p.ids[0]} type="I" />
+                      </Box>
+                    </Box>
+
+                    {/* Card Content */}
+                    <CardContent sx={{ p: 0 }}>
+                      {/* Title & Price */}
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                      >
+                        <Box>
+                          <Typography
+                            sx={{
+                              ...typography.h4,
+                              //height: "50px",
+                              fontWeight: 400,
+                              color: "#0B121E",
+                            }}
+                          >
+                            {p.title} <EditIconButton id={p.ids[1]} />
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ...typography.h6,
+                              fontWeight: 600,
+                              color: "#00000099",
+                            }}
+                          >
+                            {p.subtitle} <EditIconButton id={p.ids[2]} />
+                          </Typography>
+                        </Box>
+                        <Typography
+                          sx={{
+                            ...typography.h5,
+                            fontWeight: 700,
+                            color: "#1A7B3F",
+                          }}
+                        >
+                          {p.price} <EditIconButton id={p.ids[3]} />
+                        </Typography>
+                      </Box>
+
+                      {/* Lift Capacity & Power */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          mt: 2,
+                        }}
+                      >
+                        <Box>
+                          <Typography
+                            sx={{
+                              ...typography.bodyBase,
+                              fontFamily: "Fira Sans",
+                              fontWeight: 400,
+                              color: "#677489",
+                            }}
+                          >
+                            {p.lift} <EditIconButton id={p.ids[4]} />
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ...typography.h5,
+                              fontWeight: 500,
+                              color: "#0E1626",
+                            }}
+                          >
+                            Lift Capacity
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Typography
+                            sx={{
+                              ...typography.bodyBase,
+                              fontFamily: "Fira Sans",
+                              fontWeight: 400,
+                              color: "#677489",
+                            }}
+                          >
+                            {p.power} <EditIconButton id={p.ids[5]} />
+                          </Typography>
+                          <Typography
+                            sx={{
+                              ...typography.h5,
+                              fontWeight: 500,
+                              color: "#0E1626",
+                            }}
+                          >
+                            Power Supply
+                          </Typography>
                         </Box>
                       </Box>
 
-                      <Box sx={{ flex: 1 }}>
+                      {/* Details */}
+                      <Box sx={{ mt: 2 }}>
                         <Typography
                           sx={{
-                            ...typography?.h4,
-                            color: "#0E1109",
-                            fontSize: { xs: "0.95rem", sm: "1.1rem" },
-                            mb: 0.5,
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                          }}
-                        >
-                          {item.title}
-                          <EditIconButton id={`RS${base}`} />
-                        </Typography>
-
-                        <Typography
-                          sx={{
-                            ...typography?.bodyBase,
+                            ...typography.bodyBase,
+                            fontFamily: "Fira Sans",
+                            fontWeight: 400,
                             color: "#677489",
-                            fontSize: { xs: "0.75rem", sm: "0.85rem" },
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
                           }}
                         >
-                          {item.author} <EditIconButton id={`RS${base + 1}`} />{" "}
-                          • {item.date} <EditIconButton id={`RS${base + 2}`} />
+                          View Details <EditIconButton id={p.ids[6]} />
                         </Typography>
-
-                        <Link
-                          href="#"
-                          underline="none"
+                        <Typography
                           sx={{
-                            color: "#1F77D6",
-                            ...typography?.bodyBasemedium,
-                            mt: 0.5,
-                            fontSize: { xs: "0.75rem", sm: "0.85rem" },
-                            display: "inline-flex",
-                            alignItems: "center",
+                            ...typography.h5,
+                            fontWeight: 500,
+                            color: "#677489",
                           }}
-                          onClick={() => navigate("/home/Blogpost")}
                         >
-                          Discover More{" "}
-                          <ArrowForwardIosIcon
+                          {p.details}
+                        </Typography>
+                      </Box>
+
+                      {/* Button */}
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{
+                          mt: 3,
+                          backgroundColor: "#0b2d55",
+                          color: "white",
+                          textTransform: "none",
+                          fontWeight: 600,
+                          borderRadius: 2,
+                          py: 1,
+                          "&:hover": { backgroundColor: "#103766" },
+                        }}
+                      >
+                        Check Availability
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+
+          {/* View All Link */}
+          <Box
+            sx={{
+              mt: 6,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                ...typography.h3,
+                color: "#2F6FBA",
+                fontWeight: 600,
+                fontSize: "22px",
+                textDecoration: "underline",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "#174a99",
+                },
+              }}
+              onClick={() => navigate("/home/SellMagnet")}
+            >
+              {content.RS1083}
+            </Typography>
+            <EditIconButton id="RS1083" />
+          </Box>
+        </Box>
+
+
+        {/* FAQs Section */}
+        <Box sx={{ px: 2, py: 2 }}>
+          {/* Section Header */}
+          <Button
+            disableElevation
+            disableRipple
+            sx={{
+              color: "#2F6FBA",
+              backgroundColor: "#EAF3FC",
+              borderRadius: "20px",
+              height: "33px",
+              ml: 8,
+              boxShadow: "none",
+              px: 2,
+              display: "flex",
+              alignItems: "center",
+              "&:hover": {
+                backgroundColor: "rgba(36,121,233,0.15)",
+                boxShadow: "none",
+              },
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <Typography
+                sx={{
+                  ...typography.bodySmall,
+                  fontSize: "14px",
+                  fontWeight: 400,
+                  lineHeight: "150%",
+                  letterSpacing: "0.14%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {content.RS1084}
+              </Typography>
+              <EditIconButton id="RS1084" />
+            </Box>
+          </Button>
+
+          <Typography
+            sx={{
+              ml: 8,
+              ...typography.displayL,
+              color: "#1C2D4B",
+              fontWeight: "bold",
+            }}
+            variant="h3"
+            gutterBottom
+          >
+            {content.RS1085} <EditIconButton id="RS1085" />
+          </Typography>
+
+          <Typography
+            variant="h5"
+            sx={{
+              color: "#1C2D4B",
+              ...typography.h4,
+              ml: 8,
+              mb: 3,
+            }}
+          >
+            {content.RS1086} <EditIconButton id="RS1086" />
+          </Typography>
+
+          {/* Accordion Section */}
+          <Box sx={{ px: 8, py: 3 }}>
+            {rsFaqData.map((item, index) => (
+              <Accordion
+                key={index}
+                id={item.qId} // ⭐ required for scroll
+                expanded={expanded === index}
+                onChange={() => handleChange(index)}
+                disableGutters
+                elevation={0}
+                sx={{
+                  backgroundColor: expanded === index ? "#eaf3fb" : "#fdfdfd",
+                  borderRadius: 2,
+                  mb: 1,
+                  px: 2,
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={
+                    <IconButton>
+                      {expanded === index ? (
+                        <RemoveIcon sx={{ color: "#1976d2" }} />
+                      ) : (
+                        <AddIcon sx={{ color: "#1976d2" }} />
+                      )}
+                    </IconButton>
+                  }
+                >
+                  <Typography sx={{ ...typography.h4, color: "#0E1109" }}>
+                    {item.question}
+                    <EditIconButton id={item.qId} />
+
+                    {/* DELETE FAQ */}
+                    {isAdmin &&
+                      <IconButton
+                        size="small"
+                        onClick={() => handleDeleteFAQ(item.qId, item.aId)}
+                        sx={{
+                          ml: 1,
+                          color: "#B71C1C",
+                          "&:hover": { backgroundColor: "#fbe9e7" },
+                        }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>}
+                  </Typography>
+                </AccordionSummary>
+
+                <AccordionDetails>
+                  <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }}>
+                    {item.answer}
+                    <EditIconButton id={item.aId} />
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+
+            {/* Add New FAQ Button */}
+            {isAdmin && (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <Button
+                  variant="contained"
+                  onClick={handleAddRSFAQ}
+                  sx={{
+                    backgroundColor: "#1C2D4B",
+                    color: "#fff",
+                    px: 3,
+                    py: 1,
+                    borderRadius: "8px",
+                    textTransform: "none",
+                    "&:hover": { backgroundColor: "#16233B" },
+                  }}
+                >
+                  <AddIcon /> Add New FAQ
+                </Button>
+              </Box>
+            )}
+          </Box>
+        </Box>
+
+        {/* Blogs Section */}
+        <Box sx={{ px: { xs: 2, md: 8 }, py: { xs: 3, md: 6 } }}>
+          {/* Section Header */}
+          <Button
+            disableElevation
+            disableRipple
+            sx={{
+              marginBottom: 2,
+              textTransform: "none",
+              fontSize: "0.8rem",
+              fontWeight: 500,
+              color: "#1a4dab",
+              backgroundColor: "rgba(36,121,233,0.08)",
+              borderRadius: "20px",
+              px: 2,
+              py: 0.5,
+              boxShadow: "none",
+              "&:hover": {
+                backgroundColor: "rgba(36,121,233,0.15)",
+                boxShadow: "none",
+              },
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 0.5,
+            }}
+          >
+            {content.RS1097}
+            <EditIconButton id="RS1097" />
+          </Button>
+
+          <Typography
+            sx={{
+              ...typography.displayL,
+              color: "#1C2D4B",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+            variant="h3"
+            fontWeight="bold"
+            gutterBottom
+          >
+            {content.RS1098}
+            <EditIconButton id="RS1098" />
+          </Typography>
+
+          <Typography
+            variant="h5"
+            sx={{
+              mb: 4,
+              color: "#1C2D4B",
+              ...typography.h4,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            {content.RS1099}
+            <EditIconButton id="RS1099" />
+          </Typography>
+
+          {/* Blog Section */}
+          <Grid container spacing={3}>
+            {/* Featured Post */}
+            <Grid item xs={12} md={6}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: 3,
+                  boxShadow: 0,
+                  bgcolor: "#fafafa",
+                  cursor: "pointer",
+                }}
+              >
+                <Box sx={{ position: "relative" }}>
+                  <CardMedia
+                    component="img"
+                    image={blogData[0].image}
+                    alt={content?.[`RS1104_ALT`] || blogData[0].title}
+                    sx={{
+                      borderRadius: 3,
+                      width: "100%",
+                      height: { xs: 240, sm: 280, md: 300 },
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
+                    <EditIconButton id="RS1104" type="I" />
+                  </Box>
+                </Box>
+
+                <CardContent>
+                  <Typography
+                    sx={{
+                      ...typography?.h5,
+                      color: "#0E1109",
+                      fontSize: { xs: "1.2rem", md: "1.5rem" },
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                    gutterBottom
+                  >
+                    {blogData[0].title}
+                    <EditIconButton id="RS1101" />
+                  </Typography>
+                  <Typography
+                    sx={{
+                      ...typography?.bodyBase,
+                      color: "#677489",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    {blogData[0].author} <EditIconButton id="RS1102" /> •{" "}
+                    {blogData[0].date} <EditIconButton id="RS1103" />
+                  </Typography>
+
+                  <Link
+                    href="#"
+                    underline="none"
+                    sx={{
+                      color: "#1F77D6",
+                      ...typography?.bodyBasemedium,
+                      mt: 1,
+                      display: "inline-flex",
+                      alignItems: "center",
+                    }}
+                    onClick={() => navigate("/home/BlogDetails")}
+                  >
+                    Discover More{" "}
+                    <ArrowForwardIosIcon
+                      sx={{ ml: 0.5, color: "#1F77D6", fontSize: "0.9rem" }}
+                    />
+                  </Link>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Other Posts */}
+            <Grid item xs={12} md={6}>
+              <Grid container spacing={2} direction="column">
+                {blogData.slice(1).map((item, idx) => {
+                  const base = 1106 + idx * 4; // auto increment RS keys per card
+                  return (
+                    <Grid item key={idx}>
+                      <Card
+                        sx={{
+                          display: "flex",
+                          flexDirection: { xs: "row", sm: "row" },
+                          alignItems: "center",
+                          borderRadius: 3,
+                          px: { xs: 1, md: 2 },
+                          py: { xs: 1, md: 1.5 },
+                          bgcolor: "#fdfdfd",
+                          boxShadow: 0,
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Box sx={{ position: "relative" }}>
+                          <CardMedia
+                            component="img"
+                            image={item.image}
+                            alt={content?.[`RS${base + 3}_ALT`] || item.title}
                             sx={{
-                              ml: 0.5,
-                              color: "#1F77D6",
-                              fontSize: "0.8rem",
+                              width: { xs: 100, sm: 120, md: 130 },
+                              height: { xs: 100, sm: 120, md: 141 },
+                              borderRadius: 2,
+                              objectFit: "cover",
+                              mr: 2,
                             }}
                           />
-                        </Link>
-                      </Box>
-                    </Card>
-                  </Grid>
-                );
-              })}
+                          <Box sx={{ position: "absolute", bottom: 6, right: 6 }}>
+                            <EditIconButton id={`RS${base + 3}`} type="I" />
+                          </Box>
+                        </Box>
+
+                        <Box sx={{ flex: 1 }}>
+                          <Typography
+                            sx={{
+                              ...typography?.h4,
+                              color: "#0E1109",
+                              fontSize: { xs: "0.95rem", sm: "1.1rem" },
+                              mb: 0.5,
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                            }}
+                          >
+                            {item.title}
+                            <EditIconButton id={`RS${base}`} />
+                          </Typography>
+
+                          <Typography
+                            sx={{
+                              ...typography?.bodyBase,
+                              color: "#677489",
+                              fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                            }}
+                          >
+                            {item.author} <EditIconButton id={`RS${base + 1}`} />{" "}
+                            • {item.date} <EditIconButton id={`RS${base + 2}`} />
+                          </Typography>
+
+                          <Link
+                            href="#"
+                            underline="none"
+                            sx={{
+                              color: "#1F77D6",
+                              ...typography?.bodyBasemedium,
+                              mt: 0.5,
+                              fontSize: { xs: "0.75rem", sm: "0.85rem" },
+                              display: "inline-flex",
+                              alignItems: "center",
+                            }}
+                            onClick={() => navigate("/home/Blogpost")}
+                          >
+                            Discover More{" "}
+                            <ArrowForwardIosIcon
+                              sx={{
+                                ml: 0.5,
+                                color: "#1F77D6",
+                                fontSize: "0.8rem",
+                              }}
+                            />
+                          </Link>
+                        </Box>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
 
+
+      </Box>
       {/* Footer Section */}
       <Box>
         <Footer />

@@ -99,6 +99,7 @@ export default function RentServices() {
       if (!content[`HR${base}`]) continue;
       cards.push({
         img: content[`HR${base}`],
+        alt: content[`HR${base}_ALT`],
         title: content[`HR${base + 1}`],
         subtitle: content[`HR${base + 2}`],
         lift: content[`HR${base + 3}`],
@@ -151,7 +152,7 @@ export default function RentServices() {
     const payload = createNewCardPayload();
     try {
       const response = await fetch(
-        "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+        "https://refluxmagnets.com/API/data/UpdateContentV1.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -208,7 +209,7 @@ export default function RentServices() {
 
     try {
       const res = await fetch(
-        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        "https://refluxmagnets.com/API/data/DeleteContentV1.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -250,243 +251,261 @@ export default function RentServices() {
 
   /* -------------------- RENDER -------------------- */
   return (
-    <Box sx={{ px: { xs: 2, md: "5%" }, py: 7, bgcolor: "#fff" }}>
-      {/* Tag Line */}
+    <Box sx={{  }}>
+      {/* ✅ WIDTH LOCK WRAPPER */}
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",   // <<--- the fix
-          mb: 2,
-          gap: 1,
+          maxWidth: "1200px",
+          mx: "auto",
+          px: { xs: 2, md: 0 },
+          py: 7,
         }}
       >
-        {/* LEFT SIDE */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Button
-            disableRipple
-            sx={{
-              ...typography.bodySmall,
-              textTransform: "none",
-              fontWeight: 400,
-              color: "#1a4dab",
-              backgroundColor: "rgba(36,121,233,0.08)",
-              borderRadius: "20px",
-              px: 2,
-              py: 0.5,
-              "&:hover": { backgroundColor: "rgba(36,121,233,0.15)" },
-            }}
-          >
-            {content.HR1001}
-          </Button>
 
-          <EditIconButton id="HR1001" />
-        </Box>
-
-        {/* RIGHT SIDE */}
-        {isAdmin && (
-          <Button
-            startIcon={<AddIcon />}
-            onClick={handleAddRent}
-            sx={{
-              textTransform: "none",
-              border: "1px solid #1a4dab",
-              color: "#1a4dab",
-              borderRadius: "10px",
-              "&:hover": { borderColor: "#163a82", background: "#f5f8ff" },
-            }}
-          >
-            Add Rent
-          </Button>
-        )}
-      </Box>
-
-
-      {/* Heading */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-        <Typography sx={{ ...typography.h3RB, fontWeight: 700 }}>
-          {content.HR1002}
-        </Typography>
-        <EditIconButton id="HR1002" />
-      </Box>
-
-      {/* Description */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 5 }}>
-        <Typography
-          variant="h6"
-          sx={{ ...typography.h3B1, color: "text.secondary", fontWeight: 400 }}
+        {/* Tag Line */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",   // <<--- the fix
+            mb: 2,
+            gap: 1,
+          }}
         >
-          {content.HR1003}
-        </Typography>
-        <EditIconButton id="HR1003" />
-      </Box>
-
-      {/* Swiper */}
-
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={30}
-        slidesPerView={3}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
-          1280: { slidesPerView: 3 }, // optional clarity
-        }}
-      >
-
-        {services.map((p) => (
-          <SwiperSlide
-            key={p.ids[0]}
-            style={{ display: "flex" }}
-          >
-            <Card
+          {/* LEFT SIDE */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Button
+              disableRipple
               sx={{
-                borderRadius: 3,
-                width: "100%",          // ✅ let Swiper control width
-                maxWidth: "100%",
-                overflow: "hidden",
-                position: "relative",
-                p: 2,
-                bgcolor: "#FAFAFA",
-                border: "1px solid #e0e0e0",
-                transition: "all 0.4s ease",
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-
-                "&:hover": {
-                  backgroundColor: "#1C2D4B",
-                  color: "#fff",
-                  transform: "scale(1.01)",
-                },
-
-                "&:hover .MuiButton-root": {
-                  backgroundColor: "#b18028",
-                  color: "#fff",
-                },
+                ...typography.bodySmall,
+                textTransform: "none",
+                fontWeight: 400,
+                color: "#1a4dab",
+                backgroundColor: "rgba(36,121,233,0.08)",
+                borderRadius: "20px",
+                px: 2,
+                py: 0.5,
+                "&:hover": { backgroundColor: "rgba(36,121,233,0.15)" },
               }}
             >
+              {content.HR1001}
+            </Button>
 
-              <Box sx={{ position: "relative", borderRadius: 2, overflow: "hidden", mb: 2 }}>
-                <Box
-                  component="img"
-                  src={`https://cmsreflux.bexatm.com${p.img}`}
-                  alt={p.title}
-                  sx={{ width: "100%", height: 220, objectFit: "cover", borderRadius: 2 }}
-                />
+            <EditIconButton id="HR1001" />
+          </Box>
 
-                <Box sx={{ position: "absolute", top: 8, left: 10, display: "flex", gap: 1 }}>
-                  <Chip label="🔧 Available for Rent" size="small"
-                    sx={{
-                      borderRadius: '0px', bgcolor: "#1B7B4E",
-                      color: "white", fontSize: "14px",
-                      fontWeight: 400,
-                    }} />
-                  <Chip
-                    label="🛡️ Safety Tested"
-                    size="small"
-                    sx={{
-                      borderRadius: "0px",
-                      ml: { xs: 0, sm: "70px" },
-                      bgcolor: "#2F6FBA",
-                      color: "white",
-                      fontSize: "14px",
-                      fontWeight: 400,
-                    }}
-                  />
+          {/* RIGHT SIDE */}
+          {isAdmin && (
+            <Button
+              startIcon={<AddIcon />}
+              onClick={handleAddRent}
+              sx={{
+                textTransform: "none",
+                border: "1px solid #1a4dab",
+                color: "#1a4dab",
+                borderRadius: "10px",
+                "&:hover": { borderColor: "#163a82", background: "#f5f8ff" },
+              }}
+            >
+              Add Rent
+            </Button>
+          )}
+        </Box>
 
-                </Box>
 
-                <Box sx={{ position: "absolute", top: 8, right: 8 }}>
-                  <EditIconButton id={p.ids[0]} type="I " />
-                  <DeleteIconButton ids={p.ids} />
-                </Box>
-              </Box>
+        {/* Heading */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+          <Typography sx={{ ...typography.h3RB, fontWeight: 700 }}>
+            {content.HR1002}
+          </Typography>
+          <EditIconButton id="HR1002" />
+        </Box>
 
-              <CardContent
+        {/* Description */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 5 }}>
+          <Typography
+            variant="h6"
+            sx={{ ...typography.h3B1, color: "text.secondary", fontWeight: 400 }}
+          >
+            {content.HR1003}
+          </Typography>
+          <EditIconButton id="HR1003" />
+        </Box>
+
+        {/* Swiper */}
+
+        <Swiper
+          modules={[Pagination]}
+          spaceBetween={24}
+          slidesPerView={3}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            600: { slidesPerView: 2 },
+            960: { slidesPerView: 3 },
+            1200: { slidesPerView: 3 }, // optional clarity
+          }}
+        >
+
+          {services.map((p) => (
+            <SwiperSlide
+              key={p.ids[0]}
+              style={{ display: "flex" }}
+            >
+              <Card
                 sx={{
-                  p: 0,
-                  flexGrow: 1,
+                  borderRadius: 3,
+                  width: "100%",          // ✅ let Swiper control width
+                  maxWidth: 1200,
+                  overflow: "hidden",
+                  position: "relative",
+                  p: 2,
+                  bgcolor: "#FAFAFA",
+                  border: "1px solid #e0e0e0",
+                  transition: "all 0.4s ease",
+                  height: "100%",
                   display: "flex",
                   flexDirection: "column",
+                  justifyContent: "space-between",
+
+                  "&:hover": {
+                    backgroundColor: "#1C2D4B",
+                    color: "#fff",
+                    // transform: "scale(1.05)",
+                  },
+
+                  "&:hover .hover-text": {
+                    color: "#c5cbd6ff", // ← your desired hover color
+                  },
+
+                  "&:hover .MuiButton-root": {
+                    backgroundColor: "#b18028",
+                    color: "#fff",
+                  },
                 }}
               >
 
-                <Box display="flex" justifyContent="space-between">
-                  <Box>
-                    <Typography sx={{ ...typography.h4, fontWeight: 700 }}>
-                      {p.title} <EditIconButton id={p.ids[1]} />
-                    </Typography>
-                    <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
-                      {p.subtitle} <EditIconButton id={p.ids[2]} />
-                    </Typography>
+                <Box sx={{ position: "relative", borderRadius: 2, overflow: "hidden", mb: 2 }}>
+                  <Box
+                    component="img"
+                    src={`https://refluxmagnets.com${p.img}`}
+                     alt={p.alt || p.title}
+                    sx={{ width: "100%", height: 220, objectFit: "cover", borderRadius: 2 }}
+                  />
+
+                  <Box sx={{ position: "absolute", top: 8, left: 10, display: "flex", gap: 1 }}>
+                    <Chip label="🔧 Available for Rent" size="small"
+                      sx={{
+                        borderRadius: '0px', bgcolor: "#1B7B4E",
+                        color: "white", fontSize: "14px",
+                        fontWeight: 400,
+                      }} />
+                    <Chip
+                      label="🛡️ Safety Tested"
+                      size="small"
+                      sx={{
+                        borderRadius: "0px",
+                        ml: { xs: 0, sm: "70px" },
+                        bgcolor: "#2F6FBA",
+                        color: "white",
+                        fontSize: "14px",
+                        fontWeight: 400,
+                      }}
+                    />
+
                   </Box>
 
-                  <Box sx={{ textAlign: "right" }}>
-                    <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
-                      Start at
-                    </Typography>
-                    <Typography sx={{ ...typography.h5, fontWeight: 700, color: "#178270" }}>
-                      {p.price} <EditIconButton id={p.ids[6]} />
-                    </Typography>
+                  <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+                    <EditIconButton id={p.ids[0]} type="I " />
+                    <DeleteIconButton ids={p.ids} />
                   </Box>
                 </Box>
 
-                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-                  <Box>
-                    <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, color: "#677489" }}>Lift Capacity</Typography>
-                    <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626", fontSize: "20px" }}>
-                      {p.lift} <EditIconButton id={p.ids[3]} />
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, color: "#677489" }}>Power Supply</Typography>
-                    <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626", fontSize: "20px" }}>
-                      {p.power} <EditIconButton id={p.ids[4]} />
-                    </Typography>
-                  </Box>
-                </Box>
-
-                <Box sx={{ mt: 3 }}>
-                  <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, color: "#677489" }}>
-                    Size Options <EditIconButton id={p.ids[5]} />
-                  </Typography>
-                  <Typography sx={{ ...typography.h5, fontWeight: 500, color: "#0E1626", fontSize: "20px" }}>{p.details}</Typography>
-                </Box>
-
-                <Button
-                  fullWidth
+                <CardContent
                   sx={{
-                    width: "100%",
-                    height: "50px",
-                    mt: 3,
-                    backgroundColor: "#1C2D4B",
-                    color: "#fff",
-                    textTransform: "none",
-                    fontWeight: 600,
-                    borderRadius: 2,
+                    p: 0,
+                    flexGrow: 1,
+                    display: "flex",
+                    flexDirection: "column",
                   }}
-                  onClick={() => navigate("/home/CheckAvailabilty")}
                 >
-                  Check Availability
-                </Button>
-              </CardContent>
-            </Card>
-          </SwiperSlide>
-        ))}
-      </Swiper>
 
-      <style>
-        {`
-            .swiper {
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>
+                      <Typography sx={{ ...typography.h4, fontWeight: 700 }}>
+                        {p.title} <EditIconButton id={p.ids[1]} />
+                      </Typography>
+                      <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
+                        {p.subtitle} <EditIconButton id={p.ids[2]} />
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ textAlign: "right" }}>
+                      <Typography sx={{ ...typography.h6, fontWeight: 600 }}>
+                        Start at
+                      </Typography>
+                      <Typography sx={{ ...typography.h5, fontWeight: 700, color: "#178270" }}>
+                        {p.price} <EditIconButton id={p.ids[6]} />
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+                    <Box>
+                      <Typography className="hover-text" sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, color: "#677489" }}>Lift Capacity</Typography>
+                      <Typography sx={{ ...typography.h5, fontWeight: 500, fontSize: "20px" }}>
+                        {p.lift} <EditIconButton id={p.ids[3]} />
+                      </Typography>
+                    </Box>
+
+                    <Box>
+                      <Typography className="hover-text" sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, color: "#677489" }}>Power Supply</Typography>
+                      <Typography sx={{ ...typography.h5, fontWeight: 500, fontSize: "20px" }}>
+                        {p.power} <EditIconButton id={p.ids[4]} />
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Box sx={{ mt: 3 }}>
+                    <Typography className="hover-text" sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, color: "#677489" }}>
+                      Size Options <EditIconButton id={p.ids[5]} />
+                    </Typography>
+                    <Typography sx={{ ...typography.h5, fontWeight: 500, fontSize: "20px" }}>{p.details}</Typography>
+                  </Box>
+
+                  <Button
+                    fullWidth
+                    sx={{
+                      width: "100%",
+                      height: "50px",
+                      mt: 3,
+                      backgroundColor: "#1C2D4B",
+                      color: "#fff",
+                      textTransform: "none",
+                      fontWeight: 600,
+                      borderRadius: 2,
+                    }}
+                    onClick={() => navigate("/home/CheckAvailabilty")}
+                  >
+                    Check Availability
+                  </Button>
+                </CardContent>
+              </Card>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        <style>
+          {`
+           .swiper {
               width: 100%;
-              padding-bottom: 40px; /* space for progress bar */
-               overflow: visible !important;
+              max-width: 1200px;
+              mx:auto;
+              margin: 0 auto;
+              padding-bottom: 40px;
+              overflow: hidden;
             }
+
 
             /* Progress bar styling */
             .swiper-pagination-progressbar {
@@ -517,7 +536,8 @@ export default function RentServices() {
             }
 
           `}
-      </style>
+        </style>
+      </Box>
     </Box>
 
   );

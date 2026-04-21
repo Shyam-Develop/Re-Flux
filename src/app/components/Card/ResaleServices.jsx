@@ -64,7 +64,8 @@ const ResaleServices = () => {
       id: 1,
       title: content.HM1076,
       desc: content.HM1077,
-      img: `https://cmsreflux.bexatm.com${content.HM1078}`,
+      img: `https://refluxmagnets.com${content.HM1078}`,
+      alt: content.HM1078_ALT,
       titleId: "HM1076",
       descId: "HM1077",
       imgId: "HM1078",
@@ -73,7 +74,8 @@ const ResaleServices = () => {
       id: 2,
       title: content.HM1079,
       desc: content.HM1080,
-      img: `https://cmsreflux.bexatm.com${content.HM1081}`,
+      img: `https://refluxmagnets.com${content.HM1081}`,
+      alt: content.HM1081_ALT,
       titleId: "HM1079",
       descId: "HM1080",
       imgId: "HM1081",
@@ -167,6 +169,7 @@ const ResaleServices = () => {
             <CardMedia
               component="img"
               image={service.img}
+              alt={service.alt || service.title} 
               sx={{
                 height: { xs: 180, sm: 220, md: 260 },
                 padding: { xs: "20px", md: "30px" },
@@ -218,7 +221,7 @@ const ResaleServices = () => {
               {service.desc} <EditIconButton id={service.descId} />
             </Typography>
 
-            {hoveredCard === service.id && (
+            {/* {hoveredCard === service.id && (
               <Button
                 fullWidth
                 variant="contained"
@@ -235,7 +238,7 @@ const ResaleServices = () => {
                 {content.HM1082}
                 <EditIconButton id="HM1082" />
               </Button>
-            )}
+            )} */}
           </CardContent>
         </Card>
       </SwiperSlide>

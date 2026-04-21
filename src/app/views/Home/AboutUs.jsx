@@ -141,687 +141,707 @@ const AboutUS = () => {
         { title: content.AU1017, desc: content.AU1018 },
     ];
 
+    const cardHoverStyle = {
+        transition: "transform 0.25s ease",
+        "&:hover": {
+            transform: "scale(1.05)",
+        },
+    };
+
 
     return (
-        <Box
-            display="grid"
-            gap="20px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            sx={{
-                "& > div": {
-                    gridColumn: isNonMobile ? undefined : "span 4",
-                },
-                padding: "10px",
-            }}
-        >
-            <Box sx={{ gridColumn: "span 4" }}
-            // gap={"20px"}
-            // direction={"column"}
+        <>
+            <Box
+                display="grid"
+                gap="20px"
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                    "& > div": {
+                        gridColumn: isNonMobile ? undefined : "span 4",
+                    },
+                    padding: "10px",
+                    width: "100%",
+                    maxWidth: 1200,
+                    mx: "auto",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
             >
-                <AboutUsCard />
-
-                <ServicesSection />
-
-                {/* //About */}
-                <Box
-                    sx={{
-                        width: "100%",
-                        mx: "auto",
-                        py: { xs: 6, md: 10 },
-                        px: { xs: 2, md: 10 },
-                        backgroundColor: "#fff",
-                    }}
+                <Box sx={{ gridColumn: "span 4" }}
+                // gap={"20px"}
+                // direction={"column"}
                 >
-                    <Grid
-                        container
-                        spacing={{ xs: 4, md: 6 }}
-                        alignItems="flex-start"
-                        justifyContent="center"
+                    <AboutUsCard />
+
+                    <ServicesSection />
+
+                    {/* //About */}
+                    <Box
+                        sx={{
+                            width: "100%",
+                            mx: "auto",
+                            py: { xs: 6, md: 10 },
+                            px: { xs: 2, md: 10 },
+                            backgroundColor: "#fff",
+                        }}
                     >
-                        {/* LEFT SIDE */}
                         <Grid
-                            item
-                            xs={1}
-                            md={4}
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: { xs: "center", md: "flex-start" },
-                                justifyContent: { xs: "center", md: "center" },
-                                textAlign: { xs: "center", md: "left" },
-                                mt: { xs: 0, md: 25 }, // ✅ push left content slightly down
-                                paddingRight: "40px",
-                                position: "relative",
-                            }}
+                            container
+                            spacing={{ xs: 4, md: 6 }}
+                            alignItems="flex-start"
+                            justifyContent="center"
                         >
-                            <Typography
-                                sx={{
-                                    fontFamily: "'Space Grotesk', sans-serif",
-                                    fontSize: { xs: "28px", md: "32px" },
-                                    fontWeight: 700,
-                                    color: "#061D47",
-                                    mb: 1.5,
-                                }}
-                            >
-                                {content.AU1005}
-                                <EditIconButton id="AU1005" />
-                            </Typography>
-
-                            <Typography
-                                sx={{
-                                    fontFamily: "Fira Sans",
-                                    fontSize: "16px",
-                                    fontWeight: 400,
-                                    color: "#4b5563",
-                                    mb: 3,
-                                    maxWidth: 280,
-                                }}
-                            >
-                                {content.AU1006}
-                                <EditIconButton id="AU1006" />
-                            </Typography>
-
-                            <Button
-                                disableRipple
-                                sx={{
-                                    backgroundColor: "#00A99D",
-                                    color: "#fff",
-                                    textTransform: "none",
-                                    fontSize: "14px",
-                                    fontWeight: 500,
-                                    borderRadius: "20px",
-                                    px: 3,
-                                    py: 1,
-                                    "&:hover": { backgroundColor: "#009688" },
-                                }}
-                            >
-                                About Us
-                            </Button>
-
-                            {/* Arrow */}
-                            <Box
-                                component="img"
-                                src={about}
-                                alt="arrow"
-                                sx={{
-                                    width: 150,
-                                    position: "absolute",
-                                    bottom: -80,
-                                    right: { xs: "5%", md: "5%" },
-                                    display: { xs: "none", md: "block" },
-                                }}
-                            />
-                        </Grid>
-
-                        {/* RIGHT SIDE (CARDS) */}
-                        <Grid item xs={12} md={6}>
+                            {/* ================= LEFT SIDE ================= */}
                             <Grid
-                                container
-                                spacing={{ xs: 4, md: 2 }}
-                                sx={{ mt: { xs: 4, md: 2 } }} // ✅ moves cards slightly down
-                            >
-                                {/* LEFT COLUMN of cards */}
-                                <Grid item xs={12} md={6} >
-                                    <Box sx={{ display: "flex", width: "242px", height: "746px", flexDirection: "column", gap: 3 }}>
-                                        {/* Card 1 */}
-                                        <Box sx={{ width: "242px", height: "220px" }}>
-                                            <Typography sx={{ ...typography.h5, fontWeight: 500, fontSize: "18px", color: "#061D47" }}>
-                                                {content.AU1007}
-                                                <EditIconButton id="AU1007" />
-                                            </Typography>
-                                            <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", color: "#4b5563" }}>
-                                                {content.AU1008}
-                                                <EditIconButton id="AU1008" />
-                                            </Typography>
-                                            <Divider sx={{ mt: 3, border: "2px solid", borderColor: "#00A99D", width: "100%" }} />
-                                        </Box>
-
-                                        {/* Card 2 */}
-                                        <Box sx={{ width: "242px", height: "220px" }}>
-                                            <Typography sx={{ fontSize: "18px", ...typography.h5, fontWeight: 500, color: "#061D47" }}>
-                                                {content.AU1009}
-                                                <EditIconButton id="AU1009" />
-                                            </Typography>
-                                            <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", color: "#4b5563" }}>
-                                                {content.AU1010}
-                                                <EditIconButton id="AU1010" />
-                                            </Typography>
-                                            <Divider sx={{ mt: 3, border: "2px solid", borderColor: "#00A99D", width: "100%" }} />
-                                        </Box>
-
-                                        {/* Card 3 */}
-                                        <Box sx={{ width: "242px", height: "220px", }}>
-                                            <Typography sx={{ fontSize: "18px", ...typography.h5, fontWeight: 500, color: "#061D47" }}>
-                                                {content.AU1011}
-                                                <EditIconButton id="AU1011" />
-                                            </Typography>
-                                            <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", color: "#4b5563" }}>
-                                                {content.AU1012}
-                                                <EditIconButton id="AU1012" />
-                                            </Typography>
-                                            <Divider sx={{ mt: 3, border: "2px solid", borderColor: "#00A99D", width: "100%" }} />
-                                        </Box>
-                                    </Box>
-                                </Grid>
-
-                                {/* RIGHT COLUMN of cards */}
-                                <Grid item xs={12} md={6}>
-                                    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, mt: { xs: 0, md: 15 } }}>
-                                        {/* Card 4 */}
-                                        <Box sx={{ width: "242px", height: "220px" }}>
-                                            <Typography sx={{ fontSize: "18px", ...typography.h5, fontWeight: 500, color: "#061D47" }}>
-                                                {content.AU1013}
-                                                <EditIconButton id="AU1013" />
-                                            </Typography>
-                                            <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", color: "#4b5563" }}>
-                                                {content.AU1014}
-                                                <EditIconButton id="AU1014" />
-                                            </Typography>
-                                            <Divider sx={{ mt: 3, border: "2px solid", borderColor: "#00A99D", width: "100%" }} />
-                                        </Box>
-
-                                        {/* Card 5 */}
-                                        <Box sx={{ width: "242px", height: "220px" }}>
-                                            <Typography sx={{ fontSize: "18px", ...typography.h5, fontWeight: 500, color: "#061D47" }}>
-                                                {content.AU1015}
-                                                <EditIconButton id="AU1015" />
-                                            </Typography>
-                                            <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", color: "#4b5563" }}>
-                                                {content.AU1016}
-                                                <EditIconButton id="AU1016" />
-                                            </Typography>
-                                            <Divider sx={{ mt: 3, border: "2px solid", borderColor: "#00A99D", width: "100%" }} />
-                                        </Box>
-
-                                        {/* Card 6 */}
-                                        <Box sx={{ width: "242px", height: "220px" }}>
-                                            <Typography sx={{ fontSize: "18px", ...typography.h5, fontWeight: 500, color: "#061D47" }}>
-                                                {content.AU1017}
-                                                <EditIconButton id="AU1017" />
-                                            </Typography>
-                                            <Typography sx={{ ...typography.bodyBase, fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", color: "#4b5563" }}>
-                                                {content.AU1018}
-                                                <EditIconButton id="AU1018" />
-                                            </Typography>
-                                            <Divider sx={{ mt: 3, border: "2px solid", borderColor: "#00A99D", width: "100%" }} />
-                                        </Box>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Box>
-
-                <HowWeWork />
-                {/* OUR CAPABILITIES SECTiON */}
-
-                <AboutUsRepairServicesPageCard />
-                {/* Industry SECTiON */}
-
-                {/* //Industries we serve */}
-                <IndustriesSwiper />
-
-
-                {/* Our Brands Section */}
-
-                <Box sx={{ px: { xs: 2, md: 8 }, py: 6 }}>
-                    {/* 🔹 Heading */}
-                    <Typography
-                        sx={{
-                            ...typography.displayL,
-                            fontSize: { xs: "36px", md: "56px" },
-                            fontWeight: 700,
-                            color: "#1C2D4B",
-                            mb: 1,
-                        }}
-                    >
-                        {content.AU1079}
-                        <EditIconButton id="AU1079" />
-                    </Typography>
-
-                    {/* 🔹 Subheading */}
-                    <Typography
-                        sx={{
-                            ...typography.h4,
-                            fontWeight: 400,
-                            fontSize: { xs: "18px", md: "24px" },
-                            color: "#99A0AE",
-                            mb: 6,
-                        }}
-                    >
-                        {content.AU1080}
-                        <EditIconButton id="AU1080" />
-                    </Typography>
-
-                    {/* 🔹 Two Brands */}
-                    <Grid container spacing={4}>
-                        {/* Left Brand */}
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            sx={{
-                                borderRight: { md: "1px solid #E0E0E0" },
-                                pr: { md: 4 },
-                            }}
-                        >
-                            <Box display="flex" flexDirection="column" alignItems="flex-start">
-                                {/* Brand 1 Image */}
-                                <Box sx={{ position: "relative", marginLeft: "30%" }}>
-                                    <Box
-                                        component="img"
-                                        src={`https://cmsreflux.bexatm.com${content.AU1081}`}
-                                        alt="Electro Flux Logo"
-                                        sx={{ width: "151px", height: "158px", mb: 2 }}
-                                    />
-                                    <Box sx={{ position: "absolute", top: 0, right: -30 }}>
-                                        <EditIconButton id="AU1081" type="I" />
-                                    </Box>
-                                </Box>
-
-                                {/* Brand 1 Descriptions */}
-                                <Typography
-                                    sx={{
-                                        ...typography.bodyBase,
-                                        fontFamily: "'Fira Sans', sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "18px",
-                                        color: "#000000",
-                                        mb: 1,
-                                    }}
-                                >
-                                    {content.AU1082}
-                                    <EditIconButton id="AU1082" />
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        ...typography.bodyBase,
-                                        fontFamily: "'Fira Sans', sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "18px",
-                                        color: "#000000",
-                                        mb: 1,
-                                    }}
-                                >
-                                    {content.AU1083}
-                                    <EditIconButton id="AU1083" />
-                                </Typography>
-
-                                {/* Learn More */}
-                                <Box display="flex" alignItems="center">
-                                    <Link
-                                        href={content.AU1085 || "#"}
-                                        underline="none"
-                                        sx={{ color: "#2F6FBA", fontWeight: 600 }}
-                                    >
-                                        {content.AU1084}
-                                    </Link>
-                                    <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
-                                    <EditIconButton id="AU1084" />
-                                </Box>
-                            </Box>
-                        </Grid>
-
-                        {/* Right Brand */}
-                        <Grid item xs={12} md={6} sx={{ pl: { md: 4 } }}>
-                            <Box display="flex" flexDirection="column" alignItems="flex-start">
-                                {/* ReFlux Logo & Text */}
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: 2,
-                                        justifyContent: "center",
-                                        py: 7,
-                                        marginLeft: "30%",
-                                        position: "relative",
-                                    }}
-                                >
-                                    {/* SVG Icon or Image */}
-                                    <Box>
-                                        <RefluxSvg width={60} height={60} color="#00374C" />
-                                        <Box sx={{ position: "absolute", top: 20, right: -30 }}>
-                                            <EditIconButton id="AU1085" type="I" />
-                                        </Box>
-                                    </Box>
-
-                                    {/* Text */}
-                                    <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-                                        <Typography
-                                            sx={{
-                                                fontFamily: "Fira Sans, sans-serif",
-                                                fontWeight: 700,
-                                                fontSize: "30px",
-                                                color: "#00374C",
-                                                lineHeight: 1,
-                                            }}
-                                        >
-                                            ReFlux
-                                        </Typography>
-                                        <Typography
-                                            sx={{
-                                                fontFamily: "Fira Sans, sans-serif",
-                                                fontWeight: 400,
-                                                fontSize: "14px",
-                                                letterSpacing: "6px",
-                                                color: "#00374C",
-                                                mt: 0.5,
-                                            }}
-                                        >
-                                            MAGNETS
-                                        </Typography>
-                                    </Box>
-                                </Box>
-
-                                {/* ReFlux Descriptions */}
-                                <Typography
-                                    sx={{
-                                        ...typography.bodyBase,
-                                        fontFamily: "'Fira Sans', sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "18px",
-                                        color: "#000000",
-                                        mb: 1,
-                                    }}
-                                >
-                                    {content.AU1086}
-                                    <EditIconButton id="AU1086" />
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        ...typography.bodyBase,
-                                        fontFamily: "'Fira Sans', sans-serif",
-                                        fontWeight: 400,
-                                        fontSize: "18px",
-                                        color: "#000000",
-                                        mb: 1,
-                                    }}
-                                >
-                                    {content.AU1087}
-                                    <EditIconButton id="AU1087" />
-                                </Typography>
-
-                                {/* Learn More */}
-                                <Box display="flex" alignItems="center">
-                                    <Link
-                                        href={content.AU1092 || "#"}
-                                        underline="none"
-                                        sx={{ color: "#2F6FBA", fontWeight: 600 }}
-                                    >
-                                        {content.AU1088}
-                                    </Link>
-                                    <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
-                                    <EditIconButton id="AU1088" />
-                                </Box>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Box>
-
-
-                {/*CONTACT SECTION */}
-                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb", width: "95%", mx: "auto" }}>
-                    {/* 🔹 Heading */}
-                    <Typography
-                        sx={{
-                            ...typography.displayM,
-                            color: "#0C0F13",
-                            ml: { xs: 0, md: 8 },
-                            mt: { xs: 2, md: 5 },
-                            fontSize: { xs: "24px", md: typography.displayM.fontSize },
-                        }}
-                        variant="h3"
-                        fontWeight="bold"
-                        gutterBottom
-                    >
-                        {content.AU1093}
-                        <EditIconButton id="AU1093" />
-                    </Typography>
-
-                    <Grid container spacing={4} sx={{ ml: { xs: 0, md: 7 } }}>
-                        {/* 🔸 Left Section */}
-                        <Grid item xs={12} md={5}>
-                            <Paper
-                                elevation={0}
-                                sx={{
-                                    p: { xs: 2, sm: 3 },
-                                    borderRadius: 2,
-                                    backgroundColor: "#eaf0f8",
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        ...typography.h1,
-                                        fontSize: { xs: "20px", md: typography.h1.fontSize },
-                                        color: "#0E1109",
-                                    }}
-                                    gutterBottom
-                                >
-                                    {content.AU1094}
-                                    <EditIconButton id="AU1094" />
-                                </Typography>
-
-                                <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }} gutterBottom>
-                                    {content.AU1095}
-                                    <EditIconButton id="AU1095" />
-                                </Typography>
-
-                                {/* Contact Info */}
-                                <Box mt={2}>
-                                    <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
-                                        {content.AU1096}
-                                        <EditIconButton id="AU1096" />
-                                    </Typography>
-                                    <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
-                                        {content.AU1097}
-                                        <EditIconButton id="AU1097" />
-                                    </Typography>
-                                </Box>
-
-                                <Box mt={2}>
-                                    <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
-                                        {content.AU1098}
-                                        <EditIconButton id="AU1098" />
-                                    </Typography>
-                                    <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
-                                        {content.AU1099}
-                                        <EditIconButton id="AU1099" />
-                                    </Typography>
-                                </Box>
-
-                                <Box mt={2}>
-                                    <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
-                                        {content.AU1100}
-                                        <EditIconButton id="AU1100" />
-                                    </Typography>
-                                    <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
-                                        {content.AU1101}
-                                        <EditIconButton id="AU1101" />
-                                    </Typography>
-                                </Box>
-
-                                <Box mt={2}>
-                                    <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
-                                        {content.AU1102}
-                                        <EditIconButton id="AU1102" />
-                                    </Typography>
-                                    <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
-                                        {content.AU1103}
-                                        <EditIconButton id="AU1103" />
-                                    </Typography>
-                                </Box>
-                            </Paper>
-                        </Grid>
-
-                        {/* 🔸 Right Section - Form */}
-                        <Grid item xs={12} md={5}>
-                            <Paper elevation={2} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
-                                <Typography variant="h6" fontWeight={600} sx={{ fontSize: { xs: "18px", sm: "20px" } }}>
-                                    {content.AU1104}
-                                    <EditIconButton id="AU1104" />
-                                </Typography>
-
-                                <Box component="form" noValidate autoComplete="off">
-                                    <TextField fullWidth label="Company Name *" margin="normal" />
-                                    <TextField fullWidth label="Contact Person *" margin="normal" />
-                                    <TextField fullWidth label="Phone *" margin="normal" />
-                                    <TextField fullWidth label="Email" margin="normal" />
-
-                                    <TextField select fullWidth label="Enquiry For" margin="normal" defaultValue="">
-                                        <MenuItem value="Product">Product</MenuItem>
-                                        <MenuItem value="Service">Service</MenuItem>
-                                        <MenuItem value="Other">Other</MenuItem>
-                                    </TextField>
-
-                                    <TextField fullWidth multiline rows={4} label="Message" margin="normal" />
-
-                                    {/* File Upload Box */}
-                                    <Box
-                                        mt={2}
-                                        p={3}
-                                        border="2px dashed #ccc"
-                                        borderRadius={2}
-                                        textAlign="center"
-                                        color="text.secondary"
-                                        sx={{ fontSize: { xs: "12px", sm: "14px" } }}
-                                    >
-                                        {content.AU1105}
-                                        <EditIconButton id="AU1105" />
-                                        {" "}
-                                        <Button variant="text" sx={{ fontSize: "inherit" }}>
-                                            Browse
-                                        </Button>
-                                        <Typography variant="caption" display="block">
-                                            {content.AU1106}
-                                            <EditIconButton id="AU1106" />
-                                        </Typography>
-                                    </Box>
-
-                                    {/* Buttons */}
-                                    <Box mt={2}>
-                                        <Button
-                                            fullWidth
-                                            sx={{
-                                                color: "#111B2D",
-                                                justifyContent: "center",
-                                            }}
-                                            startIcon={
-                                                <WhatsAppIcon
-                                                    sx={{ borderRadius: "10px", backgroundColor: "#25D366", color: "#fff" }}
-                                                />
-                                            }
-                                        >
-                                            {content.AU1107}
-                                            <EditIconButton id="AU1107" />
-                                        </Button>
-                                    </Box>
-
-                                    <Box mt={2} sx={{ backgroundColor: "#2e8e7e3b", borderRadius: 20 }}>
-                                        <Button
-                                            fullWidth
-                                            sx={{
-                                                color: "#F7F9FC",
-                                                textTransform: "none",
-                                                fontWeight: 500,
-                                            }}
-                                        >
-                                            {content.AU1108}
-                                            <EditIconButton id="AU1108" />
-                                        </Button>
-                                    </Box>
-
-                                    <Box mt={2}>
-                                        <Button
-                                            fullWidth
-                                            variant="outlined"
-                                            sx={{
-                                                borderRadius: 20,
-                                                color: "#111B2D",
-                                                textTransform: "none",
-                                                fontWeight: 500,
-                                            }}
-                                        >
-                                            {content.AU1109}
-                                            <EditIconButton id="AU1109" />
-                                        </Button>
-                                    </Box>
-                                </Box>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Box>
-
-                {/*Location Section*/}
-                <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#fff" }}>
-                    {/* 🔹 Section Title */}
-                    <Typography sx={{ ...typography.h2, fontWeight: 600, fontSize: "32px" }} gutterBottom>
-                        {content.AU1110}
-                        <EditIconButton id="AU1110" />
-                    </Typography>
-
-                    <Grid container spacing={4} alignItems="center">
-                        {/* 🔸 Map Section */}
-                        <Grid item xs={12} md={5}>
-                            <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden", height: "300px" }} >
-                                <Box component="a" href={googleMapsUrl} target="_blank" rel="noopener noreferrer" sx={{ display: "block", width: "100%", height: "100%" }} >
-                                    <iframe title="location-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus" width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" >
-                                    </iframe>
-                                </Box>
-                            </Paper>
-                        </Grid>
-
-                        {/* 🔸 Address Section */}
-                        <Grid item xs={12} md={5}>
-                            <Box
+                                item
+                                xs={12}
+                                md={4}
                                 sx={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    alignItems: "center",
-                                    height: "100%",
+                                    alignItems: { xs: "center", md: "flex-start" },
+                                    justifyContent: "center",
+                                    textAlign: { xs: "center", md: "left" },
+                                    mt: { xs: 0, md: 25 },
+                                    pr: { xs: 0, md: "40px" },
+                                    position: "relative",
                                 }}
                             >
-                                <Box sx={{ textAlign: "left" }}>
-                                    <Typography
-                                        sx={{
-                                            ...typography.h2,
-                                            fontWeight: 600,
-                                            fontSize: "32px",
-                                            color: "#0A142F",
-                                            mb: 1,
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {content.AU1111}
-                                        <EditIconButton id="AU1111" />
-                                    </Typography>
+                                <Typography
+                                    sx={{
+                                        fontFamily: "'Space Grotesk', sans-serif",
+                                        fontSize: { xs: "28px", md: "32px" },
+                                        fontWeight: 600,
+                                        color: "#061D47",
+                                        mb: 1.5,
+                                        ...typography.h2
+                                    }}
+                                >
+                                    {content.AU1005}
+                                    <EditIconButton id="AU1005" />
+                                </Typography>
 
-                                    <Typography
-                                        sx={{
-                                            ...typography.h5,
-                                            fontWeight: 500,
-                                            fontSize: "20px",
-                                            color: "#0A142F",
-                                            marginLeft: "33%",
-                                        }}
-                                    >
-                                        {content.AU1112}
-                                        <EditIconButton id="AU1112" />
-                                    </Typography>
-                                </Box>
-                            </Box>
+                                <Typography
+                                    sx={{
+                                        fontFamily: "Fira Sans",
+                                        fontSize: "14px",
+                                        fontWeight: 400,
+                                        color: "#4b5563",
+                                        mb: 3,
+
+                                        maxWidth: 280,
+                                    }}
+                                >
+                                    {content.AU1006}
+                                    <EditIconButton id="AU1006" />
+                                </Typography>
+
+                                <Button
+                                    disableRipple
+                                    sx={{
+                                        backgroundColor: "#00A99D",
+                                        color: "#fff",
+                                        textTransform: "none",
+                                        fontSize: "14px",
+                                        fontWeight: 500,
+                                        borderRadius: "10px",
+                                        px: 3,
+                                        py: 1,
+                                        "&:hover": { backgroundColor: "#009688" },
+                                    }}
+                                >
+                                    About Us
+                                </Button>
+
+                                {/* Arrow */}
+                                <Box
+                                    component="img"
+                                    src={about}
+                                    alt="arrow"
+                                    sx={{
+                                        width: 150,
+                                        position: "absolute",
+                                        bottom: -80,
+                                        right: "5%",
+                                        display: { xs: "none", md: "block" }, // ✅ mobile hidden
+                                    }}
+                                />
+                            </Grid>
+
+                            {/* ================= RIGHT SIDE ================= */}
+                            <Grid item xs={12} md={6}>
+                                <Grid
+                                    container
+                                    spacing={{ xs: 4, md: 2 }}
+                                    sx={{ mt: { xs: 4, md: 2 } }}
+                                >
+                                    {/* ===== LEFT COLUMN CARDS ===== */}
+                                    <Grid item xs={12} md={6}>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                width: { xs: "100%", md: "242px" },
+                                                height: { xs: "auto", md: "746px" },
+                                                flexDirection: "column",
+                                                gap: 3,
+                                                alignItems: { xs: "center", md: "flex-start" },
+                                            }}
+                                        >
+                                            {/* CARD 1 */}
+                                            <Box sx={{ width: { xs: "100%", md: "242px" }, ...cardHoverStyle, height: { xs: "auto", md: "220px" } }}>
+                                                <Typography sx={{ ...typography.h5, fontSize: "20px", fontWeight: 500, color: "#061D47" }}>
+                                                    {content.AU1007}
+                                                    <EditIconButton id="AU1007" />
+                                                </Typography>
+                                                <Typography sx={{ ...typography.bodyBase, fontFamily: 'Fira sans', fontSize: "18px", color: "#4b5563" }}>
+                                                    {content.AU1008}
+                                                    <EditIconButton id="AU1008" />
+                                                </Typography>
+                                                <Divider sx={{ mt: 3, border: "2px solid #00A99D" }} />
+                                            </Box>
+
+                                            {/* CARD 2 */}
+                                            <Box sx={{ mt: 4, width: { xs: "100%", md: "242px" }, ...cardHoverStyle, height: { xs: "auto", md: "220px" } }}>
+                                                <Typography sx={{ ...typography.h5, fontSize: "20px", fontWeight: 500, color: "#061D47" }}>
+                                                    {content.AU1009}
+                                                    <EditIconButton id="AU1009" />
+                                                </Typography>
+                                                <Typography sx={{ ...typography.bodyBase, fontFamily: 'Fira sans', fontSize: "18px", color: "#4b5563" }}>
+                                                    {content.AU1010}
+                                                    <EditIconButton id="AU1010" />
+                                                </Typography>
+                                                <Divider sx={{ mt: 3, border: "2px solid #00A99D" }} />
+                                            </Box>
+
+                                            {/* CARD 3 */}
+                                            <Box sx={{ width: { xs: "100%", md: "242px" }, ...cardHoverStyle, height: { xs: "auto", md: "220px" } }}>
+                                                <Typography sx={{ ...typography.h5, fontSize: "20px", fontWeight: 500, color: "#061D47" }}>
+                                                    {content.AU1011}
+                                                    <EditIconButton id="AU1011" />
+                                                </Typography>
+                                                <Typography sx={{ ...typography.bodyBase, fontFamily: 'Fira sans', fontSize: "18px", color: "#4b5563" }}>
+                                                    {content.AU1012}
+                                                    <EditIconButton id="AU1012" />
+                                                </Typography>
+                                                <Divider sx={{ mt: 3, border: "2px solid #00A99D" }} />
+                                            </Box>
+                                        </Box>
+                                    </Grid>
+
+                                    {/* ===== RIGHT COLUMN CARDS ===== */}
+                                    <Grid item xs={12} md={6}>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: 3,
+                                                mt: { xs: 0, md: 15 },
+                                                alignItems: { xs: "center", md: "flex-start" },
+                                            }}
+                                        >
+                                            {[["AU1013", "AU1014"], ["AU1015", "AU1016"], ["AU1017", "AU1018"]].map(
+                                                ([title, body]) => (
+                                                    <Box
+                                                        key={title}
+                                                        sx={{
+                                                            width: { xs: "100%", md: "242px" },
+                                                            height: { xs: "auto", md: "220px" },
+                                                            ...cardHoverStyle,
+                                                        }}
+
+                                                    >
+                                                        <Typography sx={{ ...typography.h5, fontSize: "20px", fontWeight: 500, ...cardHoverStyle, color: "#061D47" }}>
+                                                            {content[title]}
+                                                            <EditIconButton id={title} />
+                                                        </Typography>
+                                                        <Typography sx={{ ...typography.bodyBase, fontFamily: 'Fira sans', fontSize: "18px", color: "#4b5563" }}>
+                                                            {content[body]}
+                                                            <EditIconButton id={body} />
+                                                        </Typography>
+                                                        <Divider sx={{ mt: 3, border: "2px solid #00A99D" }} />
+                                                    </Box>
+                                                )
+                                            )}
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Box>
+                    </Box>
 
-                {/* Footer Section */}
-                <Box >
-                    <Footer />
-                </Box>
 
+                    <HowWeWork />
+                    {/* OUR CAPABILITIES SECTiON */}
+
+                    <AboutUsRepairServicesPageCard />
+                    {/* Industry SECTiON */}
+
+                    {/* //Industries we serve */}
+                    <IndustriesSwiper />
+
+
+                    {/* Our Brands Section */}
+
+                    <Box sx={{ px: { xs: 2, md: 8 }, py: 6 }}>
+                        {/* 🔹 Heading */}
+                        <Typography
+                            sx={{
+                                ...typography.displayL,
+                                fontSize: { xs: "36px", md: "56px" },
+                                fontWeight: 700,
+                                color: "#1C2D4B",
+                                mb: 1,
+                            }}
+                        >
+                            {content.AU1079}
+                            <EditIconButton id="AU1079" />
+                        </Typography>
+
+                        {/* 🔹 Subheading */}
+                        <Typography
+                            sx={{
+                                ...typography.h4,
+                                fontWeight: 400,
+                                fontSize: { xs: "18px", md: "24px" },
+                                color: "#99A0AE",
+                                mb: 6,
+                            }}
+                        >
+                            {content.AU1080}
+                            <EditIconButton id="AU1080" />
+                        </Typography>
+
+                        {/* 🔹 Two Brands */}
+                        <Grid container spacing={4}>
+                            {/* Left Brand */}
+                            <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                sx={{
+                                    borderRight: { md: "1px solid #E0E0E0" },
+                                    pr: { md: 4 },
+                                }}
+                            >
+                                <Box display="flex" flexDirection="column" alignItems="flex-start">
+                                    {/* Brand 1 Image */}
+                                    <Box sx={{ position: "relative", marginLeft: "30%" }}>
+                                        <Box
+                                            component="img"
+                                            src={`https://refluxmagnets.com${content.AU1081}`}
+                                            alt="Electro Flux Logo"
+                                            sx={{ width: "151px", height: "158px", mb: 2 }}
+                                        />
+                                        <Box sx={{ position: "absolute", top: 0, right: -30 }}>
+                                            <EditIconButton id="AU1081" type="I" />
+                                        </Box>
+                                    </Box>
+
+                                    {/* Brand 1 Descriptions */}
+                                    <Typography
+                                        sx={{
+                                            ...typography.bodyBase,
+                                            fontFamily: "'Fira Sans', sans-serif",
+                                            fontWeight: 400,
+                                            fontSize: "18px",
+                                            color: "#000000",
+                                            mb: 1,
+                                        }}
+                                    >
+                                        {content.AU1082}
+                                        <EditIconButton id="AU1082" />
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            ...typography.bodyBase,
+                                            fontFamily: "'Fira Sans', sans-serif",
+                                            fontWeight: 400,
+                                            fontSize: "18px",
+                                            color: "#000000",
+                                            mb: 1,
+                                        }}
+                                    >
+                                        {content.AU1083}
+                                        <EditIconButton id="AU1083" />
+                                    </Typography>
+
+                                    {/* Learn More */}
+                                    <Box display="flex" alignItems="center">
+                                        <Link
+                                            href={content.AU1085 || "#"}
+                                            underline="none"
+                                            sx={{ color: "#2F6FBA", fontWeight: 600 }}
+                                        >
+                                            {content.AU1084}
+                                        </Link>
+                                        <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
+                                        <EditIconButton id="AU1084" />
+                                    </Box>
+                                </Box>
+                            </Grid>
+
+                            {/* Right Brand */}
+                            <Grid item xs={12} md={6} sx={{ pl: { md: 4 } }}>
+                                <Box display="flex" flexDirection="column" alignItems="flex-start">
+                                    {/* ReFlux Logo & Text */}
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 2,
+                                            justifyContent: "center",
+                                            py: 7,
+                                            marginLeft: "30%",
+                                            position: "relative",
+                                        }}
+                                    >
+                                        {/* SVG Icon or Image */}
+                                        <Box>
+                                            <RefluxSvg width={60} height={60} color="#00374C" />
+                                            <Box sx={{ position: "absolute", top: 20, right: -30 }}>
+                                                <EditIconButton id="AU1085" type="I" />
+                                            </Box>
+                                        </Box>
+
+                                        {/* Text */}
+                                        <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                                            <Typography
+                                                sx={{
+                                                    fontFamily: "Fira Sans, sans-serif",
+                                                    fontWeight: 700,
+                                                    fontSize: "30px",
+                                                    color: "#00374C",
+                                                    lineHeight: 1,
+                                                }}
+                                            >
+                                                ReFlux
+                                            </Typography>
+                                            <Typography
+                                                sx={{
+                                                    fontFamily: "Fira Sans, sans-serif",
+                                                    fontWeight: 400,
+                                                    fontSize: "14px",
+                                                    letterSpacing: "6px",
+                                                    color: "#00374C",
+                                                    mt: 0.5,
+                                                }}
+                                            >
+                                                MAGNETS
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+
+                                    {/* ReFlux Descriptions */}
+                                    <Typography
+                                        sx={{
+                                            ...typography.bodyBase,
+                                            fontFamily: "'Fira Sans', sans-serif",
+                                            fontWeight: 400,
+                                            fontSize: "18px",
+                                            color: "#000000",
+                                            mb: 1,
+                                        }}
+                                    >
+                                        {content.AU1086}
+                                        <EditIconButton id="AU1086" />
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            ...typography.bodyBase,
+                                            fontFamily: "'Fira Sans', sans-serif",
+                                            fontWeight: 400,
+                                            fontSize: "18px",
+                                            color: "#000000",
+                                            mb: 1,
+                                        }}
+                                    >
+                                        {content.AU1087}
+                                        <EditIconButton id="AU1087" />
+                                    </Typography>
+
+                                    {/* Learn More */}
+                                    <Box display="flex" alignItems="center">
+                                        <Link
+                                            href={content.AU1092 || "#"}
+                                            underline="none"
+                                            sx={{ color: "#2F6FBA", fontWeight: 600 }}
+                                        >
+                                            {content.AU1088}
+                                        </Link>
+                                        <ArrowRightAltIcon sx={{ ml: 0.5, color: "#2F6FBA" }} />
+                                        <EditIconButton id="AU1088" />
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
+
+                    {/*CONTACT SECTION */}
+                    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb", width: "95%", mx: "auto" }}>
+                        {/* 🔹 Heading */}
+                        <Typography
+                            sx={{
+                                ...typography.displayM,
+                                color: "#0C0F13",
+                                ml: { xs: 0, md: 8 },
+                                mt: { xs: 2, md: 5 },
+                                fontSize: { xs: "24px", md: typography.displayM.fontSize },
+                            }}
+                            variant="h3"
+                            fontWeight="bold"
+                            gutterBottom
+                        >
+                            {content.AU1093}
+                            <EditIconButton id="AU1093" />
+                        </Typography>
+
+                        <Grid container spacing={4} sx={{ ml: { xs: 0, md: 7 } }}>
+                            {/* 🔸 Left Section */}
+                            <Grid item xs={12} md={5}>
+                                <Paper
+                                    elevation={0}
+                                    sx={{
+                                        p: { xs: 2, sm: 3 },
+                                        borderRadius: 2,
+                                        backgroundColor: "#eaf0f8",
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            ...typography.h1,
+                                            fontSize: { xs: "20px", md: typography.h1.fontSize },
+                                            color: "#0E1109",
+                                        }}
+                                        gutterBottom
+                                    >
+                                        {content.AU1094}
+                                        <EditIconButton id="AU1094" />
+                                    </Typography>
+
+                                    <Typography sx={{ ...typography.bodyBase, color: "#0E1109" }} gutterBottom>
+                                        {content.AU1095}
+                                        <EditIconButton id="AU1095" />
+                                    </Typography>
+
+                                    {/* Contact Info */}
+                                    <Box mt={2}>
+                                        <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
+                                            {content.AU1096}
+                                            <EditIconButton id="AU1096" />
+                                        </Typography>
+                                        <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
+                                            {content.AU1097}
+                                            <EditIconButton id="AU1097" />
+                                        </Typography>
+                                    </Box>
+
+                                    <Box mt={2}>
+                                        <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
+                                            {content.AU1098}
+                                            <EditIconButton id="AU1098" />
+                                        </Typography>
+                                        <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
+                                            {content.AU1099}
+                                            <EditIconButton id="AU1099" />
+                                        </Typography>
+                                    </Box>
+
+                                    <Box mt={2}>
+                                        <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
+                                            {content.AU1100}
+                                            <EditIconButton id="AU1100" />
+                                        </Typography>
+                                        <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
+                                            {content.AU1101}
+                                            <EditIconButton id="AU1101" />
+                                        </Typography>
+                                    </Box>
+
+                                    <Box mt={2}>
+                                        <Typography sx={{ ...typography.bodyBasemedium, color: "#0E1109" }}>
+                                            {content.AU1102}
+                                            <EditIconButton id="AU1102" />
+                                        </Typography>
+                                        <Typography sx={{ ...typography.bodySmall, color: "#0E1109" }}>
+                                            {content.AU1103}
+                                            <EditIconButton id="AU1103" />
+                                        </Typography>
+                                    </Box>
+                                </Paper>
+                            </Grid>
+
+                            {/* 🔸 Right Section - Form */}
+                            <Grid item xs={12} md={5}>
+                                <Paper elevation={2} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
+                                    <Typography variant="h6" fontWeight={600} sx={{ fontSize: { xs: "18px", sm: "20px" } }}>
+                                        {content.AU1104}
+                                        <EditIconButton id="AU1104" />
+                                    </Typography>
+
+                                    <Box component="form" noValidate autoComplete="off">
+                                        <TextField fullWidth label="Company Name *" margin="normal" />
+                                        <TextField fullWidth label="Contact Person *" margin="normal" />
+                                        <TextField fullWidth label="Phone *" margin="normal" />
+                                        <TextField fullWidth label="Email" margin="normal" />
+
+                                        <TextField select fullWidth label="Enquiry For" margin="normal" defaultValue="">
+                                            <MenuItem value="Product">Product</MenuItem>
+                                            <MenuItem value="Service">Service</MenuItem>
+                                            <MenuItem value="Other">Other</MenuItem>
+                                        </TextField>
+
+                                        <TextField fullWidth multiline rows={4} label="Message" margin="normal" />
+
+                                        {/* File Upload Box */}
+                                        <Box
+                                            mt={2}
+                                            p={3}
+                                            border="2px dashed #ccc"
+                                            borderRadius={2}
+                                            textAlign="center"
+                                            color="text.secondary"
+                                            sx={{ fontSize: { xs: "12px", sm: "14px" } }}
+                                        >
+                                            {content.AU1105}
+                                            <EditIconButton id="AU1105" />
+                                            {" "}
+                                            <Button variant="text" sx={{ fontSize: "inherit" }}>
+                                                Browse
+                                            </Button>
+                                            <Typography variant="caption" display="block">
+                                                {content.AU1106}
+                                                <EditIconButton id="AU1106" />
+                                            </Typography>
+                                        </Box>
+
+                                        {/* Buttons */}
+                                        <Box mt={2}>
+                                            <Button
+                                                fullWidth
+                                                sx={{
+                                                    color: "#111B2D",
+                                                    justifyContent: "center",
+                                                }}
+                                                startIcon={
+                                                    <WhatsAppIcon
+                                                        sx={{ borderRadius: "10px", backgroundColor: "#25D366", color: "#fff" }}
+                                                    />
+                                                }
+                                            >
+                                                {content.AU1107}
+                                                <EditIconButton id="AU1107" />
+                                            </Button>
+                                        </Box>
+
+                                        <Box mt={2} sx={{ backgroundColor: "#2e8e7e3b", borderRadius: 20 }}>
+                                            <Button
+                                                fullWidth
+                                                sx={{
+                                                    color: "#F7F9FC",
+                                                    textTransform: "none",
+                                                    fontWeight: 500,
+                                                }}
+                                            >
+                                                {content.AU1108}
+                                                <EditIconButton id="AU1108" />
+                                            </Button>
+                                        </Box>
+
+                                        <Box mt={2}>
+                                            <Button
+                                                fullWidth
+                                                variant="outlined"
+                                                sx={{
+                                                    borderRadius: 20,
+                                                    color: "#111B2D",
+                                                    textTransform: "none",
+                                                    fontWeight: 500,
+                                                }}
+                                            >
+                                                {content.AU1109}
+                                                <EditIconButton id="AU1109" />
+                                            </Button>
+                                        </Box>
+                                    </Box>
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
+                    {/*Location Section*/}
+                    <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#fff" }}>
+                        {/* 🔹 Section Title */}
+                        <Typography sx={{ ...typography.h2, fontWeight: 600, fontSize: "32px" }} gutterBottom>
+                            {content.AU1110}
+                            <EditIconButton id="AU1110" />
+                        </Typography>
+
+                        <Grid container spacing={4} alignItems="center">
+                            {/* 🔸 Map Section */}
+                            <Grid item xs={12} md={5}>
+                                <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden", height: "300px" }} >
+                                    <Box component="a" href={googleMapsUrl} target="_blank" rel="noopener noreferrer" sx={{ display: "block", width: "100%", height: "100%" }} >
+                                        <iframe title="location-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.251785352883!2d-78.4766789!3d38.0293056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b38656c1bba22f%3A0xd8bda1d3b2f6613d!2s1112%20A%20Market%20St%20%23%20Ste%20B22%2C%20Charlottesville%2C%20VA%2022902!5e0!3m2!1sen!2sus!4v1633043300000!5m2!1sen!2sus" width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" >
+                                        </iframe>
+                                    </Box>
+                                </Paper>
+                            </Grid>
+
+                            {/* 🔸 Address Section */}
+                            <Grid item xs={12} md={5}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        height: "100%",
+                                    }}
+                                >
+                                    <Box sx={{ textAlign: "left" }}>
+                                        <Typography
+                                            sx={{
+                                                ...typography.h2,
+                                                fontWeight: 600,
+                                                fontSize: "32px",
+                                                color: "#0A142F",
+                                                mb: 1,
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            {content.AU1111}
+                                            <EditIconButton id="AU1111" />
+                                        </Typography>
+
+                                        <Typography
+                                            sx={{
+                                                ...typography.h5,
+                                                fontWeight: 500,
+                                                fontSize: "20px",
+                                                color: "#0A142F",
+                                                marginLeft: "33%",
+                                            }}
+                                        >
+                                            {content.AU1112}
+                                            <EditIconButton id="AU1112" />
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
+
+
+
+                </Box>
 
             </Box>
-
-        </Box>
+            {/* Footer Section */}
+            <Box >
+                <Footer />
+            </Box>
+        </>
     );
 
 

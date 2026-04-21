@@ -86,7 +86,7 @@ const Testimonials = ( ) => {
       <Grid container spacing={4}>
         {/* Left Section */}
         <Grid item xs={12} md={5} mt={18}>
-          <Typography sx={{ ...typography.displayL, color: "#232323", mb: 2 }}>
+          <Typography sx={{ ...typography.displayL, fontWeight:700, color: "#232323", mb: 2 }}>
             {content.HM1084} 
             
             <EditIconButton id="HM1084" />
@@ -137,7 +137,7 @@ const Testimonials = ( ) => {
                   }}
                 >
                   <CardContent>
-                    <Typography sx={{ ...typography.h3B, color: "#232323" }}>
+                    <Typography sx={{ ...typography.h3B, fontWeight:700, color: "#232323" }}>
                       {item.name}
                       <EditIconButton id={item.nameId} />
                     </Typography>

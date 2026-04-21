@@ -6,8 +6,13 @@ import {
   Typography,
   Paper,
   Alert,
+  IconButton,
+  InputAdornment
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -30,8 +35,7 @@ export default function LoginPage() {
     setLoginError("");
 
     if (!validate()) return;
-
-    if (username === "admin" && password === "admin123") {
+    if (username === "admin" && password === "R3flux@ch3nna!") {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("role", "admin");
       navigate("/");
@@ -43,6 +47,9 @@ export default function LoginPage() {
       setLoginError("Invalid username or password.");
     }
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+
 
   return (
     <Box
@@ -75,27 +82,43 @@ export default function LoginPage() {
         <Box component="form" onSubmit={handleLogin}>
           <TextField
             fullWidth
-            label="Username"
+            variant="outlined"
+            label="UserName"
             margin="normal"
-            value={username}
+            value={username}          // must be "" initially
             onChange={(e) => setUsername(e.target.value)}
             error={Boolean(errors.username)}
             helperText={errors.username}
           />
 
+
           <TextField
             fullWidth
-            type="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
             label="Password"
             margin="normal"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={Boolean(errors.password)}
             helperText={errors.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <Button
-            type="submit" 
+            type="submit"
             variant="contained"
             fullWidth
             sx={{

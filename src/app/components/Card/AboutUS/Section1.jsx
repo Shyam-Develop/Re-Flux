@@ -70,6 +70,7 @@ export default function ServicesSection() {
       title: content.SRV500101,
       descKey: "SRV500102",
       description: content.SRV500102,
+      path: "/home/RepairServicesPage",  
     },
     {
       imageKey: "SRV500105",
@@ -78,6 +79,7 @@ export default function ServicesSection() {
       title: content.SRV500106,
       descKey: "SRV500107",
       description: content.SRV500107,
+      path: "/home/CheckAvailabilty",  
     },
     {
       imageKey: "SRV500108",
@@ -86,8 +88,10 @@ export default function ServicesSection() {
       title: content.SRV500109,
       descKey: "SRV500110",
       description: content.SRV500110,
+      path: "/home/RefurbishedElectromagnet",  
     },
   ];
+
 
   return (
     <Box
@@ -120,17 +124,16 @@ export default function ServicesSection() {
                   fontWeight: 600,
                   fontSize: "48px",
                   color: "#1C2D4B",
-                  mb: 1,
                   textAlign: { xs: "center", md: "left" },
                 }}
               >
                 {content.SRV500201}
-                 <EditIconButton id="SRV500201" />
+                <EditIconButton id="SRV500201" />
               </Typography>
-             
+
             </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box >
               <Typography
                 variant="h6"
                 sx={{
@@ -138,35 +141,33 @@ export default function ServicesSection() {
                   color: "#1C2D4B",
                   fontWeight: 600,
                   textAlign: { xs: "center", md: "left" },
-                  mb: 1,
+                  mb:2
                 }}
               >
                 {content.SRV500202}
                 <EditIconButton id="SRV500202" />
               </Typography>
-              
-            </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+           
               <Typography
                 variant="body1"
                 sx={{
                   ...typography.h5,
                   color: "#6B768A",
                   textAlign: { xs: "center", md: "left" },
-                  mb: 6,
+                  
                 }}
               >
                 {content.SRV500203}
-                 <EditIconButton id="SRV500203" />
+                <EditIconButton id="SRV500203" />
               </Typography>
-             
+
             </Box>
           </>
         )}
 
         {location.pathname === "/contact-us" && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, }}>
             <Typography
               variant="h4"
               sx={{
@@ -180,7 +181,7 @@ export default function ServicesSection() {
               {content.SRV500204}
               <EditIconButton id="SRV500204" />
             </Typography>
-            
+
           </Box>
         )}
 
@@ -217,7 +218,7 @@ export default function ServicesSection() {
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box
                   component="img"
-                  src={`https://cmsreflux.bexatm.com${service.image}`}
+                  src={`https://refluxmagnets.com${service.image}`}
                   alt="service icon"
                   sx={{
                     width: "45px",
@@ -244,11 +245,23 @@ export default function ServicesSection() {
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <Typography
-                   sx={{ ...typography.h3, fontWeight: 600, fontSize: '28px', color: "#111827", mb: 1 }}
+                    onClick={() => navigate(service.path)}
+                    sx={{
+                      ...typography.h3,
+                      fontWeight: 600,
+                      fontSize: "28px",
+                      cursor: "pointer",
+                      color: "#111827",
+                      mb: 1,
+                      "&:hover": {
+                        color: "#5184beff",
+                      },
+                    }}
                   >
                     {service.title}
-                   <EditIconButton id={service.titleKey} />
+                    <EditIconButton id={service.titleKey} />
                   </Typography>
+
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -261,7 +274,7 @@ export default function ServicesSection() {
                   >
                     {service.description}
                     <EditIconButton id={service.descKey} />
-                  </Typography>                  
+                  </Typography>
                 </Box>
               </Box>
             </Box>

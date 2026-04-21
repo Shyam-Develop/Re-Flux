@@ -181,7 +181,7 @@ export default function FooterAlt() {
 
               <Box
                 component="img"
-                src={`https://cmsreflux.bexatm.com${content.CON200004}`}
+                src={`https://refluxmagnets.com${content.CON200004}`}
                 alt="Brand"
                 sx={{ width: "100px", height: "104.38px" }}
               />
@@ -212,7 +212,8 @@ export default function FooterAlt() {
             <Grid container spacing={6}>
               {/* Contact Section */}
               <Grid item xs={12} sm={6} sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
-                <Button variant="outlined" sx={{ ...styles.button, ...typography.h6 }}>
+                <Button variant="outlined" sx={{ ...styles.button, ...typography.h6 }}
+                onClick={() => navigate('/contact-us')}>
                   {content.CON200005}
                   {isAdmin && <EditIconButton id="CON200005" />}
                 </Button>

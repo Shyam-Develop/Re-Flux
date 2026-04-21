@@ -196,7 +196,7 @@ export default function SellRentServicesCard({ services }) {
     };
 
     const res = await fetch(
-      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      "https://refluxmagnets.com/API/data/UpdateContentV1.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -245,7 +245,7 @@ export default function SellRentServicesCard({ services }) {
 
     try {
       const res = await fetch(
-        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        "https://refluxmagnets.com/API/data/DeleteContentV1.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -286,7 +286,9 @@ export default function SellRentServicesCard({ services }) {
   return (
     <Box
       sx={{
-        width: { xs: "100%", md: "1440px" }, // full width on mobile
+        width: "100%",
+        maxWidth: 1200,
+        mx: "auto",
         height: { xs: "auto", md: "880px" },
         backgroundColor: "#f9fafb",
         px: { xs: 2, md: 0 },
@@ -328,15 +330,17 @@ export default function SellRentServicesCard({ services }) {
       </Typography>
 
       {/* Swiper */}
-      <Swiper
-        spaceBetween={16}
-        slidesPerView={1.1}
-        grabCursor
-        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-        breakpoints={{ 768: { slidesPerView: 3, spaceBetween: 0 } }}
-      >
+        <Swiper
+          slidesPerView="auto"
+          spaceBetween={10}
+          grabCursor
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+         
+        >
+
         {rentData.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} style={{ width: "440px" }}>
+            
             <Card
               id={`RC_${item.image.id.replace("RR", "")}`}
               sx={{
@@ -369,8 +373,8 @@ export default function SellRentServicesCard({ services }) {
               >
                 <CardMedia
                   component="img"
-                  image={`https://cmsreflux.bexatm.com${item.image.value}`}
-                  alt={item.title.value}
+                  image={`https://refluxmagnets.com${item.image.value}`}
+                 alt={content?.[`${item.image.id}_ALT`] || item.title.value}
                   sx={{
                     width: { xs: "100%", md: "395px" },
                     height: { xs: "220px", md: "240px" },

@@ -2,7 +2,7 @@
 SetEnv MAINTENANCE_MODE true
 
 <IfModule mod_rewrite.c>
-  RewriteEngine Off
+  RewriteEngine On
   RewriteBase /
 
   # Maintenance Mode Redirect

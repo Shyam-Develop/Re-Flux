@@ -162,7 +162,7 @@ const HomeVideoCard = ({
         try {
           // 1) Upload file
           const uploadRes = await fetch(
-            "https://cmsreflux.bexatm.com/API/VideoUpload.php",
+            "https://refluxmagnets.com/API/VideoUpload.php",
             { method: "POST", body: formData }
           );
           const uploadData = await uploadRes.json();
@@ -189,7 +189,7 @@ const HomeVideoCard = ({
 
           // 2) Update JSON using your actual CMS endpoint
           const updateRes = await fetch(
-            `https://cmsreflux.bexatm.com/API/ContentManageSysV1.php?contentId=Home`,
+            `https://refluxmagnets.com/API/ContentManageSysV1.php?contentId=Home`,
             {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
@@ -272,7 +272,7 @@ const HomeVideoCard = ({
           playsInline
         >
           <source
-            src={`https://cmsreflux.bexatm.com/API/images/${content.HV1001}`}
+            src={`https://refluxmagnets.com/API/images/${content.HV1001}`}
             type="video/mp4"
           />
         </video>
@@ -391,7 +391,7 @@ const HomeVideoCard = ({
           </Box>
 
           {/* Extra Link */}
-          <Typography
+          {/* <Typography
             sx={{
               fontWeight: 500,
               textDecoration: "underline",
@@ -404,7 +404,7 @@ const HomeVideoCard = ({
           >
             {content["HM2042"]}
             <EditIconButton id="HM2042" />
-          </Typography>
+          </Typography> */}
 
           {/* Small Cards Row */}
           <Box sx={{ display: "flex", gap: 2, mb: 3, mt: 3 }}>
@@ -512,7 +512,9 @@ const HomeVideoCard = ({
             top: "0%",
             right: "2%",
             width: "370px",
-            height: "600px",
+            height: "auto",        
+            maxHeight: "150%",     
+            overflowY: "auto",
             borderRadius: 1,
             boxShadow: 3,
             zIndex: 2,

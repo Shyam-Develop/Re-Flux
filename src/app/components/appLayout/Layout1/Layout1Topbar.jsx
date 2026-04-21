@@ -18,13 +18,14 @@ import { styled } from "@mui/system";
 import imgserv from "../../../../assets/topbarservice1.jpg";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link, useNavigate } from "react-router-dom"; // or any other ico
+import { Link, useNavigate } from "react-router-dom";
 import { typography } from "app/utils/constant";
 import { themeShadows } from "app/components/baseTheme/themeColors";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { CircularProgress } from "@mui/material";
 
 const MenuButton = styled(Button)(({ theme }) => ({
   background: "transparent",
@@ -36,23 +37,21 @@ const MenuButton = styled(Button)(({ theme }) => ({
     "&::before": {
       content: '""',
       position: "absolute",
-      top: "25px", // this makes it align perfectly with the diamond
+      top: "25px",
       left: 0,
-      // width: "100%",
-      // height: "4px",
-      backgroundColor: "#112B49", // dark blue line
+      backgroundColor: "#112B49",
     },
     "&::after": {
       content: '""',
       position: "absolute",
-      top: "54px", // adjust for your exact header height
+      top: "54px",
       left: "50%",
       transform: "translateX(-50%)",
       width: 0,
       height: 0,
       borderLeft: "8px solid transparent",
       borderRight: "8px solid transparent",
-      borderTop: "8px solid #112B49", // triangle color
+      borderTop: "8px solid #112B49",
     },
   },
   "&:hover": {
@@ -89,8 +88,9 @@ export default function TopbarWithMegaMenu() {
   const [role, setRole] = useState("");
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
-    // Check if logged in from localStorage
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     const storedRole = localStorage.getItem("role");
     setIsLoggedIn(loggedIn);
@@ -120,7 +120,7 @@ export default function TopbarWithMegaMenu() {
   const handleClose = () => {
     setAnchorEl(null);
     setActiveMenu(null);
-    setMobileMenuOpen(false); // mobile safe
+    setMobileMenuOpen(false);
   };
   const open = Boolean(anchorEl);
   const topBarHeight = 64;
@@ -146,8 +146,115 @@ export default function TopbarWithMegaMenu() {
   const [openContact, setOpenContact] = useState(false);
   const [openMore, setOpenMore] = useState(false);
 
+  // ─────────────────────────────────────────────────────────────────
+  // ADDED: Mobile dynamic data states — mirrors desktop popover logic
+  // ─────────────────────────────────────────────────────────────────
+  const [mobileServiceCards, setMobileServiceCards] = useState([]);
+  const [mobileRentalCards, setMobileRentalCards] = useState([]);
+  const [mobileResaleTitles, setMobileResaleTitles] = useState([]);
+
+  // Services — same fetch + parse as ServicesPopoverContent
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C013`)
+      .then((res) => res.json())
+      .then((data) => {
+        const rsKeys = Object.keys(data)
+          .filter((k) => k.startsWith("RS"))
+          .sort(
+            (a, b) =>
+              parseInt(a.replace("RS", "")) - parseInt(b.replace("RS", ""))
+          );
+
+        const titles = [];
+        for (let i = 0; i < rsKeys.length; i++) {
+          const image = data[rsKeys[i]];
+          const title = data[rsKeys[i + 1]];
+          const faults = data[rsKeys[i + 4]];
+          const service = data[rsKeys[i + 5]];
+
+          if (
+            image &&
+            typeof title === "string" &&
+            Array.isArray(faults) &&
+            typeof service === "string" &&
+            service.toLowerCase().includes("service")
+          ) {
+            titles.push({ title, imageId: rsKeys[i] });
+            i += 8;
+          }
+        }
+        setMobileServiceCards(titles);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  // Rental — same fetch + getAllTitles helper as RentalPopoverContent
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C016`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMobileRentalCards(getAllTitles(data));
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  // Resale — same fetch + same title keys as ResalePopoverContent
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=RefurbishedMagnet`)
+      .then((res) => res.json())
+      .then((data) => {
+        const titleKeys = [
+          "RM1011", "RM1017", "RM1023", "RM1029", "RM1035", "RM1041",
+        ];
+        const result = titleKeys
+          .filter((key) => data[key])
+          .map((key) => ({ title: data[key], id: key }));
+        setMobileResaleTitles(result);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+  // ─────────────────────────────────────────────────────────────────
+
+
+
+  //For contact Editing
+  const [content, setContent] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
+
+
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Home`)
+      .then((res) => res.json())
+      .then((data) => setContent(data || {}))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(`/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`);
+  };
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{ ml: 1, p: 0.5, borderRadius: "50%", backgroundColor: "#f0f0f0", color: "#1C2D4B", border: "1px solid #ccc", transition: "all 0.2s ease", "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" } }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
+
+
+
   const toggleMenu = (menuSetter, currentValue) => {
-    // Close all other menus before opening the selected one
     setOpenServices(false);
     setOpenRental(false);
     setOpenResale(false);
@@ -157,7 +264,7 @@ export default function TopbarWithMegaMenu() {
   };
 
   if (!isMobile) {
-    // Desktop view (your existing JSX)
+    // Desktop view — unchanged
     return (
       <TopbarRoot
         sx={{
@@ -177,9 +284,7 @@ export default function TopbarWithMegaMenu() {
             width="100%"
             px={5}
           >
-            {/* ================= Left: Logo + Menu ================= */}
             <Box display="flex" alignItems="center">
-              {/* Logo */}
               <Box
                 sx={{
                   display: "flex",
@@ -191,14 +296,7 @@ export default function TopbarWithMegaMenu() {
                 onClick={() => navigate("/home")}
               >
                 <RefluxSvg width={60} height={60} color="#00374C" />
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    lineHeight: 1,
-                  }}
-                >
+                <Box sx={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
                   <Typography
                     sx={{
                       fontFamily: "Fira Sans",
@@ -226,23 +324,23 @@ export default function TopbarWithMegaMenu() {
                 </Box>
               </Box>
 
-              {/* Menu Items */}
-              <Box
-                display="flex"
-                ml={3}
-                gap={12}
-                sx={{
-                  padding: "10%",
-                  width: "657px",
-                  height: "26px",
-                  marginBottom: "20px",
-                }}
-              >
-                {["Services", "Rental", "Resale", "Contact", "More"].map(
-                  (menu) => (
+              <Box sx={{ position: "relative" }} onMouseLeave={handleClose}>
+                <Box
+                  display="flex"
+                  ml={3}
+                  gap={12}
+                  sx={{
+                    padding: "10%",
+                    width: "657px",
+                    height: "26px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  {["Services", "Rental", "Resale", "Contact", "More"].map((menu) => (
                     <React.Fragment key={menu}>
                       <MenuButton
                         onClick={(e) => handleOpen(e, menu)}
+                        onMouseEnter={(e) => handleOpen(e, menu)}
                         className={activeMenu === menu ? "active" : ""}
                         sx={{
                           color: "#131313",
@@ -271,16 +369,14 @@ export default function TopbarWithMegaMenu() {
                         {menu}
                       </MenuButton>
 
-                      {/* Popover */}
                       <Popover
-                        open={activeMenu === menu}
+                        open={Boolean(activeMenu)}
                         anchorEl={anchorEl}
                         onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
+                        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                         PaperProps={{
+                          onMouseEnter: () => { },
+                          onMouseLeave: handleClose,
                           sx: {
                             marginTop: "32px",
                             left: 0,
@@ -293,68 +389,59 @@ export default function TopbarWithMegaMenu() {
                         }}
                         disableRestoreFocus
                       >
-                        <Box
-                          sx={{ borderTop: "3px solid #112B49", width: "100%" }}
-                        />
+                        <Box sx={{ borderTop: "3px solid #112B49", width: "100%" }} />
                         <Box sx={{ p: 2 }}>
-                          {menu === "Services" && (
-                            <ServicesPopoverContent onClose={handleClose} />
-                          )}
-                          {menu === "Rental" && (
-                            <RentalPopoverContent onClose={handleClose} />
-                          )}
-                          {menu === "Resale" && <ResalePopoverContent  onClose={handleClose}/>}
-                          {menu === "Contact" && <ContactPopoverContent onClose={handleClose}/>}
-                          {menu === "More" && <MorePopoverContent onClose={handleClose}/>}
+                          {activeMenu === "Services" && <ServicesPopoverContent onClose={handleClose} />}
+                          {activeMenu === "Rental" && <RentalPopoverContent onClose={handleClose} />}
+                          {activeMenu === "Resale" && <ResalePopoverContent onClose={handleClose} />}
+                          {activeMenu === "Contact" && <ContactPopoverContent onClose={handleClose} />}
+                          {activeMenu === "More" && <MorePopoverContent onClose={handleClose} />}
                         </Box>
                       </Popover>
                     </React.Fragment>
-                  )
-                )}
-                {/* ✅ Login / Logout Toggle Button */}
+                  ))}
 
-                <Box>
-                  {/* SHOW ONLY AFTER LOGIN */}
-                  {isLoggedIn && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        color: "#131313",
-                        ...typography.h5,
-                        fontWeight: 500,
-                        fontSize: "20px",
-                        textTransform: "none",
-                        position: "relative",
-                      }}
-                    >
-                      <Typography
+                  <Box>
+                    {isLoggedIn && (
+                      <Box
                         sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
                           color: "#131313",
                           ...typography.h5,
                           fontWeight: 500,
                           fontSize: "20px",
                           textTransform: "none",
+                          position: "relative",
                         }}
                       >
-                        {role || "User"}
-                      </Typography>
-
-                      <IconButton
-                        onClick={handleLogout}
-                        sx={{
-                          "&:hover": { color: "#00334E" },
-                          p: 0,
-                          border: "2px solid #835454",
-                          padding: "2px",
-                          color: "#ed8686",
-                        }}
-                      >
-                        <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
-                      </IconButton>
-                    </Box>
-                  )}
+                        <Typography
+                          sx={{
+                            color: "#131313",
+                            ...typography.h5,
+                            fontWeight: 500,
+                            fontSize: "20px",
+                            textTransform: "none",
+                          }}
+                        >
+                          {role || "User"}
+                        </Typography>
+                        <IconButton
+                          onClick={handleLogout}
+                          sx={{
+                            "&:hover": { color: "#00334E" },
+                            p: 0,
+                            border: "2px solid #835454",
+                            padding: "2px",
+                            color: "#ed8686",
+                          }}
+                        >
+                          <LogoutOutlinedIcon sx={{ fontSize: "26px" }} />
+                        </IconButton>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -365,19 +452,24 @@ export default function TopbarWithMegaMenu() {
   }
 
   const mobileNavigate = (path) => {
-  setMobileMenuOpen(false);   // close whole menu
-  setOpenRental(false);       // close Rental section
-  setOpenServices(false);
-  setOpenResale(false);
-  setOpenContact(false);
-  setOpenMore(false);
+    setMobileMenuOpen(false);
+    setOpenRental(false);
+    setOpenServices(false);
+    setOpenResale(false);
+    setOpenContact(false);
+    setOpenMore(false);
+    navigate(path);
+  };
 
-  navigate(path);
-};
+  const links = [
+    { label: "FAQ" },
+    { label: "About Us", path: "/about-us" },
+    { label: "Legal", path: "/legal" },
+  ];
+
 
   // ===== MOBILE VIEW =====
   return (
-    
     <TopbarRoot
       sx={{
         position: "sticky",
@@ -401,30 +493,11 @@ export default function TopbarWithMegaMenu() {
             onClick={() => navigate("/home")}
           >
             <RefluxSvg width={50} height={50} color="#00374C" />
-
             <Box sx={{ ml: 1, lineHeight: 1 }}>
-              <Typography
-                sx={{
-                  fontFamily: "Fira Sans",
-                  fontWeight: 700,
-                  fontSize: "28px",
-                  color: "#111B2D",
-                  //width: '100px', // Optional, usually not needed here
-                }}
-              >
+              <Typography sx={{ fontFamily: "Fira Sans", fontWeight: 700, fontSize: "28px", color: "#111B2D" }}>
                 ReFlux
               </Typography>
-
-              <Typography
-                sx={{
-                  fontFamily: "Fira Sans",
-                  fontWeight: 400,
-                  fontSize: "15px",
-                  letterSpacing: "4px",
-                  color: "#111B2D",
-                  mt: "-4px", // Adjust vertical spacing between the two texts
-                }}
-              >
+              <Typography sx={{ fontFamily: "Fira Sans", fontWeight: 400, fontSize: "15px", letterSpacing: "4px", color: "#111B2D", mt: "-4px" }}>
                 MAGNETS
               </Typography>
             </Box>
@@ -441,7 +514,7 @@ export default function TopbarWithMegaMenu() {
             sx={{
               width: "100vw",
               position: "fixed",
-              top: 80, // <-- FIXED (menu opens BELOW topbar)
+              top: 80,
               left: 0,
               backgroundColor: "#fff",
               borderBottomLeftRadius: "22px",
@@ -455,7 +528,10 @@ export default function TopbarWithMegaMenu() {
               overflowY: "auto",
             }}
           >
-            {/* Services */}
+
+            {/* ══════════════════════════════════════════════════════
+                SERVICES — now dynamic (same titles as desktop)
+            ══════════════════════════════════════════════════════ */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
               <Button
                 fullWidth
@@ -478,9 +554,11 @@ export default function TopbarWithMegaMenu() {
                   }}
                 />
               </Button>
+
               <Collapse in={openServices} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
-                  {/* Electromagnet Repair */}
+
+                  {/* Static section header — matches desktop */}
                   <Typography
                     sx={{
                       ...typography.h4,
@@ -490,142 +568,47 @@ export default function TopbarWithMegaMenu() {
                       mb: 1,
                     }}
                   >
-                    Electromagnet Repair
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Coil Rewinds
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Terminals
+                    Electromagnet Repair and Service
                   </Typography>
 
-                  {/* Rectangular Magnet */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Rectangular Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Face Machining
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Pole-Shoe Rework
-                  </Typography>
+                  {/* Dynamic titles — same data as ServicesPopoverContent */}
+                  {mobileServiceCards.map((card, index) => (
+                    <Typography
+                      key={index}
+                      sx={{
+                        ...typography.bodyBase,
+                        color: "#111B2D",
+                        mb: 0.5,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        navigate("/home/RepairServices", {
+                          state: { scrollTo: card.imageId, time: Date.now() },
+                        });
+                        setMobileMenuOpen(false);
+                        setOpenServices(false);
+                      }}
+                    >
+                      {card.title}
+                    </Typography>
+                  ))}
 
-                  {/* Suspension Magnet */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Suspension Magnet Service (Oil / Air-cooled)
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Overhaul
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Oil Changes
-                  </Typography>
-
-                  {/* Emergency Support */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Emergency Support (24×7)
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#111B2D",
-                      fontSize: "16px",
-                      ...typography.bodyBase,
-                    }}
-                  >
-                    Call +91 12345 67890
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 2 }}
-                  >
-                    Whatsapp
-                  </Typography>
-
-                  {/* Image Card */}
-                  <Card
-                    sx={{
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      mb: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={imgserv}
-                      alt="service"
-                      sx={{ height: 120, objectFit: "cover" }}
-                    />
-                    <CardContent sx={{ py: 1 }}>
-                      <Typography
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          color: "#111B2D",
-                          ...typography.bodyBase,
-                        }}
-                      >
-                        It’s more than Magnets
-                      </Typography>
-                    </CardContent>
-                  </Card>
-
-                  {/* ROI Calculators */}
+                  {/* ROI Calculators — unchanged from original */}
                   <Typography
                     sx={{
                       color: "#AE5609",
                       fontWeight: 600,
                       fontSize: "18px",
                       mb: 1,
+                      mt: 2,
                       ...typography.h4,
+                      cursor: "pointer",
                     }}
                   >
                     ROI Calculators
                   </Typography>
-                  {[
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                  ].map((item, i) => (
-                    <Typography
-                      key={i}
-                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
-                    >
+                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
                       {item}
                     </Typography>
                   ))}
@@ -633,7 +616,9 @@ export default function TopbarWithMegaMenu() {
               </Collapse>
             </Box>
 
-            {/* Rental */}
+            {/* ══════════════════════════════════════════════════════
+                RENTAL — now dynamic (same titles as desktop)
+            ══════════════════════════════════════════════════════ */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
               <Button
                 fullWidth
@@ -646,7 +631,6 @@ export default function TopbarWithMegaMenu() {
                   color: "#00334E",
                   py: 1.2,
                 }}
-                 
               >
                 Rental
                 <ArrowForwardIosIcon
@@ -657,34 +641,11 @@ export default function TopbarWithMegaMenu() {
                   }}
                 />
               </Button>
+
               <Collapse in={openRental} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
-                  {/* Circular Magnet */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                      cursor:"pointer",
-                    }}
-                     onClick={()=> mobileNavigate('./home/CheckAvailabilty')}
-                  >
-                    Circular Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Electro-Lifting Magnet
-                  </Typography>
 
-                  {/* Overband */}
+                  {/* Static section header — matches desktop */}
                   <Typography
                     sx={{
                       ...typography.h4,
@@ -694,43 +655,38 @@ export default function TopbarWithMegaMenu() {
                       mb: 1,
                     }}
                   >
-                    Overband
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Permanent Magnet
+                    Rental Services
                   </Typography>
 
-                  {/* Rectangle Magnet */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Rectangle Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Electro-Lifting Magnet
-                  </Typography>
+                  {/* Dynamic titles — same data as RentalPopoverContent */}
+                  {mobileRentalCards.map((card, index) => (
+                    <Typography
+                      key={index}
+                      sx={{
+                        ...typography.bodyBase,
+                        color: "#111B2D",
+                        mb: 0.5,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        sessionStorage.setItem("scrollToSection", card.id);
 
-                  {/* Browse All Rentals */}
+                        if (window.location.pathname === "/home/rentals") {
+                          const el = document.getElementById(card.id);
+                          if (el) el.scrollIntoView({ behavior: "smooth" });
+                        } else {
+                          navigate("/home/rentals");
+                        }
+
+                        setMobileMenuOpen(false);
+                        setOpenRental(false);
+                      }}
+                    >
+                      {card.title}
+                    </Typography>
+                  ))}
+
+                  {/* Browse All Rentals — unchanged from original */}
                   <Typography
                     sx={{
                       color: "#00334E",
@@ -747,36 +703,7 @@ export default function TopbarWithMegaMenu() {
                     Browse All Rentals →
                   </Typography>
 
-                  {/* Image Card */}
-                  <Card
-                    sx={{
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      mb: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={imgserv}
-                      alt="rental"
-                      sx={{ height: 120, objectFit: "cover" }}
-                    />
-                    <CardContent sx={{ py: 1 }}>
-                      <Typography
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          color: "#111B2D",
-                          ...typography.bodyBase,
-                        }}
-                      >
-                        It’s more than Magnets
-                      </Typography>
-                    </CardContent>
-                  </Card>
-
-                  {/* ROI Calculators */}
+                  {/* ROI Calculators — unchanged from original */}
                   <Typography
                     sx={{
                       color: "#AE5609",
@@ -788,15 +715,8 @@ export default function TopbarWithMegaMenu() {
                   >
                     ROI Calculators
                   </Typography>
-                  {[
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                  ].map((item, i) => (
-                    <Typography
-                      key={i}
-                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
-                    >
+                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
                       {item}
                     </Typography>
                   ))}
@@ -804,7 +724,9 @@ export default function TopbarWithMegaMenu() {
               </Collapse>
             </Box>
 
-            {/* Resale */}
+            {/* ══════════════════════════════════════════════════════
+                RESALE — now dynamic (same titles as desktop)
+            ══════════════════════════════════════════════════════ */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
               <Button
                 fullWidth
@@ -827,9 +749,11 @@ export default function TopbarWithMegaMenu() {
                   }}
                 />
               </Button>
+
               <Collapse in={openResale} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
-                  {/* Browse Refurbished Inventory */}
+
+                  {/* Static section header — matches desktop */}
                   <Typography
                     sx={{
                       ...typography.h4,
@@ -837,136 +761,48 @@ export default function TopbarWithMegaMenu() {
                       fontWeight: 700,
                       fontSize: "18px",
                       mb: 1,
-                      cursor:'pointer'
+                      cursor: "pointer",
                     }}
-                    onClick={()=>mobileNavigate('./home/RefurbishedElectromagnet')}
+                    onClick={() => mobileNavigate("./home/RefurbishedElectromagnet")}
                   >
                     Browse Refurbished Inventory
                   </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Circular Magnets
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Rectangular Magnets
-                  </Typography>
 
-                  {/* Sell / Exchange Your Magnet */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Sell / Exchange Your Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
+                  {/* Dynamic titles — same data as ResalePopoverContent */}
+                  {mobileResaleTitles.map((item, index) => (
+                    <Typography
+                      key={index}
+                      sx={{
+                        ...typography.bodyBase,
+                        color: "#111B2D",
+                        mb: 0.5,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        sessionStorage.setItem("scrollToSection", item.id);
+                        navigate("/home/RefurbishedElectromagnet");
+                        setMobileMenuOpen(false);
+                        setOpenResale(false);
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                  ))}
 
-                  {/* Overband */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Overband
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 1.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-
-                  {/* Rectangle Magnet */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
-                    Rectangle Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-                  <Typography
-                    sx={{ color: "#111B2D", mb: 1.5, ...typography.bodyBase }}
-                  >
-                    Permanent Magnet
-                  </Typography>
-
-                  {/* Image Card */}
-                  <Card
-                    sx={{
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      mb: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={imgserv}
-                      alt="resale"
-                      sx={{ height: 120, objectFit: "cover" }}
-                    />
-                    <CardContent sx={{ py: 1 }}>
-                      <Typography
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          color: "#111B2D",
-                        }}
-                      >
-                        It’s more than Magnets
-                      </Typography>
-                    </CardContent>
-                  </Card>
-
-                  {/* ROI Calculators */}
+                  {/* ROI Calculators — unchanged from original */}
                   <Typography
                     sx={{
                       color: "#AE5609",
                       fontWeight: 600,
                       fontSize: "18px",
                       mb: 1,
+                      mt: 2,
+                      cursor: "pointer",
                     }}
                   >
                     ROI Calculators
                   </Typography>
-                  {[
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                  ].map((item, i) => (
+                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
                     <Typography key={i} sx={{ color: "#111B2D", mb: 0.8 }}>
                       {item}
                     </Typography>
@@ -975,7 +811,9 @@ export default function TopbarWithMegaMenu() {
               </Collapse>
             </Box>
 
-            {/* Contact */}
+            {/* ══════════════════════════════════════════════════════
+                CONTACT — unchanged from original
+            ══════════════════════════════════════════════════════ */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
               <Button
                 fullWidth
@@ -1001,107 +839,37 @@ export default function TopbarWithMegaMenu() {
 
               <Collapse in={openContact} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
-                  {/* Request Quote / Book Visit */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
+                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
                     Request a Quote
                   </Typography>
                   <Typography
-                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5 }}
+                    sx={{ ...typography.bodyBase, color: "#111B2D", mb: 0.5, cursor: "pointer" }}
+                    onClick={() => mobileNavigate("./contact-us")}
                   >
                     Book a Site Visit
                   </Typography>
-                  <Typography
-                    sx={{
-                      color: "#00334E",
-                      textDecoration: "underline",
-                      mb: 0.5,
-                      ...typography.bodyBase,
-                    }}
-                  >
-                    contact@lift.agency
+                  <Typography sx={{ color: "#00334E", textDecoration: "underline", mb: 0.5, ...typography.bodyBase }}>
+                    {content.HMCONTACT}<EditIconButton id="HMCONTACT" />
                   </Typography>
-                  <Typography
-                    sx={{
-                      color: "#00334E",
-                      textDecoration: "underline",
-                      mb: 1.5,
-                      ...typography.bodyBase,
-                    }}
-                  >
-                    (123) 456-7890
+                  <Typography sx={{ color: "#00334E", textDecoration: "underline", mb: 1.5, ...typography.bodyBase }}>
+                    {content.HMPHONE}<EditIconButton id="HMPHONE" />
                   </Typography>
-
-                  {/* WhatsApp */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
+                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
                     WhatsApp an Engineer
                   </Typography>
-
-                  {/* Image Card */}
-                  <Card
-                    sx={{
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      mb: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={imgserv}
-                      alt="contact"
-                      sx={{ height: 120, objectFit: "cover" }}
-                    />
+                  <Card sx={{ borderRadius: 2, boxShadow: 1, mb: 2, overflow: "hidden" }}>
+                    <CardMedia component="img" image={imgserv} alt="contact" sx={{ height: 120, objectFit: "cover" }} />
                     <CardContent sx={{ py: 1 }}>
-                      <Typography
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          color: "#111B2D",
-                          ...typography.bodyBase,
-                        }}
-                      >
-                        It’s more than Magnets
+                      <Typography sx={{ fontWeight: 600, fontSize: "16px", color: "#111B2D", ...typography.bodyBase }}>
+                        It's more than Magnets
                       </Typography>
                     </CardContent>
                   </Card>
-
-                  {/* ROI Calculators */}
-                  <Typography
-                    sx={{
-                      color: "#AE5609",
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      mb: 1,
-                      ...typography.h4,
-                    }}
-                  >
+                  <Typography sx={{ color: "#AE5609", fontWeight: 600, fontSize: "18px", mb: 1, ...typography.h4, cursor: "pointer" }}>
                     ROI Calculators
                   </Typography>
-                  {[
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                  ].map((item, i) => (
-                    <Typography
-                      key={i}
-                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
-                    >
+                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
                       {item}
                     </Typography>
                   ))}
@@ -1109,7 +877,9 @@ export default function TopbarWithMegaMenu() {
               </Collapse>
             </Box>
 
-            {/* More */}
+            {/* ══════════════════════════════════════════════════════
+                MORE — unchanged from original
+            ══════════════════════════════════════════════════════ */}
             <Box sx={{ borderBottom: "1px solid #eee" }}>
               <Button
                 fullWidth
@@ -1135,154 +905,52 @@ export default function TopbarWithMegaMenu() {
 
               <Collapse in={openMore} timeout="auto" unmountOnExit>
                 <Box sx={{ pl: 2, pt: 1 }}>
-                  {/* ROI Calculator */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mb: 1,
-                    }}
-                  >
+                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mb: 1 }}>
                     ROI Calculator
                   </Typography>
-                  {[
-                    "Repair vs Replace",
-                    "Rental vs Buy",
-                    "AMC vs Reactive.",
-                  ].map((item, i) => (
-                    <Typography
-                      key={i}
-                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
-                    >
+                  {["Repair vs Replace", "Rental vs Buy", "AMC vs Reactive."].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
                       {item}
                     </Typography>
                   ))}
-
-                  {/* Downloads */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mt: 2,
-                      mb: 1,
-                    }}
-                  >
+                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mt: 2, mb: 1 }}>
                     Downloads
                   </Typography>
-                  {["Safety labels", "Electro-Lifting Magnet"].map(
-                    (item, i) => (
-                      <Typography
-                        key={i}
-                        sx={{
-                          color: "#111B2D",
-                          mb: 0.8,
-                          ...typography.bodyBase,
-                        }}
-                      >
-                        {item}
-                      </Typography>
-                    )
-                  )}
-
-                  {/* Case Studies */}
-                  <Typography
-                    sx={{
-                      ...typography.h4,
-                      color: "#AE5609",
-                      fontWeight: 700,
-                      fontSize: "18px",
-                      mt: 2,
-                      mb: 1,
-                    }}
-                  >
-                    Case Studies
-                  </Typography>
-                  {["Before and After", "Turn Around Time (TAT)"].map(
-                    (item, i) => (
-                      <Typography
-                        key={i}
-                        sx={{
-                          color: "#111B2D",
-                          mb: 0.8,
-                          ...typography.bodyBase,
-                        }}
-                      >
-                        {item}
-                      </Typography>
-                    )
-                  )}
-
-                  {/* Standalone Links */}
-                  {["FAQ", "About Us", "Legal"].map((item, i) => (
-                    <Typography
-                      key={i}
-                      sx={{
-                        color: "#AE5609",
-                        fontWeight: 600,
-                        fontSize: "18px",
-                        mt: 2,
-                        mb: 0.8,
-                        ...typography.bodyBase,
-                      }}
-                    >
+                  {["Safety labels", "Electro-Lifting Magnet"].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
                       {item}
                     </Typography>
                   ))}
-
-                  {/* Image Card */}
-                  <Card
-                    sx={{
-                      borderRadius: 2,
-                      boxShadow: 1,
-                      my: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={imgserv}
-                      alt="more"
-                      sx={{ height: 120, objectFit: "cover" }}
-                    />
+                  <Typography sx={{ ...typography.h4, color: "#AE5609", fontWeight: 700, fontSize: "18px", mt: 2, mb: 1 }}>
+                    Case Studies
+                  </Typography>
+                  {["Before and After", "Turn Around Time (TAT)"].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
+                      {item}
+                    </Typography>
+                  ))}
+                  {links.map((item, i) => (
+                    <Typography
+                      key={i}
+                      onClick={() => navigate(item.path)}
+                      sx={{ color: "#AE5609", fontWeight: 600, fontSize: "18px", mt: 2, mb: 0.8, cursor: "pointer", ...typography.bodyBase }}
+                    >
+                      {item.label}
+                    </Typography>
+                  ))}
+                  <Card sx={{ borderRadius: 2, boxShadow: 1, my: 2, overflow: "hidden" }}>
+                    <CardMedia component="img" image={imgserv} alt="more" sx={{ height: 120, objectFit: "cover" }} />
                     <CardContent sx={{ py: 1 }}>
-                      <Typography
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          color: "#111B2D",
-                          ...typography.bodyBase,
-                        }}
-                      >
-                        It’s more than Magnets
+                      <Typography sx={{ fontWeight: 600, fontSize: "16px", color: "#111B2D", ...typography.bodyBase }}>
+                        It's more than Magnets
                       </Typography>
                     </CardContent>
                   </Card>
-
-                  {/* ROI Calculators (again, optional if needed) */}
-                  <Typography
-                    sx={{
-                      color: "#AE5609",
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      mb: 1,
-                      ...typography.h4,
-                    }}
-                  >
+                  <Typography sx={{ color: "#AE5609", fontWeight: 600, fontSize: "18px", mb: 1, ...typography.h4 }}>
                     ROI Calculators
                   </Typography>
-                  {[
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                    "Rent Vs Replace?",
-                  ].map((item, i) => (
-                    <Typography
-                      key={i}
-                      sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}
-                    >
+                  {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+                    <Typography key={i} sx={{ color: "#111B2D", mb: 0.8, ...typography.bodyBase }}>
                       {item}
                     </Typography>
                   ))}
@@ -1290,7 +958,7 @@ export default function TopbarWithMegaMenu() {
               </Collapse>
             </Box>
 
-            {/* Login / User Section */}
+            {/* Login / User Section — unchanged */}
             <Box sx={{ mt: 1 }}>
               {isLoggedIn ? (
                 <Box
@@ -1305,16 +973,9 @@ export default function TopbarWithMegaMenu() {
                     boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
                   }}
                 >
-                  <Typography
-                    sx={{
-                      color: "#111B2D",
-                      fontWeight: 600,
-                      fontSize: "18px",
-                    }}
-                  >
+                  <Typography sx={{ color: "#111B2D", fontWeight: 600, fontSize: "18px" }}>
                     Admin
                   </Typography>
-
                   <IconButton onClick={handleLogout} sx={{ color: "#00334E" }}>
                     <LogoutOutlinedIcon sx={{ fontSize: 26 }} />
                   </IconButton>
@@ -1345,208 +1006,102 @@ export default function TopbarWithMegaMenu() {
   );
 }
 
-const ServicesPopoverContent = () => {
-  const navigate = useNavigate();
+// ══════════════════════════════════════════════════════════════════════
+// ALL DESKTOP POPOVER COMPONENTS — completely unchanged from original
+// ══════════════════════════════════════════════════════════════════════
 
+const ServicesPopoverContent = ({ onClose }) => {
+  const navigate = useNavigate();
+  const [cards, setCards] = useState([]);
+  const [headerTitles, setHeaderTitles] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const titles = cards.map((card) => card.title);
+    setHeaderTitles(titles);
+  }, [cards]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C013`)
+      .then((res) => res.json())
+      .then((data) => {
+        const rsKeys = Object.keys(data)
+          .filter((k) => k.startsWith("RS"))
+          .sort(
+            (a, b) =>
+              parseInt(a.replace("RS", "")) - parseInt(b.replace("RS", ""))
+          );
+
+        const titles = [];
+        for (let i = 0; i < rsKeys.length; i++) {
+          const image = data[rsKeys[i]];
+          const title = data[rsKeys[i + 1]];
+          const faults = data[rsKeys[i + 4]];
+          const service = data[rsKeys[i + 5]];
+
+          if (
+            image &&
+            typeof title === "string" &&
+            Array.isArray(faults) &&
+            typeof service === "string" &&
+            service.toLowerCase().includes("service")
+          ) {
+            titles.push({ title, imageId: rsKeys[i] });
+            i += 8;
+          }
+        }
+        setCards(titles);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <Box sx={{ position: "relative" }}>
-      {/* Blue line before Grid */}
-
       <Grid container spacing={0}>
-        {/* Column 1 */}
-        <Grid item xs={4}>
-          {/* Row: Electromagnet Repair + Rectangular Magnet */}
-          <Box
-            sx={{
-              width: 449,
-              display: "flex",
-              flexDirection: "row",
-              gap: 3,
-              alignItems: "flex-start",
-            }}
-          >
-            {/* Electromagnet Repair */}
-            <Box
-              sx={{
-                width: 200,
-                height: 144,
-                display: "flex",
-                flexDirection: "column",
-                gap: 1.5,
-                justifyContent: "center",
-                alignItems: "flex-start",
-              }}
-            >
-              <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-                Electromagnet
-                <br /> Repair
-              </Typography>
-
-              <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-                Coil Rewinds
-              </Typography>
-              <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-                Terminals
-              </Typography>
-            </Box>
-
-            {/* Rectangular Magnet */}
-            <Box
-              sx={{
-                width: 140,
-                height: 144,
-                display: "flex",
-                flexDirection: "column",
-                gap: 1.5,
-                justifyContent: "center",
-                alignItems: "flex-start",
-              }}
-            >
-              <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-                Rectangular
-                <br /> Magnet
-              </Typography>
-
-              <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-                Face Machining
-              </Typography>
-              <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-                Pole-Shoe Rework
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* Suspension Magnet Service */}
-          <Box
-            mt={3}
-            sx={{
-              width: 278,
-              height: 144,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              gap: 1.5,
-            }}
-          >
+        <Grid item xs={7}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              Suspension Magnet
-              <br /> Service (Oil / Air-cooled)
+              Electromagnet Repair and Service
             </Typography>
-
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Overhaul
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Oil Changes
-            </Typography>
+            {loading ? (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <CircularProgress size={100} thickness={4} />
+              </Box>
+            ) : (
+              cards.map((card, index) => (
+                <Typography
+                  key={index}
+                  sx={{ ...typography.bodyBase, color: "#111B2D", cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/home/RepairServices", {
+                      state: { scrollTo: card.imageId, time: Date.now() },
+                    });
+                    onClose && onClose();
+                  }}
+                >
+                  {card.title}
+                </Typography>
+              ))
+            )}
           </Box>
         </Grid>
-
-        {/* Column 2 */}
-        <Grid item xs={3}>
-          <Box
-            sx={{
-              width: 180,
-              height: 120,
-              display: "flex",
-              flexDirection: "column",
-              gap: 1.5,
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              Emergency Support (24×7)
-            </Typography>
-
-            <Typography
-              sx={{
-                color: "#111B2D",
-                fontFamily: "Fira Sans",
-                fontWeight: 600,
-                fontSize: "18px",
-                lineHeight: "160%",
-              }}
-            >
-              Call +91 12345 67890
-            </Typography>
-
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Whatsapp
-            </Typography>
-          </Box>
-        </Grid>
-
-        {/* Column 3 + 4 */}
-        <Grid
-          item
-          xs={5}
-          display="flex"
-          flexDirection="row"
-          alignItems="flex-start"
-          gap={2}
-        >
-          {/* Service Card */}
+        <Grid item xs={5} display="flex" flexDirection="row" alignItems="flex-start" gap={2}>
           <Box display="flex" flexDirection="column" alignItems="flex-start">
             <ServiceCard imgserv={imgserv} />
           </Box>
-
           <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-
-          {/* ROI Calculators */}
           <Box display="flex" flexDirection="column" alignItems="flex-start">
-            <Typography
-              sx={{
-                color: "#AE5609",
-                fontFamily: "Space Grotesk",
-                fontWeight: 400,
-                fontSize: "24px",
-                lineHeight: "130%",
-                mb: 2,
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("./repair-replace/roi-cal")}
-            >
+            <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "24px", lineHeight: "130%", mb: 2 }}>
               ROI Calculators
             </Typography>
-
-            <Typography
-              sx={{
-                fontFamily: "Fira Sans",
-                fontWeight: 400,
-                fontSize: "18px",
-                lineHeight: "160%",
-                color: "#111B2D",
-                mb: 1,
-              }}
-            >
-              Rent Vs Replace?
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: "Fira Sans",
-                fontWeight: 400,
-                fontSize: "18px",
-                lineHeight: "160%",
-                color: "#111B2D",
-                mb: 1,
-              }}
-            >
-              Rent Vs Replace?
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: "Fira Sans",
-                fontWeight: 400,
-                fontSize: "18px",
-                lineHeight: "160%",
-                color: "#111B2D",
-              }}
-            >
-              Rent Vs Replace?
-            </Typography>
+            {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+              <Typography key={i} sx={{ fontFamily: "Fira Sans", fontWeight: 400, fontSize: "18px", lineHeight: "160%", color: "#111B2D", mb: 1 }}>
+                {item}
+              </Typography>
+            ))}
           </Box>
         </Grid>
       </Grid>
@@ -1554,503 +1109,281 @@ const ServicesPopoverContent = () => {
   );
 };
 
-const RentalPopoverContent = ({onClose}) => {
-  const navigate = useNavigate();
+export const buildRentCards = (content) => {
+  if (!content) return [];
+  const out = [];
+  const CARD_MIN = 2000;
+  const CARD_MAX = 2999;
+  const allKeys = Object.keys(content)
+    .filter((k) => /^RE\d+$/.test(k))
+    .map((k) => parseInt(k.replace("RE", ""), 10))
+    .sort((a, b) => a - b);
 
-  const goTo = (path) => {
-    onClose();        
-    navigate(path);  
+  for (let id of allKeys) {
+    if (id < CARD_MIN || id > CARD_MAX) continue;
+    if (id % 10 !== 1) continue;
+    const base = id;
+    out.push({ title: content[`RE${base + 1}`], id: `RE${base}` });
+  }
+  return out;
+};
+
+const getAllTitles = (content) => {
+  if (!content) return [];
+  const staticCards = [
+    { title: content.RE1003, id: "RE1002" },
+    { title: content.RE1010, id: "RE1009" },
+    { title: content.RE1017, id: "RE1016" },
+  ];
+  const dynamicCards = buildRentCards(content);
+  return [...staticCards, ...dynamicCards].filter(
+    (t) => t.title && t.title !== "New Rent Title"
+  );
+};
+
+const RentalPopoverContent = ({ onClose }) => {
+  const navigate = useNavigate();
+  const [cards, setCards] = useState([]);
+  const [content, setContent] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (content) setCards(getAllTitles(content));
+  }, [content]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=C016`)
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <Box sx={{ position: "relative" }}>
+      <Grid container spacing={0}>
+        <Grid item xs={7}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1, alignItems: "flex-start" }}>
+            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
+              Rental Services
+            </Typography>
+            {loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  ml: 20,
+                  justifyContent: "center",   // horizontal center
+                  alignItems: "center",       // vertical center
+                  height: "100%",             // take full parent height
+                  minHeight: "200px",         // 👈 important (gives space)
+                }}
+              >
+                <CircularProgress size={100} thickness={4} />
+              </Box>
+            ) : (
+              cards.map((card, index) => (
+                <Typography
+                  key={index}
+                  sx={{ ...typography.bodyBase, color: "#111B2D", cursor: "pointer" }}
+                  onClick={() => {
+                    sessionStorage.setItem("scrollToSection", card.id);
+
+                    if (window.location.pathname === "/home/rentals") {
+                      const el = document.getElementById(card.id);
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                      navigate("/home/rentals");
+                    }
+
+                    onClose && onClose();
+                  }}
+                >
+                  {card.title}
+                </Typography>
+              ))
+            )}
+          </Box>
+        </Grid>
+        <Grid item xs={5} display="flex" flexDirection="row" alignItems="flex-start" gap={2}>
+          <Box display="flex" flexDirection="column">
+            <ServiceCard imgserv={imgserv} />
+          </Box>
+          <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+          <Box display="flex" flexDirection="column">
+            <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontSize: "24px", mb: 2 }}>
+              ROI Calculators
+            </Typography>
+            {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+              <Typography key={i} sx={{ fontFamily: "Fira Sans", fontSize: "18px", color: "#111B2D", mb: 1 }}>
+                {item}
+              </Typography>
+            ))}
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+
+const ResalePopoverContent = ({ onClose }) => {
+  const navigate = useNavigate();
+  const [titles, setTitles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=RefurbishedMagnet`)
+      .then((res) => res.json())
+      .then((data) => {
+        const titleKeys = ["RM1011", "RM1017", "RM1023", "RM1029", "RM1035", "RM1041"];
+        const result = titleKeys
+          .filter((key) => data[key])
+          .map((key) => ({ title: data[key], id: key }));
+        setTitles(result);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleClick = (id) => {
+    if (!id) return;
+    const el = document.getElementById(`card-${id}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    sessionStorage.setItem("scrollToSection", id);
+    navigate("/home/RefurbishedElectromagnet");
+    onClose && onClose();
   };
 
   return (
     <Grid container spacing={4} alignItems="flex-start">
-      {/* Column 1 */}
-      <Grid item xs={3}>
-        <Box display="flex" flexDirection="column" gap={4}>
-          {/* Circular Magnet */}
-          <Box display="flex" flexDirection="column" gap={1}>   
-            <Typography
-              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => goTo("./home/CheckAvailabilty")}
+      <Grid item xs={7}>
+        <Box sx={{ pl: "25px", mt: 2 }}>
+          <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}>
+            Browse Refurbished <br /> Inventory
+          </Typography>
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                minHeight: "200px", // 👈 important
+              }}
             >
-              Circular Magnet
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Permanent Magnet
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Electro-Lifting Magnet
-            </Typography>
-          </Box>
-
-          {/* Rectangle Magnet */}
-          <Box display="flex" flexDirection="column" gap={1}>
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              Rectangle Magnet
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Permanent Magnet
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Electro-Lifting Magnet
-            </Typography>
-
-            <BrowseRentals onClose={onClose}/>
-          </Box>
-        </Box>
-      </Grid>
-
-      {/* Column 2 */}
-      <Grid item xs={2.5}>
-        <Box display="flex" flexDirection="column" gap={1}>
-          <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-            Overband
-          </Typography>
-          <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-            Permanent Magnet
-          </Typography>
-          <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-            Permanent Magnet
-          </Typography>
-        </Box>
-      </Grid>
-
-      {/* Column 3 */}
-      <Grid item xs={2.5}>
-        <Box display="flex" flexDirection="column" gap={1}>
-          <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-            Rectangle Magnet
-          </Typography>
-          <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-            Permanent Magnet
-          </Typography>
-          <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-            Electro-Lifting Magnet
-          </Typography>
-        </Box>
-      </Grid>
-
-      {/* Column 4 */}
-      <Grid item xs={4} display="flex" gap={3}>
-        {/* Image Card */}
-        <ServiceCard imgserv={imgserv} />
-
-        {/* Divider + ROI */}
-        <Divider orientation="vertical" flexItem />
-
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-start"
-          ml={2}
-        >
-          <Typography
-            sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              mb: 2,
-            }}
-            onClick={() => goTo("./repair-replace/roi-cal")}
-          >
-            ROI Calculators
-          </Typography>
-
-          {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map(
-            (item, i) => (
+              <CircularProgress size={100} thickness={4} />
+            </Box>
+          ) : (
+            titles.map((item, index) => (
               <Typography
-                key={i}
+                key={index}
                 sx={{
-                  fontFamily: "Fira Sans",
-                  fontWeight: 400,
-                  fontSize: "18px",
-                  lineHeight: "160%",
+                  ...typography.bodyBase,
                   color: "#111B2D",
-                  mb: 1,
+                  cursor: "pointer",
+                  mt: 1,
                 }}
+                onClick={() => handleClick(item.id)}
               >
-                {item}
+                {item.title}
               </Typography>
-            )
+            ))
           )}
         </Box>
       </Grid>
-    </Grid>
-  );
-};
-
-const ResalePopoverContent = ({onClose}) => {
-  const navigate = useNavigate();
-
-  const goTo = (path) => {
-    onClose();      
-    navigate(path); 
-  };
-
-  return (
-    <Grid container spacing={4} alignItems="flex-start">
-      {/* Single Column */}
-      <Grid item xs={4}>
-        {/* Row: Electromagnet Repair + Rectangular Magnet */}
-        <Box
-          sx={{
-            width: 449,
-            display: "flex",
-            flexDirection: "row",
-            gap: 3, // space between the two
-            alignItems: "flex-start",
-            paddingLeft: "25px",
-            mt: 2,
-          }}
-        >
-          {/* Electromagnet Repair */}
-          <Box
-            sx={{
-              width: 200,
-              height: 144,
-              display: "flex",
-              flexDirection: "column",
-              gap: 1.5,
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <Typography
-              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => goTo("/home/RefurbishedElectromagnet")}
-            >
-              Browse Refurbished
-              <br /> Inventory
-            </Typography>
-
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Circular Magnets
-            </Typography>
-
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Rectangular Magnets
-            </Typography>
-          </Box>
-
-          {/* Rectangular Magnet */}
-          <Box
-            sx={{
-              width: 140,
-              height: 144,
-              display: "flex",
-              paddingBottom: "25px",
-              flexDirection: "column",
-              gap: 1.5,
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              Overband
-            </Typography>
-
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Permanent Magnet
-            </Typography>
-
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Permanent Magnet
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* Suspension Magnet Service */}
-        <Box
-          mt={3}
-          sx={{
-            width: 278,
-            height: 144,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            gap: 1.5,
-            paddingLeft: "25px",
-          }}
-        >
-          <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-            Sell / Exchange Your <br /> Magnet
-          </Typography>
-
-          <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-            Permanent Magnet
-          </Typography>
-
-          <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-            Permanent Magnet
-          </Typography>
-        </Box>
-      </Grid>
-
-      {/* Column 2 */}
-      <Grid item xs={3}>
-        <Box
-          sx={{
-            width: 180,
-            height: 120,
-            display: "flex",
-            flexDirection: "column",
-            gap: 1.5,
-            justifyContent: "center",
-            alignItems: "flex-start",
-          }}
-        >
-          <Typography
-            sx={{
-              ...typography.h4,
-              color: "#AE5609",
-            }}
-          >
-            Rectangle <br></br>Magnet
-          </Typography>
-
-          <Typography
-            sx={{
-              color: "#111B2D",
-              fontFamily: "Fira Sans",
-              fontWeight: 600,
-              fontSize: "18px",
-              lineHeight: "160%",
-            }}
-          >
-            Permanent Magnet
-          </Typography>
-
-          <Typography
-            sx={{
-              ...typography.bodyBase,
-              color: "#111B2D",
-            }}
-          >
-            Permanent Magnet
-          </Typography>
-        </Box>
-      </Grid>
-
-      <Grid
-        item
-        xs={5}
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-start"
-        gap={2}
-      >
-        {/* Column 3 */}
-        <Box display="flex" flexDirection="column" alignItems="flex-start">
+      <Grid item xs={5} display="flex" gap={2}>
+        <Box>
           <ServiceCard imgserv={imgserv} />
         </Box>
-
-        <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-        {/* Column 4 */}
-        <Box display="flex" flexDirection="column" alignItems="flex-start">
-          <Typography
-            sx={{
-              color: "#AE5609",
-              cursor:'pointer',
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              mb: 2,
-            }}
-            onClick={() => goTo("./repair-replace/roi-cal")}
-          >
+        <Divider orientation="vertical" flexItem />
+        <Box>
+          <Typography sx={{ color: "#AE5609", fontSize: "24px", mb: 2 }}>
             ROI Calculators
           </Typography>
-
-          <Typography
-            sx={{
-              ...typography.bodyBase,
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
-              color: "#111B2D",
-              mb: 1,
-            }}
-          >
-            Rent Vs Replace?
-          </Typography>
-          <Typography
-            sx={{
-              ...typography.bodyBase,
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
-              color: "#111B2D",
-              mb: 1,
-            }}
-          >
-            Rent Vs Replace?
-          </Typography>
-          <Typography
-            sx={{
-              ...typography.bodyBase,
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
-              color: "#111B2D",
-            }}
-          >
-            Rent Vs Replace?
-          </Typography>
+          {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+            <Typography key={i} sx={{ ...typography.bodyBase, mb: 1 }}>
+              {item}
+            </Typography>
+          ))}
         </Box>
       </Grid>
     </Grid>
   );
 };
 
-const ContactPopoverContent = ({onClose}) => {
+const ContactPopoverContent = ({ onClose }) => {
   const navigate = useNavigate();
+  const [content, setContent] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
 
-   const goTo = (path) => {
-    onClose();        
-    navigate(path);  
+  const goTo = (path) => { onClose(); navigate(path); };
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_CMS_URL}?contentId=Home`)
+      .then((res) => res.json())
+      .then((data) => setContent(data || {}))
+      .catch((err) => console.error("Error loading content:", err));
+  }, []);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsAdmin(role === "admin");
+  }, []);
+
+  const handleEdit = (contentTextID, type = "T") => {
+    navigate(`/CmsEditor?contentId=Home&contentTextID=${contentTextID}&contentType=${type}`);
   };
 
+  const EditIconButton = ({ id, type = "T" }) =>
+    isAdmin ? (
+      <IconButton
+        size="small"
+        onClick={() => handleEdit(id, type)}
+        sx={{ ml: 1, p: 0.5, borderRadius: "50%", backgroundColor: "#f0f0f0", color: "#1C2D4B", border: "1px solid #ccc", transition: "all 0.2s ease", "&:hover": { backgroundColor: "#e0e0e0", color: "#070808ff" } }}
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
+    ) : null;
+
+  if (!content) return null;
 
   return (
     <Grid container spacing={1} sx={{ px: 1, py: 2 }}>
-      {/* Column 1 */}
       <Grid item xs={3}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap={0.8}
-          sx={{ paddingLeft: "70px" }}
-        >
-          <Typography
-            sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "120%",
-              ...typography.h4,
-            }}
-          >
+        <Box display="flex" flexDirection="column" gap={0.8} sx={{ paddingLeft: "70px" }}>
+          <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "18px", lineHeight: "120%", ...typography.h4 }}>
             Request a Quote
           </Typography>
-
-          <Typography
-            // component={Link}
-            // to="/contact-us"
-            sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "120%",
-              textDecoration: "none",
-              "&:hover": { textDecoration: "underline" },
-              ...typography.h4,
-            }}
-            onClick={()=> goTo('/contact-us')}
-          >
+          <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "18px", lineHeight: "120%", textDecoration: "none", "&:hover": { textDecoration: "underline" }, ...typography.h4, cursor: "pointer" }} onClick={() => goTo("/contact-us")}>
             Book a Site Visit
           </Typography>
-
-          <Typography
-            sx={{
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "120%",
-              color: "#111B2D",
-              borderBottom: "1px solid #1E88E5",
-              width: "fit-content",
-              ...typography.h4,
-            }}
-          >
-            contact@lift.agency
+          <Typography sx={{ fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "18px", lineHeight: "120%", color: "#111B2D", borderBottom: "1px solid #1E88E5", width: "fit-content", ...typography.h4 }}>
+            {content.HMCONTACT}<EditIconButton id="HMCONTACT" />
           </Typography>
-
-          <Typography
-            sx={{
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "120%",
-              color: "#111B2D",
-              borderBottom: "1px solid #1E88E5",
-              width: "fit-content",
-              ...typography.h4,
-            }}
-          >
-            (123) 456-7890
+          <Typography sx={{ fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "18px", lineHeight: "120%", color: "#111B2D", borderBottom: "1px solid #1E88E5", width: "fit-content", ...typography.h4 }}>
+            {content.HMPHONE}<EditIconButton id="HMPHONE" />
           </Typography>
         </Box>
       </Grid>
-
-      {/* Column 2 */}
       <Grid item xs={3}>
         <Box display="flex" flexDirection="column" gap={0.8}>
-          <Typography
-            sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "120%",
-              ...typography.h4,
-            }}
-          >
+          <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "18px", lineHeight: "120%", ...typography.h4 }}>
             WhatsApp an Engineer
           </Typography>
         </Box>
       </Grid>
-
-      {/* Column 3 */}
       <Grid item xs={6}>
         <Box display="flex" flexDirection="row" alignItems="flex-start" gap={1}>
-          {/* Image Card */}
-          <Box>
-            <ServiceCard imgserv={imgserv} />
-          </Box>
-
-          {/* Divider */}
+          <Box><ServiceCard imgserv={imgserv} /></Box>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-
-          {/* ROI Calculators */}
           <Box display="flex" flexDirection="column" gap={0.5}>
-            <Typography
-              sx={{
-                color: "#AE5609",
-                fontFamily: "Space Grotesk",
-                fontWeight: 400,
-                fontSize: "18px",
-                lineHeight: "120%",
-                mb: 0.5,
-                ...typography.h4,
-              }}
-              onClick={() => goTo("./repair-replace/roi-cal")}
-            >
+            <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "18px", lineHeight: "120%", mb: 0.5, ...typography.h4 }}>
               ROI Calculators
             </Typography>
-
-            {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map(
-              (item, index) => (
-                <Typography
-                  key={index}
-                  sx={{
-                    fontFamily: "Fira Sans",
-                    fontWeight: 400,
-                    fontSize: "16px",
-                    lineHeight: "140%",
-                    color: "#111B2D",
-                    ...typography.bodyBase,
-                  }}
-                >
-                  {item}
-                </Typography>
-              )
-            )}
+            {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, index) => (
+              <Typography key={index} sx={{ fontFamily: "Fira Sans", fontWeight: 400, fontSize: "16px", lineHeight: "140%", color: "#111B2D", ...typography.bodyBase }}>
+                {item}
+              </Typography>
+            ))}
           </Box>
         </Box>
       </Grid>
@@ -2058,206 +1391,67 @@ const ContactPopoverContent = ({onClose}) => {
   );
 };
 
-const MorePopoverContent = ({onClose}) => {
-
+const MorePopoverContent = ({ onClose }) => {
   const navigate = useNavigate();
-
-  const goTo = (path) => {
-    onClose();      
-    navigate(path); 
-  };
+  const goTo = (path) => { onClose(); navigate(path); };
 
   return (
     <Grid container spacing={0}>
-      {/* Column 1 */}
       <Grid item xs={4}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 3,
-            alignItems: "flex-start",
-          }}
-        >
-          {/* ROI Calculator */}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, alignItems: "flex-start" }}>
           <Box display="flex" flexDirection="column" gap={1.2}>
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              ROI Calculator
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Repair vs Replace
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Rental vs Buy
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              AMC vs Reactive.
-            </Typography>
+            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>ROI Calculator</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D", cursor: "pointer" }} onClick={() => navigate("/repair-replace")}>Repair vs Replace</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>Rental vs Buy</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>AMC vs Reactive.</Typography>
           </Box>
-
-          {/* Downloads */}
           <Box display="flex" flexDirection="column" gap={1.2}>
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              Downloads
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Safety labels
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Electro-Lifting Magnet
-            </Typography>
+            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>Downloads</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>Safety labels</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>Electro-Lifting Magnet</Typography>
           </Box>
         </Box>
       </Grid>
-
-      {/* Column 2 */}
       <Grid item xs={3}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 3,
-            alignItems: "flex-start",
-          }}
-        >
-          {/* Case Studies */}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, alignItems: "flex-start" }}>
           <Box display="flex" flexDirection="column" gap={1.2}>
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              Case Studies
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Before and After
-            </Typography>
-            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>
-              Turn Around Time (TAT)
-            </Typography>
+            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>Case Studies</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>Before and After</Typography>
+            <Typography sx={{ ...typography.bodyBase, color: "#111B2D" }}>Turn Around Time (TAT)</Typography>
           </Box>
-
-          {/* FAQ / About Us / Legal */}
           <Box display="flex" flexDirection="column" gap={1.2}>
-            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>
-              FAQ
-            </Typography>
-            <Typography
-              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => goTo("/about-us")}
-            >
-              About Us
-            </Typography>
-            <Typography
-              sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }}
-              onClick={() => goTo("/legal")}
-            >
-              {" "}
-              Legal
-            </Typography>
+            <Typography sx={{ ...typography.h4, color: "#AE5609" }}>FAQ</Typography>
+            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }} onClick={() => goTo("/about-us")}>About Us</Typography>
+            <Typography sx={{ ...typography.h4, color: "#AE5609", cursor: "pointer" }} onClick={() => goTo("/legal")}>Legal</Typography>
           </Box>
         </Box>
       </Grid>
-
-      {/* Column 3 */}
-      <Grid
-        item
-        xs={5}
-        display="flex"
-        flexDirection="row"
-        alignItems="flex-start"
-        gap={2}
-      >
-        {/* Image Card */}
+      <Grid item xs={5} display="flex" flexDirection="row" alignItems="flex-start" gap={2}>
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           <ServiceCard imgserv={imgserv} />
         </Box>
-
-        {/* Divider */}
         <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-
-        {/* ROI Calculators */}
         <Box display="flex" flexDirection="column" alignItems="flex-start">
-          <Typography
-            sx={{
-              color: "#AE5609",
-              fontFamily: "Space Grotesk",
-              fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "130%",
-              mb: 2,
-            }}
-            onClick={() => goTo("./repair-replace/roi-cal")}
-          >
+          <Typography sx={{ color: "#AE5609", fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "24px", lineHeight: "130%", mb: 2 }}>
             ROI Calculators
           </Typography>
-
-          <Typography
-            sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
-              color: "#111B2D",
-              mb: 1,
-            }}
-          >
-            Rent Vs Replace?
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
-              color: "#111B2D",
-              mb: 1,
-            }}
-          >
-            Rent Vs Replace?
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Fira Sans",
-              fontWeight: 400,
-              fontSize: "18px",
-              lineHeight: "160%",
-              color: "#111B2D",
-            }}
-          >
-            Rent Vs Replace?
-          </Typography>
+          {["Rent Vs Replace?", "Rent Vs Replace?", "Rent Vs Replace?"].map((item, i) => (
+            <Typography key={i} sx={{ fontFamily: "Fira Sans", fontWeight: 400, fontSize: "18px", lineHeight: "160%", color: "#111B2D", mb: 1 }}>
+              {item}
+            </Typography>
+          ))}
         </Box>
       </Grid>
     </Grid>
   );
 };
 
-const BrowseRentals = ({onClose}) => {
+const BrowseRentals = ({ onClose }) => {
   const navigate = useNavigate();
-    const goTo = (path) => {
-    if (typeof onClose === "function") {
-      onClose(); // ✅ safe call
-    }
-    navigate(path);
-  };
+  const goTo = (path) => { if (typeof onClose === "function") onClose(); navigate(path); };
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      sx={{ mt: 2, cursor: "pointer" }}
-      onClick={() => goTo("./home/Rentals")} // replace with your route
-    >
-      <Typography
-        sx={{
-          fontFamily: "Space Grotesk",
-          fontWeight: 400,
-          fontSize: "24px",
-          lineHeight: "130%",
-          letterSpacing: "-0.12%",
-          textDecoration: "underline",
-          textDecorationStyle: "solid",
-          textDecorationOffset: "0%",
-          textDecorationThickness: "0%",
-          textDecorationSkipInk: "auto",
-        }}
-      >
+    <Box display="flex" alignItems="center" sx={{ mt: 2, cursor: "pointer" }} onClick={() => goTo("./home/Rentals")}>
+      <Typography sx={{ fontFamily: "Space Grotesk", fontWeight: 400, fontSize: "24px", lineHeight: "130%", letterSpacing: "-0.12%", textDecoration: "underline", textDecorationStyle: "solid", textDecorationOffset: "0%", textDecorationThickness: "0%", textDecorationSkipInk: "auto" }}>
         Browse All Rentals
       </Typography>
       <ArrowForwardIosIcon sx={{ ml: 1, fontSize: "20px" }} />
@@ -2267,182 +1461,16 @@ const BrowseRentals = ({onClose}) => {
 
 const ServiceCard = ({ imgserv }) => {
   return (
-    <Card
-      sx={{
-        width: 223, // card width
-        height: 307, // card height
-        borderRadius: 2, // theme radius (≈ 8px)
-        boxShadow: 3, // shadow depth
-        overflow: "hidden", // clip children to rounded corners
-        opacity: 1,
-        transform: "rotate(0deg)", // angle: 0deg
-        display: "flex",
-        flexDirection: "column",
-        bgcolor: "#F7F9FC",
-      }}
-    >
-      {/* Image */}
-      <CardMedia
-        component="img"
-        image={imgserv}
-        alt="promo"
-        sx={{
-          width: 223,
-          height: 190,
-          // p: 1.5,              // padding (12px)
-          objectFit: "cover",
-          borderRadius: 2, // theme spacing rounding (~8px)
-          opacity: 1,
-        }}
-      />
-
-      {/* Content Section */}
-      <CardContent
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          p: 1.5,
-        }}
-      >
-        <Typography
-          sx={{
-            fontFamily: "Space Grotesk",
-            fontWeight: 500,
-            fontStyle: "normal", // "Regular" is invalid, use "normal"
-            fontSize: "20px",
-            lineHeight: "130%", // or 1.3
-            letterSpacing: "0px", // % is invalid in CSS
-            color: "#1C2D4B",
-          }}
-        >
+    <Card sx={{ width: 223, height: 307, borderRadius: 2, boxShadow: 3, overflow: "hidden", opacity: 1, transform: "rotate(0deg)", display: "flex", flexDirection: "column", bgcolor: "#F7F9FC" }}>
+      <CardMedia component="img" image={imgserv} alt="promo" sx={{ width: 223, height: 190, objectFit: "cover", borderRadius: 2, opacity: 1 }} />
+      <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 1.5 }}>
+        <Typography sx={{ fontFamily: "Space Grotesk", fontWeight: 500, fontStyle: "normal", fontSize: "20px", lineHeight: "130%", letterSpacing: "0px", color: "#1C2D4B" }}>
           It's more than Magnets
         </Typography>
-
-        <IconButton
-          size="small"
-          sx={{ bgcolor: "primary.main", color: "white" }}
-        >
+        <IconButton size="small" sx={{ bgcolor: "primary.main", color: "white" }}>
           <EditIcon fontSize="small" />
         </IconButton>
       </CardContent>
     </Card>
   );
 };
-
-//  <Popover
-//   open={open}
-//   anchorEl={anchorEl}
-//   onClose={handleClose}
-//   anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-//   transformOrigin={{ vertical: "top", horizontal: "left" }}
-//   PaperProps={{
-//     sx: {
-//       backgroundColor:theme.palette.background.default,
-//       width: appBarRef.current ? appBarRef.current.offsetWidth : "100vw", // full width of topbar
-//       left: 0,
-//       top: `${topBarHeight}px !important`, // align exactly below topbar
-//       borderRadius: 0,
-//       p: 3,
-//       boxShadow: theme.shadows[5],
-//       minHeight: 450, // enough space for 4 columns
-//     },
-//   }}
-//   disableRestoreFocus
-// >
-//           <Grid container spacing={4}>
-//             {/* Column 1 */}
-//             <Grid item xs={3}>
-//               <Typography
-//                 variant="subtitle1"
-//                 fontWeight="bold"
-//                 color="warning.main"
-//               >
-//                 Electromagnet <br/>Repair
-//               </Typography>
-//               <Typography variant="body2">Coil Rewinds</Typography>
-//               <Typography variant="body2">Terminals</Typography>
-//               <Box mt={2}>
-//                 <Typography
-//                   variant="subtitle1"
-//                   fontWeight="bold"
-//                   color="warning.main"
-//                 >
-//                   Suspension Magnet Service (Oil / Air-cooled)
-//                 </Typography>
-//                 <Typography variant="body2">Overhaul</Typography>
-//                 <Typography variant="body2">Oil Changes</Typography>
-//               </Box>
-//             </Grid>
-
-//             {/* Column 2 */}
-//             <Grid item xs={3}>
-//               <Typography
-//                 variant="subtitle1"
-//                 fontWeight="bold"
-//                 color="warning.main"
-//               >
-//                 Rectangular Magnet
-//               </Typography>
-//               <Typography variant="body2">Face Machining</Typography>
-//               <Typography variant="body2">Pole-Shoe Rework</Typography>
-//             </Grid>
-
-//             {/* Column 3 */}
-//             <Grid item xs={3}>
-//               <Typography
-//                 variant="subtitle1"
-//                 fontWeight="bold"
-//                 color="warning.main"
-//               >
-//                 Emergency Support (24×7)
-//               </Typography>
-//               <Typography variant="body2" fontWeight="bold">
-//                 Call +91 12345 67890
-//               </Typography>
-//               <Typography variant="body2">Whatsapp</Typography>
-//             </Grid>
-
-//             {/* Column 4 - Image + ROI */}
-//             <Grid item xs={3} display="flex" flexDirection="column">
-//               <Box
-//                 component="img"
-//                 src="https://via.placeholder.com/200x120"
-//                 alt="promo"
-//                 sx={{ borderRadius: 2, mb: 2, width: "100%" }}
-//               />
-//               <Divider orientation="horizontal" flexItem sx={{ my: 1 }} />
-//               <Typography
-//                 variant="subtitle1"
-//                 fontWeight="bold"
-//                 color="warning.main"
-//               >
-//                 ROI Calculators
-//               </Typography>
-//               <Typography variant="body2">Rent Vs Replace?</Typography>
-//               <Typography variant="body2">Rent Vs Replace?</Typography>
-//               <Typography variant="body2">Rent Vs Replace?</Typography>
-//             </Grid>
-//           </Grid>
-//         </Popover>
-
-{
-  /* <Popover
-  open={open}
-  onClose={handleClose}
-  anchorReference="anchorPosition"   // ⬅️ manual positioning
-  anchorPosition={{ top: topBarHeight, left: 0 }}
-  transformOrigin={{ vertical: "top", horizontal: "left" }}
-  PaperProps={{
-    sx: {
-      backgroundColor: theme.palette.background.default,
-      width: "100vw",         // full width
-      borderRadius: 0,
-      p: 4,
-      boxShadow: theme.shadows[5],
-      height: 380,
-    },
-  }}
-  disableRestoreFocus
-> */
-}

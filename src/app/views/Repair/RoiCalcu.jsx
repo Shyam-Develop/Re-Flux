@@ -239,7 +239,7 @@ const RoiCalculator = () => {
       {/* Background Image */}
       <CardMedia
         component="img"
-        image={`https://cmsreflux.bexatm.com${item.image}`}
+        image={`https://refluxmagnets.com${item.image}`}
         alt={item.title}
         sx={{
           height: "100%",
@@ -429,7 +429,7 @@ const RoiCalculator = () => {
     };
 
     const res = await fetch(
-      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      "https://refluxmagnets.com/API/data/UpdateContentV1.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -461,7 +461,7 @@ const RoiCalculator = () => {
 
     try {
       const res = await fetch(
-        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        "https://refluxmagnets.com/API/data/DeleteContentV1.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

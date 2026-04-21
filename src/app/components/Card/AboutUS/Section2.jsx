@@ -55,21 +55,23 @@ export default function HowWeWorkSwiper() {
   if (!content) return null;
 
   const services = [
-    { step: content.AU1021, title: content.AU1022, description: content.AU1023, image: `https://cmsreflux.bexatm.com${content.AU1024}` },
-    { step: content.AU1025, title: content.AU1026, description: content.AU1027, image: `https://cmsreflux.bexatm.com${content.AU1028}` },
-    { step: content.AU1029, title: content.AU1030, description: content.AU1031, image: `https://cmsreflux.bexatm.com${content.AU1032}` },
-    { step: content.AU1033, title: content.AU1034, description: content.AU1035, image: `https://cmsreflux.bexatm.com${content.AU1036}` },
-    { step: content.AU1037, title: content.AU1038, description: content.AU1039, image: `https://cmsreflux.bexatm.com${content.AU1040}` },
-    { step: content.AU1041, title: content.AU1042, description: content.AU1043, image: `https://cmsreflux.bexatm.com${content.AU1044}` },
+    { step: content.AU1021, title: content.AU1022, description: content.AU1023, image: `https://refluxmagnets.com${content.AU1024}` },
+    { step: content.AU1025, title: content.AU1026, description: content.AU1027, image: `https://refluxmagnets.com${content.AU1028}` },
+    { step: content.AU1029, title: content.AU1030, description: content.AU1031, image: `https://refluxmagnets.com${content.AU1032}` },
+    { step: content.AU1033, title: content.AU1034, description: content.AU1035, image: `https://refluxmagnets.com${content.AU1036}` },
+    { step: content.AU1037, title: content.AU1038, description: content.AU1039, image: `https://refluxmagnets.com${content.AU1040}` },
+    { step: content.AU1041, title: content.AU1042, description: content.AU1043, image: `https://refluxmagnets.com${content.AU1044}` },
   ];
 
   return (
     <Box
       sx={{
-        width: { xs: "100%", md: "1440px" },
+        width: "100%",
+        maxWidth: 1200,
+        mx: "auto",
         height: { xs: "auto", md: "734px" },
         px: 2,
-        py: 6,
+        py: 2,
         mx: "auto",
         mb: 20
       }}
@@ -112,41 +114,41 @@ export default function HowWeWorkSwiper() {
         style={{ paddingBottom: "40px" }}
         breakpoints={{
           0: { slidesPerView: 1 },
-          600: { slidesPerView: 2.2 },
-          960: { slidesPerView: 4 },
-          1200: { slidesPerView: 5 },
+          600: { slidesPerView: 2 },
+          960: { slidesPerView: 3 },
+          1200: { slidesPerView: 4 },
         }}
       >
         {services.map((service, index) => (
           <SwiperSlide key={index}>
-            <Card
+            {/* MAIN CONTAINER (REPLACES CARD) */}
+            <Box
               sx={{
-                borderRadius: 0,
-                border: "1px solid #e5e7eb",
-                boxShadow: "none",
-                overflow: "hidden",
-                width: { xs: "100%", sm: "250px" },
+                width: "100%",
                 height: "510px",
                 mx: "auto",
               }}
             >
-              <Box >
+              {/* IMAGE */}
+              <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
                   src={service.image}
-                  alt={service.title}
+                  alt={content?.[`AU10${24 + index * 4}_ALT`] || service.title}
                   sx={{
                     width: "100%",
                     height: "250px",
                     objectFit: "cover",
                   }}
                 />
-                <Box  sx={{ position:'absolute', bottom: '92%', left: '200px' }}>
+
+                <Box sx={{ position: "absolute", top: 8, right: 8 }}>
                   <EditIconButton id={`AU10${24 + index * 4}`} type="I" />
                 </Box>
               </Box>
 
-              <CardContent sx={{ height: "174px" }}>
+              {/* CONTENT (NO CARD, NO BORDER, NO BG) */}
+              <Box sx={{ mt: 2 }}>
                 <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                   <Chip
                     label={service.step}
@@ -155,31 +157,47 @@ export default function HowWeWorkSwiper() {
                       backgroundColor: "#e0f2fe",
                       color: "#0369a1",
                       fontWeight: 500,
+                      ...typography.bodyBase,
+                      width: "73px",
+                      height: "38px",
                     }}
                   />
-                  <EditIconButton id={`AU10${21 + index * 4}`} /> {/* Add this */}
+                  <EditIconButton id={`AU10${21 + index * 4}`} />
                 </Box>
+
                 <Typography
-                  variant="h6"
-                  sx={{ ...typography.h3, fontWeight: 600, mb: 1, color: "#1C2D4B" }}
+                  sx={{
+                    ...typography.h3,
+                    fontWeight: 600,
+                    mb: 1,
+                    color: "#1C2D4B",
+                  }}
                 >
                   {service.title}
                   <EditIconButton id={`AU10${22 + index * 4}`} />
                 </Typography>
+
                 <Typography
-                  sx={{ ...typography.h5, fontWeight: 500, fontSize: '20px', color: "#4b5563", lineHeight: 1.5 }}
+                  sx={{
+                    ...typography.h5,
+                    fontWeight: 500,
+                    fontSize: "20px",
+                    color: "#4b5563",
+                    lineHeight: 1.5,
+                  }}
                 >
                   {service.description}
                   <EditIconButton id={`AU10${23 + index * 4}`} />
                 </Typography>
-              </CardContent>
-            </Card>
+              </Box>
+            </Box>
           </SwiperSlide>
         ))}
       </Swiper>
 
+
       {/* CTA */}
-      <Box sx={{ textAlign: { xs: "center", md: "center" }, mt: 6 }}>
+      <Box sx={{ textAlign: { xs: "center", md: "center" }, mt: 2 }}>
         <Button
           variant="text"
           endIcon={<span style={{ fontSize: "18px" }}>→</span>}

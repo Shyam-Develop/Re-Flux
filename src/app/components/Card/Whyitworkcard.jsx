@@ -72,7 +72,7 @@ export default function Whyitworkcard() {
       id: i,
       title,
       type: content[`CON240000_${i}_type`] || "",
-      image: `https://cmsreflux.bexatm.com${content[`CON240000_${i}_image`]}`,
+      image: `https://refluxmagnets.com${content[`CON240000_${i}_image`]}`,
       titleId: `CON240000_${i}_title`,
       typeId: `CON240000_${i}_type`,
       imageId: `CON240000_${i}_image`,

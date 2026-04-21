@@ -143,31 +143,31 @@ export default function RepairServicesPageCard() {
       id: 1,
       title: content.CON190040,
       type: content.CON190041,
-      img: `https://cmsreflux.bexatm.com${content.CON190042}`,
+      img: `https://refluxmagnets.com${content.CON190042}`,
     },
     {
       id: 2,
       title: content.CON190043,
       type: content.CON190044,
-      img: `https://cmsreflux.bexatm.com${content.CON190045}`,
+      img: `https://refluxmagnets.com${content.CON190045}`,
     },
     {
       id: 3,
       title: content.CON190046,
       type: content.CON190047,
-      img: `https://cmsreflux.bexatm.com${content.CON190048}`,
+      img: `https://refluxmagnets.com${content.CON190048}`,
     },
     {
       id: 4,
       title: content.CON190049,
       type: content.CON190050,
-      img: `https://cmsreflux.bexatm.com${content.CON190051}`,
+      img: `https://refluxmagnets.com${content.CON190051}`,
     },
     {
       id: 5,
       title: content.CON190052,
       type: content.CON190053,
-      img: `https://cmsreflux.bexatm.com${content.CON190054}`,
+      img: `https://refluxmagnets.com${content.CON190054}`,
     },
   ];
 
@@ -220,7 +220,7 @@ export default function RepairServicesPageCard() {
                 <CardMedia
                   component="img"
                   image={service.img}
-                  alt={service.title}
+                  alt={content?.[`CON1900${42 + index * 3}_ALT`] || service.title}
                   sx={{
                     height: 210,
                     objectFit: "contain",

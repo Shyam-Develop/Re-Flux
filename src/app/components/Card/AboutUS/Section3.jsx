@@ -55,7 +55,7 @@ export default function AboutUsRepairServicesPageCard() {
         id: base,
         title: t,
         type: d,
-        img: `https://cmsreflux.bexatm.com${i}`,
+        img: `https://refluxmagnets.com${i}`,
       });
     }
 
@@ -79,7 +79,7 @@ export default function AboutUsRepairServicesPageCard() {
         id: base,
         title: content[tKey],
         type: content[dKey],
-        img: `https://cmsreflux.bexatm.com${content[iKey]}`,
+        img: `https://refluxmagnets.com${content[iKey]}`,
       });
     }
 
@@ -179,7 +179,7 @@ export default function AboutUsRepairServicesPageCard() {
     };
 
     const res = await fetch(
-      "https://cmsreflux.bexatm.com/API/data/UpdateContentV1.php",
+      "https://refluxmagnets.com/API/data/UpdateContentV1.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -218,7 +218,7 @@ export default function AboutUsRepairServicesPageCard() {
       const iKey = `AU${baseId + 2}`;
 
       const res = await fetch(
-        "https://cmsreflux.bexatm.com/API/data/DeleteContentV1.php",
+        "https://refluxmagnets.com/API/data/DeleteContentV1.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -298,7 +298,7 @@ export default function AboutUsRepairServicesPageCard() {
     <Box sx={{ p: { xs: 2, md: 6 }, backgroundColor: "#f9fafb" }}>
       {/* ✅ Section Header (CMS Editable) */}
       <Typography
-        sx={{ ...typography.displayM, color: "#1C2D4B", textAlign: "left" }}
+        sx={{ ...typography.displayM, color: "#1C2D4B", fontWeight:600, textAlign: "left" }}
       >
         {content.AU1046}
         <EditIconButton id="AU1046" />
@@ -359,7 +359,7 @@ export default function AboutUsRepairServicesPageCard() {
                 <CardMedia
                   component="img"
                   image={service.img}
-                  alt={service.title}
+                 alt={content?.[`AU${service.id + 2}_ALT`] || service.title}
                   sx={{
                     height: 210,
                     objectFit: "contain",
@@ -490,6 +490,7 @@ export default function AboutUsRepairServicesPageCard() {
         <EditIconButton id="AU1113" />
       </Button>
 
+
       {/* ✅ Dialog (same design) */}
       <Dialog
         open={BrowseDialogopen}
@@ -510,11 +511,11 @@ export default function AboutUsRepairServicesPageCard() {
               Tell us what you need
             </Typography>
             <Typography sx={{ fontSize: "15px", color: "#111" }}>
-              Company Name *
+              Company Name 
             </Typography>
             <TextField placeholder="Ex: John" fullWidth variant="outlined" />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
-              Contact Person *
+              Contact Person 
             </Typography>
             <TextField
               placeholder="example@gmail.com"
@@ -522,7 +523,7 @@ export default function AboutUsRepairServicesPageCard() {
               variant="outlined"
             />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
-              Phone *
+              Phone
             </Typography>
             <TextField
               placeholder="example@gmail.com"
@@ -530,7 +531,7 @@ export default function AboutUsRepairServicesPageCard() {
               variant="outlined"
             />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
-              Email *
+              Email
             </Typography>
             <TextField
               placeholder="example@gmail.com"
@@ -538,7 +539,7 @@ export default function AboutUsRepairServicesPageCard() {
               variant="outlined"
             />
             <Typography sx={{ fontSize: "15px", mt: 2, color: "#111" }}>
-              Enquiry for *
+              Enquiry for
             </Typography>
             <FormControl fullWidth>
               <Select defaultValue="">
@@ -582,6 +583,8 @@ export default function AboutUsRepairServicesPageCard() {
           </Box>
         </DialogContent>
       </Dialog>
+      <Box sx={{mt:4}}> <hr ></hr></Box>
     </Box>
+    
   );
 }
